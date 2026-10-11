@@ -17,8 +17,9 @@ only: no "RIR", "deload", "hypertrophy" or "1RM" in questions. In `language: es`
 
 Run `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/athlete_folder.py" find`.
 
-- **Found, `profile.md` has a `level`** → *"You're already set up. Redo your answers, or keep them?"* Keep → stop
-  here. Redo → go on; answers are replaced, data files are never touched.
+- **Found, `profile.md` has a `history`** → *"You're already set up. Redo your answers, or keep them?"* Keep →
+  stop here. Redo → go on; answers are replaced, data files are never touched, and the recorded doctor's
+  clearance is blanked (`safety_clearance_date`, `safety_clearance_sentence`): the safety intake asks again.
 - **Not found** → *"Make this folder your training folder? ({cwd})"*. Yes, or a path the user gives →
   `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/athlete_folder.py" init <dir>`.
 
@@ -59,18 +60,19 @@ log it, tell the user they can run `/onboard` again after the clearance, and end
 
 ## 6. Placement
 
-| History | Last trained | 8-rep loads | Level | Flag |
-|---|---|---|---|---|
-| never | — | — | beginner | — |
-| 6m-2y | last-3m | — | intermediate | — |
-| 6m-2y | 3-12m | — | beginner | returning, check week 4 |
-| 6m-2y | over-1y | — | beginner | returning, check week 6 |
-| over-2y | last-3m | given | advanced | loads seed the first targets |
-| over-2y | last-3m | not known | intermediate | advanced check week 6 |
-| over-2y | 3-12m | — | intermediate | returning, two easier sessions first, advanced check week 6 |
-| over-2y | over-1y | — | beginner | returning, check week 4 |
+Never work out the level yourself: the placement tree lives in `program_build.py` only. Write the answers so far
+(steps 3 to 5) into the front matter of `profile.md`, then run:
 
-Then:
+```
+python3 "${CLAUDE_PLUGIN_ROOT}/scripts/program_build.py" --dir <folder> --place
+```
+
+It prints JSON: `level`, `returning`, `promotion_check_week`, `advanced_check_week` and `line`, the sentence to
+say (in `language: es`, say it in Spanish, as in [questions-es.md](questions-es.md)). Exit 2 names a missing or
+bad answer: ask that question again. The level is not written to `profile.md`; `program-build` places the
+athlete again from the same answers and records it in `plan/program.json` (`level`, `placement`).
+
+Then, by the printed `level`:
 
 - 60+ and beginner: *"Can you stand up from a chair 5 times in a row without using your hands?"* → `chair_stand`.
 - Intermediate or advanced: *"What do you want most?"* More strength · More muscle · Both → `goal`. Beginners:
@@ -78,14 +80,14 @@ Then:
 - Advanced: *"Want to give one area priority?"* None · Chest · Back · Shoulders · Arms · Quads · Glutes and
   hamstrings · Calves → `priority`.
 
-Tell the user the placement and why, e.g. *"I've put you in **Intermediate**: 6 months to 2 years of lifting,
-and you trained in the last 3 months."*
+Tell the user the placement with the printed `line`, e.g. *"We've put you in Intermediate: 6 months to 2 years
+of lifting, and you trained in the last 3 months."*
 
 ## 7. Write and log
 
 Write every answer into the front matter of `profile.md` (field names as in the template), set `updated` to
 today, add any free-text remarks under `# Profile`. Then:
-`python3 "${CLAUDE_PLUGIN_ROOT}/scripts/athlete_folder.py" log onboard "<level>, <days> days, <minutes> min, goal <goal>"`.
+`python3 "${CLAUDE_PLUGIN_ROOT}/scripts/athlete_folder.py" log onboard "<level from --place>, <days> days, <minutes> min, goal <goal>"`.
 
 ## 8. v0.2 hooks: do not ask yet
 

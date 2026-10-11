@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build a starter program from an athlete folder's intake answers.
 
-Usage: python3 program_build.py --dir <athlete folder> [--week N] [--today YYYY-MM-DD] [--dry-run]
+Usage: python3 program_build.py --dir <athlete folder> [--week N] [--today YYYY-MM-DD] [--dry-run | --place]
 
 Reads `coaich.md` (safety acknowledgement + clearance) and `profile.md` (intake answers in its YAML header, as the
 onboard and safety skills write them: templates/athlete/profile.md). Places the athlete (level), picks one of
@@ -22,6 +22,7 @@ import sys
 import unicodedata
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import athlete_folder as af  # noqa: E402
 import program_audit as pa  # noqa: E402
 
 LEVELS = ["beginner", "intermediate", "advanced"]
@@ -36,10 +37,9 @@ REGIONS = {
 }
 HEALTH = ["pregnancy_or_postpartum", "heart_or_circulation", "high_blood_pressure", "chest_pain",
           "dizziness_or_fainting", "doctor_said_no", "recent_operation", "osteoporosis_or_hernia", "other_reason",
-          "bone_or_joint_problem", "urine_leak", "diabetes"]
-NOT_SERIOUS = {"high_blood_pressure", "osteoporosis_or_hernia", "diabetes", "bone_or_joint_problem", "urine_leak"}
-# Diabetes: a warning in the plugin's safety skill (plan §4); the Swift core has no diabetes item (G120 D10).
-STRONG_WARNING = {"high_blood_pressure", "osteoporosis_or_hernia", "diabetes"}
+          "bone_or_joint_problem", "urine_leak"]
+NOT_SERIOUS = {"high_blood_pressure", "osteoporosis_or_hernia", "bone_or_joint_problem", "urine_leak"}
+STRONG_WARNING = {"high_blood_pressure", "osteoporosis_or_hernia"}
 EASY_WEEK_EVERY = pa.EASY_WEEK_EVERY
 
 # Copy (copy: lawyer review pending — medical and legal lines).
@@ -569,7 +569,7 @@ def decide(a, week=1):
         return {"outcome": "under_age", "message": UNDER_AGE}
     health = set(a.get("health", ()))
     serious = [h for h in HEALTH if h in health and h not in NOT_SERIOUS]
-    cleared = a.get("clearance") in CLEARANCE_SENTENCES
+    cleared = str(a.get("clearance") or "").strip().rstrip(".") in {c.rstrip(".") for c in CLEARANCE_SENTENCES}
     if serious and not cleared:
         return {"outcome": "needs_clearance", "items": serious, "message": CLEARANCE_NEEDED}
     fired, notes, warnings = [], [], []
@@ -737,7 +737,7 @@ PROFILE_LAST = {"last-3m": "last_3_months", "3-12m": "3_to_12_months", "over-1y"
 PROFILE_HEALTH = {"pregnancy": "pregnancy_or_postpartum", "heart": "heart_or_circulation", "chest-pain": "chest_pain",
                   "fainting": "dizziness_or_fainting", "doctor-said-no": "doctor_said_no", "surgery": "recent_operation",
                   "other": "other_reason", "high-blood-pressure": "high_blood_pressure",
-                  "osteoporosis": "osteoporosis_or_hernia", "hernia": "osteoporosis_or_hernia", "diabetes": "diabetes",
+                  "osteoporosis": "osteoporosis_or_hernia", "hernia": "osteoporosis_or_hernia",
                   "joint": "bone_or_joint_problem", "leaking": "urine_leak"}
 PROFILE_AREA = {"knee": "knee", "lower-back": "low_back", "low-back": "low_back", "low_back": "low_back",
                 "shoulder": "shoulder", "elbow-wrist": "elbow_wrist", "elbow_wrist": "elbow_wrist", "hip": "hip",
@@ -767,13 +767,9 @@ def read_answers(folder):
     settings, prof = header("coaich.md"), header("profile.md")
     if not prof:
         raise ValueError("profile.md is missing or has no YAML header: run /onboard first")
-    health = {_pick({"h": h}, "h", PROFILE_HEALTH) for h in prof.get("health_items") or []}
-    covers = {PROFILE_HEALTH.get(str(h), str(h)) for h in settings.get("safety_clearance_covers") or []}
-    serious = {h for h in health if h not in NOT_SERIOUS}
-    # A clearance counts with the exact sentence, and only for the stop items it covers (an empty list covers all).
+    health = {_pick({"health_items": h}, "health_items", PROFILE_HEALTH) for h in prof.get("health_items") or []}
+    # One clearance (date + exact sentence) lifts every stop item answered in the same onboarding, as in the app.
     clearance = settings.get("safety_clearance_sentence")
-    if covers and not serious <= covers:
-        clearance = None
     injuries = []
     for p in prof.get("pain") or []:
         p = {"area": p} if isinstance(p, str) else p
@@ -949,12 +945,18 @@ def main(argv=None):
     ap.add_argument("--week", type=int, default=1, help="training week, counted in sessions done (default 1)")
     ap.add_argument("--today", default=datetime.date.today().isoformat(), help="date stamp (YYYY-MM-DD)")
     ap.add_argument("--dry-run", action="store_true", help="print program.json, write nothing")
+    ap.add_argument("--place", action="store_true",
+                    help="print only the placement (level, flags, the sentence to say) as JSON; write nothing")
     a = ap.parse_args(argv)
     try:
         answers = read_answers(a.dir)
     except ValueError as e:
         print(f"stop: {e}", file=sys.stderr)
         return 2
+    if a.place:
+        pl = place(answers["history"], answers.get("last_trained"), answers.get("known_loads"))
+        print(json.dumps(dict(pl, line=placement_line(pl)), ensure_ascii=False))
+        return 0
     result = decide(answers, a.week)
     if result["outcome"] != "program":
         print(f"stop ({result['outcome']}): {result['message']}" +
@@ -975,13 +977,8 @@ def main(argv=None):
         json.dump(doc, f, ensure_ascii=False, indent=1)
         f.write("\n")
     write_current(a.dir, current_block(result, a.today, checks, unexpected))
-    log = os.path.join(a.dir, "log.md")
-    if not os.path.exists(log):
-        with open(log, "w", encoding="utf-8") as f:
-            f.write("# Log\n\nOne line per skill run.\n\n")
-    with open(log, "a", encoding="utf-8") as f:
-        f.write(f"- {a.today} · program-build · {doc['name']} ({prog['level']}, {prog['days']} days × "
-                f"{prog['minutes']} min, week {prog['week']}), audit passed\n")
+    af.append_log(a.dir, "program-build", f"{doc['name']} ({prog['level']}, {prog['days']} days × "
+                  f"{prog['minutes']} min, week {prog['week']}), audit passed", date=a.today)
     print(f"wrote plan/program.json and plan/CURRENT.md: {doc['name']}")
     return 0
 

@@ -26,9 +26,8 @@ fields stay in English.
 | 8 | `high-blood-pressure` | Tengo la tensión alta (con o sin medicación) |
 | 9 | `osteoporosis` | Tengo osteoporosis |
 | 10 | `hernia` | Tengo una hernia |
-| 11 | `diabetes` | Tengo diabetes |
-| 12 | `joint` | Tengo un problema de huesos o articulaciones que empeora con el ejercicio |
-| 13 | `leaking` | Se me escapa la orina al hacer esfuerzo, toser o saltar |
+| 11 | `joint` | Tengo un problema de huesos o articulaciones que empeora con el ejercicio |
+| 12 | `leaking` | Se me escapa la orina al hacer esfuerzo, toser o saltar |
 
 **Stop:** "Por lo que has respondido, antes de empezar necesitas que un médico te diga que puedes entrenar
 fuerza. Cuando lo tengas, confírmalo aquí."

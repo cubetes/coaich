@@ -220,7 +220,6 @@ SETTINGS = """---
 coaich: 0.1
 safety_acknowledged: 2030-01-06
 safety_clearance_sentence:
-safety_clearance_covers: []
 ---
 """
 
@@ -286,8 +285,7 @@ class Folder(unittest.TestCase):
             (PROFILE.replace("age_band: 18-59", "age_band: under-16"), SETTINGS, "under_age"),
             (PROFILE.replace("[joint]", "[joint, heart]"), SETTINGS, "needs_clearance"),
             (PROFILE.replace("[joint]", "[heart, surgery]"), SETTINGS.replace(
-                "safety_clearance_sentence:", "safety_clearance_sentence: I confirm a doctor has cleared me to do "
-                "strength training.").replace("covers: []", "covers: [heart]"), "needs_clearance"),
+                "safety_clearance_sentence:", "safety_clearance_sentence: my doctor said it's fine"), "needs_clearance"),
         ]
         for profile, settings, why in stops:
             d = self.folder(profile, settings)
@@ -295,9 +293,26 @@ class Folder(unittest.TestCase):
             self.assertEqual(code, 2, why)
             self.assertIn(why, err)
             self.assertFalse(os.path.exists(os.path.join(d, "plan", "program.json")))
-        cleared = SETTINGS.replace("safety_clearance_sentence:", "safety_clearance_sentence: I confirm a doctor has "
-                                   "cleared me to do strength training.").replace("covers: []", "covers: [heart]")
-        self.assertEqual(self.run_build(self.folder(PROFILE.replace("[joint]", "[heart]"), cleared))[0], 0)
+        # One clearance lifts every stop item answered in the onboarding (as in the app); Spanish too.
+        for sentence in ("I confirm a doctor has cleared me to do strength training.",
+                         "Confirmo que un médico me ha autorizado a entrenar fuerza."):
+            cleared = SETTINGS.replace("safety_clearance_sentence:", f"safety_clearance_sentence: {sentence}")
+            self.assertEqual(self.run_build(self.folder(PROFILE.replace("[joint]", "[heart, surgery]"), cleared))[0], 0)
+
+    def test_diabetes_is_not_a_health_item(self):
+        code, err = self.run_build(self.folder(PROFILE.replace("[joint]", "[diabetes]")))
+        self.assertEqual(code, 2)
+        self.assertIn("'health_items: diabetes' is not one of", err)
+
+    def test_place_prints_the_placement_only(self):
+        d = self.folder()
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            self.assertEqual(pb.main(["--dir", d, "--place"]), 0)
+        pl = json.loads(out.getvalue())
+        self.assertEqual((pl["level"], pl["advanced_check_week"], pl["row"]), ("intermediate", 6, 6))
+        self.assertTrue(pl["line"].startswith("We've put you in Intermediate"))
+        self.assertEqual(sorted(os.listdir(d)), ["coaich.md", "profile.md"])  # nothing written
 
     def test_bad_answers_stop_with_the_key_named(self):
         code, err = self.run_build(self.folder(PROFILE.replace("history: over-2y", "history: lots")))

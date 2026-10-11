@@ -115,7 +115,7 @@ gates: exercises are left out on purpose.
 | row 28 | goal |
 | rows 29, 43 | advanced: priority and top sets |
 | row 44 | 60+ |
-| G120 | strong medical warning (high blood pressure, osteoporosis or hernia, diabetes): program + "talk to your doctor" |
+| G120 | strong medical warning (high blood pressure, osteoporosis or hernia): program + "talk to your doctor" (no diabetes item: G120 D10) |
 
 ## Placement
 

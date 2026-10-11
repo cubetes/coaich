@@ -53,9 +53,8 @@ and that sentence (without the last one) as `safety_acknowledged` / `safety_ackn
 | 8 | `high-blood-pressure` | I have high blood pressure (with or without medication) | warning |
 | 9 | `osteoporosis` | I have osteoporosis | warning |
 | 10 | `hernia` | I have a hernia | warning |
-| 11 | `diabetes` | I have diabetes | warning |
-| 12 | `joint` | I have a bone or joint problem that gets worse with exercise | warning |
-| 13 | `leaking` | I leak urine when I strain, cough or jump | warning |
+| 11 | `joint` | I have a bone or joint problem that gets worse with exercise | warning |
+| 12 | `leaking` | I leak urine when I strain, cough or jump | warning |
 
 Write the chosen ids to `health_items` in `profile.md`. Do not ask follow-up medical questions.
 
@@ -76,9 +75,10 @@ spreading?"* Write `pain: [{area, red_flag, checked}]` to `profile.md`, then app
 Offer, never push: *"When a doctor has cleared you, reply with this sentence:"*
 **"I confirm a doctor has cleared me to do strength training."**
 
-Only that confirmation counts (the sentence, or a clear yes to it). Record today's date, the sentence and the
-stop ids it covers. A stop item reported **after** that date needs a new clearance. Do not judge whether a
-condition is "really" serious, and do not suggest the user can skip this.
+Only that confirmation counts (the sentence, or a clear yes to it). Record today's date and the sentence. One
+clearance lifts every stop item answered in this onboarding. A new onboarding (`/onboard` redo) clears it and
+asks again, and so does a stop item reported later (step 3 rerun). Do not judge whether a condition is "really"
+serious, and do not suggest the user can skip this.
 
 ## Red-flag pain (intake and any time later)
 
@@ -90,17 +90,18 @@ condition is "really" serious, and do not suggest the user can skip this.
   it and tell me. If the pain gets worse, see a physiotherapist or doctor."*
 - **Chest pain, fainting or severe breathlessness during exercise**, at any time → say: *"Stop training now.
   Chest pain, fainting or severe shortness of breath can be serious: call your local emergency number or get
-  medical help right away."* Then add the matching stop item and set `stop` until a new clearance.
+  medical help right away."* Then add the matching stop item, blank the clearance and set `stop` until a new
+  one.
 - A new pregnancy, operation, diagnosis or a doctor's "no" mentioned later → rerun step 3 for that item.
 
 ## Record
 
 Update the front matter of `coaich.md`:
 
-- `safety_status`: `stop` if age is under 16, there is no acknowledgement, or any stop item is not covered by a
+- `safety_status`: `stop` if age is under 16, there is no acknowledgement, or there is a stop item and no
   clearance; otherwise `warn` if there is any warning item, `age-16-17` or any pain area; otherwise `go`.
 - `safety_reasons`: the ids behind the status (`red-flag:<area>` for red-flag pain).
-- `safety_clearance_date`, `safety_clearance_sentence`, `safety_clearance_covers`.
+- `safety_clearance_date`, `safety_clearance_sentence` (blank them when a stop item is added later).
 
 Then: `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/athlete_folder.py" log safety "status <status>; <reasons>"`.
 

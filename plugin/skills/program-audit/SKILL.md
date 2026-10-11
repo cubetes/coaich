@@ -14,8 +14,8 @@ a study (SR/MA, RCT, OBS) or "our rule" (practitioner). Never call a preference 
 
 - **Generated program** → it is already `plan/program.json`. Go to 2.
 - **The user's own program** (pasted, a photo, a Hevy routine, a spreadsheet) → write it to a scratch file in the
-  shape of [program-schema.md](../../docs/program-schema.md) §Hand-written programs: `level` (from `profile.md`;
-  ask if there is none), `days`, `minutes` if known, and per day the exercises with `exercise_id` and `sets`
+  shape of [program-schema.md](../../docs/program-schema.md) §Hand-written programs: `level` (from `plan/program.json`, else
+  `program_build.py --dir <folder> --place`; never worked out by hand), `days`, `minutes` if known, and per day the exercises with `exercise_id` and `sets`
   (`rep_range`, `reps_left` if given). Map each exercise to a free-exercise-db id
   (`${CLAUDE_PLUGIN_ROOT}/data/exercises.json`; reuse `data/exercise_map.csv`). Unsure match → ask; never guess
   silently. Add `pain` from `profile.md`. Do not overwrite `plan/program.json` with it.
