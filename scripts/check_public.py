@@ -37,6 +37,7 @@ def load_guard(path=GUARD):
 def walk(root):
     for d, dirs, files in os.walk(root):
         dirs[:] = [x for x in dirs if x != ".git"]
+        files = [x for x in files if x != ".git"]  # a worktree's .git file holds a local path
         for name in dirs + files:
             yield os.path.relpath(os.path.join(d, name), root), name in files
 

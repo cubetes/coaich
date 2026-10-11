@@ -1,0 +1,15 @@
+[
+  {
+    "id": "a1b2c3d4-0000-4000-8000-000000000001",
+    "title": "Legs",
+    "description": "From the watch",
+    "start_time": "2030-01-16T07:30:00Z",
+    "end_time": "2030-01-16T08:20:00Z",
+    "exercises": [
+      {"index": 0, "title": "Squat (Barbell)", "exercise_template_id": "TPLSQUAT",
+       "sets": [{"index": 0, "type": "normal", "weight_kg": 112.5, "reps": 5, "rpe": 7}]},
+      {"index": 1, "title": "Leg Press (Machine)", "exercise_template_id": "TPLLEGPRESS",
+       "sets": [{"index": 0, "type": "failure", "weight_kg": 200, "reps": 12, "rpe": 10}]}
+    ]
+  }
+]
