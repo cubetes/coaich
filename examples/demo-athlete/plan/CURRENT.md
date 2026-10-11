@@ -6,6 +6,7 @@
   easy week. The next weekly review grades it and sets 2030-W14.
 - **Targets in force:** `plan/targets/` (one file per ISO week, frozen once applied).
 - **Safety:** status go, no health items, no pain areas.
+- **Nutrition:** on, a slow lean gain (block below). Photos: off.
 
 <!-- coaich:program -->
 ## Program — Upper/lower, 4 days × 60 min (ul4i·60)
@@ -75,3 +76,9 @@ Every 7th week, counted in sessions done (4 sessions = a week): weeks 7, 14, 21,
 
 Gates G1–G9: all pass.
 <!-- /coaich:program -->
+
+<!-- coaich:nutrition -->
+## Nutrition
+
+Phase gain (0.25 % a week) · 2,900 kcal · protein 140 g · fat 81 g · carbs 403 g · from 2030-01-07 · file `plan/nutrition.md`.
+<!-- /coaich:nutrition -->

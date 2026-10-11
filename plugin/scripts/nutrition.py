@@ -297,19 +297,20 @@ def weekly_line(tr, prev):
     """One line for the weekly review: the 4-week weight trend against the band of the plan in force. It never
     says "eat less": a slower loss is only reported, and the nutrition skill corrects calories at a check-in."""
     if tr.get("kg_per_week") is None or tr["days"] < TREND_MIN_DAYS or tr["weigh_ins"] < TREND_MIN_WEIGHINS:
-        return (f"Weight trend: not enough weigh-ins yet ({tr['weigh_ins']} in the last 4 weeks; needs "
+        return (f"Weight trend: not enough weigh-ins yet ({tr['weigh_ins']} over {tr.get('days', 0)} days; needs "
                 f"{TREND_MIN_WEIGHINS} over {TREND_MIN_DAYS}+ days).")
     phase, rate = str(prev["phase"]), float(prev.get("rate_pct_week") or 0)
-    lo, hi = phase_band(phase, rate, float(prev.get("loss_cap_pct_week") or LOSS_CAP["lean"]))
-    pct = tr["pct_per_week"]
+    # Compared as shown, to 0.01 %, so the verdict never contradicts the printed numbers.
+    lo, hi = (round(x, 2) for x in phase_band(phase, rate, float(prev.get("loss_cap_pct_week") or LOSS_CAP["lean"])))
+    pct = round(tr["pct_per_week"], 2)
     if lo <= pct <= hi:
         verdict = "on track"
     elif pct < lo:
         verdict = "losing faster than the safe cap: eat more" if phase == "lose" else "eat more"
     else:
         verdict = {"lose": "slower than planned", "gain": "faster than planned"}.get(phase, "drifting up")
-    return (f"Weight trend: {tr['kg_per_week']:+.2f} kg a week ({pct:+.2f} %), {tr['weigh_ins']} weigh-ins since "
-            f"{tr['since']}; {phase} band {lo:+.2f} to {hi:+.2f} % → {verdict}.")
+    return (f"Weight trend, 4 weeks to {tr['until']}: {tr['kg_per_week']:+.2f} kg a week ({pct:+.2f} %), "
+            f"{tr['weigh_ins']} weigh-ins; {phase} band {lo:+.2f} to {hi:+.2f} % → {verdict}.")
 
 
 def trend_line(folder, today):

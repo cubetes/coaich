@@ -6,8 +6,10 @@ Usage: demo_athlete.py [--out examples/demo-athlete] [--seed 17]
 
 How it is made, the way a real athlete's folder grows:
   profile.md + coaich.md  ->  program_build.py (plan/program.json, the CURRENT.md program block, a log line)
+                          ->  nutrition.py plan (a slow lean gain; plan/nutrition.md, its CURRENT.md block, a log line)
   then each week: train to the applied targets (week 1 finds the starting weights), import, and on Sunday the
-  weekly review: progression.py propose -> apply (every ask row OK'd), a check-in and two log lines.
+  weekly review: progression.py propose -> apply (every ask row OK'd), the weight-trend line, a check-in and two
+  log lines. Photos stay off (no images in the repository).
 Week 12 is trained and imported but not reviewed: `/weekly-review` on the demo grades it live.
 Deterministic: the same seed writes byte-identical files. Re-running replaces a previous demo folder (one whose
 coaich.md says `demo: true`) and refuses to touch any other non-empty folder.
@@ -26,6 +28,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import athlete_folder as af  # noqa: E402
 import import_common as ic  # noqa: E402
+import nutrition as nu  # noqa: E402
 import program_build as pb  # noqa: E402
 import progression as pg  # noqa: E402
 
@@ -91,12 +94,33 @@ minutes_per_session: 60
 equipment: gym
 goal: both
 priority: none
+exercise_swaps: []
+# --- nutrition ---
+age_years: 29
+sex: male
+height: 175 cm
+weight: 78 kg
+activity: moderate
+eating_disorder_history: no
+wellbeing_pause:
+nutrition_phase: gain
+rate_pct_week: 0.25
+body_fat_pct:
+diet: omnivore
+allergies: []
+foods_avoid: []
+weight_tracking: yes
+# --- photos and ideal physique ---
+photos_opt_in: no
+ideal_physique:
+long_term_priorities: []
 ---
 # Profile
 
 Fictional lifter "Sam". Has lifted on and off for about three years, trained steadily in the last three months,
 does not know their 8-rep loads. Wants strength and muscle about equally. Trains in a commercial gym after work
-and logs every session in Strong.
+and logs every session in Strong. Wants help with food for a slow lean gain; weighs in most mornings on a
+bathroom scale. No progress photos.
 """
 
 CURRENT_MD = f"""# What is in force today
@@ -107,6 +131,7 @@ CURRENT_MD = f"""# What is in force today
   easy week. The next weekly review grades it and sets {pg.week_label(START + dt.timedelta(weeks=WEEKS))}.
 - **Targets in force:** `plan/targets/` (one file per ISO week, frozen once applied).
 - **Safety:** status go, no health items, no pain areas.
+- **Nutrition:** on, a slow lean gain (block below). Photos: off.
 """
 
 
@@ -197,7 +222,7 @@ def run(script_main, argv):
     return out.getvalue()
 
 
-def checkin(folder, today, last, nxt, propose_out, apply_out):
+def checkin(folder, today, last, nxt, propose_out, apply_out, weight_line=None):
     """Write check-ins/{today}-weekly.md in the weekly-review skill's layout from what the engine printed.
     Returns the skill's log result."""
     doc = pg.load_json(pg.targets_path(folder, nxt))
@@ -219,7 +244,7 @@ def checkin(folder, today, last, nxt, propose_out, apply_out):
     nextweek = apply_out.split("## Next week's targets", 1)[1].split("\n", 2)[2].rsplit("\n->", 1)[0].strip()
     text = (f"# Weekly check-in · {today} · {last}\n\n## The week\n\n"
             f"- Sessions: {len(week)} of {planned} planned.\n- {summary}\n- {band}\n"
-            + "".join(n + "\n" for n in notes)
+            + (f"- {weight_line}\n" if weight_line else "") + "".join(n + "\n" for n in notes)
             + f"\n## Grades\n\n{table}\n\n## Next week ({nxt})\n\n{nextweek}\n\n## Decisions\n\n"
             + ("\n".join(changes + held) if changes or held else "No changes this week.") + "\n")
     path = Path(folder) / "check-ins" / f"{today}-weekly.md"
@@ -238,12 +263,15 @@ def weekly_review(folder, sunday):
     asks = [r["id"] for r in pg.load_json(pg.targets_path(folder, nxt))["rows"] if r["needs_approval"]]
     apply_out = run(pg.main, ["apply", "--dir", str(folder), "--week", nxt, "--accept-all"]
                     + (["--approve", ",".join(asks)] if asks else []))
-    result = checkin(folder, sunday.isoformat(), last, nxt, propose_out, apply_out)
+    weight_line = nu.trend_line(str(folder), sunday)  # the skill's `nutrition.py trend --line` (nutrition is on)
+    result = checkin(folder, sunday.isoformat(), last, nxt, propose_out, apply_out, weight_line)
     af.append_log(folder, "weekly-review", result, date=sunday.isoformat())
     return result
 
 
 def body_rows(rng):
+    """Morning scale weigh-ins (most days) and a Monday waist, a slow lean gain. Their own random stream, so the
+    weekly reviews can read them while the training stream stays as it was."""
     rows = []
     for d in range((TODAY - START).days + 1):
         day = START + dt.timedelta(days=d)
@@ -293,7 +321,10 @@ def write(out, seed):
     af.append_log(out, "safety", "status go; none", date=onboarded)
     if run(pb.main, ["--dir", str(out), "--today", START.isoformat()]).startswith("wrote") is False:
         sys.exit("program_build.py refused the demo profile")
+    if run(nu.main, ["plan", "--dir", str(out), "--today", START.isoformat()]).startswith("---") is False:
+        sys.exit("nutrition.py refused the demo profile")
     program = pg.load_program(out)
+    af.upsert_rows(out, "data/body.csv", body_rows(random.Random(seed + 1)))
 
     rng = random.Random(seed)
     strength = {k: float(v[0]) for k, v in E1RM.items()}
@@ -312,7 +343,6 @@ def write(out, seed):
                 weekly_review(out, sunday)
     finally:
         pg.now = real_now
-    af.upsert_rows(out, "data/body.csv", body_rows(rng))
     af.upsert_rows(out, "data/health.csv", health_rows(rng))
     return len(af.read_rows(out, "data/sets.csv")), len(af.read_rows(out, "data/sessions.csv"))
 

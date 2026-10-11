@@ -144,11 +144,11 @@ class Roadmap(DemoCopy):
         self.assertEqual(pg.week_type_of(self.dir, pg.parse_week("2030-W16")), "full")   # W15 not trained yet
 
     def test_cut_and_bulk_need_the_nutrition_safeguards(self):
+        prof = self.dir / "profile.md"
+        af.set_header(self.dir, "profile.md", "wellbeing_pause", "2030-03-30")     # the demo has nutrition on
         with self.assertRaises(SystemExit):
             self.make("cut:12,maintenance:4")
-        prof = self.dir / "profile.md"
-        for k, v in (("age_years", "34"), ("eating_disorder_history", "no"), ("nutrition_phase", "lose")):
-            af.set_header(self.dir, "profile.md", k, v)
+        af.set_header(self.dir, "profile.md", "wellbeing_pause", "")
         rm = self.make("cut:12,maintenance:4,bulk:20")
         cut, _, bulk = rm["phases"]
         self.assertIn("weight_rate -1..-0.25", cut["gates"])
@@ -379,7 +379,11 @@ class MonthlyEndToEnd(DemoCopy):
         self.assertIn("| 2030-W11 | full | 3/4 |", text)                         # the missed session
         self.assertIn("Placement promised an Advanced offer from week 6", text)
         self.assertIn("The block ends with program week 14 (an easy week)", text)
-        self.assertIn("Nutrition skill: off · physique skill: off.", text)
+        self.assertIn("Nutrition skill: on · physique skill: off.", text)
+        self.assertIn("Targets in force since 2030-01-07: phase gain (0.25 % a week)", text)
+        self.assertRegex(text, r"Weight trend, 4 weeks to 2030-03-31: \+0\.\d\d kg a week .* → on track\.")
+        self.assertIn("For information: below the usual coaching band this month:", text)
+        self.assertNotIn("Volume: below", text)                                  # not a signal
         self.assertIn("Phase: maintenance (2030-04-01 → 2030-06-23) · program week 12", text)
         self.assertIn("below the usual coaching band", text)
 

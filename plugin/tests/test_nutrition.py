@@ -298,8 +298,8 @@ class Trend(unittest.TestCase):
         self.assertEqual(r.returncode, 3)
         plan(d)
         r = run("nutrition.py", "trend", "--dir", d, "--today", TODAY, "--line")
-        self.assertRegex(r.stdout, r"^Weight trend: \+0\.14 kg a week \(\+0\.17 %\), 28 weigh-ins since 2030-01-04; "
-                                   r"gain band \+0\.12 to \+0\.50 % → on track\.\n$")
+        self.assertEqual(r.stdout, "Weight trend, 4 weeks to 2030-02-01: +0.14 kg a week (+0.17 %), 28 weigh-ins; "
+                                   "gain band +0.12 to +0.50 % → on track.\n")
 
     def test_no_consent_means_no_body_csv(self):
         d = athlete(self, weight_tracking="no", weight="82 kg")
