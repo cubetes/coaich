@@ -136,7 +136,7 @@ Model-invoked (Claude reaches for them, or you name them): `safety`, `import`, `
 | `adapt` | Pain (red flag → a professional, the area left out; otherwise safer swaps), fewer days, less time or travel, then back to normal. Every version passes the audit. | `adapt.py` |
 | `roadmap` | A dated macrocycle: phases with gates, mesocycles, projected weeks with their types. Re-plans when a gate is passed or missed. | `roadmap.py` |
 | `nutrition` | Calories, protein, fat and carbs, a day of meals from your diet and allergies, and corrections from your weight trend. 18+ only; safeguards in code (lawyer review pending). | `nutrition.py` |
-| `physique` | 18+ and opt-in only. Rates muscle groups in your progress photos, compares sets, gives a rough body-fat range if you ask, and turns a goal physique into training priorities. Strips photo location data on filing. | `photos.py` |
+| `physique` | 18+ and opt-in only. Rates muscle groups in your progress photos, compares sets, gives a rough body-fat range if you ask, and turns a goal physique into training priorities. Removes your face and the photo's location data on your computer before Claude sees it. | `photos.py` |
 
 Every script is Python 3.9+ standard library only, works offline and reads and writes the folder through
 `scripts/athlete_folder.py`.
@@ -177,8 +177,9 @@ own git repository.
 - **Calorie targets and photo reviews share one wellbeing gate:** 18+ only, off for anyone who reports an
   eating-disorder history (or would rather not say), and paused whenever you say something worrying about food
   or your body, until you ask for them back. Pregnancy turns calorie targets off.
-- **Photos are opt-in.** They stay in your folder and pass only through your own Claude session; location and
-  camera data are stripped when they are filed. Reviews rate muscle groups, never looks; body fat only as a rough range.
+- **Photos are opt-in, and your face comes off first.** Your own computer cuts each photo just below the chin (or
+  covers the face, if you prefer) before Claude sees it; Claude never opens the original. Only that copy is kept,
+  in your folder, without location or camera data. Your original stays where you had it. Reviews rate muscle groups, never looks; body fat only as a rough range.
 
 ## Licence
 

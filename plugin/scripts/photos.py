@@ -4,23 +4,32 @@ file, changes between sets and the muscle-group priorities.
 
 Usage:
   photos.py gate [--dir D]                                   may photos be used? JSON; exit 2 = no
-  photos.py file --date YYYY-MM-DD POSE=PATH... [--replace]  copy photos into photos/DATE/, metadata stripped
-  photos.py strip IN OUT                                     strip one JPEG/PNG (no athlete folder needed)
+  photos.py file --date YYYY-MM-DD POSE=PATH... [--replace] [--anonymise crop|blur] [--user-cropped]
+                                                             remove the face, then file into photos/DATE/POSE.jpg
+                                                             with no metadata (the original is never copied)
+  photos.py strip IN OUT                                     strip metadata only (keeps the face; not for filing)
   photos.py sets [--dir D]                                   the dated photo sets and their poses, JSON
   photos.py rate --date D GROUP=RATING... [--confidence C] [--note GROUP TEXT]   write rows to photos/ratings.md
   photos.py bodyfat --date D --low L --high H                body-fat range → ratings.md + body.csv midpoint
   photos.py compare [--from D1] [--to D2]                    rating changes between two sets, JSON
   photos.py priorities [--date D] [--rating GROUP=RATING...] [--emphasis G,G]   ranked priorities, JSON
 
-POSE is front, side or back, decided by looking at each image (never by file name or order). GROUP and RATING
-ids are in references/muscle-rubric.md. Exit 2 = refused (gate, bad input). Python stdlib only.
+POSE is front, side or back, as the user names each file (Claude never opens an original). The face is removed on
+this computer first: Apple Vision on macOS (anonymise.swift, compiled once into a cache folder), OpenCV's bundled
+face detector elsewhere if `opencv-python` is installed. --anonymise defaults to `photo_anonymise` in coaich.md,
+else crop. GROUP and RATING ids are in references/muscle-rubric.md. Exit 2 = refused (gate, bad input, a face that
+cannot be removed safely). Python stdlib only (OpenCV optional).
 """
 import argparse
 import datetime
+import hashlib
 import json
 import os
 import re
+import shutil
+import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -238,6 +247,171 @@ def metadata_left(data):
     return left
 
 
+# ---------------------------------------------------------------- face removal
+
+ANON_MODES = ("crop", "blur")
+CHIN_MARGIN = 0.3      # × face height below the face box: Vision's box ends above the jaw, more so in profile (real photos)
+SHOULDER_CLEAR = 0.3   # × face height the cut stays above the highest shoulder/neck point (traps, delts stay)
+SIDE_NECK_UP = 0.25    # side photos: the cut sits this × face height above the base of the neck
+COVER_SIDE, COVER_UP = 0.35, 0.6  # blur: the cover reaches past the face box to the ears and up over the hair
+HEAD_POINTS = ("nose", "left_eye", "right_eye", "left_ear", "right_ear")
+FACE_POINTS = ("nose", "left_eye", "right_eye")
+SHOULDER_POINTS = ("neck", "left_shoulder", "right_shoulder")
+RECROP = "Crop it yourself just below the chin, then send it again and say you cropped it."
+
+
+def merge_faces(faces, overlap=0.5):
+    """One head often comes back as two overlapping boxes (seen on a real side photo): boxes whose overlap covers at
+    least half of the smaller box merge into their union, which covers both, so the cut still clears the lower chin."""
+    out = []
+    for x, y, w, h in faces:
+        for i, (a, b, c, d) in enumerate(out):
+            iw = min(x + w, a + c) - max(x, a)
+            ih = min(y + h, b + d) - max(y, b)
+            if iw > 0 and ih > 0 and iw * ih >= overlap * min(w * h, c * d):
+                x0, y0 = min(x, a), min(y, b)
+                out[i] = [x0, y0, max(x + w, a + c) - x0, max(y + h, b + d) - y0]
+                break
+        else:
+            out.append([x, y, w, h])
+    return out
+
+
+def anonymise_plan(det, pose, mode="crop", user_cropped=False):
+    """What to do to one photo, from a detector's findings → ["none"] | ["crop", top] | ["cover", x0, y0, x1, y1].
+    `det` = {"width", "height", "faces": [[x, y, w, h]], "points": {name: [x, y]}}, pixels of the upright image,
+    origin top-left. Refuses whenever the face cannot be removed with confidence: never lets a face through."""
+    if mode not in ANON_MODES:
+        raise Refused(f"unknown anonymise mode '{mode}': use crop or blur")
+    W, H, pts = det["width"], det["height"], det.get("points") or {}
+    faces = merge_faces(det["faces"])
+    if len(faces) > 1:
+        raise Refused(f"{len(faces)} faces found. Only one person can be in a progress photo. " + RECROP)
+    if not faces:
+        if any(k in pts for k in FACE_POINTS):
+            raise Refused("a face is visible but could not be outlined, so it cannot be removed safely. " + RECROP)
+        if pose == "back" or user_cropped:
+            return ["none"]  # no face to remove (a back view, or the user cropped it); metadata still goes
+        raise Refused("no face found, so it cannot be removed safely. " + RECROP)
+    x, y, w, h = faces[0]
+    if y + h / 2 > 0.6 * H:
+        raise Refused("the only face found is not where a head should be in a standing photo. " + RECROP)
+    head = [pts[k][1] for k in HEAD_POINTS if k in pts]
+    line = round(max([y + h, *head]) + CHIN_MARGIN * h)
+    shoulders = [pts[k][1] for k in SHOULDER_POINTS if k in pts]
+    clear = SHOULDER_CLEAR * h
+    if pose == "side":
+        # In profile the face box stops well above the jaw (real photos): cut just above the base of the neck
+        # instead. Traps are not rated from the side, so the cut may sit closer to the shoulders.
+        if "neck" not in pts:
+            raise Refused("in a side photo the jaw can only be cut safely when the neck is found. " + RECROP)
+        line = max(line, round(pts["neck"][1] - SIDE_NECK_UP * h))
+        clear = 0
+    if shoulders and line > min(shoulders) - clear or line >= H:
+        raise Refused("the chin is too close to the shoulders to cut between them (head tilted down?). Retake it "
+                      "with the head level, or crop it yourself and say so.")
+    if mode == "crop":
+        return ["crop", line]
+    return ["cover", max(0, round(x - COVER_SIDE * w)), max(0, round(y - COVER_UP * h)),
+            min(W, round(x + w + COVER_SIDE * w)), line]
+
+
+class VisionDetector:
+    """Apple Vision through anonymise.swift, compiled once per version into the user's cache folder."""
+    name = "Apple Vision"
+
+    def __init__(self, exe):
+        self.exe = str(exe)
+
+    def _run(self, *args):
+        r = subprocess.run([self.exe, *args], capture_output=True, text=True)
+        if r.returncode:
+            raise Refused("the face tool failed: " + (r.stderr.strip() or "no message"))
+        return r.stdout
+
+    def detect(self, src):
+        return json.loads(self._run("detect", str(src)))
+
+    def render(self, src, dst, op):
+        self._run("render", str(src), str(dst), *map(str, op))
+
+
+def _vision_exe():
+    src = Path(__file__).with_name("anonymise.swift")
+    cache = Path.home() / "Library" / "Caches" / "coaich"
+    exe = cache / f"anonymise-{hashlib.sha256(src.read_bytes()).hexdigest()[:12]}"
+    if not exe.exists():
+        cache.mkdir(parents=True, exist_ok=True)
+        tmp = cache / f"{exe.name}.{os.getpid()}.tmp"
+        r = subprocess.run(["swiftc", "-O", "-o", str(tmp), str(src)], capture_output=True, text=True)
+        if r.returncode:
+            raise Refused("could not build the face tool. Install Apple's command line tools (run "
+                          "`xcode-select --install` in Terminal), or crop the photo yourself and say so.")
+        os.replace(tmp, exe)
+    return exe
+
+
+class OpenCVDetector:
+    """OpenCV's bundled Haar face detectors (front and profile), for Windows and Linux. No body-pose points."""
+    name = "OpenCV"
+
+    def __init__(self, cv2):
+        self.cv2 = cv2
+
+    def _read(self, src):
+        img = self.cv2.imread(str(src), self.cv2.IMREAD_COLOR)  # applies the EXIF orientation
+        if img is None:
+            raise Refused(f"cannot read {src}")
+        return img
+
+    def detect(self, src):
+        cv2 = self.cv2
+        img = self._read(src)
+        H, W = img.shape[:2]
+        gray = cv2.equalizeHist(cv2.cvtColor(img, cv2.COLOR_BGR2GRAY))
+        side = max(24, H // 40)
+        found = []
+        for name, flips in (("haarcascade_frontalface_default.xml", (False,)), ("haarcascade_profileface.xml", (False, True))):
+            c = cv2.CascadeClassifier(os.path.join(cv2.data.haarcascades, name))
+            for flip in flips:
+                for x, y, w, h in c.detectMultiScale(cv2.flip(gray, 1) if flip else gray, scaleFactor=1.1,
+                                                     minNeighbors=8, minSize=(side, side)):
+                    found.append([int(W - x - w if flip else x), int(y), int(w), int(h)])
+        faces = []
+        for b in sorted(found, key=lambda b: -b[2] * b[3]):  # one face seen by two detectors counts once
+            if not any(_overlap(b, f) > 0.5 for f in faces):
+                faces.append(b)
+        return {"width": W, "height": H, "faces": faces, "points": {}}
+
+    def render(self, src, dst, op):
+        img = self._read(src)
+        if op[0] == "crop":
+            img = img[op[1]:]
+        elif op[0] == "cover":
+            img = img.copy()
+            img[op[2]:op[4], op[1]:op[3]] = 128
+        if not self.cv2.imwrite(str(dst), img, [self.cv2.IMWRITE_JPEG_QUALITY, 92]):
+            raise Refused(f"cannot write {dst}")
+
+
+def _overlap(a, b):
+    """Intersection over the smaller box."""
+    ix = max(0, min(a[0] + a[2], b[0] + b[2]) - max(a[0], b[0]))
+    iy = max(0, min(a[1] + a[3], b[1] + b[3]) - max(a[1], b[1]))
+    return ix * iy / max(1, min(a[2] * a[3], b[2] * b[3]))
+
+
+def find_detector():
+    """Apple Vision on macOS, else OpenCV if installed, else None."""
+    if sys.platform == "darwin" and shutil.which("swiftc"):
+        return VisionDetector(_vision_exe())
+    try:
+        import cv2
+    except ImportError:
+        return None
+    return OpenCVDetector(cv2)
+
+
 # ---------------------------------------------------------------- filing
 
 def _date(s):
@@ -247,37 +421,55 @@ def _date(s):
         raise Refused(f"'{s}' is not a date (YYYY-MM-DD)")
 
 
-def file_photos(folder, date, poses, replace=False):
-    """poses = {pose: source path}. Copies each into photos/DATE/POSE.jpg|png without metadata. Returns the paths
-    written, relative to the folder. Refuses if the gate is closed or a pose is already filed (unless replace)."""
+def file_photos(folder, date, poses, replace=False, mode=None, detector=None, user_cropped=False):
+    """poses = {pose: source path}. Removes the face from each photo on this computer (`mode` crop or blur;
+    default coaich.md `photo_anonymise`, else crop), then writes only that copy to photos/DATE/POSE.jpg without
+    metadata. The original is read, never copied into the folder. Returns the paths written, relative to the
+    folder. Refuses (writing nothing) if the gate is closed, a pose is already filed (unless replace), or any face
+    cannot be removed safely. `user_cropped`: the user says they removed the face themselves; a detector, when
+    there is one, must still find none."""
     _require(folder)
     date = _date(date)
+    mode = mode or af.setting(folder, "photo_anonymise") or "crop"
+    if mode not in ANON_MODES:
+        raise Refused(f"unknown anonymise mode '{mode}': use crop or blur")
     if not poses:
         raise Refused("no photos given")
     bad = set(poses) - set(POSES)
     if bad:
         raise Refused(f"unknown pose {sorted(bad)}: use front, side or back")
     day = Path(folder) / "photos" / date
-    clean = {}
-    for pose, src in poses.items():  # read and clean all first: nothing is written if one fails
+    for pose, src in poses.items():  # every cheap check first: nothing is written if one fails
         try:
-            raw = Path(src).read_bytes()
+            kind(Path(src).read_bytes()[:8])
         except OSError as e:
             raise Refused(f"cannot read {src}: {e.strerror}")
-        try:
-            data = strip(raw)
-        except ValueError as e:
-            raise Refused(f"{src}: {e}")
-        if metadata_left(data):
-            raise Refused(f"{src}: metadata could not be removed")
-        old = [p for p in day.glob(pose + ".*")] if day.exists() else []
-        if old and not replace:
+        if day.exists() and list(day.glob(pose + ".*")) and not replace:
             raise Refused(f"{date} already has a {pose} photo; say so to replace it")
-        clean[pose] = (data, kind(raw), old)
+    detector = detector or find_detector()
+    if detector is None and not user_cropped:
+        raise Refused("there is no face detector on this computer, so the face cannot be removed here. " + RECROP)
+    clean = {}
+    with tempfile.TemporaryDirectory(prefix="coaich-anon-") as tmp:  # outside the athlete folder
+        for pose, src in poses.items():
+            if detector is None:  # user_cropped, nothing to check with: metadata only
+                raw, ext = Path(src).read_bytes(), None
+            else:
+                op = anonymise_plan(detector.detect(src), pose, mode, user_cropped)
+                out = Path(tmp) / f"{pose}.jpg"
+                detector.render(src, out, op)
+                raw, ext = out.read_bytes(), "jpg"
+            try:
+                data = strip(raw)
+            except ValueError as e:
+                raise Refused(f"{src}: {e}")
+            if metadata_left(data):
+                raise Refused(f"{src}: metadata could not be removed")
+            clean[pose] = (data, ext or kind(raw))
     day.mkdir(parents=True, exist_ok=True)
     written = []
-    for pose, (data, ext, old) in clean.items():
-        for p in old:
+    for pose, (data, ext) in clean.items():
+        for p in day.glob(pose + ".*"):
             p.unlink()
         out = day / f"{pose}.{ext}"
         out.write_bytes(data)
@@ -470,6 +662,8 @@ def main(argv=None):
     s["file"].add_argument("--date", required=True)
     s["file"].add_argument("photos", nargs="+", metavar="POSE=PATH")
     s["file"].add_argument("--replace", action="store_true")
+    s["file"].add_argument("--anonymise", choices=ANON_MODES)
+    s["file"].add_argument("--user-cropped", action="store_true")
     st = sub.add_parser("strip")
     st.add_argument("src")
     st.add_argument("dst")
@@ -498,8 +692,9 @@ def main(argv=None):
             print(json.dumps(g))
             return 0 if g["allowed"] else 2
         if a.cmd == "file":
-            made = file_photos(folder, a.date, _pairs(a.photos, "POSE=PATH"), a.replace)
-            af.append_log(folder, "physique", f"filed {len(made)} photos for {a.date} (metadata stripped)")
+            made = file_photos(folder, a.date, _pairs(a.photos, "POSE=PATH"), a.replace, a.anonymise,
+                               user_cropped=a.user_cropped)
+            af.append_log(folder, "physique", f"filed {len(made)} photos for {a.date} (face removed, metadata stripped)")
             print("\n".join(made))
         elif a.cmd == "sets":
             print(json.dumps(photo_sets(folder)))

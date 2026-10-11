@@ -3,6 +3,15 @@
 CoAIch follows [docs/versioning.md](../docs/versioning.md): semantic versioning; 0.x is a preview with no hero
 name. Dates are release-candidate dates; nothing is published until the trademark search is done.
 
+## Unreleased
+
+Added
+- `physique`: the face is removed on the user's computer before Claude sees a photo. Default: cut just below the
+  chin (neck, traps and shoulders kept); `blur` covers the face with a solid block. Apple Vision on macOS
+  (`scripts/anonymise.swift`), OpenCV if installed elsewhere; no face, several faces or a chin too close to the
+  shoulders → nothing is filed and the user crops it. Only the anonymised copy is kept; Claude never opens the
+  original. Setting `photo_anonymise: crop | blur` in `coaich.md`.
+
 ## 0.2.0 — preview
 
 Added

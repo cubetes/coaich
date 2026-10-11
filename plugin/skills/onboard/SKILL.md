@@ -134,8 +134,8 @@ Skip this whole step when `age_band` is `under-16` or `16-17`, or `wellbeing_pau
 answer. Anything but **No** → skip this step: photo reviews stay off (`scripts/athlete_folder.py gate` says why).
 
 1. *"Do you want to use progress photos? I'd rate how each muscle group is coming along, compare them over time
-   and help you pick what to train most. Your photos stay in this folder, pass only through your own Claude
-   session, and their location and camera data are removed when they are filed. You can switch this off any
+   and help you pick what to train most. Your computer cuts your face off each photo before I see it, and only
+   that copy is kept, in this folder, with its location and camera data removed. You can switch this off any
    time."* Yes · No → `photos_opt_in: yes | no`. Only an explicit yes counts.
 2. *"Is there a look you're aiming for? Describe it in a few words, or say no. (For example: wider shoulders,
    bigger arms, stronger legs.)"* → `ideal_physique: "<their words>"`, or leave it blank. If they share a picture

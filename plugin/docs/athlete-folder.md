@@ -20,7 +20,7 @@ my-training/
   data/health.csv        daily wearable metrics, long format (schema below)
   data/exercise_map.csv  source exercise name → exercise_id (the fix-up list)
   data/raw/              untouched exports (git-ignored)
-  photos/YYYY-MM-DD/     front.jpg|png, side.*, back.* with metadata stripped (v0.2, git-ignored)
+  photos/YYYY-MM-DD/     front.jpg, side.jpg, back.jpg: face removed, metadata stripped (v0.2, git-ignored)
   photos/ratings.md      muscle-group ratings + body-fat ranges per photo date (v0.2)
   check-ins/             YYYY-MM-DD-weekly.md, YYYY-MM-DD-monthly.md
   log.md                 one line per skill run (format below)
@@ -87,9 +87,26 @@ picks by source: `manual`, then `scale`, then `apple-health`, then `photo-range`
 
 Only when the shared wellbeing gate is open (below: 18 or over, `eating_disorder_history: no`, no
 `wellbeing_pause`) and `photos_opt_in: yes`; `scripts/photos.py` refuses every write otherwise. `photos/YYYY-MM-DD/` holds one file per pose, `front`, `side`
-and `back` (`.jpg` or `.png`), dated by the day they were taken. `photos.py file` copies them in with all
-metadata removed (EXIF incl. GPS, XMP, comments, PNG text/time chunks, anything after the image); a JPEG keeps
-only its orientation and colour profile. The whole `photos/` folder is git-ignored by the template.
+and `back` (`.jpg`), dated by the day they were taken. The whole `photos/` folder is git-ignored by the template.
+
+**Face removal, before Claude sees a photo.** `photos.py file` never copies the original in. On the user's computer
+it finds the face (macOS: Apple Vision face rectangles + body pose, through `scripts/anonymise.swift`, compiled once
+into `~/Library/Caches/coaich/`; Windows/Linux: OpenCV's bundled Haar face detectors if `opencv-python` is
+installed), works on the upright image (EXIF orientation applied), and writes a new JPEG:
+
+- `crop` (default; `photo_anonymise` in `coaich.md` or `--anonymise`): everything above a line just below the chin
+  is cut off: the face box's bottom edge (or the lowest nose, eye or ear point, if lower) plus 12 % of the face
+  height. The line must stay 30 % of the face height above the highest shoulder or neck point, so the neck, traps
+  and shoulders stay; if it cannot, nothing is filed.
+- `blur`: a solid grey block over the face box widened by 35 % each side and raised by 60 % (ears, hair), down to
+  the same line. A flat fill, not a real blur: it leaves nothing to reverse.
+
+It stops and writes nothing when there is no face, more than one, head points with no face box, or a face in the
+lower 40 % of the picture. Two exceptions file the photo uncut (metadata still removed): a `back` pose with no
+face and no nose or eye point, and `--user-cropped` (the user cut the face off) with no face found, or with no
+detector at all. The new JPEG is written with no properties, then cleaned again in Python: all metadata removed
+(EXIF incl. GPS, XMP, comments, PNG text/time chunks, anything after the image); a JPEG keeps only its colour
+profile. The user's original stays where it was, untouched.
 
 `photos/ratings.md`: a short header, then one Markdown table, one row per `date` + `group` (the key):
 
