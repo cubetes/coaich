@@ -42,3 +42,7 @@ This repository is filled by an allow-list copy from a private repository
 ## Licence
 
 [AGPL-3.0](LICENSE). Contributions need the CLA in [docs/CLA.md](docs/CLA.md) (draft).
+
+## Trademarks
+
+The code is AGPL-3.0. The CoAIch name and logo are not covered by the licence: forks are welcome under another name. See `TRADEMARKS.md`.
