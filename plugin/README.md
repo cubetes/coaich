@@ -11,6 +11,8 @@ folder, and give every target a reason you can check: "you did 100 kg × 7, 7, 7
 next week is 102.5 kg."
 
 
+![How CoAIch works](docs/how-it-works.svg)
+
 **See [how it works](docs/how-it-works.md)**: the skills map, the weekly and monthly loop, and how each next target is decided.
 
 ## Install (30 seconds)

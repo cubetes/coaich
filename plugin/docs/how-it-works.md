@@ -3,6 +3,8 @@
 Everything lives in one **athlete folder** on your computer. Skills read it, change it through small scripts,
 and explain every number they write. Nothing goes to a CoAIch server: there isn't one.
 
+![How CoAIch works: your apps feed an athlete folder on your computer; onboarding builds a checked program, the weekly review sets next targets, the monthly check-in re-issues the plan](how-it-works.svg)
+
 ## The skills
 
 ```mermaid
