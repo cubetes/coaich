@@ -6,7 +6,8 @@ Usage:
   athlete_folder.py init DIR                    create the folder from the template; never overwrites
   athlete_folder.py log SKILL RESULT [--dir D]  append "date · skill · result" to log.md
 
-Library: find(), read_rows(), upsert_rows(), append_log(). Python stdlib only.
+Library: find(), setting(), read_rows(), upsert_rows(), write_rows(), replace_sessions(), append_log().
+Python stdlib only.
 """
 import argparse
 import csv
@@ -34,6 +35,7 @@ SCHEMAS = {
     ),
     "data/body.csv": (["date", "weight_kg", "waist_cm", "body_fat_pct", "source"], ("date",)),
     "data/health.csv": (["date", "metric", "value", "unit", "source"], ("date", "metric")),
+    "data/exercise_map.csv": (["exercise", "exercise_id"], ("exercise",)),
 }
 
 
@@ -44,6 +46,16 @@ def find(start=None):
         if (d / MARKER).is_file():
             return d
     raise FileNotFoundError(f"no {MARKER} in {here} or above: run /onboard to set up an athlete folder")
+
+
+def setting(folder, key):
+    """A `key: value` line from coaich.md, lower-cased, or None."""
+    with open(Path(folder) / MARKER, encoding="utf-8") as f:
+        for line in f:
+            k, sep, v = line.split("#")[0].strip().lstrip("-* ").partition(":")
+            if sep and k.strip().lower() == key:
+                return v.strip().strip("`\"'").lower() or None
+    return None
 
 
 def init(folder):
@@ -84,13 +96,25 @@ def _cell(v):
     return str(v)
 
 
+def write_rows(folder, name, rows):
+    """Replace the whole file with `rows` (the file's columns, in that order). Atomic: temp file + rename."""
+    columns, _ = _schema(name)
+    path = Path(folder) / name
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    with open(tmp, "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=columns, lineterminator="\n")
+        w.writeheader()
+        w.writerows({c: _cell(r.get(c)) for c in columns} for r in rows)
+    os.replace(tmp, path)
+
+
 def upsert_rows(folder, name, rows):
     """Insert or replace rows by the file's key. Existing order is kept; new rows are appended in order.
     Returns (added, replaced). Writes atomically. Unknown columns or a blank key raise ValueError."""
     columns, key = _schema(name)
-    path = Path(folder) / name
     existing = read_rows(folder, name)
-    index = {tuple(r[k] for k in key): i for i, r in enumerate(existing)}
+    index = {tuple(r.get(k, "") for k in key): i for i, r in enumerate(existing)}
     added = replaced = 0
     for row in rows:
         extra = set(row) - set(columns)
@@ -108,14 +132,39 @@ def upsert_rows(folder, name, rows):
             index[k] = len(existing)
             existing.append(clean)
             added += 1
-    path.parent.mkdir(parents=True, exist_ok=True)
-    tmp = path.with_suffix(path.suffix + ".tmp")
-    with open(tmp, "w", newline="", encoding="utf-8") as f:
-        w = csv.DictWriter(f, fieldnames=columns, lineterminator="\n")
-        w.writeheader()
-        w.writerows({c: r.get(c, "") for c in columns} for r in existing)
-    os.replace(tmp, path)
+    write_rows(folder, name, existing)
     return added, replaced
+
+
+def replace_sessions(folder, sets, sessions):
+    """Write whole sessions into sets.csv + sessions.csv. A session replaces every stored session with the same
+    session_id, or with the same start minute + workout name (the same workout seen through another export, e.g.
+    Hevy CSV then Hevy MCP), sets included: a set deleted at the source disappears here too. Safe to run again.
+    Keeps a hand-filled `gym` on a replaced session. Returns (n_new, n_replaced)."""
+    old_sets, old_sess = read_rows(folder, "data/sets.csv"), read_rows(folder, "data/sessions.csv")
+
+    def same(r):
+        return (r["datetime"][:16], r["workout_name"].strip().lower())
+
+    new_ids = {s["session_id"] for s in sessions}
+    new_keys = {same(s) for s in sessions}
+    gone = {s["session_id"] for s in old_sess if s["session_id"] in new_ids or same(s) in new_keys}
+    gyms = {}
+    for s in old_sess:
+        if s["session_id"] in gone and s.get("gym"):
+            gyms[s["session_id"]] = gyms[same(s)] = s["gym"]
+    for s in sessions:
+        s["gym"] = s.get("gym") or gyms.get(s["session_id"]) or gyms.get(same(s), "")
+
+    all_sets = [r for r in old_sets if r["session_id"] not in gone] + list(sets)
+    all_sess = [s for s in old_sess if s["session_id"] not in gone] + list(sessions)
+    all_sets.sort(key=lambda r: (r["datetime"], r["session_id"]))  # stable: keeps set order within a session
+    all_sess.sort(key=lambda s: (s["datetime"], s["session_id"]))
+    write_rows(folder, "data/sets.csv", all_sets)
+    write_rows(folder, "data/sessions.csv", all_sess)
+    old_ids, old_keys = {s["session_id"] for s in old_sess}, {same(s) for s in old_sess}
+    replaced = sum(1 for s in sessions if s["session_id"] in old_ids or same(s) in old_keys)
+    return len(sessions) - replaced, replaced
 
 
 def append_log(folder, skill, result, date=None):

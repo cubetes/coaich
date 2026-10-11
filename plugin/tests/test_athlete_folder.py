@@ -72,6 +72,19 @@ class AthleteFolderTest(unittest.TestCase):
             af.upsert_rows(self.dir, "data/other.csv", [])
         self.assertFalse((self.dir / "data/body.csv").exists())
 
+    def test_setting_reads_the_template_with_its_comments(self):
+        af.init(self.dir)
+        self.assertEqual(af.setting(self.dir, "units"), "kg")
+        self.assertIsNone(af.setting(self.dir, "safety_clearance_sentence"))
+
+    def test_replace_sessions_drops_sets_gone_at_the_source(self):
+        sess = {"date": "2030-01-07", "datetime": "2030-01-07T18:30", "session_id": "manual:a",
+                "workout_name": "Upper A", "source": "manual"}
+        af.replace_sessions(self.dir, [SET, dict(SET, set_index=1)], [dict(sess, gym="home")])
+        self.assertEqual(af.replace_sessions(self.dir, [SET], [dict(sess)]), (0, 1))
+        self.assertEqual(len(af.read_rows(self.dir, "data/sets.csv")), 1)
+        self.assertEqual(af.read_rows(self.dir, "data/sessions.csv")[0]["gym"], "home")  # hand-filled gym kept
+
     def test_log_appends_one_line(self):
         (self.dir / "coaich.md").write_text("x")
         af.append_log(self.dir, "onboard", "profile written,\nlevel intermediate", date="2030-01-06")

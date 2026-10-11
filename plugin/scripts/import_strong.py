@@ -22,6 +22,7 @@ import sys
 from datetime import datetime
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import athlete_folder as af  # noqa: E402
 import exercise_map  # noqa: E402
 import import_common as ic  # noqa: E402
 
@@ -129,16 +130,16 @@ def main():
     ap.add_argument("--unit", choices=["kg", "lb"], help="weight unit of an older export without one")
     args = ap.parse_args()
     folder = ic.athlete_dir(args.dir)
-    unit = args.unit or {"kg": "kg", "lb": "lb", "lbs": "lb"}.get(ic.setting(folder, "units") or "")
+    unit = args.unit or {"kg": "kg", "lb": "lb", "lbs": "lb"}.get(af.setting(folder, "units") or "")
     sets, sessions, drops = convert(args.export, unit)
     ic.keep_raw(folder, args.export, "strong")
-    added, replaced = ic.merge_sessions(folder, sets, sessions)
+    added, replaced = af.replace_sessions(folder, sets, sessions)
     res = exercise_map.sync(folder)
     summary = (f"strong: {len(sessions)} sessions, {len(sets)} sets in the export "
                f"({added} new sessions, {replaced} updated), {len(drops)} rows dropped, "
                f"{len(res['unmapped'])} exercises to map")
     through = max((x["date"] for x in sessions), default="none")
-    ic.append_log(folder, f"strong: {len(sessions)} sessions, {len(sets)} sets through {through}")
+    af.append_log(folder, "import", f"strong: {len(sessions)} sessions, {len(sets)} sets through {through}")
     print(summary)
     for d in drops:
         print("  dropped:", d)

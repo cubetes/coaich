@@ -19,7 +19,6 @@ TEXT table has a slot per language). User-facing text says "reps left" and "easy
 Deterministic, Python 3.9+ stdlib, no network.
 """
 import argparse
-import csv
 import json
 import math
 import os
@@ -28,6 +27,8 @@ import sys
 from collections import Counter, defaultdict
 from datetime import date, datetime, timedelta
 from itertools import permutations
+
+import athlete_folder as af
 
 # ------------------------------------------------------------------ the jump table (G119), in one place
 # Every set reached the top of the rep range: how many load steps the next target adds, by the reps
@@ -285,30 +286,28 @@ def save_json(path, obj):
 
 def load_sessions(folder):
     """data/sets.csv -> sessions sorted by time: {id, date, title, sets: {exercise_id: [set, ...]}}."""
-    path = path_in(folder, "data", "sets.csv")
-    if not os.path.exists(path):
+    if not os.path.exists(path_in(folder, "data", "sets.csv")):
         raise SystemExit(f"data/sets.csv missing in {folder}: import the training history first.")
     sess = {}
-    with open(path, encoding="utf-8") as fh:
-        for r in csv.DictReader(fh):
-            try:
-                d = date.fromisoformat((r.get("date") or "").strip())
-            except ValueError:
-                continue
-            sid = r.get("session_id") or f"{d}-{r.get('workout_name', '')}"
-            s = sess.setdefault(sid, {"id": sid, "date": d, "datetime": r.get("datetime", ""),
-                                      "title": r.get("workout_name", ""), "sets": defaultdict(list)})
-            rir = fnum(r.get("rir"))
-            rpe = fnum(r.get("rpe"))
-            if rir is None and rpe is not None:
-                rir = min(5, max(0, round(10 - rpe)))
-            s["sets"][r.get("exercise_id", "")].append({
-                "date": str(d), "idx": int(fnum(r.get("set_index"), 0) or 0),
-                "type": r.get("set_type") or "normal",
-                "kg": fnum(r.get("weight_kg"), 0.0) or 0.0,
-                "reps": int(fnum(r.get("reps"), 0) or 0),
-                "rir": None if rir is None else int(rir),
-                "note": (r.get("note") or "").strip()})
+    for r in af.read_rows(folder, "data/sets.csv"):
+        try:
+            d = date.fromisoformat((r.get("date") or "").strip())
+        except ValueError:
+            continue
+        sid = r.get("session_id") or f"{d}-{r.get('workout_name', '')}"
+        s = sess.setdefault(sid, {"id": sid, "date": d, "datetime": r.get("datetime", ""),
+                                  "title": r.get("workout_name", ""), "sets": defaultdict(list)})
+        rir = fnum(r.get("rir"))
+        rpe = fnum(r.get("rpe"))
+        if rir is None and rpe is not None:
+            rir = min(5, max(0, round(10 - rpe)))
+        s["sets"][r.get("exercise_id", "")].append({
+            "date": str(d), "idx": int(fnum(r.get("set_index"), 0) or 0),
+            "type": r.get("set_type") or "normal",
+            "kg": fnum(r.get("weight_kg"), 0.0) or 0.0,
+            "reps": int(fnum(r.get("reps"), 0) or 0),
+            "rir": None if rir is None else int(rir),
+            "note": (r.get("note") or "").strip()})
     out = sorted(sess.values(), key=lambda s: (s["date"], s["datetime"]))
     for s in out:
         for sets in s["sets"].values():

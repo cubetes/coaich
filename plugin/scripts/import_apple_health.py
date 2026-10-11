@@ -20,6 +20,7 @@ import sys
 from collections import defaultdict
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import athlete_folder as af  # noqa: E402
 import import_common as ic  # noqa: E402
 
 KJ_PER_KCAL = 4.184
@@ -107,23 +108,21 @@ def main():
     for p in args.exports:
         ic.keep_raw(folder, p, "apple-health")
 
-    health_path = os.path.join(folder, "data", "health.csv")
-    health = {(r["date"], r["metric"]): r for r in ic.read_rows(health_path)}
-    for (day, metric), v in values.items():
-        if metric not in BODY_ONLY:
-            health[(day, metric)] = {"date": day, "metric": metric, "value": ic.fmt(v, 2),
-                                     "unit": METRICS_BY_METRIC[metric][2], "source": "apple-health"}
-    ic.write_rows(health_path, ic.HEALTH_COLS, [health[k] for k in sorted(health)])
+    af.upsert_rows(folder, "data/health.csv", [
+        {"date": day, "metric": metric, "value": ic.fmt(v, 2), "unit": METRICS_BY_METRIC[metric][2],
+         "source": "apple-health"}
+        for (day, metric), v in sorted(values.items()) if metric not in BODY_ONLY])
 
-    body_path = os.path.join(folder, "data", "body.csv")
-    body = {r["date"]: r for r in ic.read_rows(body_path)}
+    body = {r["date"]: r for r in af.read_rows(folder, "data/body.csv")}
+    changed = set()
     for (day, metric), v in values.items():
         if metric in ("weight_kg", "waist_cm", "body_fat_pct"):
             row = body.setdefault(day, {"date": day, "weight_kg": "", "waist_cm": "", "body_fat_pct": "",
                                         "source": "apple-health"})
             row[metric] = ic.fmt(v, 2)  # a value already typed by hand for another field stays
             row["source"] = row.get("source") or "apple-health"
-    ic.write_rows(body_path, ic.BODY_COLS, [body[d] for d in sorted(body)])
+            changed.add(day)
+    af.upsert_rows(folder, "data/body.csv", [body[d] for d in sorted(changed)])
 
     days = sorted({d for d, _ in values})
     weights = [(d, ic.num(r["weight_kg"])) for d, r in sorted(body.items()) if ic.num(r["weight_kg"])]
@@ -132,7 +131,7 @@ def main():
     span = f"{days[0]} to {days[-1]}" if days else "no days"
     summary = (f"apple-health: {len(days)} days ({span}), {len(values)} values, "
                f"{len(dropped)} out-of-range dropped")
-    ic.append_log(folder, f"apple-health: {len(days)} days through {days[-1] if days else 'none'}")
+    af.append_log(folder, "import", f"apple-health: {len(days)} days through {days[-1] if days else 'none'}")
     print(summary)
     for d in dropped:
         print("  dropped:", d)

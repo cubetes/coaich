@@ -53,7 +53,8 @@ class DemoAthleteTest(unittest.TestCase):
             self.assertTrue(rows, name)
             self.assertEqual(len({tuple(r[k] for k in key) for r in rows}), len(rows), f"{name}: duplicate keys")
             for r in rows:
-                self.assertTrue(r["date"].startswith("2030-"), r)
+                if "date" in r:
+                    self.assertTrue(r["date"].startswith("2030-"), r)
 
     def test_training_looks_like_twelve_weeks_with_progress_and_stalls(self):
         sets = af.read_rows(self.dir, "data/sets.csv")

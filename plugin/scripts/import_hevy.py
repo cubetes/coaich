@@ -25,6 +25,7 @@ import sys
 from datetime import datetime
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import athlete_folder as af  # noqa: E402
 import exercise_map  # noqa: E402
 import import_common as ic  # noqa: E402
 
@@ -127,7 +128,7 @@ def load(path):
 
 
 def cursor(folder):
-    dates = [s["date"] for s in ic.read_rows(os.path.join(folder, "data", "sessions.csv")) if s["source"] == "hevy"]
+    dates = [s["date"] for s in af.read_rows(folder, "data/sessions.csv") if s["source"] == "hevy"]
     return max(dates) if dates else ""
 
 
@@ -153,12 +154,12 @@ def main():
     sets, sessions, drops = from_workouts(workouts)
     for p in args.inputs:
         ic.keep_raw(folder, p, "hevy")
-    added, replaced = ic.merge_sessions(folder, sets, sessions)
+    added, replaced = af.replace_sessions(folder, sets, sessions)
     res = exercise_map.sync(folder)
     summary = (f"hevy: {len(sessions)} sessions, {len(sets)} sets read ({added} new sessions, "
                f"{replaced} updated), {len(drops)} sets dropped, {len(res['unmapped'])} exercises to map")
     through = max((x["date"] for x in sessions), default="none")
-    ic.append_log(folder, f"hevy: {len(sessions)} sessions, {len(sets)} sets through {through}")
+    af.append_log(folder, "import", f"hevy: {len(sessions)} sessions, {len(sets)} sets through {through}")
     print(summary)
     for d in drops:
         print("  dropped:", d)

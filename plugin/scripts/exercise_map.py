@@ -19,10 +19,10 @@ import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import athlete_folder as af  # noqa: E402
 import import_common as ic  # noqa: E402
 
 DATA = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
-MAP_COLS = ["exercise", "exercise_id"]
 CUSTOM = "custom:"
 
 
@@ -40,7 +40,7 @@ def load_catalog():
 
 
 def load_aliases():
-    return {norm(r["exercise"]): r["exercise_id"] for r in ic.read_rows(os.path.join(DATA, "exercise_aliases.csv"))}
+    return {norm(r["exercise"]): r["exercise_id"] for r in af.read_rows(DATA, "exercise_aliases.csv")}
 
 
 def guess(name, by_name, aliases):
@@ -62,10 +62,8 @@ def sync(folder):
     catalog = load_catalog()
     by_name = {norm(e["name"]): i for i, e in catalog.items()}
     aliases = load_aliases()
-    map_path = os.path.join(folder, "data", "exercise_map.csv")
-    sets_path = os.path.join(folder, "data", "sets.csv")
-    rows = {norm(r["exercise"]): r for r in ic.read_rows(map_path)}
-    sets = ic.read_rows(sets_path)
+    rows = {norm(r["exercise"]): r for r in af.read_rows(folder, "data/exercise_map.csv")}
+    sets = af.read_rows(folder, "data/sets.csv")
     new = set()
     for r in sets:
         n = norm(r["exercise"])
@@ -88,9 +86,9 @@ def sync(folder):
 
     for r in sets:
         r["exercise_id"] = effective[norm(r["exercise"])]
-    ic.write_rows(map_path, MAP_COLS, sorted(rows.values(), key=lambda r: norm(r["exercise"])))
+    af.write_rows(folder, "data/exercise_map.csv", sorted(rows.values(), key=lambda r: norm(r["exercise"])))
     if sets:
-        ic.write_rows(sets_path, ic.SETS_COLS, sets)
+        af.write_rows(folder, "data/sets.csv", sets)
     unmapped = sorted(r["exercise"] for n, r in rows.items() if effective[n] == CUSTOM + slug(r["exercise"]))
     return {"unmapped": unmapped, "new_unmapped": sorted(new_unmapped), "bad_ids": bad}
 
