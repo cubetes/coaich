@@ -10,6 +10,9 @@ moment you close them. CoAIch is a set of small Claude Code skills that keep you
 folder, and give every target a reason you can check: "you did 100 kg × 7, 7, 7, 7 with two reps to spare, so
 next week is 102.5 kg."
 
+
+**See [how it works](docs/how-it-works.md)**: the skills map, the weekly and monthly loop, and how each next target is decided.
+
 ## Install (30 seconds)
 
 From inside Claude Code:
