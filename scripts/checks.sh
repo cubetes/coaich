@@ -7,6 +7,11 @@ fail=0
 
 python3 scripts/check_public.py --self-test && python3 scripts/check_public.py . || fail=1
 
+# Plugin scripts: stdlib unittest (every tests/ folder under plugin/scripts).
+if [ -d plugin/scripts/tests ]; then
+  python3 -m unittest discover -s plugin/scripts/tests -q || fail=1
+fi
+
 if command -v gitleaks >/dev/null; then
   gitleaks dir . --config .gitleaks.toml --no-banner --redact || fail=1
   if git rev-parse --verify --quiet HEAD >/dev/null; then
