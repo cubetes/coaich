@@ -10,7 +10,8 @@ One pass, in order. The athlete folder is the working directory (it holds `coaic
 `plan/CURRENT.md` first: it wins over every other file. Write in the language `coaich.md` sets.
 
 `{today}` = today's date. `{last}` = the ISO week just finished. `{next}` = the week starting next
-Monday.
+Monday. When the newest session in `data/sets.csv` is weeks away from today (an old export, the demo athlete in
+2030), ask which week to review and take `{today}` as that week's Sunday.
 
 ## 1. Make sure the week is in
 
@@ -66,7 +67,8 @@ Write `check-ins/{today}-weekly.md`:
 
 ## 7. Log
 
-Append one line to `log.md`: `{today} · weekly-review · {last} graded, x/n met, k changes, m held`.
+`python3 "${CLAUDE_PLUGIN_ROOT}/scripts/athlete_folder.py" log weekly-review "{last} graded, x/n met, k changes, m held"`
+(it writes the contract's line, `- YYYY-MM-DD · weekly-review · …`, dated today).
 
 ## Out of scope in this version
 
