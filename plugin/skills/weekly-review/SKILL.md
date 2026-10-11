@@ -19,6 +19,9 @@ Check `data/sets.csv` has sessions dated in `{last}`. If the athlete trained sin
 run the `import` skill first. Ask once: "Anything you did that isn't logged?" Missing sessions are
 graded "not done", which is fine, but it should be true.
 
+If `plan/CURRENT.md` has an **Adapted** block whose temporary program has ended
+(`adapt.py status --dir .` says DUE), run the `adapt` skill's restore first.
+
 ## 2. Grade and propose
 
 Run the `progression` skill, step 1 (`propose --week {next}`). It grades `{last}` and drafts

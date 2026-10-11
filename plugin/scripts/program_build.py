@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Build a starter program from an athlete folder's intake answers.
 
-Usage: python3 program_build.py --dir <athlete folder> [--week N] [--today YYYY-MM-DD] [--dry-run | --place]
+Usage: python3 program_build.py --dir <athlete folder> [--week N] [--today YYYY-MM-DD] [--start YYYY-MM-DD]
+                                [--dry-run | --place]
 
 Reads `coaich.md` (safety acknowledgement + clearance) and `profile.md` (intake answers in its YAML header, as the
 onboard and safety skills write them: templates/athlete/profile.md). Places the athlete (level), picks one of
@@ -429,6 +430,10 @@ def build(layout, level, days, a, week=1):
                     and not a.get("bench_safeties"):
                 id_ = "Dumbbell_Bench_Press"
                 why.append("no safety bars or spotter for the bench top set: dumbbells")
+            to = (a.get("swaps") or {}).get(id_)
+            if to and not (level == "beginner" and to in NOT_FOR_BEGINNERS):
+                id_ = to
+                why.append("your choice at a check-in")
             for inj in injuries:
                 if dropped:
                     break
@@ -553,10 +558,17 @@ def program_name(prog):
     return pa.program_name(prog)
 
 
+def program_week(prog, sessions_done):
+    """The 1-based program week the next session falls in, counted in sessions done since program week 1 began
+    (`days` sessions = a week; a missed session moves every later week, easy weeks included). The one count the
+    builder, the progression engine and the roadmap share."""
+    return sessions_done // max(1, prog.get("days") or len(prog["routines"])) + 1
+
+
 def is_easy_week(prog, sessions_done):
     """Whether the next session falls in an easy week, counted in sessions done (`days` sessions = a week)."""
     every = EASY_WEEK_EVERY[prog["level"]]
-    return bool(every) and (sessions_done // prog["days"] + 1) % every == 0
+    return bool(every) and program_week(prog, sessions_done) % every == 0
 
 
 # ---------------------------------------------------------------- the tree
@@ -786,6 +798,13 @@ def read_answers(folder):
     priority = prof.get("priority")
     priority = None if priority in (None, "", "none") else _pick(
         prof, "priority", {k.replace("_", "-"): k for k in REGIONS})
+    swaps = {}
+    for x in prof.get("exercise_swaps") or []:
+        frm, to = (x.get("from"), x.get("to")) if isinstance(x, dict) else (None, None)
+        if not frm or pa.PATTERN_OF.get(frm) is None or pa.PATTERN_OF.get(frm) != pa.PATTERN_OF.get(to):
+            raise ValueError(f"exercise_swaps: {x} must swap within one slot (from and to in the same column of "
+                             "references/starter-programs.md)")
+        swaps[frm] = to
     return {
         "acknowledged": bool(settings.get("safety_acknowledged")),
         "age": _pick(prof, "age_band", PROFILE_AGE) or "adult",
@@ -795,7 +814,7 @@ def read_answers(folder):
         "known_loads": {"squat", "bench"} <= lifts,
         "days": days, "minutes": minutes,
         "chair_stand": prof.get("chair_stand"), "goal": goal, "priority": priority,
-        "bench_safeties": bool(prof.get("bench_safeties")),
+        "bench_safeties": bool(prof.get("bench_safeties")), "swaps": swaps,
     }
 
 
@@ -826,7 +845,7 @@ def tool(equipment, id_, lower_body):
                                                                                                          "bodyweight")
 
 
-def program_json(result, today):
+def program_json(result, today, start=None):
     prog = copy.deepcopy({k: v for k, v in result["program"].items() if k != "swaps"})
     for n, r in enumerate(prog["routines"], 1):
         r["order"], r["minutes"] = n, pa.routine_minutes(r["exercises"])
@@ -839,7 +858,7 @@ def program_json(result, today):
                      reps_left=s.pop("rir"))
     every = EASY_WEEK_EVERY[prog["level"]]
     prog["easy_weeks"] = list(range(every, 53, every)) if every else []
-    return {"schema": "coaich.program/0.1", "start": today, "name": program_name(prog), **prog,
+    return {"schema": "coaich.program/0.1", "start": start or today, "issued": today, "name": program_name(prog), **prog,
             "rebuild_at_week": rebuild_week(prog), "placement": result["placement"], "notes": result["notes"],
             "warnings": result["warnings"], "rules_fired": result["fired"], "swaps": result["program"]["swaps"]}
 
@@ -887,11 +906,12 @@ def explain(result):
     return out
 
 
-def current_block(result, today, checks, unexpected):
+def current_block(result, today, checks, unexpected, start=None):
     prog = result["program"]
     name = program_name(prog)
     lines = ["<!-- coaich:program -->", f"## Program — {LAYOUT_NAMES[prog['layout']]} × {prog['minutes']} min ({name})", "",
-             f"In force from {today} · week {prog['week']} · level {prog['level']}"
+             f"In force from {today} · week {prog['week']}" + (f" (week 1 began {start})" if start and start != today else "")
+             + f" · level {prog['level']}"
              + (f" · goal {prog['goal']}" if prog["goal"] else "") + " · file `plan/program.json`."]
     rw = rebuild_week(prog)
     if rw:
@@ -940,11 +960,37 @@ def write_current(folder, block, tag="program"):
         f.write(new)
 
 
+def issue(folder, answers, week, today, start=None):
+    """The one write path for a program: decide, gate with the audit, then write plan/program.json, the program block
+    of plan/CURRENT.md and a log line. `start` = the day program week 1 began (a re-issue keeps the old one, so easy
+    weeks keep their count). → (exit code, message): 0 written, 1 refused by the audit, 2 stop; nothing is written
+    unless 0."""
+    result = decide(answers, week)
+    if result["outcome"] != "program":
+        return 2, (f"stop ({result['outcome']}): {result['message']}"
+                   + (f" Items: {', '.join(result['items'])}." if result.get("items") else ""))
+    prog = result["program"]
+    checks = pa.audit(prog)
+    unexpected = pa.unexpected_failures(prog, checks)
+    if unexpected:
+        return 1, "refused: the program fails the audit: " + "; ".join(unexpected)
+    doc = program_json(result, today, start)
+    os.makedirs(os.path.join(folder, "plan"), exist_ok=True)
+    with open(os.path.join(folder, "plan", "program.json"), "w", encoding="utf-8") as f:
+        json.dump(doc, f, ensure_ascii=False, indent=1)
+        f.write("\n")
+    write_current(folder, current_block(result, today, checks, unexpected, doc["start"]))
+    af.append_log(folder, "program-build", f"{doc['name']} ({prog['level']}, {prog['days']} days × "
+                  f"{prog['minutes']} min, week {prog['week']}), audit passed", date=today)
+    return 0, f"wrote plan/program.json and plan/CURRENT.md: {doc['name']}"
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--dir", required=True, help="athlete folder (holds coaich.md and profile.md)")
     ap.add_argument("--week", type=int, default=1, help="training week, counted in sessions done (default 1)")
     ap.add_argument("--today", default=datetime.date.today().isoformat(), help="date stamp (YYYY-MM-DD)")
+    ap.add_argument("--start", help="the day program week 1 began (a re-issue keeps it; default --today)")
     ap.add_argument("--dry-run", action="store_true", help="print program.json, write nothing")
     ap.add_argument("--place", action="store_true",
                     help="print only the placement (level, flags, the sentence to say) as JSON; write nothing")
@@ -958,30 +1004,16 @@ def main(argv=None):
         pl = place(answers["history"], answers.get("last_trained"), answers.get("known_loads"))
         print(json.dumps(dict(pl, line=placement_line(pl)), ensure_ascii=False))
         return 0
-    result = decide(answers, a.week)
-    if result["outcome"] != "program":
-        print(f"stop ({result['outcome']}): {result['message']}" +
-              (f" Items: {', '.join(result['items'])}." if result.get("items") else ""), file=sys.stderr)
-        return 2
-    prog = result["program"]
-    checks = pa.audit(prog)
-    unexpected = pa.unexpected_failures(prog, checks)
-    doc = program_json(result, a.today)
     if a.dry_run:
-        print(json.dumps(doc, ensure_ascii=False, indent=1))
-        return 1 if unexpected else 0
-    if unexpected:
-        print("refused: the program fails the audit: " + "; ".join(unexpected), file=sys.stderr)
-        return 1
-    os.makedirs(os.path.join(a.dir, "plan"), exist_ok=True)
-    with open(os.path.join(a.dir, "plan", "program.json"), "w", encoding="utf-8") as f:
-        json.dump(doc, f, ensure_ascii=False, indent=1)
-        f.write("\n")
-    write_current(a.dir, current_block(result, a.today, checks, unexpected))
-    af.append_log(a.dir, "program-build", f"{doc['name']} ({prog['level']}, {prog['days']} days × "
-                  f"{prog['minutes']} min, week {prog['week']}), audit passed", date=a.today)
-    print(f"wrote plan/program.json and plan/CURRENT.md: {doc['name']}")
-    return 0
+        result = decide(answers, a.week)
+        if result["outcome"] != "program":
+            print(f"stop ({result['outcome']}): {result['message']}", file=sys.stderr)
+            return 2
+        print(json.dumps(program_json(result, a.today, a.start), ensure_ascii=False, indent=1))
+        return 1 if pa.unexpected_failures(result["program"]) else 0
+    code, msg = issue(a.dir, answers, a.week, a.today, a.start)
+    print(msg, file=sys.stderr if code else sys.stdout)
+    return code
 
 
 if __name__ == "__main__":

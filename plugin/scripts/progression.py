@@ -29,6 +29,7 @@ from datetime import date, datetime, timedelta
 from itertools import permutations
 
 import athlete_folder as af
+import program_build as pb
 
 # ------------------------------------------------------------------ the jump table (G119), in one place
 # Every set reached the top of the rep range: how many load steps the next target adds, by the reps
@@ -405,15 +406,34 @@ def week_type_from_current(folder, monday):
     return None
 
 
+def sessions_done(folder, prog, before):
+    """Sessions of the program's routines logged from program week 1 (`start`) up to the day before `before`."""
+    start = date.fromisoformat(prog["start"])
+    titles = [rt.get("title", "") for rt in prog.get("routines", [])]
+    seen = set()
+    for r in af.read_rows(folder, "data/sets.csv"):
+        try:
+            d = date.fromisoformat((r.get("date") or "").strip())
+        except ValueError:
+            continue
+        if start <= d < before and any(session_matches(r.get("workout_name", ""), t) for t in titles):
+            seen.add(r.get("session_id") or f"{d}-{r.get('workout_name', '')}")
+    return len(seen)
+
+
 def week_type_from_program(folder, monday):
-    """program.json `start` (date) + `easy_weeks` (1-based program week numbers) -> "recovery"."""
+    """program.json `start` + `easy_weeks` (1-based program weeks) -> "recovery". Program weeks are counted in
+    sessions done, not calendar weeks (program_build.program_week): the ISO week takes the type of the program
+    week its first session falls in."""
     path = path_in(folder, "plan", "program.json")
     prog = load_json(path) if os.path.exists(path) else {}
+    if not prog.get("easy_weeks"):
+        return None
     try:
-        n = (monday - week_of(date.fromisoformat(prog["start"]))).days // 7 + 1
+        n = pb.program_week(prog, sessions_done(folder, prog, monday))
     except (KeyError, TypeError, ValueError):
         return None
-    return "recovery" if n in (prog.get("easy_weeks") or []) else None
+    return "recovery" if n in prog["easy_weeks"] else None
 
 
 def week_type_of(folder, monday):

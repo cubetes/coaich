@@ -6,7 +6,8 @@ Usage:
   athlete_folder.py init DIR                    create the folder from the template; never overwrites
   athlete_folder.py log SKILL RESULT [--dir D]  append "date · skill · result" to log.md
 
-Library: find(), setting(), read_rows(), upsert_rows(), write_rows(), replace_sessions(), append_log().
+Library: find(), setting(), read_rows(), upsert_rows(), write_rows(), replace_sessions(), set_header(),
+append_log().
 Python stdlib only.
 """
 import argparse
@@ -165,6 +166,32 @@ def replace_sessions(folder, sets, sessions):
     old_ids, old_keys = {s["session_id"] for s in old_sess}, {same(s) for s in old_sess}
     replaced = sum(1 for s in sessions if s["session_id"] in old_ids or same(s) in old_keys)
     return len(sessions) - replaced, replaced
+
+
+def set_header(folder, name, key, value):
+    """Set one top-level key in a Markdown file's YAML header (profile.md, coaich.md) to `value`, YAML text written
+    as given (`[]`, `[{area: knee, red_flag: true}]`, `2030-04-01`). Replaces the key's line and any indented lines
+    under it, keeps its trailing comment, or adds the key before the closing `---`. Atomic."""
+    path = Path(folder) / name
+    lines = path.read_text(encoding="utf-8").splitlines()
+    if not lines or lines[0].strip() != "---":
+        raise ValueError(f"{name} has no YAML header")
+    end = next((i for i, x in enumerate(lines[1:], 1) if x.strip() == "---"), None)
+    if end is None:
+        raise ValueError(f"{name}: the YAML header has no closing ---")
+    i = next((i for i in range(1, end) if lines[i].split(":", 1)[0] == key), None)
+    if i is None:
+        lines.insert(end, f"{key}: {value}")
+    else:
+        j = i + 1
+        while j < end and lines[j].startswith((" ", "-")) and lines[j].strip():
+            j += 1
+        rest = lines[i].split(":", 1)[1]
+        comment = rest[rest.index(" #"):].strip() if " #" in rest else ""
+        lines[i:j] = [f"{key}: {value}" + (f"  {comment}" if comment else "")]
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    tmp.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    os.replace(tmp, path)
 
 
 def append_log(folder, skill, result, date=None):

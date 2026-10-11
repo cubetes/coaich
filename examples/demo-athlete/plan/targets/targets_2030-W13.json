@@ -19,7 +19,7 @@
   "reduce": 0,
   "easy_week": 0,
   "swap": 0,
-  "needs_approval": 0,
+  "needs_approval": 1,
   "grades": null
  },
  "rows": [
@@ -61,7 +61,7 @@
     },
     {
      "kg": 70.0,
-     "reps": 8,
+     "reps": 7,
      "type": "normal"
     }
    ],
@@ -70,7 +70,7 @@
     10,
     9,
     8,
-    8
+    7
    ],
    "prev_target_sets": [
     {
@@ -90,7 +90,7 @@
     },
     {
      "kg": 70.0,
-     "reps": 7,
+     "reps": 6,
      "type": "normal"
     }
    ],
@@ -122,7 +122,7 @@
     },
     {
      "kg": 70.0,
-     "reps": 8,
+     "reps": 7,
      "type": "normal"
     }
    ],
@@ -138,7 +138,7 @@
       "kg": 70.0,
       "reps": 10,
       "type": "normal",
-      "rir": 3
+      "rir": 2
      },
      {
       "date": "2030-03-18",
@@ -152,12 +152,12 @@
       "kg": 70.0,
       "reps": 8,
       "type": "normal",
-      "rir": 4
+      "rir": 3
      },
      {
       "date": "2030-03-18",
       "kg": 70.0,
-      "reps": 8,
+      "reps": 7,
       "type": "normal",
       "rir": 3
      }
@@ -181,7 +181,7 @@
      },
      {
       "kg": 70.0,
-      "reps": 7,
+      "reps": 6,
       "type": "normal"
      }
     ]
@@ -219,7 +219,7 @@
     },
     {
      "kg": 62.5,
-     "reps": 12,
+     "reps": 11,
      "type": "normal"
     },
     {
@@ -236,7 +236,7 @@
    "target_kg": 62.5,
    "target_reps": [
     12,
-    12,
+    11,
     11,
     10
    ],
@@ -258,7 +258,7 @@
     },
     {
      "kg": 62.5,
-     "reps": 10,
+     "reps": 9,
      "type": "normal"
     }
    ],
@@ -280,7 +280,7 @@
     },
     {
      "kg": 62.5,
-     "reps": 12,
+     "reps": 11,
      "type": "normal"
     },
     {
@@ -306,13 +306,6 @@
       "kg": 62.5,
       "reps": 12,
       "type": "normal",
-      "rir": 3
-     },
-     {
-      "date": "2030-03-18",
-      "kg": 62.5,
-      "reps": 12,
-      "type": "normal",
       "rir": 2
      },
      {
@@ -325,9 +318,16 @@
      {
       "date": "2030-03-18",
       "kg": 62.5,
+      "reps": 11,
+      "type": "normal",
+      "rir": 2
+     },
+     {
+      "date": "2030-03-18",
+      "kg": 62.5,
       "reps": 10,
       "type": "normal",
-      "rir": null
+      "rir": 3
      }
     ],
     "athlete_note": null,
@@ -349,7 +349,7 @@
      },
      {
       "kg": 62.5,
-      "reps": 10,
+      "reps": 9,
       "type": "normal"
      }
     ]
@@ -421,13 +421,7 @@
    ],
    "decision": "hold",
    "reason": {
-    "code": "close_hold",
-    "why": {
-     "code": "close",
-     "met": 2,
-     "n": 3,
-     "short": 2
-    }
+    "code": "miss_hold"
    },
    "needs_approval": false,
    "flags": [],
@@ -453,32 +447,34 @@
     }
    ],
    "last_week": {
-    "grade": "partial",
+    "grade": "miss",
     "grade_reason": {
-     "code": "close",
-     "met": 2,
+     "code": "missed",
+     "met": 1,
      "n": 3,
-     "short": 2
+     "missing": 0,
+     "under_load": false,
+     "short": 6
     },
     "source_sets": [
      {
       "date": "2030-03-18",
       "kg": 40.0,
-      "reps": 10,
+      "reps": 9,
+      "type": "normal",
+      "rir": 0
+     },
+     {
+      "date": "2030-03-18",
+      "kg": 40.0,
+      "reps": 8,
       "type": "normal",
       "rir": 1
      },
      {
       "date": "2030-03-18",
       "kg": 40.0,
-      "reps": 9,
-      "type": "normal",
-      "rir": 1
-     },
-     {
-      "date": "2030-03-18",
-      "kg": 40.0,
-      "reps": 9,
+      "reps": 7,
       "type": "normal",
       "rir": 1
      }
@@ -529,26 +525,26 @@
    "load_step": 5.0,
    "target_sets": [
     {
-     "kg": 65.0,
-     "reps": 8,
+     "kg": 60.0,
+     "reps": 12,
      "type": "normal"
     },
     {
-     "kg": 65.0,
-     "reps": 8,
+     "kg": 60.0,
+     "reps": 12,
      "type": "normal"
     },
     {
-     "kg": 65.0,
-     "reps": 8,
+     "kg": 60.0,
+     "reps": 11,
      "type": "normal"
     }
    ],
-   "target_kg": 65.0,
+   "target_kg": 60.0,
    "target_reps": [
-    8,
-    8,
-    8
+    12,
+    12,
+    11
    ],
    "prev_target_sets": [
     {
@@ -567,13 +563,9 @@
      "type": "normal"
     }
    ],
-   "decision": "increase",
+   "decision": "hold",
    "reason": {
-    "code": "step",
-    "reps": 12,
-    "left": 2,
-    "kg_add": 5.0,
-    "lo": 8
+    "code": "reps_to_done"
    },
    "needs_approval": false,
    "flags": [],
@@ -583,18 +575,18 @@
    "override_reason": null,
    "live_target_sets": [
     {
-     "kg": 65.0,
-     "reps": 8,
+     "kg": 60.0,
+     "reps": 12,
      "type": "normal"
     },
     {
-     "kg": 65.0,
-     "reps": 8,
+     "kg": 60.0,
+     "reps": 12,
      "type": "normal"
     },
     {
-     "kg": 65.0,
-     "reps": 8,
+     "kg": 60.0,
+     "reps": 11,
      "type": "normal"
     }
    ],
@@ -610,13 +602,6 @@
       "kg": 60.0,
       "reps": 12,
       "type": "normal",
-      "rir": 3
-     },
-     {
-      "date": "2030-03-18",
-      "kg": 60.0,
-      "reps": 12,
-      "type": "normal",
       "rir": 2
      },
      {
@@ -624,7 +609,14 @@
       "kg": 60.0,
       "reps": 12,
       "type": "normal",
-      "rir": 2
+      "rir": 1
+     },
+     {
+      "date": "2030-03-18",
+      "kg": 60.0,
+      "reps": 11,
+      "type": "normal",
+      "rir": 1
      }
     ],
     "athlete_note": null,
@@ -674,24 +666,24 @@
    "target_sets": [
     {
      "kg": 10.0,
-     "reps": 18,
+     "reps": 17,
      "type": "normal"
     },
     {
      "kg": 10.0,
-     "reps": 17,
+     "reps": 16,
      "type": "normal"
     }
    ],
    "target_kg": 10.0,
    "target_reps": [
-    18,
-    17
+    17,
+    16
    ],
    "prev_target_sets": [
     {
      "kg": 10.0,
-     "reps": 16,
+     "reps": 17,
      "type": "normal"
     },
     {
@@ -702,7 +694,13 @@
    ],
    "decision": "hold",
    "reason": {
-    "code": "reps_to_done"
+    "code": "close_hold",
+    "why": {
+     "code": "close",
+     "met": 1,
+     "n": 2,
+     "short": 1
+    }
    },
    "needs_approval": false,
    "flags": [],
@@ -713,42 +711,44 @@
    "live_target_sets": [
     {
      "kg": 10.0,
-     "reps": 18,
+     "reps": 17,
      "type": "normal"
     },
     {
      "kg": 10.0,
-     "reps": 17,
+     "reps": 16,
      "type": "normal"
     }
    ],
    "last_week": {
-    "grade": "hit",
+    "grade": "partial",
     "grade_reason": {
-     "code": "met",
-     "n": 2
+     "code": "close",
+     "met": 1,
+     "n": 2,
+     "short": 1
     },
     "source_sets": [
      {
       "date": "2030-03-18",
       "kg": 10.0,
-      "reps": 18,
+      "reps": 16,
       "type": "normal",
       "rir": 1
      },
      {
       "date": "2030-03-18",
       "kg": 10.0,
-      "reps": 17,
+      "reps": 16,
       "type": "normal",
-      "rir": 1
+      "rir": 0
      }
     ],
     "athlete_note": null,
     "target_sets": [
      {
       "kg": 10.0,
-      "reps": 16,
+      "reps": 17,
       "type": "normal"
      },
      {
@@ -791,7 +791,7 @@
     },
     {
      "kg": 95.0,
-     "reps": 9,
+     "reps": 10,
      "type": "normal"
     },
     {
@@ -808,7 +808,7 @@
    "target_kg": 95.0,
    "target_reps": [
     10,
-    9,
+    10,
     9,
     8
    ],
@@ -830,7 +830,7 @@
     },
     {
      "kg": 95.0,
-     "reps": 8,
+     "reps": 7,
      "type": "normal"
     }
    ],
@@ -852,7 +852,7 @@
     },
     {
      "kg": 95.0,
-     "reps": 9,
+     "reps": 10,
      "type": "normal"
     },
     {
@@ -878,12 +878,12 @@
       "kg": 95.0,
       "reps": 10,
       "type": "normal",
-      "rir": 2
+      "rir": 4
      },
      {
       "date": "2030-03-19",
       "kg": 95.0,
-      "reps": 9,
+      "reps": 10,
       "type": "normal",
       "rir": 3
      },
@@ -892,14 +892,14 @@
       "kg": 95.0,
       "reps": 9,
       "type": "normal",
-      "rir": 2
+      "rir": 3
      },
      {
       "date": "2030-03-19",
       "kg": 95.0,
       "reps": 8,
       "type": "normal",
-      "rir": 3
+      "rir": 4
      }
     ],
     "athlete_note": null,
@@ -921,7 +921,7 @@
      },
      {
       "kg": 95.0,
-      "reps": 8,
+      "reps": 7,
       "type": "normal"
      }
     ]
@@ -959,25 +959,25 @@
     },
     {
      "kg": 82.5,
-     "reps": 10,
+     "reps": 11,
      "type": "normal"
     },
     {
      "kg": 82.5,
-     "reps": 9,
+     "reps": 11,
      "type": "normal"
     }
    ],
    "target_kg": 82.5,
    "target_reps": [
     12,
-    10,
-    9
+    11,
+    11
    ],
    "prev_target_sets": [
     {
      "kg": 82.5,
-     "reps": 12,
+     "reps": 11,
      "type": "normal"
     },
     {
@@ -987,19 +987,13 @@
     },
     {
      "kg": 82.5,
-     "reps": 9,
+     "reps": 10,
      "type": "normal"
     }
    ],
    "decision": "hold",
    "reason": {
-    "code": "close_hold",
-    "why": {
-     "code": "close",
-     "met": 2,
-     "n": 3,
-     "short": 1
-    }
+    "code": "reps_to_done"
    },
    "needs_approval": false,
    "flags": [],
@@ -1015,51 +1009,49 @@
     },
     {
      "kg": 82.5,
-     "reps": 10,
+     "reps": 11,
      "type": "normal"
     },
     {
      "kg": 82.5,
-     "reps": 9,
+     "reps": 11,
      "type": "normal"
     }
    ],
    "last_week": {
-    "grade": "partial",
+    "grade": "hit",
     "grade_reason": {
-     "code": "close",
-     "met": 2,
-     "n": 3,
-     "short": 1
+     "code": "met",
+     "n": 3
     },
     "source_sets": [
      {
       "date": "2030-03-19",
       "kg": 82.5,
+      "reps": 12,
+      "type": "normal",
+      "rir": 3
+     },
+     {
+      "date": "2030-03-19",
+      "kg": 82.5,
       "reps": 11,
       "type": "normal",
-      "rir": 1
+      "rir": 3
      },
      {
       "date": "2030-03-19",
       "kg": 82.5,
-      "reps": 10,
+      "reps": 11,
       "type": "normal",
-      "rir": 1
-     },
-     {
-      "date": "2030-03-19",
-      "kg": 82.5,
-      "reps": 9,
-      "type": "normal",
-      "rir": 2
+      "rir": 3
      }
     ],
     "athlete_note": null,
     "target_sets": [
      {
       "kg": 82.5,
-      "reps": 12,
+      "reps": 11,
       "type": "normal"
      },
      {
@@ -1069,7 +1061,7 @@
      },
      {
       "kg": 82.5,
-      "reps": 9,
+      "reps": 10,
       "type": "normal"
      }
     ]
@@ -1101,49 +1093,53 @@
    "load_step": 5.0,
    "target_sets": [
     {
-     "kg": 180.0,
-     "reps": 10,
+     "kg": 185.0,
+     "reps": 8,
      "type": "normal"
     },
     {
-     "kg": 180.0,
-     "reps": 10,
+     "kg": 185.0,
+     "reps": 8,
      "type": "normal"
     },
     {
-     "kg": 180.0,
-     "reps": 10,
+     "kg": 185.0,
+     "reps": 8,
      "type": "normal"
     }
    ],
-   "target_kg": 180.0,
+   "target_kg": 185.0,
    "target_reps": [
-    10,
-    10,
-    10
+    8,
+    8,
+    8
    ],
    "prev_target_sets": [
     {
-     "kg": 180.0,
-     "reps": 8,
+     "kg": 175.0,
+     "reps": 12,
      "type": "normal"
     },
     {
-     "kg": 180.0,
-     "reps": 8,
+     "kg": 175.0,
+     "reps": 12,
      "type": "normal"
     },
     {
-     "kg": 180.0,
-     "reps": 8,
+     "kg": 175.0,
+     "reps": 11,
      "type": "normal"
     }
    ],
-   "decision": "hold",
+   "decision": "increase",
    "reason": {
-    "code": "reps_to_done"
+    "code": "step",
+    "reps": 12,
+    "left": 4,
+    "kg_add": 10.0,
+    "lo": 8
    },
-   "needs_approval": false,
+   "needs_approval": true,
    "flags": [],
    "pre_easy_sets": null,
    "accepted": true,
@@ -1151,18 +1147,18 @@
    "override_reason": null,
    "live_target_sets": [
     {
-     "kg": 180.0,
-     "reps": 10,
+     "kg": 185.0,
+     "reps": 8,
      "type": "normal"
     },
     {
-     "kg": 180.0,
-     "reps": 10,
+     "kg": 185.0,
+     "reps": 8,
      "type": "normal"
     },
     {
-     "kg": 180.0,
-     "reps": 10,
+     "kg": 185.0,
+     "reps": 8,
      "type": "normal"
     }
    ],
@@ -1175,22 +1171,22 @@
     "source_sets": [
      {
       "date": "2030-03-19",
-      "kg": 180.0,
-      "reps": 10,
+      "kg": 175.0,
+      "reps": 12,
       "type": "normal",
-      "rir": null
+      "rir": 5
      },
      {
       "date": "2030-03-19",
-      "kg": 180.0,
-      "reps": 10,
+      "kg": 175.0,
+      "reps": 12,
       "type": "normal",
-      "rir": 4
+      "rir": 5
      },
      {
       "date": "2030-03-19",
-      "kg": 180.0,
-      "reps": 10,
+      "kg": 175.0,
+      "reps": 12,
       "type": "normal",
       "rir": 4
      }
@@ -1198,18 +1194,18 @@
     "athlete_note": null,
     "target_sets": [
      {
-      "kg": 180.0,
-      "reps": 8,
+      "kg": 175.0,
+      "reps": 12,
       "type": "normal"
      },
      {
-      "kg": 180.0,
-      "reps": 8,
+      "kg": 175.0,
+      "reps": 12,
       "type": "normal"
      },
      {
-      "kg": 180.0,
-      "reps": 8,
+      "kg": 175.0,
+      "reps": 11,
       "type": "normal"
      }
     ]
@@ -1247,19 +1243,19 @@
     },
     {
      "kg": 40.0,
-     "reps": 13,
+     "reps": 14,
      "type": "normal"
     }
    ],
    "target_kg": 40.0,
    "target_reps": [
     15,
-    13
+    14
    ],
    "prev_target_sets": [
     {
      "kg": 40.0,
-     "reps": 15,
+     "reps": 14,
      "type": "normal"
     },
     {
@@ -1270,13 +1266,7 @@
    ],
    "decision": "hold",
    "reason": {
-    "code": "close_hold",
-    "why": {
-     "code": "close",
-     "met": 1,
-     "n": 2,
-     "short": 1
-    }
+    "code": "reps_to_done"
    },
    "needs_approval": false,
    "flags": [],
@@ -1292,23 +1282,21 @@
     },
     {
      "kg": 40.0,
-     "reps": 13,
+     "reps": 14,
      "type": "normal"
     }
    ],
    "last_week": {
-    "grade": "partial",
+    "grade": "hit",
     "grade_reason": {
-     "code": "close",
-     "met": 1,
-     "n": 2,
-     "short": 1
+     "code": "met",
+     "n": 2
     },
     "source_sets": [
      {
       "date": "2030-03-19",
       "kg": 40.0,
-      "reps": 14,
+      "reps": 15,
       "type": "normal",
       "rir": 1
      },
@@ -1317,14 +1305,14 @@
       "kg": 40.0,
       "reps": 14,
       "type": "normal",
-      "rir": 0
+      "rir": 2
      }
     ],
     "athlete_note": null,
     "target_sets": [
      {
       "kg": 40.0,
-      "reps": 15,
+      "reps": 14,
       "type": "normal"
      },
      {
@@ -1362,50 +1350,46 @@
    "target_sets": [
     {
      "kg": 70.0,
-     "reps": 10,
+     "reps": 12,
      "type": "normal"
     },
     {
      "kg": 70.0,
-     "reps": 10,
+     "reps": 12,
      "type": "normal"
     },
     {
      "kg": 70.0,
-     "reps": 10,
+     "reps": 12,
      "type": "normal"
     }
    ],
    "target_kg": 70.0,
    "target_reps": [
-    10,
-    10,
-    10
+    12,
+    12,
+    12
    ],
    "prev_target_sets": [
     {
-     "kg": 60.0,
-     "reps": 18,
+     "kg": 70.0,
+     "reps": 10,
      "type": "normal"
     },
     {
-     "kg": 60.0,
-     "reps": 18,
+     "kg": 70.0,
+     "reps": 10,
      "type": "normal"
     },
     {
-     "kg": 60.0,
-     "reps": 18,
+     "kg": 70.0,
+     "reps": 10,
      "type": "normal"
     }
    ],
-   "decision": "increase",
+   "decision": "hold",
    "reason": {
-    "code": "step",
-    "reps": 20,
-    "left": 4,
-    "kg_add": 10.0,
-    "lo": 10
+    "code": "reps_to_done"
    },
    "needs_approval": false,
    "flags": [],
@@ -1416,17 +1400,17 @@
    "live_target_sets": [
     {
      "kg": 70.0,
-     "reps": 10,
+     "reps": 12,
      "type": "normal"
     },
     {
      "kg": 70.0,
-     "reps": 10,
+     "reps": 12,
      "type": "normal"
     },
     {
      "kg": 70.0,
-     "reps": 10,
+     "reps": 12,
      "type": "normal"
     }
    ],
@@ -1439,41 +1423,41 @@
     "source_sets": [
      {
       "date": "2030-03-19",
-      "kg": 60.0,
-      "reps": 20,
+      "kg": 70.0,
+      "reps": 12,
       "type": "normal",
       "rir": 5
      },
      {
       "date": "2030-03-19",
-      "kg": 60.0,
-      "reps": 20,
+      "kg": 70.0,
+      "reps": 12,
       "type": "normal",
       "rir": 5
      },
      {
       "date": "2030-03-19",
-      "kg": 60.0,
-      "reps": 20,
+      "kg": 70.0,
+      "reps": 12,
       "type": "normal",
-      "rir": 4
+      "rir": 5
      }
     ],
     "athlete_note": null,
     "target_sets": [
      {
-      "kg": 60.0,
-      "reps": 18,
+      "kg": 70.0,
+      "reps": 10,
       "type": "normal"
      },
      {
-      "kg": 60.0,
-      "reps": 18,
+      "kg": 70.0,
+      "reps": 10,
       "type": "normal"
      },
      {
-      "kg": 60.0,
-      "reps": 18,
+      "kg": 70.0,
+      "reps": 10,
       "type": "normal"
      }
     ]
@@ -1505,58 +1489,64 @@
    "load_step": 2.0,
    "target_sets": [
     {
-     "kg": 26.0,
+     "kg": 28.0,
      "reps": 9,
      "type": "normal"
     },
     {
-     "kg": 26.0,
-     "reps": 9,
+     "kg": 28.0,
+     "reps": 8,
      "type": "normal"
     },
     {
-     "kg": 26.0,
-     "reps": 9,
+     "kg": 28.0,
+     "reps": 8,
      "type": "normal"
     },
     {
-     "kg": 26.0,
+     "kg": 28.0,
      "reps": 8,
      "type": "normal"
     }
    ],
-   "target_kg": 26.0,
+   "target_kg": 28.0,
    "target_reps": [
     9,
-    9,
-    9,
+    8,
+    8,
     8
    ],
    "prev_target_sets": [
     {
-     "kg": 26.0,
+     "kg": 28.0,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 28.0,
      "reps": 8,
      "type": "normal"
     },
     {
-     "kg": 26.0,
+     "kg": 28.0,
      "reps": 8,
      "type": "normal"
     },
     {
-     "kg": 26.0,
-     "reps": 8,
-     "type": "normal"
-    },
-    {
-     "kg": 26.0,
+     "kg": 28.0,
      "reps": 8,
      "type": "normal"
     }
    ],
    "decision": "hold",
    "reason": {
-    "code": "reps_to_done"
+    "code": "close_hold",
+    "why": {
+     "code": "close",
+     "met": 3,
+     "n": 4,
+     "short": 1
+    }
    },
    "needs_approval": false,
    "flags": [],
@@ -1566,81 +1556,83 @@
    "override_reason": null,
    "live_target_sets": [
     {
-     "kg": 26.0,
+     "kg": 28.0,
      "reps": 9,
      "type": "normal"
     },
     {
-     "kg": 26.0,
-     "reps": 9,
+     "kg": 28.0,
+     "reps": 8,
      "type": "normal"
     },
     {
-     "kg": 26.0,
-     "reps": 9,
+     "kg": 28.0,
+     "reps": 8,
      "type": "normal"
     },
     {
-     "kg": 26.0,
+     "kg": 28.0,
      "reps": 8,
      "type": "normal"
     }
    ],
    "last_week": {
-    "grade": "hit",
+    "grade": "partial",
     "grade_reason": {
-     "code": "met",
-     "n": 4
+     "code": "close",
+     "met": 3,
+     "n": 4,
+     "short": 1
     },
     "source_sets": [
      {
       "date": "2030-03-21",
-      "kg": 26.0,
-      "reps": 9,
-      "type": "normal",
-      "rir": 2
-     },
-     {
-      "date": "2030-03-21",
-      "kg": 26.0,
-      "reps": 9,
-      "type": "normal",
-      "rir": 2
-     },
-     {
-      "date": "2030-03-21",
-      "kg": 26.0,
+      "kg": 28.0,
       "reps": 9,
       "type": "normal",
       "rir": 1
      },
      {
       "date": "2030-03-21",
-      "kg": 26.0,
+      "kg": 28.0,
       "reps": 8,
       "type": "normal",
-      "rir": 2
+      "rir": 1
+     },
+     {
+      "date": "2030-03-21",
+      "kg": 28.0,
+      "reps": 8,
+      "type": "normal",
+      "rir": 1
+     },
+     {
+      "date": "2030-03-21",
+      "kg": 28.0,
+      "reps": 7,
+      "type": "normal",
+      "rir": 1
      }
     ],
     "athlete_note": null,
     "target_sets": [
      {
-      "kg": 26.0,
+      "kg": 28.0,
+      "reps": 9,
+      "type": "normal"
+     },
+     {
+      "kg": 28.0,
       "reps": 8,
       "type": "normal"
      },
      {
-      "kg": 26.0,
+      "kg": 28.0,
       "reps": 8,
       "type": "normal"
      },
      {
-      "kg": 26.0,
-      "reps": 8,
-      "type": "normal"
-     },
-     {
-      "kg": 26.0,
+      "kg": 28.0,
       "reps": 8,
       "type": "normal"
      }
@@ -1684,7 +1676,7 @@
     },
     {
      "kg": 65.0,
-     "reps": 10,
+     "reps": 11,
      "type": "normal"
     }
    ],
@@ -1692,7 +1684,7 @@
    "target_reps": [
     11,
     11,
-    10
+    11
    ],
    "prev_target_sets": [
     {
@@ -1734,7 +1726,7 @@
     },
     {
      "kg": 65.0,
-     "reps": 10,
+     "reps": 11,
      "type": "normal"
     }
    ],
@@ -1750,6 +1742,13 @@
       "kg": 65.0,
       "reps": 11,
       "type": "normal",
+      "rir": null
+     },
+     {
+      "date": "2030-03-21",
+      "kg": 65.0,
+      "reps": 11,
+      "type": "normal",
       "rir": 2
      },
      {
@@ -1758,13 +1757,6 @@
       "reps": 11,
       "type": "normal",
       "rir": 1
-     },
-     {
-      "date": "2030-03-21",
-      "kg": 65.0,
-      "reps": 10,
-      "type": "normal",
-      "rir": 2
      }
     ],
     "athlete_note": null,
@@ -1813,20 +1805,20 @@
    "load_step": 2.0,
    "target_sets": [
     {
-     "kg": 20.0,
-     "reps": 12,
+     "kg": 22.0,
+     "reps": 8,
      "type": "normal"
     },
     {
-     "kg": 20.0,
-     "reps": 11,
+     "kg": 22.0,
+     "reps": 8,
      "type": "normal"
     }
    ],
-   "target_kg": 20.0,
+   "target_kg": 22.0,
    "target_reps": [
-    12,
-    11
+    8,
+    8
    ],
    "prev_target_sets": [
     {
@@ -1840,15 +1832,13 @@
      "type": "normal"
     }
    ],
-   "decision": "hold",
+   "decision": "increase",
    "reason": {
-    "code": "close_hold",
-    "why": {
-     "code": "close",
-     "met": 1,
-     "n": 2,
-     "short": 1
-    }
+    "code": "step",
+    "reps": 12,
+    "left": 2,
+    "kg_add": 2.0,
+    "lo": 8
    },
    "needs_approval": false,
    "flags": [],
@@ -1858,38 +1848,36 @@
    "override_reason": null,
    "live_target_sets": [
     {
-     "kg": 20.0,
-     "reps": 12,
+     "kg": 22.0,
+     "reps": 8,
      "type": "normal"
     },
     {
-     "kg": 20.0,
-     "reps": 11,
+     "kg": 22.0,
+     "reps": 8,
      "type": "normal"
     }
    ],
    "last_week": {
-    "grade": "partial",
+    "grade": "hit",
     "grade_reason": {
-     "code": "close",
-     "met": 1,
-     "n": 2,
-     "short": 1
+     "code": "met",
+     "n": 2
     },
     "source_sets": [
      {
       "date": "2030-03-21",
       "kg": 20.0,
-      "reps": 11,
+      "reps": 12,
       "type": "normal",
-      "rir": 1
+      "rir": 2
      },
      {
       "date": "2030-03-21",
       "kg": 20.0,
-      "reps": 11,
+      "reps": 12,
       "type": "normal",
-      "rir": 1
+      "rir": 2
      }
     ],
     "athlete_note": "shoulder fine today",
@@ -1933,50 +1921,47 @@
    "load_step": 5.0,
    "target_sets": [
     {
-     "kg": 65.0,
+     "kg": 60.0,
+     "reps": 11,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
+     "reps": 10,
+     "type": "normal"
+    }
+   ],
+   "target_kg": 60.0,
+   "target_reps": [
+    11,
+    10,
+    10
+   ],
+   "prev_target_sets": [
+    {
+     "kg": 60.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
      "reps": 9,
      "type": "normal"
     },
     {
-     "kg": 65.0,
-     "reps": 8,
-     "type": "normal"
-    },
-    {
-     "kg": 65.0,
-     "reps": 8,
-     "type": "normal"
-    }
-   ],
-   "target_kg": 65.0,
-   "target_reps": [
-    9,
-    8,
-    8
-   ],
-   "prev_target_sets": [
-    {
-     "kg": 65.0,
-     "reps": 8,
-     "type": "normal"
-    },
-    {
-     "kg": 65.0,
-     "reps": 8,
-     "type": "normal"
-    },
-    {
-     "kg": 65.0,
-     "reps": 8,
+     "kg": 60.0,
+     "reps": 9,
      "type": "normal"
     }
    ],
    "decision": "hold",
    "reason": {
-    "code": "add_rep",
-    "set": 1,
-    "frm": 8,
-    "to": 9
+    "code": "reps_to_done"
    },
    "needs_approval": false,
    "flags": [],
@@ -1986,18 +1971,18 @@
    "override_reason": null,
    "live_target_sets": [
     {
-     "kg": 65.0,
-     "reps": 9,
+     "kg": 60.0,
+     "reps": 11,
      "type": "normal"
     },
     {
-     "kg": 65.0,
-     "reps": 8,
+     "kg": 60.0,
+     "reps": 10,
      "type": "normal"
     },
     {
-     "kg": 65.0,
-     "reps": 8,
+     "kg": 60.0,
+     "reps": 10,
      "type": "normal"
     }
    ],
@@ -2010,41 +1995,41 @@
     "source_sets": [
      {
       "date": "2030-03-21",
-      "kg": 65.0,
-      "reps": 8,
+      "kg": 60.0,
+      "reps": 11,
       "type": "normal",
       "rir": 2
      },
      {
       "date": "2030-03-21",
-      "kg": 65.0,
-      "reps": 8,
+      "kg": 60.0,
+      "reps": 10,
       "type": "normal",
-      "rir": 1
+      "rir": 2
      },
      {
       "date": "2030-03-21",
-      "kg": 65.0,
-      "reps": 8,
+      "kg": 60.0,
+      "reps": 10,
       "type": "normal",
-      "rir": null
+      "rir": 2
      }
     ],
     "athlete_note": null,
     "target_sets": [
      {
-      "kg": 65.0,
-      "reps": 8,
+      "kg": 60.0,
+      "reps": 10,
       "type": "normal"
      },
      {
-      "kg": 65.0,
-      "reps": 8,
+      "kg": 60.0,
+      "reps": 9,
       "type": "normal"
      },
      {
-      "kg": 65.0,
-      "reps": 8,
+      "kg": 60.0,
+      "reps": 9,
       "type": "normal"
      }
     ]
@@ -2077,7 +2062,7 @@
    "target_sets": [
     {
      "kg": 14.0,
-     "reps": 14,
+     "reps": 16,
      "type": "normal"
     },
     {
@@ -2088,13 +2073,13 @@
    ],
    "target_kg": 14.0,
    "target_reps": [
-    14,
+    16,
     14
    ],
    "prev_target_sets": [
     {
      "kg": 14.0,
-     "reps": 14,
+     "reps": 16,
      "type": "normal"
     },
     {
@@ -2122,7 +2107,7 @@
    "live_target_sets": [
     {
      "kg": 14.0,
-     "reps": 14,
+     "reps": 16,
      "type": "normal"
     },
     {
@@ -2143,23 +2128,23 @@
      {
       "date": "2030-03-21",
       "kg": 14.0,
-      "reps": 14,
+      "reps": 15,
       "type": "normal",
       "rir": 1
      },
      {
       "date": "2030-03-21",
       "kg": 14.0,
-      "reps": 13,
+      "reps": 15,
       "type": "normal",
-      "rir": 1
+      "rir": 0
      }
     ],
     "athlete_note": null,
     "target_sets": [
      {
       "kg": 14.0,
-      "reps": 14,
+      "reps": 16,
       "type": "normal"
      },
      {
@@ -2197,24 +2182,24 @@
    "target_sets": [
     {
      "kg": 25.0,
-     "reps": 13,
+     "reps": 14,
      "type": "normal"
     },
     {
      "kg": 25.0,
-     "reps": 12,
+     "reps": 14,
      "type": "normal"
     }
    ],
    "target_kg": 25.0,
    "target_reps": [
-    13,
-    12
+    14,
+    14
    ],
    "prev_target_sets": [
     {
      "kg": 25.0,
-     "reps": 12,
+     "reps": 13,
      "type": "normal"
     },
     {
@@ -2225,10 +2210,7 @@
    ],
    "decision": "hold",
    "reason": {
-    "code": "add_rep",
-    "set": 1,
-    "frm": 12,
-    "to": 13
+    "code": "reps_to_done"
    },
    "needs_approval": false,
    "flags": [],
@@ -2239,12 +2221,12 @@
    "live_target_sets": [
     {
      "kg": 25.0,
-     "reps": 13,
+     "reps": 14,
      "type": "normal"
     },
     {
      "kg": 25.0,
-     "reps": 12,
+     "reps": 14,
      "type": "normal"
     }
    ],
@@ -2258,23 +2240,23 @@
      {
       "date": "2030-03-21",
       "kg": 25.0,
-      "reps": 12,
+      "reps": 14,
       "type": "normal",
-      "rir": 1
+      "rir": 2
      },
      {
       "date": "2030-03-21",
       "kg": 25.0,
-      "reps": 12,
+      "reps": 14,
       "type": "normal",
-      "rir": 0
+      "rir": 1
      }
     ],
     "athlete_note": null,
     "target_sets": [
      {
       "kg": 25.0,
-      "reps": 12,
+      "reps": 13,
       "type": "normal"
      },
      {
@@ -2322,12 +2304,12 @@
     },
     {
      "kg": 85.0,
-     "reps": 9,
+     "reps": 10,
      "type": "normal"
     },
     {
      "kg": 85.0,
-     "reps": 8,
+     "reps": 10,
      "type": "normal"
     }
    ],
@@ -2335,8 +2317,8 @@
    "target_reps": [
     10,
     10,
-    9,
-    8
+    10,
+    10
    ],
    "prev_target_sets": [
     {
@@ -2351,21 +2333,21 @@
     },
     {
      "kg": 85.0,
-     "reps": 8,
+     "reps": 10,
      "type": "normal"
     },
     {
      "kg": 85.0,
-     "reps": 8,
+     "reps": 9,
      "type": "normal"
     }
    ],
    "decision": "hold",
    "reason": {
     "code": "add_rep",
-    "set": 3,
-    "frm": 8,
-    "to": 9
+    "set": 4,
+    "frm": 9,
+    "to": 10
    },
    "needs_approval": false,
    "flags": [],
@@ -2386,12 +2368,12 @@
     },
     {
      "kg": 85.0,
-     "reps": 9,
+     "reps": 10,
      "type": "normal"
     },
     {
      "kg": 85.0,
-     "reps": 8,
+     "reps": 10,
      "type": "normal"
     }
    ],
@@ -2403,30 +2385,30 @@
     },
     "source_sets": [
      {
-      "date": "2030-03-22",
+      "date": "2030-03-23",
+      "kg": 85.0,
+      "reps": 10,
+      "type": "normal",
+      "rir": null
+     },
+     {
+      "date": "2030-03-23",
       "kg": 85.0,
       "reps": 10,
       "type": "normal",
       "rir": 2
      },
      {
-      "date": "2030-03-22",
+      "date": "2030-03-23",
       "kg": 85.0,
       "reps": 10,
       "type": "normal",
-      "rir": 1
+      "rir": 2
      },
      {
-      "date": "2030-03-22",
+      "date": "2030-03-23",
       "kg": 85.0,
-      "reps": 8,
-      "type": "normal",
-      "rir": 3
-     },
-     {
-      "date": "2030-03-22",
-      "kg": 85.0,
-      "reps": 8,
+      "reps": 9,
       "type": "normal",
       "rir": 2
      }
@@ -2445,12 +2427,12 @@
      },
      {
       "kg": 85.0,
-      "reps": 8,
+      "reps": 10,
       "type": "normal"
      },
      {
       "kg": 85.0,
-      "reps": 8,
+      "reps": 9,
       "type": "normal"
      }
     ]
@@ -2516,16 +2498,13 @@
     },
     {
      "kg": 28.0,
-     "reps": 11,
+     "reps": 10,
      "type": "normal"
     }
    ],
    "decision": "hold",
    "reason": {
-    "code": "add_rep",
-    "set": 2,
-    "frm": 11,
-    "to": 12
+    "code": "reps_to_done"
    },
    "needs_approval": false,
    "flags": [],
@@ -2558,25 +2537,25 @@
     },
     "source_sets": [
      {
-      "date": "2030-03-22",
+      "date": "2030-03-23",
       "kg": 28.0,
       "reps": 12,
       "type": "normal",
-      "rir": 2
+      "rir": null
      },
      {
-      "date": "2030-03-22",
+      "date": "2030-03-23",
+      "kg": 28.0,
+      "reps": 12,
+      "type": "normal",
+      "rir": 3
+     },
+     {
+      "date": "2030-03-23",
       "kg": 28.0,
       "reps": 11,
       "type": "normal",
-      "rir": 2
-     },
-     {
-      "date": "2030-03-22",
-      "kg": 28.0,
-      "reps": 11,
-      "type": "normal",
-      "rir": 1
+      "rir": 3
      }
     ],
     "athlete_note": null,
@@ -2593,7 +2572,7 @@
      },
      {
       "kg": 28.0,
-      "reps": 11,
+      "reps": 10,
       "type": "normal"
      }
     ]
@@ -2631,7 +2610,7 @@
     },
     {
      "kg": 60.0,
-     "reps": 14,
+     "reps": 15,
      "type": "normal"
     },
     {
@@ -2643,7 +2622,7 @@
    "target_kg": 60.0,
    "target_reps": [
     16,
-    14,
+    15,
     14
    ],
    "prev_target_sets": [
@@ -2654,21 +2633,18 @@
     },
     {
      "kg": 60.0,
-     "reps": 14,
+     "reps": 13,
      "type": "normal"
     },
     {
      "kg": 60.0,
-     "reps": 14,
+     "reps": 12,
      "type": "normal"
     }
    ],
    "decision": "hold",
    "reason": {
-    "code": "add_rep",
-    "set": 1,
-    "frm": 15,
-    "to": 16
+    "code": "reps_to_done"
    },
    "needs_approval": false,
    "flags": [],
@@ -2684,7 +2660,7 @@
     },
     {
      "kg": 60.0,
-     "reps": 14,
+     "reps": 15,
      "type": "normal"
     },
     {
@@ -2701,25 +2677,25 @@
     },
     "source_sets": [
      {
-      "date": "2030-03-22",
+      "date": "2030-03-23",
       "kg": 60.0,
-      "reps": 15,
-      "type": "normal",
-      "rir": 0
-     },
-     {
-      "date": "2030-03-22",
-      "kg": 60.0,
-      "reps": 14,
+      "reps": 16,
       "type": "normal",
       "rir": 1
      },
      {
-      "date": "2030-03-22",
+      "date": "2030-03-23",
+      "kg": 60.0,
+      "reps": 15,
+      "type": "normal",
+      "rir": 1
+     },
+     {
+      "date": "2030-03-23",
       "kg": 60.0,
       "reps": 14,
       "type": "normal",
-      "rir": 0
+      "rir": 2
      }
     ],
     "athlete_note": null,
@@ -2731,12 +2707,12 @@
      },
      {
       "kg": 60.0,
-      "reps": 14,
+      "reps": 13,
       "type": "normal"
      },
      {
       "kg": 60.0,
-      "reps": 14,
+      "reps": 12,
       "type": "normal"
      }
     ]
@@ -2774,14 +2750,14 @@
     },
     {
      "kg": 40.0,
-     "reps": 17,
+     "reps": 19,
      "type": "normal"
     }
    ],
    "target_kg": 40.0,
    "target_reps": [
     19,
-    17
+    19
    ],
    "prev_target_sets": [
     {
@@ -2791,16 +2767,13 @@
     },
     {
      "kg": 40.0,
-     "reps": 17,
+     "reps": 18,
      "type": "normal"
     }
    ],
    "decision": "hold",
    "reason": {
-    "code": "add_rep",
-    "set": 1,
-    "frm": 18,
-    "to": 19
+    "code": "reps_to_done"
    },
    "needs_approval": false,
    "flags": [],
@@ -2816,7 +2789,7 @@
     },
     {
      "kg": 40.0,
-     "reps": 17,
+     "reps": 19,
      "type": "normal"
     }
    ],
@@ -2828,18 +2801,18 @@
     },
     "source_sets": [
      {
-      "date": "2030-03-22",
+      "date": "2030-03-23",
       "kg": 40.0,
-      "reps": 18,
+      "reps": 19,
       "type": "normal",
       "rir": 1
      },
      {
-      "date": "2030-03-22",
+      "date": "2030-03-23",
       "kg": 40.0,
-      "reps": 17,
+      "reps": 19,
       "type": "normal",
-      "rir": null
+      "rir": 0
      }
     ],
     "athlete_note": null,
@@ -2851,7 +2824,7 @@
      },
      {
       "kg": 40.0,
-      "reps": 17,
+      "reps": 18,
       "type": "normal"
      }
     ]
@@ -2889,7 +2862,7 @@
     },
     {
      "kg": 55.0,
-     "reps": 15,
+     "reps": 16,
      "type": "normal"
     },
     {
@@ -2901,29 +2874,29 @@
    "target_kg": 55.0,
    "target_reps": [
     16,
-    15,
+    16,
     15
    ],
    "prev_target_sets": [
     {
      "kg": 55.0,
-     "reps": 16,
-     "type": "normal"
-    },
-    {
-     "kg": 55.0,
      "reps": 15,
      "type": "normal"
     },
     {
      "kg": 55.0,
      "reps": 15,
+     "type": "normal"
+    },
+    {
+     "kg": 55.0,
+     "reps": 14,
      "type": "normal"
     }
    ],
    "decision": "hold",
    "reason": {
-    "code": "miss_hold"
+    "code": "reps_to_done"
    },
    "needs_approval": false,
    "flags": [],
@@ -2939,7 +2912,7 @@
     },
     {
      "kg": 55.0,
-     "reps": 15,
+     "reps": 16,
      "type": "normal"
     },
     {
@@ -2949,34 +2922,30 @@
     }
    ],
    "last_week": {
-    "grade": "miss",
+    "grade": "hit",
     "grade_reason": {
-     "code": "missed",
-     "met": 1,
-     "n": 3,
-     "missing": 0,
-     "under_load": false,
-     "short": 4
+     "code": "met",
+     "n": 3
     },
     "source_sets": [
      {
-      "date": "2030-03-22",
+      "date": "2030-03-23",
       "kg": 55.0,
-      "reps": 15,
-      "type": "normal",
-      "rir": 0
-     },
-     {
-      "date": "2030-03-22",
-      "kg": 55.0,
-      "reps": 14,
+      "reps": 16,
       "type": "normal",
       "rir": 1
      },
      {
-      "date": "2030-03-22",
+      "date": "2030-03-23",
       "kg": 55.0,
-      "reps": 13,
+      "reps": 16,
+      "type": "normal",
+      "rir": 0
+     },
+     {
+      "date": "2030-03-23",
+      "kg": 55.0,
+      "reps": 15,
       "type": "normal",
       "rir": 1
      }
@@ -2985,17 +2954,17 @@
     "target_sets": [
      {
       "kg": 55.0,
-      "reps": 16,
-      "type": "normal"
-     },
-     {
-      "kg": 55.0,
       "reps": 15,
       "type": "normal"
      },
      {
       "kg": 55.0,
       "reps": 15,
+      "type": "normal"
+     },
+     {
+      "kg": 55.0,
+      "reps": 14,
       "type": "normal"
      }
     ]

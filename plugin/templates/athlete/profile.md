@@ -13,6 +13,7 @@ minutes_per_session:     # 30 | 45 | 60 | 75
 equipment: gym           # gym only in v0.1
 goal:                    # strength | muscle | both
 priority: none           # advanced only: none | chest | back | shoulders | arms | quads | glutes-hamstrings | calves
+exercise_swaps: []       # [{from: Romanian_Deadlift, to: Stiff-Legged_Dumbbell_Deadlift}] same slot only (monthly check-in)
 # --- nutrition (v0.2, optional; onboard step 8a · skills/nutrition) ---
 age_years:               # whole number; nutrition targets only from 18
 sex:                     # male | female | unspecified  (energy formula only)
