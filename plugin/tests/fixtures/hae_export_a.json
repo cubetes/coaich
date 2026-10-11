@@ -1,0 +1,24 @@
+{"data": {"workouts": [], "metrics": [
+  {"name": "step_count", "units": "count", "data": [
+    {"date": "2030-03-01 00:00:00 +0100", "qty": 8000},
+    {"date": "2030-03-02 09:00:00 +0100", "qty": 6000},
+    {"date": "2030-03-02 18:00:00 +0100", "qty": 4500}]},
+  {"name": "active_energy", "units": "kJ", "data": [
+    {"date": "2030-03-02 00:00:00 +0100", "qty": 2092}]},
+  {"name": "resting_heart_rate", "units": "count/min", "data": [
+    {"date": "2030-03-01 00:00:00 +0100", "qty": 56},
+    {"date": "2030-03-02 00:00:00 +0100", "qty": 58}]},
+  {"name": "heart_rate_variability", "units": "ms", "data": [
+    {"date": "2030-03-02 03:00:00 +0100", "qty": 50},
+    {"date": "2030-03-02 05:00:00 +0100", "qty": 60}]},
+  {"name": "weight_body_mass", "units": "kg", "data": [
+    {"date": "2030-03-01 07:00:00 +0100", "qty": 80.4},
+    {"date": "2030-03-02 07:00:00 +0100", "qty": 80.2}]},
+  {"name": "body_fat_percentage", "units": "%", "data": [
+    {"date": "2030-03-02 07:00:00 +0100", "qty": 18.5}]},
+  {"name": "sleep_analysis", "units": "hr", "data": [
+    {"date": "2030-03-02 00:00:00 +0100", "totalSleep": 7.25, "deep": 1.1, "rem": 1.6, "core": 4.55, "awake": 0.3,
+     "sleepStart": "2030-03-01 23:30:00 +0100", "sleepEnd": "2030-03-02 07:05:00 +0100"}]},
+  {"name": "dietary_water", "units": "mL", "data": [
+    {"date": "2030-03-02 00:00:00 +0100", "qty": 2000}]}
+]}}

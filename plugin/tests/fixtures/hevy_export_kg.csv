@@ -1,0 +1,9 @@
+"title","start_time","end_time","description","exercise_title","superset_id","exercise_notes","set_index","set_type","weight_kg","reps","distance_km","duration_seconds","rpe"
+"Push","14 Jan 2030, 18:00","14 Jan 2030, 19:05","Good day","Bench Press (Barbell)",,"",0,"warmup",40,10,,,
+"Push","14 Jan 2030, 18:00","14 Jan 2030, 19:05","Good day","Bench Press (Barbell)",,"",1,"normal",80,6,,,8
+"Push","14 Jan 2030, 18:00","14 Jan 2030, 19:05","Good day","Bench Press (Barbell)",,"",2,"normal",80,6,,,9.5
+"Push","14 Jan 2030, 18:00","14 Jan 2030, 19:05","Good day","Lateral Raise (Dumbbell)",,"Slow",0,"normal",10,15,,,
+"Push","14 Jan 2030, 18:00","14 Jan 2030, 19:05","Good day","Lateral Raise (Dumbbell)",,"Slow",1,"dropset",6,12,,,
+"Legs","16 Jan 2030, 07:30","16 Jan 2030, 08:20","","Squat (Barbell)",,"",0,"normal",110,5,,,7
+"Legs","16 Jan 2030, 07:30","16 Jan 2030, 08:20","","Leg Press (Machine)",,"",0,"failure",200,12,,,10
+"Legs","16 Jan 2030, 07:30","16 Jan 2030, 08:20","","Belt Squat (Machine)",,"",0,"normal",80,10,,,
