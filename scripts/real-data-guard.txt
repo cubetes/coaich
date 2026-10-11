@@ -1,0 +1,33 @@
+# Real-data guard: one Python regex per line, prefixed by its scope.
+#   all:       checked in every text file
+#   fixtures:  checked only in test data, demo data and examples (see FIXTURE in check_public.py)
+# Text is NFC-normalised first, so "Adrián" matches whether the accent is composed or not.
+# A hit fails the check. Fix the file, or keep it out of the allow-list. Never add an "ignore".
+
+# Owner identity
+all: (?i)\badri[aá]n\b
+all: (?i)fern[aá]ndez
+all: (?i)adrianfgil
+all: (?i)[a-z0-9._%+-]+@gmail\.com
+all: F529M7U37T
+
+# Device UDIDs (owner iPhone / Watch prefixes)
+all: 00008160-
+all: 00008310-
+
+# Owner server
+all: (?i)palazzopalloni
+all: (?i)workers\.dev
+
+# Owner gyms
+all: (?i)viva ?gym
+all: \bON AIR\b
+all: (?i)on-air-eixample
+all: (?i)eixample
+
+# Hevy exercise-template ids ("79D0BB3A")
+all: "[0-9A-F]{8}"
+
+# Real dates in test or demo data (use synthetic dates, e.g. 2001-01-01)
+fixtures: \b2026-\d{2}-\d{2}
+fixtures: \b2026-W\d{2}

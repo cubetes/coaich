@@ -1,0 +1,12 @@
+# Xcode / SwiftPM
+build/
+DerivedData/
+.build/
+.swiftpm/
+xcuserdata/
+*.xcuserstate
+# macOS
+.DS_Store
+# secrets never live here
+.secrets/
+*.env
