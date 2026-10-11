@@ -40,24 +40,48 @@ the user's own explicit request lifts it (blank the field, add a dated note), as
 
 ## 2. Photos in
 
-Say once per session: *"Your photos stay in your folder (`photos/`, which git ignores). They pass only through
-your own Claude session, and their location and camera data are removed when they are filed."*
+**Never open an original.** Do not Read, preview or describe any photo the user gives you, and do not run any
+other tool on it: the face comes off on the user's computer first, and you look only at the copy in `photos/`.
+This holds even if the user asks you to "just look". The only exception is section 6 (a goal picture of someone
+else, which is never filed).
+
+Say once per session: *"Before I see a photo, your computer removes your face from it: by default it cuts the
+picture just below your chin, so your neck, traps and shoulders stay in. Only that copy is kept, in your folder
+(`photos/`, which git ignores), with its location and camera data removed. Your original stays where you have
+it, unchanged."*
 
 Pose protocol, the same every time: **front, side, back**, relaxed (not flexed), same light, same place, same
 time of day (morning, before eating, is easiest to repeat), camera at chest height about 2–3 m away, tight or
-little clothing. JPEG or PNG; on an iPhone, Settings › Camera › Formats › Most Compatible.
+little clothing, head level, only you in the picture. JPEG or PNG; on an iPhone, Settings › Camera › Formats ›
+Most Compatible.
 
-**Look at every image before filing it.** Decide front, side or back from what you see, never from the file
-name or the order the files came in (orders get shuffled and names lie). If you cannot tell, or a pose is
-missing or doubled, ask. Then:
+**Ask the user which file is which pose** (you cannot look). Then:
 
 ```
-python3 "$P" file --dir <folder> --date YYYY-MM-DD front=<path> side=<path> back=<path>
+python3 "$P" file --dir <folder> --date YYYY-MM-DD front=<path> side=<path> back=<path> [--anonymise crop|blur]
 ```
 
-`--date` = the day the photos were taken (ask if unsure). Exit 2 names the problem (an existing pose: ask
-before adding `--replace`; HEIC: ask for JPEG). The originals the user gave you keep their metadata: say so and
-suggest deleting them if they sit outside the folder.
+`--date` = the day the photos were taken (ask if unsure). The face is removed first (Apple Vision on a Mac,
+OpenCV on Windows or Linux if installed), then the copy is filed as `photos/DATE/POSE.jpg`. `--anonymise blur`
+covers the face, ears and hair with a solid grey block instead of cutting; use it only when the user asks
+(`photo_anonymise: blur` in `coaich.md` makes it their default). Exit 2 writes nothing and names the problem:
+
+| Problem | Do |
+|---|---|
+| no face found, several faces, a face that could not be outlined, a face low in the picture | Say the printed reason. Ask the user to crop the photo themselves just below the chin (or retake it alone, head level). When they say they cropped it, file it again with `--user-cropped`; that passes only if no face is found. |
+| chin too close to the shoulders | Ask for a retake with the head level, or a self-crop as above. |
+| no face detector on this computer | Say so. A Mac needs Apple's command line tools (`xcode-select --install`); elsewhere `pip install opencv-python` adds one. Or the user crops it and you file with `--user-cropped`. |
+| a pose already filed | Ask before adding `--replace`. |
+| HEIC | Ask for JPEG. |
+
+A back view with no face and no nose or eyes found is filed uncropped (metadata still removed).
+
+**Then check the filed copies** (`photos/DATE/`), the only images you open. If any part of a face still shows,
+delete that file at once (`rm`), say so, and ask the user to crop it themselves. If a pose is not what the user
+said (a side photo filed as front), say what you see and re-file the right originals with `--replace`.
+
+Afterwards say: *"Your original photos are still where you had them, with your face and their location data.
+You can delete them if you don't need them."* Offer; never push, and never delete them yourself.
 
 ## 3. Rate
 
@@ -140,4 +164,5 @@ hurts or feels off, a physiotherapist can look at it."*
   advice on drugs or steroids. Please talk to a doctor about them."*
 - Make medical claims or diagnose anything from photos.
 - Promise a result or a date.
+- Open, read or describe an original photo the user gives you (only the anonymised copies in `photos/`).
 - Upload, share or copy photos anywhere outside the user's folder.

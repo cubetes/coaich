@@ -9,6 +9,7 @@ safety_status:           # go | warn | stop (safety skill)
 safety_reasons: []       # health item ids, age, red-flag:<area>
 safety_clearance_date:   # date the user confirmed a doctor's clearance
 safety_clearance_sentence: # exact sentence; one clearance lifts every stop item of that onboarding
+photo_anonymise: crop     # crop | blur: how the face is removed from progress photos (physique skill)
 ---
 # CoAIch settings
 

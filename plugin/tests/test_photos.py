@@ -1,11 +1,16 @@
 """photos.py: safeguard gate, filing, metadata stripping (GPS), ratings round-trip, compare, priorities.
 No real photos: every image is a tiny generated placeholder."""
+import contextlib
+import io
 import json
 import os
 import struct
+import tempfile
+import shutil
 import unittest
 import zlib
 from pathlib import Path
+from unittest import mock
 
 from support import make_folder, run
 import athlete_folder as af
@@ -86,12 +91,41 @@ class Base(unittest.TestCase):
         Path(d, "profile.md").write_text(PROFILE.format(age=age, ed=ed, opt=opt), encoding="utf-8")
         return d
 
-    def images(self, d):
-        jpg, _, _ = placeholder_jpeg()
+    def images(self, d=None):
+        """The user's originals, outside the athlete folder (where they keep their camera roll)."""
+        d = d or tempfile.mkdtemp(prefix="coaich-originals-")
+        self.addCleanup(shutil.rmtree, d, True)
+        jpg = placeholder_jpeg()[0].replace(SCAN, ORIGINAL + SCAN)
         png, _, _ = placeholder_png()
         for name, data in (("a.jpg", jpg), ("b.png", png), ("c.jpg", jpg)):
             Path(d, name).write_bytes(data)
         return {"front": os.path.join(d, "a.jpg"), "side": os.path.join(d, "b.png"), "back": os.path.join(d, "c.jpg")}
+
+
+ORIGINAL = b"ORIGINALPIXELS"  # only in the originals' image data: never in the athlete folder
+# One face, high in a 1000 x 2000 standing photo; shoulders well below the chin.
+FACE = [400, 200, 200, 240]
+POINTS = {"nose": [500, 330], "left_eye": [460, 290], "right_eye": [540, 290], "neck": [500, 600],
+          "left_shoulder": [380, 610], "right_shoulder": [620, 605]}
+
+
+class FakeDetector:
+    """Stands in for Apple Vision / OpenCV. Its output image still carries EXIF + GPS, so the tests prove that filing
+    strips whatever a detector leaves in."""
+    name = "fake"
+
+    def __init__(self, faces=(FACE,), points=None, by_src=None):
+        self.findings = {"width": 1000, "height": 2000, "faces": [list(f) for f in faces],
+                         "points": POINTS if points is None else points}
+        self.by_src = by_src or {}
+        self.ops = []
+
+    def detect(self, src):
+        return self.by_src.get(src, self.findings)
+
+    def render(self, src, dst, op):
+        self.ops.append(op)
+        Path(dst).write_bytes(placeholder_jpeg(orientation=1)[0])
 
 
 class StripTest(unittest.TestCase):
@@ -159,7 +193,7 @@ class GateTest(Base):
 
     def test_closed_gate_refuses_every_write(self):
         d = self.folder(ed="yes")
-        imgs = self.images(d)
+        imgs = self.images()
         with self.assertRaisesRegex(ph.Refused, "eating-disorder-history"):
             ph.file_photos(d, "2030-01-06", imgs)
         with self.assertRaises(ph.Refused):
@@ -185,42 +219,150 @@ class GateTest(Base):
 
 
 class FilingTest(Base):
-    def test_files_by_pose_and_date_without_metadata(self):
+    def test_files_by_pose_and_date_face_removed_without_metadata(self):
         d = self.folder()
-        made = ph.file_photos(d, "2030-01-06", self.images(d))
+        imgs = self.images()
+        fake = FakeDetector(by_src={imgs["back"]: {"width": 1000, "height": 2000, "faces": [], "points": {}}})
+        made = ph.file_photos(d, "2030-01-06", imgs, detector=fake)
         self.assertEqual(sorted(made), ["photos/2030-01-06/back.jpg", "photos/2030-01-06/front.jpg",
-                                        "photos/2030-01-06/side.png"])
+                                        "photos/2030-01-06/side.jpg"])
+        self.assertEqual(fake.ops, [["crop", 469], ["crop", 469], ["none"]])
         for rel in made:
             data = Path(d, rel).read_bytes()
             self.assertNotIn(GPS_SENTINEL, data)
             self.assertEqual(ph.metadata_left(data), [])
         self.assertEqual(ph.photo_sets(d), [{"date": "2030-01-06", "poses": ["front", "side", "back"]}])
 
+    def test_the_original_is_never_copied_into_the_folder(self):
+        d = self.folder()
+        imgs = self.images()
+        ph.file_photos(d, "2030-01-06", {"front": imgs["front"]}, detector=FakeDetector())
+        for f in Path(d).rglob("*"):
+            if f.is_file():
+                self.assertNotIn(ORIGINAL, f.read_bytes(), f)
+        self.assertIn(ORIGINAL, Path(imgs["front"]).read_bytes())  # the user's own file is left as it was
+
+    def test_blur_from_the_settings_file(self):
+        d = self.folder()
+        with open(Path(d, "coaich.md"), "a", encoding="utf-8") as f:
+            f.write("photo_anonymise: blur\n")
+        fake = FakeDetector()
+        ph.file_photos(d, "2030-01-06", {"front": self.images()["front"]}, detector=fake)
+        self.assertEqual(fake.ops, [["cover", 330, 56, 670, 469]])
+        ph.file_photos(d, "2030-01-06", {"front": self.images()["front"]}, replace=True, mode="crop", detector=fake)
+        self.assertEqual(fake.ops[-1], ["crop", 469])  # the command line wins over the setting
+
+    def test_a_face_that_cannot_be_removed_writes_nothing(self):
+        d = self.folder()
+        imgs = self.images()
+        two = FakeDetector(by_src={imgs["side"]: {"width": 1000, "height": 2000, "faces": [FACE, [100, 200, 90, 100]],
+                                                   "points": {}}})
+        with self.assertRaisesRegex(ph.Refused, "2 faces found"):
+            ph.file_photos(d, "2030-01-06", imgs, detector=two)
+        with self.assertRaisesRegex(ph.Refused, "no face found"):
+            ph.file_photos(d, "2030-01-06", imgs, detector=FakeDetector(faces=(), points={}))
+        self.assertFalse(Path(d, "photos").exists())
+
+    def test_no_detector_stops_unless_the_user_cropped_it(self):
+        d = self.folder()
+        imgs = self.images()
+        with mock.patch.object(ph, "find_detector", lambda: None):
+            with self.assertRaisesRegex(ph.Refused, "no face detector"):
+                ph.file_photos(d, "2030-01-06", {"front": imgs["front"]})
+            self.assertFalse(Path(d, "photos").exists())
+            made = ph.file_photos(d, "2030-01-06", {"front": imgs["side"]}, user_cropped=True)
+        self.assertEqual(made, ["photos/2030-01-06/front.png"])
+        self.assertEqual(ph.metadata_left(Path(d, made[0]).read_bytes()), [])
+
     def test_refuses_to_overwrite_unless_asked(self):
         d = self.folder()
-        imgs = self.images(d)
-        ph.file_photos(d, "2030-01-06", {"front": imgs["front"]})
+        imgs = self.images()
+        fake = FakeDetector()
+        ph.file_photos(d, "2030-01-06", {"front": imgs["front"]}, detector=fake)
         with self.assertRaisesRegex(ph.Refused, "already has a front"):
-            ph.file_photos(d, "2030-01-06", {"front": imgs["side"]})
-        ph.file_photos(d, "2030-01-06", {"front": imgs["side"]}, replace=True)
-        self.assertEqual([p.name for p in Path(d, "photos", "2030-01-06").iterdir()], ["front.png"])
+            ph.file_photos(d, "2030-01-06", {"front": imgs["side"]}, detector=fake)
+        ph.file_photos(d, "2030-01-06", {"front": imgs["side"]}, replace=True, detector=fake)
+        self.assertEqual([p.name for p in Path(d, "photos", "2030-01-06").iterdir()], ["front.jpg"])
 
     def test_bad_input_writes_nothing(self):
         d = self.folder()
-        imgs = self.images(d)
+        imgs = self.images()
         Path(d, "x.heic").write_bytes(b"\x00\x00\x00\x18ftypheic")
+        fake = FakeDetector()
         for poses in ({"front": imgs["front"], "side": os.path.join(d, "x.heic")}, {"pose-4": imgs["front"]}):
             with self.assertRaises(ph.Refused):
-                ph.file_photos(d, "2030-01-06", poses)
+                ph.file_photos(d, "2030-01-06", poses, detector=fake)
         with self.assertRaisesRegex(ph.Refused, "not a date"):
-            ph.file_photos(d, "06/01/2030", {"front": imgs["front"]})
+            ph.file_photos(d, "06/01/2030", {"front": imgs["front"]}, detector=fake)
+        with self.assertRaisesRegex(ph.Refused, "anonymise mode"):
+            ph.file_photos(d, "2030-01-06", {"front": imgs["front"]}, mode="pixelate", detector=fake)
         self.assertFalse(Path(d, "photos").exists())
+        self.assertEqual(fake.ops, [])
 
     def test_cli_files_and_logs(self):
         d = self.folder()
-        imgs = self.images(d)
-        run("photos.py", "file", "--dir", d, "--date", "2030-01-06", f"front={imgs['front']}", f"back={imgs['back']}")
-        self.assertIn("· physique · filed 2 photos for 2030-01-06", Path(d, "log.md").read_text(encoding="utf-8"))
+        imgs = self.images()
+        fake = FakeDetector()
+        with mock.patch.object(ph, "find_detector", lambda: fake), contextlib.redirect_stdout(io.StringIO()):
+            code = ph.main(["file", "--dir", d, "--date", "2030-01-06", "--anonymise", "blur",
+                            f"front={imgs['front']}", f"side={imgs['side']}"])
+        self.assertEqual(code, 0)
+        self.assertEqual([op[0] for op in fake.ops], ["cover", "cover"])
+        self.assertIn("· physique · filed 2 photos for 2030-01-06 (face removed", Path(d, "log.md").read_text(encoding="utf-8"))
+
+
+class PlanTest(unittest.TestCase):
+    """Where the cut goes, from the detector's findings (pixels of the upright image, origin top-left)."""
+
+    def det(self, faces=(FACE,), points=None):
+        return {"width": 1000, "height": 2000, "faces": [list(f) for f in faces],
+                "points": POINTS if points is None else points}
+
+    def test_crop_line_just_below_the_chin_above_the_shoulders(self):
+        # face box bottom 440 + 0.12 x 240 = 468.8 → 469; shoulders start at 605, so 469 < 605 - 72
+        self.assertEqual(ph.anonymise_plan(self.det(), "front"), ["crop", 469])
+        self.assertEqual(ph.anonymise_plan(self.det(points={}), "side"), ["crop", 469])  # no body pose: face box only
+
+    def test_a_head_point_below_the_box_moves_the_line_down(self):
+        pts = dict(POINTS, nose=[500, 450])  # a tilted head: the nose sits under Vision's box
+        self.assertEqual(ph.anonymise_plan(self.det(points=pts), "front"), ["crop", 479])
+
+    def test_never_cuts_the_shoulders(self):
+        pts = dict(POINTS, left_shoulder=[380, 520])  # 469 > 520 - 72: the cut would take the traps
+        with self.assertRaisesRegex(ph.Refused, "too close to the shoulders"):
+            ph.anonymise_plan(self.det(points=pts), "front")
+
+    def test_blur_covers_face_ears_and_hair_down_to_the_same_line(self):
+        self.assertEqual(ph.anonymise_plan(self.det(), "front", "blur"), ["cover", 330, 56, 670, 469])
+        edge = ph.anonymise_plan(self.det(faces=([0, 20, 200, 240],), points={}), "front", "blur")
+        self.assertEqual(edge, ["cover", 0, 0, 270, 289])  # clamped to the picture
+
+    def test_stops_on_several_faces_or_none(self):
+        with self.assertRaisesRegex(ph.Refused, "2 faces"):
+            ph.anonymise_plan(self.det(faces=(FACE, [100, 100, 80, 90])), "front")
+        for pose in ("front", "side"):
+            with self.assertRaisesRegex(ph.Refused, "no face found"):
+                ph.anonymise_plan(self.det(faces=(), points={}), pose)
+
+    def test_a_low_face_is_not_trusted(self):
+        with self.assertRaisesRegex(ph.Refused, "not where a head should be"):
+            ph.anonymise_plan(self.det(faces=([400, 1500, 200, 240],), points={}), "front")
+
+    def test_back_view_without_a_face_passes_uncropped(self):
+        body_only = {"neck": [500, 600], "left_shoulder": [380, 610], "left_ear": [430, 300]}
+        self.assertEqual(ph.anonymise_plan(self.det(faces=(), points=body_only), "back"), ["none"])
+        for face_point in ("nose", "left_eye", "right_eye"):
+            with self.assertRaisesRegex(ph.Refused, "could not be outlined"):
+                ph.anonymise_plan(self.det(faces=(), points=dict(body_only, **{face_point: [500, 300]})), "back")
+        self.assertEqual(ph.anonymise_plan(self.det(), "back"), ["crop", 469])  # a face in a back view is still cut
+
+    def test_user_cropped_passes_only_with_no_face_left(self):
+        self.assertEqual(ph.anonymise_plan(self.det(faces=(), points={}), "front", user_cropped=True), ["none"])
+        self.assertEqual(ph.anonymise_plan(self.det(), "front", user_cropped=True), ["crop", 469])
+
+    def test_overlap_merges_one_face_seen_twice(self):
+        self.assertGreater(ph._overlap([0, 0, 100, 100], [10, 10, 80, 80]), 0.5)
+        self.assertEqual(ph._overlap([0, 0, 10, 10], [50, 50, 10, 10]), 0)
 
 
 class RatingsTest(Base):

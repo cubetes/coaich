@@ -57,8 +57,8 @@ Same order as [SKILL.md](SKILL.md). Answers map to the same English values in `p
 
 **Photos and ideal physique (8b)** (draft, lawyer review pending)
 1. "¿Quieres usar fotos de progreso? Valoraría cómo va cada grupo muscular, las compararía con el tiempo y te
-   ayudaría a elegir qué entrenar más. Tus fotos se quedan en esta carpeta, solo pasan por tu propia sesión de
-   Claude, y se les quitan la ubicación y los datos de la cámara al guardarlas. Puedes desactivarlo cuando
+   ayudaría a elegir qué entrenar más. Tu ordenador recorta tu cara de cada foto antes de que yo la vea, y solo
+   se guarda esa copia, en esta carpeta, sin la ubicación ni los datos de la cámara. Puedes desactivarlo cuando
    quieras." Sí · No
 2. "¿Buscas un físico concreto? Descríbelo en pocas palabras, o di que no. (Por ejemplo: hombros más anchos,
    brazos más grandes, piernas más fuertes.)"
