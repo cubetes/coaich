@@ -226,7 +226,7 @@ class FilingTest(Base):
         made = ph.file_photos(d, "2030-01-06", imgs, detector=fake)
         self.assertEqual(sorted(made), ["photos/2030-01-06/back.jpg", "photos/2030-01-06/front.jpg",
                                         "photos/2030-01-06/side.jpg"])
-        self.assertEqual(fake.ops, [["crop", 469], ["crop", 469], ["none"]])
+        self.assertEqual(fake.ops, [["crop", 512], ["crop", 540], ["none"]])
         for rel in made:
             data = Path(d, rel).read_bytes()
             self.assertNotIn(GPS_SENTINEL, data)
@@ -248,9 +248,9 @@ class FilingTest(Base):
             f.write("photo_anonymise: blur\n")
         fake = FakeDetector()
         ph.file_photos(d, "2030-01-06", {"front": self.images()["front"]}, detector=fake)
-        self.assertEqual(fake.ops, [["cover", 330, 56, 670, 469]])
+        self.assertEqual(fake.ops, [["cover", 330, 56, 670, 512]])
         ph.file_photos(d, "2030-01-06", {"front": self.images()["front"]}, replace=True, mode="crop", detector=fake)
-        self.assertEqual(fake.ops[-1], ["crop", 469])  # the command line wins over the setting
+        self.assertEqual(fake.ops[-1], ["crop", 512])  # the command line wins over the setting
 
     def test_a_face_that_cannot_be_removed_writes_nothing(self):
         d = self.folder()
@@ -319,23 +319,24 @@ class PlanTest(unittest.TestCase):
                 "points": POINTS if points is None else points}
 
     def test_crop_line_just_below_the_chin_above_the_shoulders(self):
-        # face box bottom 440 + 0.12 x 240 = 468.8 → 469; shoulders start at 605, so 469 < 605 - 72
-        self.assertEqual(ph.anonymise_plan(self.det(), "front"), ["crop", 469])
-        self.assertEqual(ph.anonymise_plan(self.det(points={}), "side"), ["crop", 469])  # no body pose: face box only
+        # face box bottom 440 + 0.3 x 240 = 512; shoulders start at 605, so 512 < 605 - 72
+        self.assertEqual(ph.anonymise_plan(self.det(), "front"), ["crop", 512])
+        with self.assertRaisesRegex(ph.Refused, "neck is found"):  # profile: the face box ends above the jaw
+            ph.anonymise_plan(self.det(points={}), "side")
 
     def test_a_head_point_below_the_box_moves_the_line_down(self):
         pts = dict(POINTS, nose=[500, 450])  # a tilted head: the nose sits under Vision's box
-        self.assertEqual(ph.anonymise_plan(self.det(points=pts), "front"), ["crop", 479])
+        self.assertEqual(ph.anonymise_plan(self.det(points=pts), "front"), ["crop", 522])
 
     def test_never_cuts_the_shoulders(self):
-        pts = dict(POINTS, left_shoulder=[380, 520])  # 469 > 520 - 72: the cut would take the traps
+        pts = dict(POINTS, left_shoulder=[380, 520])  # 512 > 520 - 72: the cut would take the traps
         with self.assertRaisesRegex(ph.Refused, "too close to the shoulders"):
             ph.anonymise_plan(self.det(points=pts), "front")
 
     def test_blur_covers_face_ears_and_hair_down_to_the_same_line(self):
-        self.assertEqual(ph.anonymise_plan(self.det(), "front", "blur"), ["cover", 330, 56, 670, 469])
+        self.assertEqual(ph.anonymise_plan(self.det(), "front", "blur"), ["cover", 330, 56, 670, 512])
         edge = ph.anonymise_plan(self.det(faces=([0, 20, 200, 240],), points={}), "front", "blur")
-        self.assertEqual(edge, ["cover", 0, 0, 270, 289])  # clamped to the picture
+        self.assertEqual(edge, ["cover", 0, 0, 270, 332])  # clamped to the picture
 
     def test_stops_on_several_faces_or_none(self):
         with self.assertRaisesRegex(ph.Refused, "2 faces"):
@@ -343,6 +344,15 @@ class PlanTest(unittest.TestCase):
         for pose in ("front", "side"):
             with self.assertRaisesRegex(ph.Refused, "no face found"):
                 ph.anonymise_plan(self.det(faces=(), points={}), pose)
+
+    def test_one_head_found_twice_is_one_face_cut_below_the_lower_chin(self):
+        # the real side-photo case: two boxes on the same head, the second lower
+        self.assertEqual(ph.merge_faces([[436, 261, 153, 153], [448, 330, 135, 135]]), [[436, 261, 153, 204]])
+        self.assertEqual(ph.merge_faces([[0, 0, 100, 100], [500, 0, 100, 100]]), [[0, 0, 100, 100], [500, 0, 100, 100]])
+        twice = ph.anonymise_plan(self.det(faces=(FACE, [FACE[0] + 10, FACE[1] + 10, FACE[2] - 20, FACE[3] - 20])), "front")
+        once = ph.anonymise_plan(self.det(faces=(FACE,)), "front")
+        self.assertEqual(twice[0], "crop")
+        self.assertGreaterEqual(twice[1], once[1])  # never cuts higher than for the single box
 
     def test_a_low_face_is_not_trusted(self):
         with self.assertRaisesRegex(ph.Refused, "not where a head should be"):
@@ -354,11 +364,11 @@ class PlanTest(unittest.TestCase):
         for face_point in ("nose", "left_eye", "right_eye"):
             with self.assertRaisesRegex(ph.Refused, "could not be outlined"):
                 ph.anonymise_plan(self.det(faces=(), points=dict(body_only, **{face_point: [500, 300]})), "back")
-        self.assertEqual(ph.anonymise_plan(self.det(), "back"), ["crop", 469])  # a face in a back view is still cut
+        self.assertEqual(ph.anonymise_plan(self.det(), "back"), ["crop", 512])  # a face in a back view is still cut
 
     def test_user_cropped_passes_only_with_no_face_left(self):
         self.assertEqual(ph.anonymise_plan(self.det(faces=(), points={}), "front", user_cropped=True), ["none"])
-        self.assertEqual(ph.anonymise_plan(self.det(), "front", user_cropped=True), ["crop", 469])
+        self.assertEqual(ph.anonymise_plan(self.det(), "front", user_cropped=True), ["crop", 512])
 
     def test_overlap_merges_one_face_seen_twice(self):
         self.assertGreater(ph._overlap([0, 0, 100, 100], [10, 10, 80, 80]), 0.5)

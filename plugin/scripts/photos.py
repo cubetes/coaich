@@ -250,13 +250,31 @@ def metadata_left(data):
 # ---------------------------------------------------------------- face removal
 
 ANON_MODES = ("crop", "blur")
-CHIN_MARGIN = 0.12     # × face height below the face box: Vision's box can end just above the chin
+CHIN_MARGIN = 0.3      # × face height below the face box: Vision's box ends above the jaw, more so in profile (real photos)
 SHOULDER_CLEAR = 0.3   # × face height the cut stays above the highest shoulder/neck point (traps, delts stay)
+SIDE_NECK_UP = 0.25    # side photos: the cut sits this × face height above the base of the neck
 COVER_SIDE, COVER_UP = 0.35, 0.6  # blur: the cover reaches past the face box to the ears and up over the hair
 HEAD_POINTS = ("nose", "left_eye", "right_eye", "left_ear", "right_ear")
 FACE_POINTS = ("nose", "left_eye", "right_eye")
 SHOULDER_POINTS = ("neck", "left_shoulder", "right_shoulder")
 RECROP = "Crop it yourself just below the chin, then send it again and say you cropped it."
+
+
+def merge_faces(faces, overlap=0.5):
+    """One head often comes back as two overlapping boxes (seen on a real side photo): boxes whose overlap covers at
+    least half of the smaller box merge into their union, which covers both, so the cut still clears the lower chin."""
+    out = []
+    for x, y, w, h in faces:
+        for i, (a, b, c, d) in enumerate(out):
+            iw = min(x + w, a + c) - max(x, a)
+            ih = min(y + h, b + d) - max(y, b)
+            if iw > 0 and ih > 0 and iw * ih >= overlap * min(w * h, c * d):
+                x0, y0 = min(x, a), min(y, b)
+                out[i] = [x0, y0, max(x + w, a + c) - x0, max(y + h, b + d) - y0]
+                break
+        else:
+            out.append([x, y, w, h])
+    return out
 
 
 def anonymise_plan(det, pose, mode="crop", user_cropped=False):
@@ -265,7 +283,8 @@ def anonymise_plan(det, pose, mode="crop", user_cropped=False):
     origin top-left. Refuses whenever the face cannot be removed with confidence: never lets a face through."""
     if mode not in ANON_MODES:
         raise Refused(f"unknown anonymise mode '{mode}': use crop or blur")
-    W, H, faces, pts = det["width"], det["height"], det["faces"], det.get("points") or {}
+    W, H, pts = det["width"], det["height"], det.get("points") or {}
+    faces = merge_faces(det["faces"])
     if len(faces) > 1:
         raise Refused(f"{len(faces)} faces found. Only one person can be in a progress photo. " + RECROP)
     if not faces:
@@ -280,7 +299,15 @@ def anonymise_plan(det, pose, mode="crop", user_cropped=False):
     head = [pts[k][1] for k in HEAD_POINTS if k in pts]
     line = round(max([y + h, *head]) + CHIN_MARGIN * h)
     shoulders = [pts[k][1] for k in SHOULDER_POINTS if k in pts]
-    if shoulders and line > min(shoulders) - SHOULDER_CLEAR * h or line >= H:
+    clear = SHOULDER_CLEAR * h
+    if pose == "side":
+        # In profile the face box stops well above the jaw (real photos): cut just above the base of the neck
+        # instead. Traps are not rated from the side, so the cut may sit closer to the shoulders.
+        if "neck" not in pts:
+            raise Refused("in a side photo the jaw can only be cut safely when the neck is found. " + RECROP)
+        line = max(line, round(pts["neck"][1] - SIDE_NECK_UP * h))
+        clear = 0
+    if shoulders and line > min(shoulders) - clear or line >= H:
         raise Refused("the chin is too close to the shoulders to cut between them (head tilted down?). Retake it "
                       "with the head level, or crop it yourself and say so.")
     if mode == "crop":
