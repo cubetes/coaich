@@ -90,6 +90,67 @@ every set.
 Schema: [program-schema.md](program-schema.md). Targets files (`plan/targets/`): the progression rules,
 `skills/progression/rules.md`.
 
+## plan/CURRENT.md blocks
+
+Scripts own one block each, between `<!-- coaich:NAME -->` and `<!-- /coaich:NAME -->`, and replace only their
+own: `program` (program_build.py), `roadmap` (roadmap.py: phase, program week, next easy week, gate review date),
+`adapt` (adapt.py: pain and temporary constraints; its tag carries `days=`, `minutes=`, `until=` of a temporary
+program, and its week-type rows `| W15 | Travel | 2030-04-08 | why |` are read by the progression engine).
+
+## plan/roadmap.md
+
+A YAML header holds the data; the body (phases, mesocycles, projected microcycles) is rewritten from it by
+`roadmap.py`:
+
+```
+---
+roadmap: 0.1
+made: 2030-03-31
+start: 2030-04-01
+end: 2030-12-08
+goal: both
+level: intermediate
+phases:
+  - name: maintenance              # cut | bulk | maintenance
+    start: 2030-04-01
+    end: 2030-06-23
+    status: current                # done | current | next
+    gates: ["sessions_per_week 3..", "hit_rate 70..85", "e1rm:Barbell_Squat 5.."]
+    result:                        # passed 2030-06-20 | missed 2030-06-20, extended 4 weeks | moved on, gates missed …
+---
+```
+
+Gates are `metric band`, with the metrics and bands of `plan/changes.md` below.
+
+## plan/changes.md
+
+Every applied plan change, appended by the skill that made it (`adapt`, `monthly-check-in`, or by hand with
+`scripts/changes.py add`). Entries are never edited; the monthly check-in adds one `graded` line once the check
+date has come.
+
+```
+## c3 · 2030-03-31 · Swap Romanian Deadlift → Stiff-Legged Dumbbell Deadlift
+- change: Romanian Deadlift → Stiff-Legged Dumbbell Deadlift wherever it ran
+- why: the athlete's choice at the monthly check-in
+- by: monthly-check-in
+- metric: e1rm:Stiff-Legged_Dumbbell_Deadlift
+- band: 0..
+- check: 2030-04-28
+- graded 2030-04-28: in band (+3.1 %; best e1RM 80.0 kg → 82.5 kg) · keep
+```
+
+| metric | unit | measured over applied → today |
+|---|---|---|
+| `hit_rate` | % | targets met ÷ (met + close + missed) in the graded weeks |
+| `sessions_per_week` | sessions | program sessions logged a week |
+| `e1rm:<exercise_id>` | % | best Epley estimate (working sets of 1–12 reps, easy weeks out): the 4 weeks before against the last 2 |
+| `sets:<muscle or group>` | sets/week | effective sets (direct ×1, secondary ×0.5), full weeks, easy weeks out |
+| `weight_rate` | %/week | least-squares slope of `body.csv` weight (6+ weigh-ins over 2+ weeks) |
+| `ask` | — | not measurable: the check-in asks the athlete |
+
+A band is `lo..hi`; either side may be blank (`5..`, `..-0.25`). Verdicts: in band (keep) · below or above band
+(adjust or revert: the athlete decides) · too early · no data.
+
 ## log.md
 
 Header `# Log`, then one line per skill run, exactly:
