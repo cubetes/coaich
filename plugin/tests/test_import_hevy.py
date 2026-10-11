@@ -73,6 +73,8 @@ class HevyMcp(unittest.TestCase):
         before = text(self.d, "sets.csv"), text(self.d, "sessions.csv")
         run("import_hevy.py", "--dir", self.d, fixture("hevy_mcp_page2.json"), fixture("hevy_mcp_page1.json"))
         self.assertEqual(before, (text(self.d, "sets.csv"), text(self.d, "sessions.csv")))
+        with open(os.path.join(self.d, "log.md"), encoding="utf-8") as fh:
+            self.assertIn(" · import · hevy: 2 sessions, 5 sets through 2030-01-18", fh.read().splitlines()[-1])
         self.assertEqual(run("import_hevy.py", "--dir", self.d, "--cursor").stdout.strip(), "2030-01-18")
         self.assertTrue(os.path.exists(os.path.join(self.d, "data", "raw", "hevy", "hevy_mcp_page1.json")))
 

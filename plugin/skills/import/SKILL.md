@@ -57,7 +57,9 @@ health data, and the exercises still to map. Example:
 > Imported 12 Strong sessions (3 new), 214 sets. 1 row dropped (9,999 kg, a typing error).
 > 2 exercises still to map: Belt Squat (Machine), Sandbag Carry.
 
-The importers append the line to `log.md` themselves (`- date · import · result`); add nothing more.
+The importers append the `log.md` line themselves; add nothing more. Its exact form,
+`- YYYY-MM-DD · import · <source>: <n> sessions, <m> sets through YYYY-MM-DD` (Apple Health:
+`apple-health: <n> days through YYYY-MM-DD`), is read by the progression skill's stale-data check.
 
 ## Rules
 

@@ -132,7 +132,7 @@ def main():
     span = f"{days[0]} to {days[-1]}" if days else "no days"
     summary = (f"apple-health: {len(days)} days ({span}), {len(values)} values, "
                f"{len(dropped)} out-of-range dropped")
-    ic.append_log(folder, summary)
+    ic.append_log(folder, f"apple-health: {len(days)} days through {days[-1] if days else 'none'}")
     print(summary)
     for d in dropped:
         print("  dropped:", d)

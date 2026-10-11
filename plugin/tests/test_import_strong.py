@@ -67,6 +67,11 @@ class SemicolonKgExport(unittest.TestCase):
         with open(os.path.join(self.d, "log.md"), encoding="utf-8") as fh:
             self.assertEqual(sum(line.startswith("- ") for line in fh), 2)
 
+    def test_log_line_for_the_stale_data_guard(self):
+        with open(os.path.join(self.d, "log.md"), encoding="utf-8") as fh:
+            last = fh.read().splitlines()[-1]
+        self.assertRegex(last, r"^- \d{4}-\d{2}-\d{2} · import · strong: 2 sessions, 12 sets through 2030-01-09$")
+
     def test_raw_export_kept(self):
         self.assertTrue(os.path.exists(os.path.join(self.d, "data", "raw", "strong", "strong_semicolon_kg.csv")))
 

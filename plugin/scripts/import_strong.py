@@ -137,7 +137,8 @@ def main():
     summary = (f"strong: {len(sessions)} sessions, {len(sets)} sets in the export "
                f"({added} new sessions, {replaced} updated), {len(drops)} rows dropped, "
                f"{len(res['unmapped'])} exercises to map")
-    ic.append_log(folder, summary)
+    through = max((x["date"] for x in sessions), default="none")
+    ic.append_log(folder, f"strong: {len(sessions)} sessions, {len(sets)} sets through {through}")
     print(summary)
     for d in drops:
         print("  dropped:", d)

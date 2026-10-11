@@ -157,7 +157,8 @@ def main():
     res = exercise_map.sync(folder)
     summary = (f"hevy: {len(sessions)} sessions, {len(sets)} sets read ({added} new sessions, "
                f"{replaced} updated), {len(drops)} sets dropped, {len(res['unmapped'])} exercises to map")
-    ic.append_log(folder, summary)
+    through = max((x["date"] for x in sessions), default="none")
+    ic.append_log(folder, f"hevy: {len(sessions)} sessions, {len(sets)} sets through {through}")
     print(summary)
     for d in drops:
         print("  dropped:", d)
