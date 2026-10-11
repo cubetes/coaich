@@ -25,7 +25,8 @@ athlete folder; `plan/CURRENT.md` says which one is in force. Exercises are free
 | `pain` | `[{area, red_flag, checked}]` | the areas the program was adapted to |
 | `left_out` | slot codes | slots dropped for pain |
 | `easy_week_every` | 7 · 6 · null | intermediate · advanced · beginner (triggered only) |
-| `easy_weeks` | ints | 1-based program weeks that are easy weeks, up to week 52 |
+| `easy_from_week` | int | the program week the easy-week count starts from: 1, or the week of a level change on a re-issue (a promotion is never followed straight by an easy week) |
+| `easy_weeks` | ints | 1-based program weeks that are easy weeks, up to week 52: every `easy_week_every`th week from `easy_from_week` |
 | `placement` | object | `{level, returning, promotion_check_week, advanced_check_week, row}` |
 | `notes`, `warnings` | text lists | shown beside the program (warnings are medical copy, lawyer review pending) |
 | `rules_fired` | text list | the rule ids that fired (`references/starter-programs.md` §Rules) |

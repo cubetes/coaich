@@ -634,6 +634,7 @@
  ],
  "left_out": [],
  "easy_week_every": 7,
+ "easy_from_week": 1,
  "easy_weeks": [
   7,
   14,

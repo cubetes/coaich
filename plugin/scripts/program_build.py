@@ -565,10 +565,16 @@ def program_week(prog, sessions_done):
     return sessions_done // max(1, prog.get("days") or len(prog["routines"])) + 1
 
 
+def easy_week(prog, n):
+    """Program week n is an easy week: every `easy_week_every`th week, counted from `easy_from_week` (1, or the
+    week of a promotion: the count restarts there, so a promotion is never followed straight by an easy week)."""
+    every, first = EASY_WEEK_EVERY[prog["level"]], prog.get("easy_from_week") or 1
+    return bool(every) and n >= first and (n - first + 1) % every == 0
+
+
 def is_easy_week(prog, sessions_done):
     """Whether the next session falls in an easy week, counted in sessions done (`days` sessions = a week)."""
-    every = EASY_WEEK_EVERY[prog["level"]]
-    return bool(every) and program_week(prog, sessions_done) % every == 0
+    return easy_week(prog, program_week(prog, sessions_done))
 
 
 # ---------------------------------------------------------------- the tree
@@ -845,7 +851,7 @@ def tool(equipment, id_, lower_body):
                                                                                                          "bodyweight")
 
 
-def program_json(result, today, start=None):
+def program_json(result, today, start=None, easy_from=1):
     prog = copy.deepcopy({k: v for k, v in result["program"].items() if k != "swaps"})
     for n, r in enumerate(prog["routines"], 1):
         r["order"], r["minutes"] = n, pa.routine_minutes(r["exercises"])
@@ -856,8 +862,8 @@ def program_json(result, today, start=None):
                 else "compound"
             s.update(name=ex["name"], equipment=ex.get("equipment"), load_step_kg=LOAD_STEP_KG[s["tool"]],
                      reps_left=s.pop("rir"))
-    every = EASY_WEEK_EVERY[prog["level"]]
-    prog["easy_weeks"] = list(range(every, 53, every)) if every else []
+    prog["easy_from_week"] = easy_from
+    prog["easy_weeks"] = [n for n in range(1, 53) if easy_week(prog, n)]
     return {"schema": "coaich.program/0.1", "start": start or today, "issued": today, "name": program_name(prog), **prog,
             "rebuild_at_week": rebuild_week(prog), "placement": result["placement"], "notes": result["notes"],
             "warnings": result["warnings"], "rules_fired": result["fired"], "swaps": result["program"]["swaps"]}
@@ -906,7 +912,7 @@ def explain(result):
     return out
 
 
-def current_block(result, today, checks, unexpected, start=None):
+def current_block(result, today, checks, unexpected, start=None, easy_weeks=None):
     prog = result["program"]
     name = program_name(prog)
     lines = ["<!-- coaich:program -->", f"## Program — {LAYOUT_NAMES[prog['layout']]} × {prog['minutes']} min ({name})", "",
@@ -934,7 +940,7 @@ def current_block(result, today, checks, unexpected, start=None):
     every = EASY_WEEK_EVERY[prog["level"]]
     lines += ["", "### Easy weeks", "",
               (f"Every {every}th week, counted in sessions done ({prog['days']} sessions = a week): weeks "
-               + ", ".join(str(w) for w in range(every, 4 * every + 1, every))
+               + ", ".join(str(w) for w in [w for w in easy_weeks or range(every, 53, every) if w >= prog["week"]][:4])
                + " … A third fewer sets, about 10 % lighter, 3–4 reps in reserve; nothing is graded.") if every
               else "None planned. One is triggered by 3+ exercises reduced within 14 days or joint pain on 2 sessions."]
     fails = [c for c in checks if not c["passed"] and not c["warn_only"]]
@@ -974,12 +980,18 @@ def issue(folder, answers, week, today, start=None):
     unexpected = pa.unexpected_failures(prog, checks)
     if unexpected:
         return 1, "refused: the program fails the audit: " + "; ".join(unexpected)
-    doc = program_json(result, today, start)
+    path = os.path.join(folder, "plan", "program.json")
+    easy_from = 1
+    if start and os.path.exists(path):  # a re-issue: keep the easy-week count, restart it on a level change
+        with open(path, encoding="utf-8") as f:
+            old = json.load(f)
+        easy_from = week if old.get("level") != prog["level"] else old.get("easy_from_week") or 1
+    doc = program_json(result, today, start, easy_from)
     os.makedirs(os.path.join(folder, "plan"), exist_ok=True)
-    with open(os.path.join(folder, "plan", "program.json"), "w", encoding="utf-8") as f:
+    with open(path, "w", encoding="utf-8") as f:
         json.dump(doc, f, ensure_ascii=False, indent=1)
         f.write("\n")
-    write_current(folder, current_block(result, today, checks, unexpected, doc["start"]))
+    write_current(folder, current_block(result, today, checks, unexpected, doc["start"], doc["easy_weeks"]))
     af.append_log(folder, "program-build", f"{doc['name']} ({prog['level']}, {prog['days']} days × "
                   f"{prog['minutes']} min, week {prog['week']}), audit passed", date=today)
     return 0, f"wrote plan/program.json and plan/CURRENT.md: {doc['name']}"

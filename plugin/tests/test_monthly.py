@@ -310,6 +310,25 @@ class Swaps(DemoCopy):
         self.assertNotIn("Front_Barbell_Squat", [s["exercise_id"] for r in prog["routines"] for s in r["exercises"]])
 
 
+class Promotion(DemoCopy):
+    def test_promotion_restarts_the_easy_week_count(self):
+        old = self.program()
+        self.assertEqual((old["level"], old.get("easy_from_week", 1)), ("intermediate", 1))
+        r, out = quiet(mc.main, ["reissue", "--dir", str(self.dir), "--today", "2030-03-24", "--promote"])
+        self.assertEqual(r, 0, out)
+        new = self.program()
+        week = new["week"]
+        self.assertEqual((new["level"], new["start"], new["easy_from_week"]), ("advanced", old["start"], week))
+        self.assertEqual(new["easy_weeks"][0], week + 5)        # every 6th week, counted from the promotion
+        self.assertTrue(all(w > week for w in new["easy_weeks"]))
+        self.assertFalse(pb.easy_week(new, week + 1))
+        self.assertTrue(pb.easy_week(old, 14) and not pb.easy_week(new, 14))
+        # Another re-issue at the same level keeps the count.
+        r, out = quiet(mc.main, ["reissue", "--dir", str(self.dir), "--today", "2030-03-31", "--swap", f"{RDL}={SLDL}"])
+        self.assertEqual(r, 0, out)
+        self.assertEqual(self.program()["easy_from_week"], week)
+
+
 # ------------------------------------------------------------------ the monthly check-in, end to end
 def train(folder, label, calibrate_kg=30.0):
     """One week trained to the applied targets (one rep over on each first set), imported as a manual log."""

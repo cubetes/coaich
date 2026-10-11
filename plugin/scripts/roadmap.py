@@ -139,10 +139,9 @@ def position(folder, prog, today):
 
 def easy_week(prog, n):
     """Program week n is an easy week: program.json's list, then its interval past the list's end."""
-    every = prog.get("easy_week_every", pb.EASY_WEEK_EVERY.get(prog.get("level")))
     if prog.get("easy_weeks") and n <= max(prog["easy_weeks"]):
         return n in prog["easy_weeks"]
-    return bool(every) and n % every == 0
+    return pb.easy_week(prog, n)
 
 
 def block_ends(prog, upto):
