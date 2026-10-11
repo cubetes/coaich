@@ -16,15 +16,15 @@ One line per skill run.
 - 2030-02-10 · import · strong: 4 sessions, 70 sets through 2030-02-08
 - 2030-02-10 · weekly-review · 2030-W06 graded, 16/21 met, 15 changes, 0 held
 - 2030-02-17 · import · strong: 4 sessions, 70 sets through 2030-02-16
-- 2030-02-17 · weekly-review · 2030-W07 graded, 15/21 met, 21 changes, 0 held
-- 2030-02-24 · import · strong: 4 sessions, 49 sets through 2030-02-22
-- 2030-02-24 · weekly-review · 2030-W08 graded, 0/0 met, 21 changes, 0 held
-- 2030-03-03 · import · strong: 4 sessions, 70 sets through 2030-03-02
-- 2030-03-03 · weekly-review · 2030-W09 graded, 20/21 met, 20 changes, 0 held
+- 2030-02-17 · weekly-review · 2030-W07 graded, 15/21 met, 16 changes, 0 held
+- 2030-02-24 · import · strong: 4 sessions, 70 sets through 2030-02-22
+- 2030-02-24 · weekly-review · 2030-W08 graded, 18/21 met, 21 changes, 0 held
+- 2030-03-03 · import · strong: 4 sessions, 49 sets through 2030-03-01
+- 2030-03-03 · weekly-review · 2030-W09 graded, 0/0 met, 21 changes, 0 held
 - 2030-03-10 · import · strong: 4 sessions, 70 sets through 2030-03-08
-- 2030-03-10 · weekly-review · 2030-W10 graded, 15/21 met, 13 changes, 0 held
-- 2030-03-17 · import · strong: 3 sessions, 52 sets through 2030-03-16
-- 2030-03-17 · weekly-review · 2030-W11 graded, 10/16 met, 11 changes, 0 held
-- 2030-03-24 · import · strong: 4 sessions, 70 sets through 2030-03-22
-- 2030-03-24 · weekly-review · 2030-W12 graded, 15/21 met, 15 changes, 0 held
-- 2030-03-31 · import · strong: 4 sessions, 70 sets through 2030-03-30
+- 2030-03-10 · weekly-review · 2030-W10 graded, 18/21 met, 17 changes, 0 held
+- 2030-03-17 · import · strong: 3 sessions, 52 sets through 2030-03-15
+- 2030-03-17 · weekly-review · 2030-W11 graded, 14/16 met, 14 changes, 0 held
+- 2030-03-24 · import · strong: 4 sessions, 70 sets through 2030-03-23
+- 2030-03-24 · weekly-review · 2030-W12 graded, 17/21 met, 17 changes, 0 held
+- 2030-03-31 · import · strong: 4 sessions, 70 sets through 2030-03-29

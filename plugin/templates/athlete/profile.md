@@ -13,6 +13,7 @@ minutes_per_session:     # 30 | 45 | 60 | 75
 equipment: gym           # gym only in v0.1
 goal:                    # strength | muscle | both
 priority: none           # advanced only: none | chest | back | shoulders | arms | quads | glutes-hamstrings | calves
+exercise_swaps: []       # [{from: Romanian_Deadlift, to: Stiff-Legged_Dumbbell_Deadlift}] same slot only (monthly check-in)
 # v0.2 (not asked yet): nutrition, photos, ideal_physique
 ---
 # Profile

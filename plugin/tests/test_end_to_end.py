@@ -113,9 +113,12 @@ class EndToEnd(unittest.TestCase):
         grades = {r["id"]: r["grade"] for r in w14["rows"]}
         self.assertTrue(all(grades[f"{k}-1"] == "hit" for k in ("upper-a", "lower-a", "upper-b", "lower-b")))
         self.assertTrue(all(grades[f"{k}-2"] in ("partial", "miss") for k in ("upper-a", "lower-a", "upper-b", "lower-b")))
+        # Easy weeks count in sessions: two missed sessions make 2030-W15 program week 13 (50 sessions done), so
+        # the week-14 easy week starts once W15's four sessions are in (52 done), not in the calendar's W15.
         w15 = pg.load_json(pg.targets_path(d, "2030-W15"))
-        self.assertEqual(w15["microcycle_type"], "recovery")  # program week 14: the easy week
-        self.assertEqual({r["decision"] for r in w15["rows"]}, {"easy_week"})
+        self.assertEqual(pb.program_week(program, pg.sessions_done(d, program, pg.parse_week("2030-W15"))), 13)
+        self.assertEqual(w15["microcycle_type"], "full")
+        self.assertTrue(pb.program_week(program, 52) == 14 and 14 in program["easy_weeks"])
         self.assertIn("## Next week's targets (2030-W15)", apply_out)
 
         # Check-ins and log lines.

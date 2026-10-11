@@ -3,7 +3,7 @@
  "iso_week": "2030-W08",
  "week_start": "2030-02-18",
  "week_end": "2030-02-24",
- "microcycle_type": "recovery",
+ "microcycle_type": "full",
  "status": "graded",
  "generated_at": "2030-02-17 20:00",
  "data_through": "2030-02-17",
@@ -14,14 +14,15 @@
  "graded_at": "2030-02-24 20:00",
  "summary": {
   "rows": 21,
-  "increase": 0,
-  "hold": 0,
-  "reduce": 0,
-  "easy_week": 21,
+  "increase": 1,
+  "hold": 19,
+  "reduce": 1,
+  "easy_week": 0,
   "swap": 0,
-  "needs_approval": 0,
+  "needs_approval": 1,
   "grades": {
-   "excluded": 21
+   "hit": 18,
+   "partial": 3
   }
  },
  "rows": [
@@ -47,26 +48,32 @@
    "load_step": 2.5,
    "target_sets": [
     {
-     "kg": 62.5,
-     "reps": 9,
+     "kg": 70.0,
+     "reps": 10,
      "type": "normal"
     },
     {
-     "kg": 62.5,
+     "kg": 70.0,
      "reps": 8,
      "type": "normal"
     },
     {
-     "kg": 62.5,
+     "kg": 70.0,
      "reps": 7,
+     "type": "normal"
+    },
+    {
+     "kg": 70.0,
+     "reps": 6,
      "type": "normal"
     }
    ],
-   "target_kg": 62.5,
+   "target_kg": 70.0,
    "target_reps": [
-    9,
+    10,
     8,
-    7
+    7,
+    6
    ],
    "prev_target_sets": [
     {
@@ -90,16 +97,23 @@
      "type": "normal"
     }
    ],
-   "decision": "easy_week",
+   "decision": "hold",
    "reason": {
-    "code": "easy_week"
+    "code": "add_rep",
+    "set": 1,
+    "frm": 9,
+    "to": 10
    },
    "needs_approval": false,
    "flags": [],
-   "pre_easy_sets": [
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
     {
      "kg": 70.0,
-     "reps": 9,
+     "reps": 10,
      "type": "normal"
     },
     {
@@ -115,26 +129,6 @@
     {
      "kg": 70.0,
      "reps": 6,
-     "type": "normal"
-    }
-   ],
-   "accepted": true,
-   "source": "rule",
-   "override_reason": null,
-   "live_target_sets": [
-    {
-     "kg": 62.5,
-     "reps": 9,
-     "type": "normal"
-    },
-    {
-     "kg": 62.5,
-     "reps": 8,
-     "type": "normal"
-    },
-    {
-     "kg": 62.5,
-     "reps": 7,
      "type": "normal"
     }
    ],
@@ -198,13 +192,44 @@
      }
     ]
    },
-   "grade": "excluded",
+   "grade": "hit",
    "grade_reason": {
-    "code": "easy_week_graded",
-    "days": 14
+    "code": "met",
+    "n": 4
    },
-   "grade_flags": [],
-   "source_sets": []
+   "grade_flags": [
+    "overshoot"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-02-18",
+     "kg": 70.0,
+     "reps": 10,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-02-18",
+     "kg": 70.0,
+     "reps": 8,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-02-18",
+     "kg": 70.0,
+     "reps": 7,
+     "type": "normal",
+     "rir": 3
+    },
+    {
+     "date": "2030-02-18",
+     "kg": 70.0,
+     "reps": 7,
+     "type": "normal",
+     "rir": 2
+    }
+   ]
   },
   {
    "id": "upper-a-2",
@@ -228,24 +253,30 @@
    "load_step": 2.5,
    "target_sets": [
     {
-     "kg": 57.5,
+     "kg": 62.5,
      "reps": 12,
      "type": "normal"
     },
     {
-     "kg": 57.5,
+     "kg": 62.5,
      "reps": 10,
      "type": "normal"
     },
     {
-     "kg": 57.5,
+     "kg": 62.5,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 62.5,
      "reps": 9,
      "type": "normal"
     }
    ],
-   "target_kg": 57.5,
+   "target_kg": 62.5,
    "target_reps": [
     12,
+    10,
     10,
     9
    ],
@@ -271,50 +302,34 @@
      "type": "normal"
     }
    ],
-   "decision": "easy_week",
+   "decision": "hold",
    "reason": {
-    "code": "easy_week"
+    "code": "reps_to_done"
    },
    "needs_approval": false,
    "flags": [],
-   "pre_easy_sets": [
-    {
-     "kg": 62.5,
-     "reps": 12,
-     "type": "normal"
-    },
-    {
-     "kg": 62.5,
-     "reps": 10,
-     "type": "normal"
-    },
-    {
-     "kg": 62.5,
-     "reps": 9,
-     "type": "normal"
-    },
-    {
-     "kg": 62.5,
-     "reps": 9,
-     "type": "normal"
-    }
-   ],
+   "pre_easy_sets": null,
    "accepted": true,
    "source": "rule",
    "override_reason": null,
    "live_target_sets": [
     {
-     "kg": 57.5,
+     "kg": 62.5,
      "reps": 12,
      "type": "normal"
     },
     {
-     "kg": 57.5,
+     "kg": 62.5,
      "reps": 10,
      "type": "normal"
     },
     {
-     "kg": 57.5,
+     "kg": 62.5,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 62.5,
      "reps": 9,
      "type": "normal"
     }
@@ -379,13 +394,44 @@
      }
     ]
    },
-   "grade": "excluded",
+   "grade": "hit",
    "grade_reason": {
-    "code": "easy_week_graded",
-    "days": 14
+    "code": "met",
+    "n": 4
    },
-   "grade_flags": [],
-   "source_sets": []
+   "grade_flags": [
+    "exact_copy"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-02-18",
+     "kg": 62.5,
+     "reps": 12,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-02-18",
+     "kg": 62.5,
+     "reps": 10,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-02-18",
+     "kg": 62.5,
+     "reps": 10,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-02-18",
+     "kg": 62.5,
+     "reps": 9,
+     "type": "normal",
+     "rir": 2
+    }
+   ]
   },
   {
    "id": "upper-a-3",
@@ -409,19 +455,25 @@
    "load_step": 2.5,
    "target_sets": [
     {
-     "kg": 35.0,
+     "kg": 40.0,
      "reps": 12,
      "type": "normal"
     },
     {
-     "kg": 35.0,
+     "kg": 40.0,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 40.0,
      "reps": 9,
      "type": "normal"
     }
    ],
-   "target_kg": 35.0,
+   "target_kg": 40.0,
    "target_reps": [
     12,
+    9,
     9
    ],
    "prev_target_sets": [
@@ -441,40 +493,35 @@
      "type": "normal"
     }
    ],
-   "decision": "easy_week",
+   "decision": "hold",
    "reason": {
-    "code": "easy_week"
+    "code": "close_hold",
+    "why": {
+     "code": "close",
+     "met": 2,
+     "n": 3,
+     "short": 2
+    }
    },
    "needs_approval": false,
    "flags": [],
-   "pre_easy_sets": [
-    {
-     "kg": 40.0,
-     "reps": 12,
-     "type": "normal"
-    },
-    {
-     "kg": 40.0,
-     "reps": 9,
-     "type": "normal"
-    },
-    {
-     "kg": 40.0,
-     "reps": 9,
-     "type": "normal"
-    }
-   ],
+   "pre_easy_sets": null,
    "accepted": true,
    "source": "rule",
    "override_reason": null,
    "live_target_sets": [
     {
-     "kg": 35.0,
+     "kg": 40.0,
      "reps": 12,
      "type": "normal"
     },
     {
-     "kg": 35.0,
+     "kg": 40.0,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 40.0,
      "reps": 9,
      "type": "normal"
     }
@@ -529,13 +576,37 @@
      }
     ]
    },
-   "grade": "excluded",
+   "grade": "partial",
    "grade_reason": {
-    "code": "easy_week_graded",
-    "days": 14
+    "code": "close",
+    "met": 2,
+    "n": 3,
+    "short": 2
    },
    "grade_flags": [],
-   "source_sets": []
+   "source_sets": [
+    {
+     "date": "2030-02-18",
+     "kg": 40.0,
+     "reps": 10,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-02-18",
+     "kg": 40.0,
+     "reps": 9,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-02-18",
+     "kg": 40.0,
+     "reps": 9,
+     "type": "normal",
+     "rir": 1
+    }
+   ]
   },
   {
    "id": "upper-a-4",
@@ -559,19 +630,25 @@
    "load_step": 5.0,
    "target_sets": [
     {
-     "kg": 55.0,
+     "kg": 60.0,
      "reps": 11,
      "type": "normal"
     },
     {
-     "kg": 55.0,
+     "kg": 60.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
      "reps": 10,
      "type": "normal"
     }
    ],
-   "target_kg": 55.0,
+   "target_kg": 60.0,
    "target_reps": [
     11,
+    10,
     10
    ],
    "prev_target_sets": [
@@ -591,13 +668,17 @@
      "type": "normal"
     }
    ],
-   "decision": "easy_week",
+   "decision": "hold",
    "reason": {
-    "code": "easy_week"
+    "code": "reps_to_done"
    },
    "needs_approval": false,
    "flags": [],
-   "pre_easy_sets": [
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
     {
      "kg": 60.0,
      "reps": 11,
@@ -610,21 +691,6 @@
     },
     {
      "kg": 60.0,
-     "reps": 9,
-     "type": "normal"
-    }
-   ],
-   "accepted": true,
-   "source": "rule",
-   "override_reason": null,
-   "live_target_sets": [
-    {
-     "kg": 55.0,
-     "reps": 11,
-     "type": "normal"
-    },
-    {
-     "kg": 55.0,
      "reps": 10,
      "type": "normal"
     }
@@ -677,13 +743,37 @@
      }
     ]
    },
-   "grade": "excluded",
+   "grade": "hit",
    "grade_reason": {
-    "code": "easy_week_graded",
-    "days": 14
+    "code": "met",
+    "n": 3
    },
-   "grade_flags": [],
-   "source_sets": []
+   "grade_flags": [
+    "exact_copy"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-02-18",
+     "kg": 60.0,
+     "reps": 11,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-02-18",
+     "kg": 60.0,
+     "reps": 10,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-02-18",
+     "kg": 60.0,
+     "reps": 10,
+     "type": "normal",
+     "rir": 1
+    }
+   ]
   },
   {
    "id": "upper-a-5",
@@ -707,14 +797,20 @@
    "load_step": 2.0,
    "target_sets": [
     {
-     "kg": 8.0,
+     "kg": 10.0,
      "reps": 16,
+     "type": "normal"
+    },
+    {
+     "kg": 10.0,
+     "reps": 15,
      "type": "normal"
     }
    ],
-   "target_kg": 8.0,
+   "target_kg": 10.0,
    "target_reps": [
-    16
+    16,
+    15
    ],
    "prev_target_sets": [
     {
@@ -728,13 +824,23 @@
      "type": "normal"
     }
    ],
-   "decision": "easy_week",
+   "decision": "hold",
    "reason": {
-    "code": "easy_week"
+    "code": "close_hold",
+    "why": {
+     "code": "close",
+     "met": 1,
+     "n": 2,
+     "short": 2
+    }
    },
    "needs_approval": false,
    "flags": [],
-   "pre_easy_sets": [
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
     {
      "kg": 10.0,
      "reps": 16,
@@ -743,16 +849,6 @@
     {
      "kg": 10.0,
      "reps": 15,
-     "type": "normal"
-    }
-   ],
-   "accepted": true,
-   "source": "rule",
-   "override_reason": null,
-   "live_target_sets": [
-    {
-     "kg": 8.0,
-     "reps": 16,
      "type": "normal"
     }
    ],
@@ -794,13 +890,30 @@
      }
     ]
    },
-   "grade": "excluded",
+   "grade": "hit",
    "grade_reason": {
-    "code": "easy_week_graded",
-    "days": 14
+    "code": "met",
+    "n": 2
    },
-   "grade_flags": [],
-   "source_sets": []
+   "grade_flags": [
+    "overshoot"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-02-18",
+     "kg": 10.0,
+     "reps": 17,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-02-18",
+     "kg": 10.0,
+     "reps": 16,
+     "type": "normal",
+     "rir": 1
+    }
+   ]
   },
   {
    "id": "lower-a-1",
@@ -824,26 +937,32 @@
    "load_step": 2.5,
    "target_sets": [
     {
-     "kg": 85.0,
+     "kg": 95.0,
      "reps": 9,
      "type": "normal"
     },
     {
-     "kg": 85.0,
+     "kg": 95.0,
+     "reps": 8,
+     "type": "normal"
+    },
+    {
+     "kg": 95.0,
      "reps": 7,
      "type": "normal"
     },
     {
-     "kg": 85.0,
-     "reps": 7,
+     "kg": 95.0,
+     "reps": 6,
      "type": "normal"
     }
    ],
-   "target_kg": 85.0,
+   "target_kg": 95.0,
    "target_reps": [
     9,
+    8,
     7,
-    7
+    6
    ],
    "prev_target_sets": [
     {
@@ -867,13 +986,17 @@
      "type": "normal"
     }
    ],
-   "decision": "easy_week",
+   "decision": "hold",
    "reason": {
-    "code": "easy_week"
+    "code": "reps_to_done"
    },
    "needs_approval": false,
    "flags": [],
-   "pre_easy_sets": [
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
     {
      "kg": 95.0,
      "reps": 9,
@@ -881,7 +1004,7 @@
     },
     {
      "kg": 95.0,
-     "reps": 7,
+     "reps": 8,
      "type": "normal"
     },
     {
@@ -892,26 +1015,6 @@
     {
      "kg": 95.0,
      "reps": 6,
-     "type": "normal"
-    }
-   ],
-   "accepted": true,
-   "source": "rule",
-   "override_reason": null,
-   "live_target_sets": [
-    {
-     "kg": 85.0,
-     "reps": 9,
-     "type": "normal"
-    },
-    {
-     "kg": 85.0,
-     "reps": 7,
-     "type": "normal"
-    },
-    {
-     "kg": 85.0,
-     "reps": 7,
      "type": "normal"
     }
    ],
@@ -975,13 +1078,44 @@
      }
     ]
    },
-   "grade": "excluded",
+   "grade": "hit",
    "grade_reason": {
-    "code": "easy_week_graded",
-    "days": 14
+    "code": "met",
+    "n": 4
    },
-   "grade_flags": [],
-   "source_sets": []
+   "grade_flags": [
+    "overshoot"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-02-19",
+     "kg": 95.0,
+     "reps": 9,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-02-19",
+     "kg": 95.0,
+     "reps": 8,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-02-19",
+     "kg": 95.0,
+     "reps": 7,
+     "type": "normal",
+     "rir": 3
+    },
+    {
+     "date": "2030-02-19",
+     "kg": 95.0,
+     "reps": 7,
+     "type": "normal",
+     "rir": 2
+    }
+   ]
   },
   {
    "id": "lower-a-2",
@@ -1005,19 +1139,25 @@
    "load_step": 2.5,
    "target_sets": [
     {
-     "kg": 75.0,
+     "kg": 82.5,
      "reps": 11,
      "type": "normal"
     },
     {
-     "kg": 75.0,
+     "kg": 82.5,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 82.5,
      "reps": 9,
      "type": "normal"
     }
    ],
-   "target_kg": 75.0,
+   "target_kg": 82.5,
    "target_reps": [
     11,
+    9,
     9
    ],
    "prev_target_sets": [
@@ -1037,13 +1177,17 @@
      "type": "normal"
     }
    ],
-   "decision": "easy_week",
+   "decision": "hold",
    "reason": {
-    "code": "easy_week"
+    "code": "reps_to_done"
    },
    "needs_approval": false,
    "flags": [],
-   "pre_easy_sets": [
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
     {
      "kg": 82.5,
      "reps": 11,
@@ -1056,21 +1200,6 @@
     },
     {
      "kg": 82.5,
-     "reps": 8,
-     "type": "normal"
-    }
-   ],
-   "accepted": true,
-   "source": "rule",
-   "override_reason": null,
-   "live_target_sets": [
-    {
-     "kg": 75.0,
-     "reps": 11,
-     "type": "normal"
-    },
-    {
-     "kg": 75.0,
      "reps": 9,
      "type": "normal"
     }
@@ -1123,13 +1252,37 @@
      }
     ]
    },
-   "grade": "excluded",
+   "grade": "hit",
    "grade_reason": {
-    "code": "easy_week_graded",
-    "days": 14
+    "code": "met",
+    "n": 3
    },
-   "grade_flags": [],
-   "source_sets": []
+   "grade_flags": [
+    "overshoot"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-02-19",
+     "kg": 82.5,
+     "reps": 11,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-02-19",
+     "kg": 82.5,
+     "reps": 10,
+     "type": "normal",
+     "rir": 3
+    },
+    {
+     "date": "2030-02-19",
+     "kg": 82.5,
+     "reps": 10,
+     "type": "normal",
+     "rir": 2
+    }
+   ]
   },
   {
    "id": "lower-a-3",
@@ -1153,19 +1306,25 @@
    "load_step": 5.0,
    "target_sets": [
     {
-     "kg": 155.0,
+     "kg": 175.0,
      "reps": 12,
      "type": "normal"
     },
     {
-     "kg": 155.0,
+     "kg": 175.0,
+     "reps": 11,
+     "type": "normal"
+    },
+    {
+     "kg": 175.0,
      "reps": 10,
      "type": "normal"
     }
    ],
-   "target_kg": 155.0,
+   "target_kg": 175.0,
    "target_reps": [
     12,
+    11,
     10
    ],
    "prev_target_sets": [
@@ -1185,40 +1344,29 @@
      "type": "normal"
     }
    ],
-   "decision": "easy_week",
+   "decision": "hold",
    "reason": {
-    "code": "easy_week"
+    "code": "reps_to_done"
    },
    "needs_approval": false,
    "flags": [],
-   "pre_easy_sets": [
-    {
-     "kg": 175.0,
-     "reps": 12,
-     "type": "normal"
-    },
-    {
-     "kg": 175.0,
-     "reps": 10,
-     "type": "normal"
-    },
-    {
-     "kg": 175.0,
-     "reps": 10,
-     "type": "normal"
-    }
-   ],
+   "pre_easy_sets": null,
    "accepted": true,
    "source": "rule",
    "override_reason": null,
    "live_target_sets": [
     {
-     "kg": 155.0,
+     "kg": 175.0,
      "reps": 12,
      "type": "normal"
     },
     {
-     "kg": 155.0,
+     "kg": 175.0,
+     "reps": 11,
+     "type": "normal"
+    },
+    {
+     "kg": 175.0,
      "reps": 10,
      "type": "normal"
     }
@@ -1271,13 +1419,37 @@
      }
     ]
    },
-   "grade": "excluded",
+   "grade": "hit",
    "grade_reason": {
-    "code": "easy_week_graded",
-    "days": 14
+    "code": "met",
+    "n": 3
    },
-   "grade_flags": [],
-   "source_sets": []
+   "grade_flags": [
+    "overshoot"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-02-19",
+     "kg": 175.0,
+     "reps": 12,
+     "type": "normal",
+     "rir": 3
+    },
+    {
+     "date": "2030-02-19",
+     "kg": 175.0,
+     "reps": 12,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-02-19",
+     "kg": 175.0,
+     "reps": 11,
+     "type": "normal",
+     "rir": 2
+    }
+   ]
   },
   {
    "id": "lower-a-4",
@@ -1301,14 +1473,20 @@
    "load_step": 5.0,
    "target_sets": [
     {
-     "kg": 35.0,
+     "kg": 40.0,
      "reps": 14,
+     "type": "normal"
+    },
+    {
+     "kg": 40.0,
+     "reps": 12,
      "type": "normal"
     }
    ],
-   "target_kg": 35.0,
+   "target_kg": 40.0,
    "target_reps": [
-    14
+    14,
+    12
    ],
    "prev_target_sets": [
     {
@@ -1322,13 +1500,23 @@
      "type": "normal"
     }
    ],
-   "decision": "easy_week",
+   "decision": "hold",
    "reason": {
-    "code": "easy_week"
+    "code": "close_hold",
+    "why": {
+     "code": "close",
+     "met": 1,
+     "n": 2,
+     "short": 1
+    }
    },
    "needs_approval": false,
    "flags": [],
-   "pre_easy_sets": [
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
     {
      "kg": 40.0,
      "reps": 14,
@@ -1337,16 +1525,6 @@
     {
      "kg": 40.0,
      "reps": 12,
-     "type": "normal"
-    }
-   ],
-   "accepted": true,
-   "source": "rule",
-   "override_reason": null,
-   "live_target_sets": [
-    {
-     "kg": 35.0,
-     "reps": 14,
      "type": "normal"
     }
    ],
@@ -1388,13 +1566,30 @@
      }
     ]
    },
-   "grade": "excluded",
+   "grade": "partial",
    "grade_reason": {
-    "code": "easy_week_graded",
-    "days": 14
+    "code": "close",
+    "met": 1,
+    "n": 2,
+    "short": 2
    },
    "grade_flags": [],
-   "source_sets": []
+   "source_sets": [
+    {
+     "date": "2030-02-19",
+     "kg": 40.0,
+     "reps": 12,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-02-19",
+     "kg": 40.0,
+     "reps": 12,
+     "type": "normal",
+     "rir": 1
+    }
+   ]
   },
   {
    "id": "lower-a-5",
@@ -1418,20 +1613,26 @@
    "load_step": 5.0,
    "target_sets": [
     {
-     "kg": 65.0,
-     "reps": 13,
+     "kg": 60.0,
+     "reps": 17,
      "type": "normal"
     },
     {
-     "kg": 65.0,
-     "reps": 12,
+     "kg": 60.0,
+     "reps": 17,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
+     "reps": 17,
      "type": "normal"
     }
    ],
-   "target_kg": 65.0,
+   "target_kg": 60.0,
    "target_reps": [
-    13,
-    12
+    17,
+    17,
+    17
    ],
    "prev_target_sets": [
     {
@@ -1450,41 +1651,35 @@
      "type": "normal"
     }
    ],
-   "decision": "easy_week",
+   "decision": "reduce",
    "reason": {
-    "code": "easy_week"
+    "code": "reduce",
+    "streak": 2,
+    "pct": 92,
+    "coarse": ""
    },
-   "needs_approval": false,
-   "flags": [],
-   "pre_easy_sets": [
-    {
-     "kg": 75.0,
-     "reps": 13,
-     "type": "normal"
-    },
-    {
-     "kg": 75.0,
-     "reps": 12,
-     "type": "normal"
-    },
-    {
-     "kg": 75.0,
-     "reps": 11,
-     "type": "normal"
-    }
+   "needs_approval": true,
+   "flags": [
+    "coach_review"
    ],
+   "pre_easy_sets": null,
    "accepted": true,
    "source": "rule",
    "override_reason": null,
    "live_target_sets": [
     {
-     "kg": 65.0,
-     "reps": 13,
+     "kg": 60.0,
+     "reps": 17,
      "type": "normal"
     },
     {
-     "kg": 65.0,
-     "reps": 12,
+     "kg": 60.0,
+     "reps": 17,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
+     "reps": 17,
      "type": "normal"
     }
    ],
@@ -1540,13 +1735,37 @@
      }
     ]
    },
-   "grade": "excluded",
+   "grade": "hit",
    "grade_reason": {
-    "code": "easy_week_graded",
-    "days": 14
+    "code": "met",
+    "n": 3
    },
-   "grade_flags": [],
-   "source_sets": []
+   "grade_flags": [
+    "overshoot"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-02-19",
+     "kg": 60.0,
+     "reps": 19,
+     "type": "normal",
+     "rir": 5
+    },
+    {
+     "date": "2030-02-19",
+     "kg": 60.0,
+     "reps": 19,
+     "type": "normal",
+     "rir": 5
+    },
+    {
+     "date": "2030-02-19",
+     "kg": 60.0,
+     "reps": 19,
+     "type": "normal",
+     "rir": 4
+    }
+   ]
   },
   {
    "id": "upper-b-1",
@@ -1570,25 +1789,31 @@
    "load_step": 2.0,
    "target_sets": [
     {
-     "kg": 22.0,
+     "kg": 24.0,
      "reps": 12,
      "type": "normal"
     },
     {
-     "kg": 22.0,
+     "kg": 24.0,
      "reps": 12,
      "type": "normal"
     },
     {
-     "kg": 22.0,
+     "kg": 24.0,
+     "reps": 11,
+     "type": "normal"
+    },
+    {
+     "kg": 24.0,
      "reps": 11,
      "type": "normal"
     }
    ],
-   "target_kg": 22.0,
+   "target_kg": 24.0,
    "target_reps": [
     12,
     12,
+    11,
     11
    ],
    "prev_target_sets": [
@@ -1613,13 +1838,17 @@
      "type": "normal"
     }
    ],
-   "decision": "easy_week",
+   "decision": "hold",
    "reason": {
-    "code": "easy_week"
+    "code": "reps_to_done"
    },
    "needs_approval": false,
    "flags": [],
-   "pre_easy_sets": [
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
     {
      "kg": 24.0,
      "reps": 12,
@@ -1637,26 +1866,6 @@
     },
     {
      "kg": 24.0,
-     "reps": 10,
-     "type": "normal"
-    }
-   ],
-   "accepted": true,
-   "source": "rule",
-   "override_reason": null,
-   "live_target_sets": [
-    {
-     "kg": 22.0,
-     "reps": 12,
-     "type": "normal"
-    },
-    {
-     "kg": 22.0,
-     "reps": 12,
-     "type": "normal"
-    },
-    {
-     "kg": 22.0,
      "reps": 11,
      "type": "normal"
     }
@@ -1721,13 +1930,44 @@
      }
     ]
    },
-   "grade": "excluded",
+   "grade": "hit",
    "grade_reason": {
-    "code": "easy_week_graded",
-    "days": 14
+    "code": "met",
+    "n": 4
    },
-   "grade_flags": [],
-   "source_sets": []
+   "grade_flags": [
+    "overshoot"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-02-21",
+     "kg": 24.0,
+     "reps": 12,
+     "type": "normal",
+     "rir": 4
+    },
+    {
+     "date": "2030-02-21",
+     "kg": 24.0,
+     "reps": 12,
+     "type": "normal",
+     "rir": 4
+    },
+    {
+     "date": "2030-02-21",
+     "kg": 24.0,
+     "reps": 12,
+     "type": "normal",
+     "rir": 3
+    },
+    {
+     "date": "2030-02-21",
+     "kg": 24.0,
+     "reps": 12,
+     "type": "normal",
+     "rir": 3
+    }
+   ]
   },
   {
    "id": "upper-b-2",
@@ -1751,18 +1991,24 @@
    "load_step": 5.0,
    "target_sets": [
     {
-     "kg": 55.0,
+     "kg": 60.0,
      "reps": 12,
      "type": "normal"
     },
     {
-     "kg": 55.0,
+     "kg": 60.0,
+     "reps": 12,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
      "reps": 11,
      "type": "normal"
     }
    ],
-   "target_kg": 55.0,
+   "target_kg": 60.0,
    "target_reps": [
+    12,
     12,
     11
    ],
@@ -1783,40 +2029,32 @@
      "type": "normal"
     }
    ],
-   "decision": "easy_week",
+   "decision": "hold",
    "reason": {
-    "code": "easy_week"
+    "code": "add_rep",
+    "set": 2,
+    "frm": 11,
+    "to": 12
    },
    "needs_approval": false,
    "flags": [],
-   "pre_easy_sets": [
-    {
-     "kg": 60.0,
-     "reps": 12,
-     "type": "normal"
-    },
-    {
-     "kg": 60.0,
-     "reps": 11,
-     "type": "normal"
-    },
-    {
-     "kg": 60.0,
-     "reps": 11,
-     "type": "normal"
-    }
-   ],
+   "pre_easy_sets": null,
    "accepted": true,
    "source": "rule",
    "override_reason": null,
    "live_target_sets": [
     {
-     "kg": 55.0,
+     "kg": 60.0,
      "reps": 12,
      "type": "normal"
     },
     {
-     "kg": 55.0,
+     "kg": 60.0,
+     "reps": 12,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
      "reps": 11,
      "type": "normal"
     }
@@ -1869,13 +2107,37 @@
      }
     ]
    },
-   "grade": "excluded",
+   "grade": "hit",
    "grade_reason": {
-    "code": "easy_week_graded",
-    "days": 14
+    "code": "met",
+    "n": 3
    },
-   "grade_flags": [],
-   "source_sets": []
+   "grade_flags": [
+    "overshoot"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-02-21",
+     "kg": 60.0,
+     "reps": 12,
+     "type": "normal",
+     "rir": 4
+    },
+    {
+     "date": "2030-02-21",
+     "kg": 60.0,
+     "reps": 12,
+     "type": "normal",
+     "rir": 3
+    },
+    {
+     "date": "2030-02-21",
+     "kg": 60.0,
+     "reps": 12,
+     "type": "normal",
+     "rir": 2
+    }
+   ]
   },
   {
    "id": "upper-b-3",
@@ -1899,13 +2161,19 @@
    "load_step": 2.0,
    "target_sets": [
     {
-     "kg": 18.0,
+     "kg": 20.0,
+     "reps": 11,
+     "type": "normal"
+    },
+    {
+     "kg": 20.0,
      "reps": 10,
      "type": "normal"
     }
    ],
-   "target_kg": 18.0,
+   "target_kg": 20.0,
    "target_reps": [
+    11,
     10
    ],
    "prev_target_sets": [
@@ -1920,30 +2188,24 @@
      "type": "normal"
     }
    ],
-   "decision": "easy_week",
+   "decision": "hold",
    "reason": {
-    "code": "easy_week"
+    "code": "reps_to_done"
    },
    "needs_approval": false,
    "flags": [],
-   "pre_easy_sets": [
-    {
-     "kg": 20.0,
-     "reps": 10,
-     "type": "normal"
-    },
-    {
-     "kg": 20.0,
-     "reps": 9,
-     "type": "normal"
-    }
-   ],
+   "pre_easy_sets": null,
    "accepted": true,
    "source": "rule",
    "override_reason": null,
    "live_target_sets": [
     {
-     "kg": 18.0,
+     "kg": 20.0,
+     "reps": 11,
+     "type": "normal"
+    },
+    {
+     "kg": 20.0,
      "reps": 10,
      "type": "normal"
     }
@@ -1984,13 +2246,30 @@
      }
     ]
    },
-   "grade": "excluded",
+   "grade": "hit",
    "grade_reason": {
-    "code": "easy_week_graded",
-    "days": 14
+    "code": "met",
+    "n": 2
    },
-   "grade_flags": [],
-   "source_sets": []
+   "grade_flags": [
+    "overshoot"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-02-21",
+     "kg": 20.0,
+     "reps": 12,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-02-21",
+     "kg": 20.0,
+     "reps": 11,
+     "type": "normal",
+     "rir": 2
+    }
+   ]
   },
   {
    "id": "upper-b-4",
@@ -2014,20 +2293,26 @@
    "load_step": 5.0,
    "target_sets": [
     {
-     "kg": 50.0,
-     "reps": 12,
+     "kg": 60.0,
+     "reps": 8,
      "type": "normal"
     },
     {
-     "kg": 50.0,
-     "reps": 12,
+     "kg": 60.0,
+     "reps": 8,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
+     "reps": 8,
      "type": "normal"
     }
    ],
-   "target_kg": 50.0,
+   "target_kg": 60.0,
    "target_reps": [
-    12,
-    12
+    8,
+    8,
+    8
    ],
    "prev_target_sets": [
     {
@@ -2046,41 +2331,34 @@
      "type": "normal"
     }
    ],
-   "decision": "easy_week",
+   "decision": "increase",
    "reason": {
-    "code": "easy_week"
+    "code": "step",
+    "reps": 12,
+    "left": 1,
+    "kg_add": 5.0,
+    "lo": 8
    },
    "needs_approval": false,
    "flags": [],
-   "pre_easy_sets": [
-    {
-     "kg": 55.0,
-     "reps": 12,
-     "type": "normal"
-    },
-    {
-     "kg": 55.0,
-     "reps": 12,
-     "type": "normal"
-    },
-    {
-     "kg": 55.0,
-     "reps": 11,
-     "type": "normal"
-    }
-   ],
+   "pre_easy_sets": null,
    "accepted": true,
    "source": "rule",
    "override_reason": null,
    "live_target_sets": [
     {
-     "kg": 50.0,
-     "reps": 12,
+     "kg": 60.0,
+     "reps": 8,
      "type": "normal"
     },
     {
-     "kg": 50.0,
-     "reps": 12,
+     "kg": 60.0,
+     "reps": 8,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
+     "reps": 8,
      "type": "normal"
     }
    ],
@@ -2132,13 +2410,37 @@
      }
     ]
    },
-   "grade": "excluded",
+   "grade": "hit",
    "grade_reason": {
-    "code": "easy_week_graded",
-    "days": 14
+    "code": "met",
+    "n": 3
    },
-   "grade_flags": [],
-   "source_sets": []
+   "grade_flags": [
+    "overshoot"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-02-21",
+     "kg": 60.0,
+     "reps": 10,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-02-21",
+     "kg": 60.0,
+     "reps": 9,
+     "type": "normal",
+     "rir": 3
+    },
+    {
+     "date": "2030-02-21",
+     "kg": 60.0,
+     "reps": 9,
+     "type": "normal",
+     "rir": 2
+    }
+   ]
   },
   {
    "id": "upper-b-5",
@@ -2162,14 +2464,20 @@
    "load_step": 2.0,
    "target_sets": [
     {
-     "kg": 12.0,
+     "kg": 14.0,
      "reps": 14,
+     "type": "normal"
+    },
+    {
+     "kg": 14.0,
+     "reps": 13,
      "type": "normal"
     }
    ],
-   "target_kg": 12.0,
+   "target_kg": 14.0,
    "target_reps": [
-    14
+    14,
+    13
    ],
    "prev_target_sets": [
     {
@@ -2183,13 +2491,23 @@
      "type": "normal"
     }
    ],
-   "decision": "easy_week",
+   "decision": "hold",
    "reason": {
-    "code": "easy_week"
+    "code": "close_hold",
+    "why": {
+     "code": "close",
+     "met": 1,
+     "n": 2,
+     "short": 1
+    }
    },
    "needs_approval": false,
    "flags": [],
-   "pre_easy_sets": [
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
     {
      "kg": 14.0,
      "reps": 14,
@@ -2198,16 +2516,6 @@
     {
      "kg": 14.0,
      "reps": 13,
-     "type": "normal"
-    }
-   ],
-   "accepted": true,
-   "source": "rule",
-   "override_reason": null,
-   "live_target_sets": [
-    {
-     "kg": 12.0,
-     "reps": 14,
      "type": "normal"
     }
    ],
@@ -2249,13 +2557,30 @@
      }
     ]
    },
-   "grade": "excluded",
+   "grade": "hit",
    "grade_reason": {
-    "code": "easy_week_graded",
-    "days": 14
+    "code": "met",
+    "n": 2
    },
-   "grade_flags": [],
-   "source_sets": []
+   "grade_flags": [
+    "overshoot"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-02-21",
+     "kg": 14.0,
+     "reps": 15,
+     "type": "normal",
+     "rir": 0
+    },
+    {
+     "date": "2030-02-21",
+     "kg": 14.0,
+     "reps": 14,
+     "type": "normal",
+     "rir": null
+    }
+   ]
   },
   {
    "id": "upper-b-6",
@@ -2279,13 +2604,19 @@
    "load_step": 5.0,
    "target_sets": [
     {
-     "kg": 20.0,
+     "kg": 25.0,
+     "reps": 11,
+     "type": "normal"
+    },
+    {
+     "kg": 25.0,
      "reps": 11,
      "type": "normal"
     }
    ],
-   "target_kg": 20.0,
+   "target_kg": 25.0,
    "target_reps": [
+    11,
     11
    ],
    "prev_target_sets": [
@@ -2300,13 +2631,17 @@
      "type": "normal"
     }
    ],
-   "decision": "easy_week",
+   "decision": "hold",
    "reason": {
-    "code": "easy_week"
+    "code": "rep_pr_hold"
    },
    "needs_approval": false,
    "flags": [],
-   "pre_easy_sets": [
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
     {
      "kg": 25.0,
      "reps": 11,
@@ -2314,16 +2649,6 @@
     },
     {
      "kg": 25.0,
-     "reps": 11,
-     "type": "normal"
-    }
-   ],
-   "accepted": true,
-   "source": "rule",
-   "override_reason": null,
-   "live_target_sets": [
-    {
-     "kg": 20.0,
      "reps": 11,
      "type": "normal"
     }
@@ -2368,13 +2693,30 @@
      }
     ]
    },
-   "grade": "excluded",
+   "grade": "partial",
    "grade_reason": {
-    "code": "easy_week_graded",
-    "days": 14
+    "code": "close",
+    "met": 1,
+    "n": 2,
+    "short": 1
    },
    "grade_flags": [],
-   "source_sets": []
+   "source_sets": [
+    {
+     "date": "2030-02-21",
+     "kg": 25.0,
+     "reps": 11,
+     "type": "normal",
+     "rir": 0
+    },
+    {
+     "date": "2030-02-21",
+     "kg": 25.0,
+     "reps": 10,
+     "type": "normal",
+     "rir": 1
+    }
+   ]
   },
   {
    "id": "lower-b-1",
@@ -2398,24 +2740,30 @@
    "load_step": 2.5,
    "target_sets": [
     {
-     "kg": 77.5,
+     "kg": 85.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 85.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 85.0,
      "reps": 9,
      "type": "normal"
     },
     {
-     "kg": 77.5,
-     "reps": 9,
-     "type": "normal"
-    },
-    {
-     "kg": 77.5,
+     "kg": 85.0,
      "reps": 8,
      "type": "normal"
     }
    ],
-   "target_kg": 77.5,
+   "target_kg": 85.0,
    "target_reps": [
-    9,
+    10,
+    10,
     9,
     8
    ],
@@ -2441,50 +2789,34 @@
      "type": "normal"
     }
    ],
-   "decision": "easy_week",
+   "decision": "hold",
    "reason": {
-    "code": "easy_week"
+    "code": "reps_to_done"
    },
    "needs_approval": false,
    "flags": [],
-   "pre_easy_sets": [
-    {
-     "kg": 85.0,
-     "reps": 9,
-     "type": "normal"
-    },
-    {
-     "kg": 85.0,
-     "reps": 9,
-     "type": "normal"
-    },
-    {
-     "kg": 85.0,
-     "reps": 8,
-     "type": "normal"
-    },
-    {
-     "kg": 85.0,
-     "reps": 8,
-     "type": "normal"
-    }
-   ],
+   "pre_easy_sets": null,
    "accepted": true,
    "source": "rule",
    "override_reason": null,
    "live_target_sets": [
     {
-     "kg": 77.5,
+     "kg": 85.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 85.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 85.0,
      "reps": 9,
      "type": "normal"
     },
     {
-     "kg": 77.5,
-     "reps": 9,
-     "type": "normal"
-    },
-    {
-     "kg": 77.5,
+     "kg": 85.0,
      "reps": 8,
      "type": "normal"
     }
@@ -2549,13 +2881,44 @@
      }
     ]
    },
-   "grade": "excluded",
+   "grade": "hit",
    "grade_reason": {
-    "code": "easy_week_graded",
-    "days": 14
+    "code": "met",
+    "n": 4
    },
-   "grade_flags": [],
-   "source_sets": []
+   "grade_flags": [
+    "exact_copy"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-02-22",
+     "kg": 85.0,
+     "reps": 10,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-02-22",
+     "kg": 85.0,
+     "reps": 10,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-02-22",
+     "kg": 85.0,
+     "reps": 9,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-02-22",
+     "kg": 85.0,
+     "reps": 8,
+     "type": "normal",
+     "rir": 2
+    }
+   ]
   },
   {
    "id": "lower-b-2",
@@ -2579,18 +2942,24 @@
    "load_step": 2.0,
    "target_sets": [
     {
-     "kg": 26.0,
+     "kg": 28.0,
+     "reps": 11,
+     "type": "normal"
+    },
+    {
+     "kg": 28.0,
      "reps": 10,
      "type": "normal"
     },
     {
-     "kg": 26.0,
+     "kg": 28.0,
      "reps": 9,
      "type": "normal"
     }
    ],
-   "target_kg": 26.0,
+   "target_kg": 28.0,
    "target_reps": [
+    11,
     10,
     9
    ],
@@ -2611,40 +2980,29 @@
      "type": "normal"
     }
    ],
-   "decision": "easy_week",
+   "decision": "hold",
    "reason": {
-    "code": "easy_week"
+    "code": "reps_to_done"
    },
    "needs_approval": false,
    "flags": [],
-   "pre_easy_sets": [
-    {
-     "kg": 28.0,
-     "reps": 10,
-     "type": "normal"
-    },
-    {
-     "kg": 28.0,
-     "reps": 9,
-     "type": "normal"
-    },
-    {
-     "kg": 28.0,
-     "reps": 9,
-     "type": "normal"
-    }
-   ],
+   "pre_easy_sets": null,
    "accepted": true,
    "source": "rule",
    "override_reason": null,
    "live_target_sets": [
     {
-     "kg": 26.0,
+     "kg": 28.0,
+     "reps": 11,
+     "type": "normal"
+    },
+    {
+     "kg": 28.0,
      "reps": 10,
      "type": "normal"
     },
     {
-     "kg": 26.0,
+     "kg": 28.0,
      "reps": 9,
      "type": "normal"
     }
@@ -2697,13 +3055,37 @@
      }
     ]
    },
-   "grade": "excluded",
+   "grade": "hit",
    "grade_reason": {
-    "code": "easy_week_graded",
-    "days": 14
+    "code": "met",
+    "n": 3
    },
-   "grade_flags": [],
-   "source_sets": []
+   "grade_flags": [
+    "exact_copy"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-02-22",
+     "kg": 28.0,
+     "reps": 11,
+     "type": "normal",
+     "rir": null
+    },
+    {
+     "date": "2030-02-22",
+     "kg": 28.0,
+     "reps": 10,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-02-22",
+     "kg": 28.0,
+     "reps": 9,
+     "type": "normal",
+     "rir": 3
+    }
+   ]
   },
   {
    "id": "lower-b-3",
@@ -2727,20 +3109,26 @@
    "load_step": 5.0,
    "target_sets": [
     {
-     "kg": 55.0,
+     "kg": 60.0,
+     "reps": 14,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
      "reps": 13,
      "type": "normal"
     },
     {
-     "kg": 55.0,
-     "reps": 13,
+     "kg": 60.0,
+     "reps": 12,
      "type": "normal"
     }
    ],
-   "target_kg": 55.0,
+   "target_kg": 60.0,
    "target_reps": [
+    14,
     13,
-    13
+    12
    ],
    "prev_target_sets": [
     {
@@ -2759,16 +3147,23 @@
      "type": "normal"
     }
    ],
-   "decision": "easy_week",
+   "decision": "hold",
    "reason": {
-    "code": "easy_week"
+    "code": "add_rep",
+    "set": 1,
+    "frm": 13,
+    "to": 14
    },
    "needs_approval": false,
    "flags": [],
-   "pre_easy_sets": [
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
     {
      "kg": 60.0,
-     "reps": 13,
+     "reps": 14,
      "type": "normal"
     },
     {
@@ -2779,21 +3174,6 @@
     {
      "kg": 60.0,
      "reps": 12,
-     "type": "normal"
-    }
-   ],
-   "accepted": true,
-   "source": "rule",
-   "override_reason": null,
-   "live_target_sets": [
-    {
-     "kg": 55.0,
-     "reps": 13,
-     "type": "normal"
-    },
-    {
-     "kg": 55.0,
-     "reps": 13,
      "type": "normal"
     }
    ],
@@ -2845,13 +3225,37 @@
      }
     ]
    },
-   "grade": "excluded",
+   "grade": "hit",
    "grade_reason": {
-    "code": "easy_week_graded",
-    "days": 14
+    "code": "met",
+    "n": 3
    },
-   "grade_flags": [],
-   "source_sets": []
+   "grade_flags": [
+    "exact_copy"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-02-22",
+     "kg": 60.0,
+     "reps": 14,
+     "type": "normal",
+     "rir": 0
+    },
+    {
+     "date": "2030-02-22",
+     "kg": 60.0,
+     "reps": 13,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-02-22",
+     "kg": 60.0,
+     "reps": 12,
+     "type": "normal",
+     "rir": 1
+    }
+   ]
   },
   {
    "id": "lower-b-4",
@@ -2875,13 +3279,19 @@
    "load_step": 5.0,
    "target_sets": [
     {
-     "kg": 35.0,
+     "kg": 40.0,
+     "reps": 17,
+     "type": "normal"
+    },
+    {
+     "kg": 40.0,
      "reps": 16,
      "type": "normal"
     }
    ],
-   "target_kg": 35.0,
+   "target_kg": 40.0,
    "target_reps": [
+    17,
     16
    ],
    "prev_target_sets": [
@@ -2896,30 +3306,24 @@
      "type": "normal"
     }
    ],
-   "decision": "easy_week",
+   "decision": "hold",
    "reason": {
-    "code": "easy_week"
+    "code": "reps_to_done"
    },
    "needs_approval": false,
    "flags": [],
-   "pre_easy_sets": [
-    {
-     "kg": 40.0,
-     "reps": 16,
-     "type": "normal"
-    },
-    {
-     "kg": 40.0,
-     "reps": 15,
-     "type": "normal"
-    }
-   ],
+   "pre_easy_sets": null,
    "accepted": true,
    "source": "rule",
    "override_reason": null,
    "live_target_sets": [
     {
-     "kg": 35.0,
+     "kg": 40.0,
+     "reps": 17,
+     "type": "normal"
+    },
+    {
+     "kg": 40.0,
      "reps": 16,
      "type": "normal"
     }
@@ -2960,13 +3364,30 @@
      }
     ]
    },
-   "grade": "excluded",
+   "grade": "hit",
    "grade_reason": {
-    "code": "easy_week_graded",
-    "days": 14
+    "code": "met",
+    "n": 2
    },
-   "grade_flags": [],
-   "source_sets": []
+   "grade_flags": [
+    "overshoot"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-02-22",
+     "kg": 40.0,
+     "reps": 18,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-02-22",
+     "kg": 40.0,
+     "reps": 17,
+     "type": "normal",
+     "rir": 2
+    }
+   ]
   },
   {
    "id": "lower-b-5",
@@ -2990,18 +3411,24 @@
    "load_step": 5.0,
    "target_sets": [
     {
-     "kg": 50.0,
+     "kg": 55.0,
      "reps": 14,
      "type": "normal"
     },
     {
-     "kg": 50.0,
+     "kg": 55.0,
+     "reps": 14,
+     "type": "normal"
+    },
+    {
+     "kg": 55.0,
      "reps": 13,
      "type": "normal"
     }
    ],
-   "target_kg": 50.0,
+   "target_kg": 55.0,
    "target_reps": [
+    14,
     14,
     13
    ],
@@ -3022,40 +3449,29 @@
      "type": "normal"
     }
    ],
-   "decision": "easy_week",
+   "decision": "hold",
    "reason": {
-    "code": "easy_week"
+    "code": "reps_to_done"
    },
    "needs_approval": false,
    "flags": [],
-   "pre_easy_sets": [
-    {
-     "kg": 55.0,
-     "reps": 14,
-     "type": "normal"
-    },
-    {
-     "kg": 55.0,
-     "reps": 13,
-     "type": "normal"
-    },
-    {
-     "kg": 55.0,
-     "reps": 13,
-     "type": "normal"
-    }
-   ],
+   "pre_easy_sets": null,
    "accepted": true,
    "source": "rule",
    "override_reason": null,
    "live_target_sets": [
     {
-     "kg": 50.0,
+     "kg": 55.0,
      "reps": 14,
      "type": "normal"
     },
     {
-     "kg": 50.0,
+     "kg": 55.0,
+     "reps": 14,
+     "type": "normal"
+    },
+    {
+     "kg": 55.0,
      "reps": 13,
      "type": "normal"
     }
@@ -3108,15 +3524,39 @@
      }
     ]
    },
-   "grade": "excluded",
+   "grade": "hit",
    "grade_reason": {
-    "code": "easy_week_graded",
-    "days": 14
+    "code": "met",
+    "n": 3
    },
-   "grade_flags": [],
-   "source_sets": []
+   "grade_flags": [
+    "overshoot"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-02-22",
+     "kg": 55.0,
+     "reps": 15,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-02-22",
+     "kg": 55.0,
+     "reps": 15,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-02-22",
+     "kg": 55.0,
+     "reps": 14,
+     "type": "normal",
+     "rir": 1
+    }
+   ]
   }
  ],
- "graded_week_type": "recovery",
+ "graded_week_type": "full",
  "status_before_grade": "applied"
 }
