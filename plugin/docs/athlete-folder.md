@@ -13,7 +13,7 @@ my-training/
   plan/program.json      routine spec (no vendor ids; exercises by free-exercise-db id): program-schema.md
   plan/targets/          targets_YYYY-Www.json, one per ISO week
   plan/changes.md        dated plan changes, each with its success band
-  plan/nutrition.md      macros + meal plan (v0.2)
+  plan/nutrition.md      targets + a day of meals, written by scripts/nutrition.py (v0.2)
   data/sets.csv          one row per set (schema below)
   data/sessions.csv      one row per session (schema below)
   data/body.csv          body measurements (schema below)
@@ -106,6 +106,37 @@ severely-lagging`, or `body-fat` with `rating` = `low-high` in % (e.g. `15-19`, 
 `exercise, exercise_id` — every exercise name as logged → its free-exercise-db id, or `custom:<slug>` until
 mapped. The importers add new names; the user (or the import skill) fixes a row and the next import applies it to
 every set.
+
+## profile.md — nutrition fields (v0.2)
+
+Asked by `onboard` step 8 (optional, after the medical check); read by `scripts/nutrition.py`. The block sits
+between `# --- nutrition` and `# --- end nutrition` in the template.
+
+| field | values | notes |
+|---|---|---|
+| `age_years` | int | nutrition targets only from 18 |
+| `sex` | `male` \| `female` \| `unspecified` | the energy formula and the body-fat bands only |
+| `height` | `178 cm` \| `5 ft 10 in` | stored as typed; the script converts |
+| `weight` | `80 kg` \| `176 lb` | used until `data/body.csv` has weigh-ins (and consent) |
+| `activity` | `sedentary` \| `light` \| `moderate` \| `very` \| `extra` | starting multiplier; the weight trend replaces it |
+| `eating_disorder_history` | `no` \| `yes` \| `prefer-not-to-say` | anything but an explicit `no` switches calorie targets and fat-loss phases off (photo reviews too, physique skill) |
+| `wellbeing_pause` | `YYYY-MM-DD` or blank | **shared flag** (nutrition + physique): set by either skill when the user says something worrying (extreme restriction, purging, distress about body or food). While set: no calorie targets, no fat-loss phase, no photo reviews; the skill points to professional help. Only the user's explicit request clears it: the skill blanks it and adds a dated note under `# Profile` |
+| `nutrition_phase` | `maintain` \| `gain` \| `lose` | |
+| `rate_pct_week` | number or blank | % of body weight a week; lose is capped by body fat, gain at 0.5 |
+| `body_fat_pct` | number, a range (`16-20`) or blank | a range counts as its midpoint; `data/body.csv` wins when it has one |
+| `diet` | `omnivore` \| `pescatarian` \| `vegetarian` \| `vegan` | |
+| `allergies` | list: `milk`, `egg`, `fish`, `shellfish`, `peanut`, `tree-nut`, `soy`, `gluten`, `sesame`, or other words | other words remove foods whose name contains them |
+| `foods_avoid` | list of food ids or words | dislikes |
+| `weight_tracking` | `yes` \| `no` | consent to read `data/body.csv` weigh-ins; `no` = profile `weight` only, no trend |
+
+## plan/nutrition.md (v0.2)
+
+Written only by `scripts/nutrition.py plan`. YAML header: `nutrition: 0.2`, `status: on | off`, `since`
+(the date it came into force; the next weight-trend window starts here), and when on: `phase`, `rate_pct_week`,
+`kcal`, `protein_g`, `fat_g`, `carbs_g`, `maintenance_kcal`, `maintenance_source` (`formula` | `weight-trend`),
+`resting_kcal`, `weight_kg`; when off: `reason` (`age`, `eating-disorder`, `wellbeing-pause`, `pregnancy`). Body:
+the targets, how each number was made, the safeguards applied and a day of meals. The script also keeps a
+`<!-- coaich:nutrition -->` block in `plan/CURRENT.md`.
 
 ## plan/program.json
 

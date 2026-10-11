@@ -82,7 +82,7 @@ the rule that fired. `weekly-review` runs the loop and asks you before it change
 User-invoked (you type them): `/onboard`, `/weekly-review`.
 
 Model-invoked (Claude reaches for them, or you name them): `safety`, `import`, `program-build`, `progression`,
-`program-audit`, `physique`.
+`program-audit`, `nutrition`, `physique`.
 
 | Skill | What it does |
 |---|---|
@@ -95,6 +95,7 @@ Model-invoked (Claude reaches for them, or you name them): `safety`, `import`, `
 | `progression` | Grades last week and sets next week's targets, each with a reason. Spine-loaded increases and cuts need your OK. | `progression.py` |
 | `weekly-review` | The weekly loop: import, grade, propose, ask, apply, check-in. | `progression.py` |
 | `program-audit` | Pressure-tests a program, yours or a generated one, against the evidence. | `program_audit.py` |
+| `nutrition` | Calories, protein, fat and carbs, a day of meals from your diet and allergies, and corrections from your weight trend. 18+ only; safeguards in code (lawyer review pending). | `nutrition.py` |
 | `physique` | 18+ and opt-in only. Rates muscle groups in your progress photos, compares sets, gives a rough body-fat range if you ask, and turns a goal physique into training priorities. Strips photo location data on filing. | `photos.py` |
 
 Every script is Python 3.9+ standard library only, works offline and reads and writes the folder through
@@ -109,6 +110,7 @@ my-training/
   plan/CURRENT.md    what is in force today
   plan/program.json  your program
   plan/targets/      one targets file per week
+  plan/nutrition.md  calorie and macro targets + a day of meals (optional)
   data/sets.csv      one row per set
   data/sessions.csv  one row per session
   data/body.csv      weight, waist

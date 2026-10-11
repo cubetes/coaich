@@ -89,16 +89,49 @@ Write every answer into the front matter of `profile.md` (field names as in the 
 today, add any free-text remarks under `# Profile`. Then:
 `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/athlete_folder.py" log onboard "<level from --place>, <days> days, <minutes> min, goal <goal>"`.
 
-## 8. v0.2 hooks
+## 8. Nutrition and photos (optional)
 
-<!-- v0.2 nutrition hook (nutrition lane): 18+ only, eating-disorder question first → `eating_disorder_history`. -->
-Nutrition is not in this version yet. If the user asks, say it comes in a later version.
+### 8a. Nutrition (optional)
 
-### Photos and ideal physique (18+ only)
+Only when `age_band` is `18-59` or `60+`; for `16-17` say *"Nutrition targets are for ages 18 and over."* and
+skip. Ask one question at a time; write each answer into the nutrition block of `profile.md` (field names in
+`docs/athlete-folder.md`). Never work out a number yourself: `nutrition.py` does all of it.
 
-Skip this whole step when `age_band` is `under-16` or `16-17`, or `eating_disorder_history: yes` (the nutrition
-step's answer: read it, never ask it twice). If `eating_disorder_history` is not answered, skip it too; the
-`physique` skill asks it when the user first wants a photo review.
+1. *"Do you want help with food too: daily calories, protein and a sample day of meals?"* Yes · Not now. Not
+   now → skip 8a (they can ask the `nutrition` skill later).
+2. Before any number, ask exactly once: *"Have you ever had an eating disorder, or been treated for one?"*
+   No · Yes · I'd rather not say → `eating_disorder_history: no | yes | prefer-not-to-say`. Do not ask follow-up
+   questions. Anything but **No** → run the script (step 11) at once: it switches calorie targets off and prints
+   the wording to say. Then skip the rest of 8a.
+3. *"How old are you, in years?"* → `age_years`.
+4. *"For the energy formula: male, female, or rather not say?"* → `sex: male | female | unspecified`.
+5. *"How tall are you?"* (cm, or feet and inches) → `height` as typed, e.g. `178 cm`, `5 ft 10 in`.
+6. *"What do you weigh now?"* (kg or lb) → `weight` as typed, e.g. `80 kg`.
+7. *"How active is a normal week, gym included?"* Mostly sitting, little exercise · Mostly sitting, training 1–3
+   days · Training 3–5 days, or on my feet a lot · Training 6–7 days, or a physical job and training · A hard
+   physical job and hard training most days → `activity: sedentary | light | moderate | very | extra`.
+8. *"What do you want your weight to do?"* Stay about the same · Go up slowly, to build muscle · Go down, to lose
+   fat → `nutrition_phase: maintain | gain | lose`. Lose → *"Do you know your body fat roughly? A range is fine,
+   like 16–20 %. Or skip."* → `body_fat_pct` (as given). Say: *"We start at 0.5 % of your weight a week. The
+   fastest we go depends on your body fat."*
+9. *"Do you eat everything, or no meat, no meat or fish, or nothing from animals?"* → `diet: omnivore |
+   pescatarian | vegetarian | vegan`. *"Any food allergies or intolerances?"* → `allergies` (milk, egg, fish,
+   shellfish, peanut, tree-nut, soy, gluten, sesame, or the user's words). *"Anything you won't eat?"* →
+   `foods_avoid`.
+10. *"Can CoAIch read your weigh-ins (`data/body.csv`) each week to check your trend and correct the calories?
+    They stay in this folder."* Yes · No → `weight_tracking: yes | no`.
+11. Run `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/nutrition.py" plan --dir <folder>`. Exit 0 → say the daily
+    targets line and that the full plan is in `plan/nutrition.md`. Exit 3 → say its output word for word (a
+    safeguard). Exit 2 → ask the question it names again. The script writes the log line.
+
+`wellbeing_pause` is never asked: the `nutrition` and `physique` skills set it (see the nutrition skill). While it is
+set there are no calorie targets and no photo reviews.
+
+### 8b. Photos and ideal physique (optional, 18+ only)
+
+Skip this whole step when `age_band` is `under-16` or `16-17`, or `wellbeing_pause` is set. If
+`eating_disorder_history` is blank (the user skipped 8a), ask 8a's question 2 now, exactly once, and write the
+answer. Anything but **No** → skip this step: photo reviews stay off (`scripts/athlete_folder.py gate` says why).
 
 1. *"Do you want to use progress photos? I'd rate how each muscle group is coming along, compare them over time
    and help you pick what to train most. Your photos stay in this folder, pass only through your own Claude
