@@ -19,6 +19,9 @@ Check `data/sets.csv` has sessions dated in `{last}`. If the athlete trained sin
 run the `import` skill first. Ask once: "Anything you did that isn't logged?" Missing sessions are
 graded "not done", which is fine, but it should be true.
 
+If `plan/CURRENT.md` has an **Adapted** block whose temporary program has ended
+(`adapt.py status --dir .` says DUE), run the `adapt` skill's restore first.
+
 ## 2. Grade and propose
 
 Run the `progression` skill, step 1 (`propose --week {next}`). It grades `{last}` and drafts
@@ -33,6 +36,11 @@ From the propose output and `data/`:
 - Optional, only if `data/health.csv` has the week: average sleep, steps and resting heart rate
   against the previous 4 weeks, one line each. Context only. Never call fatigue on fewer than two
   signals that agree (a low hit rate plus worse sleep, say).
+- Only when `plan/nutrition.md` says `status: on`: run
+  `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/nutrition.py" trend --dir . --today {today} --line`. Exit 0 → copy
+  its one line (the 4-week weight change against the phase's band: on track, eat more, or slower or faster than
+  planned). Exit 3 → say nothing about weight or food (a safeguard or no consent). Never change calories here:
+  that is the `nutrition` skill's job at the monthly check-in, or when the athlete asks.
 
 ## 4. Ask
 
@@ -53,7 +61,8 @@ Write `check-ins/{today}-weekly.md`:
 # Weekly check-in · {today} · {last}
 
 ## The week
-<sessions done / planned · targets met · band line · health lines if any · athlete notes, verbatim>
+<sessions done / planned · targets met · band line · health lines if any · weight-trend line if any ·
+athlete notes, verbatim>
 
 ## Grades
 <the grade table from the propose output>
@@ -70,7 +79,6 @@ Write `check-ins/{today}-weekly.md`:
 `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/athlete_folder.py" log weekly-review "{last} graded, x/n met, k changes, m held"`
 (it writes the contract's line, `- YYYY-MM-DD · weekly-review · …`, dated today).
 
-## Out of scope in this version
+## Out of scope here
 
-Nutrition, photos, body weight trend and wearable sync. If the athlete asks, say they come in a
-later version and keep to training.
+Photos (the `physique` skill, monthly) and wearable sync. Calorie changes wait for the monthly check-in.

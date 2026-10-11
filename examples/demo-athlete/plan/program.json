@@ -1,6 +1,7 @@
 {
  "schema": "coaich.program/0.1",
  "start": "2030-01-07",
+ "issued": "2030-01-07",
  "name": "ul4i·60",
  "layout": "ul4i",
  "level": "intermediate",
@@ -633,6 +634,7 @@
  ],
  "left_out": [],
  "easy_week_every": 7,
+ "easy_from_week": 1,
  "easy_weeks": [
   7,
   14,

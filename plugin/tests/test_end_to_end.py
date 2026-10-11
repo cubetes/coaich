@@ -1,6 +1,7 @@
-"""End to end on a fresh copy of the demo athlete, the way the skills run the scripts:
-onboard files -> program_build.py -> weekly review (progression.py propose/apply) -> a Strong export of the next
-week through import_strong.py -> weekly review again -> check-ins and log.md lines.
+"""End to end on a fresh copy of the demo athlete (nutrition on, photos off), the way the skills run the scripts:
+onboard files -> program_build.py -> weekly review (progression.py propose/apply + the weight-trend line) -> a
+roadmap -> a Strong export of the next week through import_strong.py -> weekly review again -> the roadmap's gates
+checked -> one adapt injury cycle (red flag -> checked -> clear) -> the monthly check-in -> check-ins and log.md.
 Then every importer on its fixtures, one after the other, into one folder."""
 import csv
 import datetime as dt
@@ -18,10 +19,14 @@ import support
 from support import fixture, run
 
 sys.path.insert(0, support.SCRIPTS)
+import adapt  # noqa: E402
 import athlete_folder as af  # noqa: E402
+import changes as ch  # noqa: E402
 import demo_athlete as da  # noqa: E402
+import monthly_check_in as mc  # noqa: E402
 import program_build as pb  # noqa: E402
 import progression as pg  # noqa: E402
+import roadmap as rmp  # noqa: E402
 
 DEMO = Path(support.HERE).parent.parent / "examples" / "demo-athlete"
 LOG_LINE = re.compile(r"^- \d{4}-\d{2}-\d{2} · [a-z-]+ · \S.*$")
@@ -51,12 +56,14 @@ def strong_export(path, folder, week_label):
 
 
 def review(folder, sunday, last, nxt, *extra):
-    """The weekly-review skill: propose, apply with every ask row OK'd, check-in, log line."""
+    """The weekly-review skill: propose, apply with every ask row OK'd, the weight-trend line (nutrition is on),
+    check-in, log line."""
     propose_out = da.run(pg.main, ["propose", "--dir", folder, "--week", nxt, *extra])
     asks = [r["id"] for r in pg.load_json(pg.targets_path(folder, nxt))["rows"] if r["needs_approval"]]
     apply_out = da.run(pg.main, ["apply", "--dir", folder, "--week", nxt, "--accept-all"]
                        + (["--approve", ",".join(asks)] if asks else []))
-    result = da.checkin(folder, sunday, last, nxt, propose_out, apply_out)
+    weight_line = run("nutrition.py", "trend", "--dir", folder, "--today", sunday, "--line").stdout.strip()
+    result = da.checkin(folder, sunday, last, nxt, propose_out, apply_out, weight_line)
     af.append_log(folder, "weekly-review", result, date=sunday)
     return propose_out, apply_out, result
 
@@ -89,6 +96,15 @@ class EndToEnd(unittest.TestCase):
         w14 = pg.load_json(pg.targets_path(d, "2030-W14"))
         self.assertEqual(w14["status"], "applied")
         self.assertTrue(all(r["accepted"] for r in w14["rows"]))
+        self.assertRegex(Path(d, "check-ins", "2030-03-31-weekly.md").read_text(encoding="utf-8"),
+                         r"- Weight trend, 4 weeks to 2030-03-31: \+0\.\d\d kg a week .*; gain band \+0\.12 to "
+                         r"\+0\.50 % → on track\.")
+
+        # A roadmap: a 6-week bulk (nutrition is on and its safeguards pass) that ends with W14, then maintenance.
+        out = da.run(rmp.main, ["make", "--dir", d, "--today", "2030-03-31", "--start", "2030-02-25",
+                                "--phases", "bulk:6,maintenance:8"])
+        self.assertIn("wrote plan/roadmap.md: 2030-02-25 → 2030-06-02", out)
+        self.assertIn("weight_rate 0.1..0.5", Path(d, "plan/roadmap.md").read_text(encoding="utf-8"))
 
         # Next week arrives as a Strong export and goes through the importer.
         export = os.path.join(self.tmp, "strong.csv")
@@ -113,10 +129,48 @@ class EndToEnd(unittest.TestCase):
         grades = {r["id"]: r["grade"] for r in w14["rows"]}
         self.assertTrue(all(grades[f"{k}-1"] == "hit" for k in ("upper-a", "lower-a", "upper-b", "lower-b")))
         self.assertTrue(all(grades[f"{k}-2"] in ("partial", "miss") for k in ("upper-a", "lower-a", "upper-b", "lower-b")))
+        # Easy weeks count in sessions: two missed sessions make 2030-W15 program week 13 (50 sessions done), so
+        # the week-14 easy week starts once W15's four sessions are in (52 done), not in the calendar's W15.
         w15 = pg.load_json(pg.targets_path(d, "2030-W15"))
-        self.assertEqual(w15["microcycle_type"], "recovery")  # program week 14: the easy week
-        self.assertEqual({r["decision"] for r in w15["rows"]}, {"easy_week"})
+        self.assertEqual(pb.program_week(program, pg.sessions_done(d, program, pg.parse_week("2030-W15"))), 13)
+        self.assertEqual(w15["microcycle_type"], "full")
+        self.assertTrue(pb.program_week(program, 52) == 14 and 14 in program["easy_weeks"])
         self.assertIn("## Next week's targets (2030-W15)", apply_out)
+
+        # The bulk's gates are due in its last 2 weeks: checked, then the athlete's call (here: passed).
+        phase, due, rows, outcome = rmp.check(d, dt.date(2030, 4, 7))
+        self.assertEqual((phase["name"], due), ("bulk", True))
+        gates = {m: (v, verdict) for m, _, v, _, verdict in rows}
+        self.assertEqual(gates["weight_rate"][1], "in band", gates)               # the demo's slow lean gain
+        self.assertEqual(gates["sessions_per_week"][1], "in band", gates)
+        da.run(rmp.main, ["replan", "--dir", d, "--today", "2030-04-07", "--outcome", "passed"])
+        rm = rmp.read(d)
+        self.assertEqual([(p["name"], p["status"]) for p in rm["phases"]], [("bulk", "done"), ("maintenance", "current")])
+
+        # One adapt injury cycle: red-flag knee pain -> checked by a professional -> gone; back to the full program.
+        full = sorted(s["exercise_id"] for r in pg.load_program(d)["routines"] for s in r["exercises"])
+        out = da.run(adapt.main, ["injury", "--dir", d, "--today", "2030-04-07", "--area", "knee", "--red-flag"])
+        self.assertTrue(out.startswith("That pain should be checked"), out)
+        slots = {s["pattern"] for r in pg.load_program(d)["routines"] for s in r["exercises"]}
+        self.assertFalse(slots & {"SQ", "SM", "LU", "KE"})
+        self.assertIn("safety_status: warn", Path(d, "coaich.md").read_text(encoding="utf-8"))
+        da.run(adapt.main, ["checked", "--dir", d, "--today", "2030-04-07", "--area", "knee"])
+        da.run(adapt.main, ["clear", "--dir", d, "--today", "2030-04-07", "--area", "knee"])
+        self.assertIn("safety_status: go", Path(d, "coaich.md").read_text(encoding="utf-8"))
+        self.assertEqual(sorted(s["exercise_id"] for r in pg.load_program(d)["routines"] for s in r["exercises"]), full)
+        self.assertEqual([c["title"] for c in ch.read(d)],
+                         ["knee pain (red flag)", "knee checked by a professional", "knee pain gone"])
+
+        # The monthly check-in, nutrition on: targets in force and the weight-trend line; photos off.
+        out = da.run(mc.main, ["report", "--dir", d, "--today", "2030-04-07", "--write"])
+        monthly = Path(d, "check-ins", "2030-04-07-monthly.md").read_text(encoding="utf-8")
+        self.assertTrue(monthly.startswith("# Monthly check-in · 2030-04-07 · 2030-W11 to 2030-W14"), monthly[:80])
+        self.assertIn("Nutrition skill: on · physique skill: off.", monthly)
+        self.assertIn("Targets in force since 2030-01-07: phase gain (0.25 % a week) · 2,900 kcal", monthly)
+        self.assertRegex(monthly, r"Weight trend, 4 weeks to 2030-04-07: .* → on track\.")
+        self.assertIn("Phase: maintenance", monthly)
+        self.assertIn("| c1 knee pain (red flag) |", monthly)                     # graded later: too early now
+        self.assertIn("## Decisions\n\nNo changes this month.", monthly)
 
         # Check-ins and log lines.
         checkin = Path(d, "check-ins", "2030-04-07-weekly.md").read_text(encoding="utf-8")
@@ -126,8 +180,9 @@ class EndToEnd(unittest.TestCase):
         log = Path(d, "log.md").read_text(encoding="utf-8").splitlines()
         entries = [x for x in log if x.startswith("- ")]
         self.assertTrue(all(LOG_LINE.match(x) for x in entries), [x for x in entries if not LOG_LINE.match(x)])
-        self.assertIn(" · import · strong: 4 sessions, ", "\n".join(entries[-3:]))
-        self.assertTrue(entries[-1].startswith("- 2030-04-07 · weekly-review · 2030-W14 graded, "))
+        self.assertIn(" · import · strong: 4 sessions, ", "\n".join(entries))
+        skills = [x.split(" · ")[1] for x in entries if x.startswith("- 2030-04-07 ")]
+        self.assertEqual(skills, ["weekly-review", "roadmap"] + ["program-build", "adapt"] * 3 + ["monthly-check-in"])
 
 
 class EveryImporter(unittest.TestCase):

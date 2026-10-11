@@ -5,8 +5,10 @@ Usage:
   athlete_folder.py find [--dir D]              print the athlete folder (the one holding coaich.md)
   athlete_folder.py init DIR                    create the folder from the template; never overwrites
   athlete_folder.py log SKILL RESULT [--dir D]  append "date · skill · result" to log.md
+  athlete_folder.py gate FEATURE [--dir D]      nutrition | photos | physique: exit 0 "on", exit 3 "off: reasons"
 
-Library: find(), setting(), read_rows(), upsert_rows(), write_rows(), replace_sessions(), append_log().
+Library: find(), setting(), read_rows(), upsert_rows(), write_rows(), replace_sessions(), set_header(),
+append_log(), body_series(), gate().
 Python stdlib only.
 """
 import argparse
@@ -33,7 +35,8 @@ SCHEMAS = {
          "total_volume_kg", "gym", "source", "note"],
         ("session_id",),
     ),
-    "data/body.csv": (["date", "weight_kg", "waist_cm", "body_fat_pct", "source"], ("date",)),
+    # One row per date and source: a scale reading and a photo body-fat range on the same day both stay.
+    "data/body.csv": (["date", "weight_kg", "waist_cm", "body_fat_pct", "source"], ("date", "source")),
     "data/health.csv": (["date", "metric", "value", "unit", "source"], ("date", "metric")),
     "data/exercise_map.csv": (["exercise", "exercise_id"], ("exercise",)),
 }
@@ -167,6 +170,91 @@ def replace_sessions(folder, sets, sessions):
     return len(sessions) - replaced, replaced
 
 
+def set_header(folder, name, key, value):
+    """Set one top-level key in a Markdown file's YAML header (profile.md, coaich.md) to `value`, YAML text written
+    as given (`[]`, `[{area: knee, red_flag: true}]`, `2030-04-01`). Replaces the key's line and any indented lines
+    under it, keeps its trailing comment, or adds the key before the closing `---`. Atomic."""
+    path = Path(folder) / name
+    lines = path.read_text(encoding="utf-8").splitlines()
+    if not lines or lines[0].strip() != "---":
+        raise ValueError(f"{name} has no YAML header")
+    end = next((i for i, x in enumerate(lines[1:], 1) if x.strip() == "---"), None)
+    if end is None:
+        raise ValueError(f"{name}: the YAML header has no closing ---")
+    i = next((i for i in range(1, end) if lines[i].split(":", 1)[0] == key), None)
+    if i is None:
+        lines.insert(end, f"{key}: {value}")
+    else:
+        j = i + 1
+        while j < end and lines[j].startswith((" ", "-")) and lines[j].strip():
+            j += 1
+        rest = lines[i].split(":", 1)[1]
+        comment = rest[rest.index(" #"):].strip() if " #" in rest else ""
+        lines[i:j] = [f"{key}: {value}" + (f"  {comment}" if comment else "")]
+    tmp = path.with_suffix(path.suffix + ".tmp")
+    tmp.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    os.replace(tmp, path)
+
+
+# body.csv: which source's value counts when one date has several (a photo-range row only ever holds body fat).
+BODY_SOURCES = ("manual", "scale", "apple-health", "photo-range")
+
+
+def body_series(folder, field):
+    """[(date, value)] for one body.csv field (`weight_kg`, `waist_cm`, `body_fat_pct`), one value per date, oldest
+    first. When several sources have the field on a date: typed by hand, then scale, then Apple Health, then a
+    photo-range estimate (other sources after these)."""
+    best = {}
+    for r in read_rows(folder, "data/body.csv"):
+        try:
+            v = float(r.get(field) or "")
+        except ValueError:
+            continue
+        rank = BODY_SOURCES.index(r["source"]) if r["source"] in BODY_SOURCES else len(BODY_SOURCES)
+        if r["date"] not in best or rank < best[r["date"]][0]:
+            best[r["date"]] = (rank, v)
+    return [(day, v) for day, (_, v) in sorted(best.items())]
+
+
+ADULT_BANDS, MINOR_BANDS = ("18-59", "60+"), ("under-16", "16-17")
+GATE_FEATURES = ("nutrition", "photos", "physique")
+
+
+def _said(v, word):
+    """A YAML header reads a bare yes/no as True/False; text answers are compared lower-cased."""
+    return v is (word == "yes") or str(v).strip().lower() == word
+
+
+def gate(profile, feature):
+    """The shared wellbeing safeguards for calorie targets (`nutrition`), photo reviews (`photos`) and an
+    ideal-physique analysis without photos (`physique`, also cut/bulk roadmap phases use `nutrition`), from the
+    profile.md header (a dict). → the reasons it is off, in order; [] = on. Rules: 18+ (age_band or age_years),
+    an explicit `no` to eating_disorder_history, no `wellbeing_pause`; nutrition also not pregnant (health item),
+    photos also an explicit `photos_opt_in: yes`."""
+    if feature not in GATE_FEATURES:
+        raise ValueError(f"unknown feature {feature!r}; known: {', '.join(GATE_FEATURES)}")
+    band, age, reasons = str(profile.get("age_band") or ""), profile.get("age_years"), []
+    years = age if isinstance(age, int) and not isinstance(age, bool) else None
+    if band in MINOR_BANDS or (years is not None and years < 18):
+        reasons.append("age")
+    elif band not in ADULT_BANDS and years is None:
+        reasons.append("age-unanswered")
+    ed = profile.get("eating_disorder_history")
+    if ed is None or ed == "" or ed == []:
+        reasons.append("eating-disorder-unanswered")
+    elif not _said(ed, "no"):  # only an explicit "no" opens these features
+        reasons.append("eating-disorder-history")
+    if profile.get("wellbeing_pause") not in (None, "", []):
+        reasons.append("wellbeing-pause")
+    if feature == "nutrition":
+        items = profile.get("health_items") or []
+        if "pregnancy" in [str(x).strip().lower() for x in (items if isinstance(items, list) else [items])]:
+            reasons.append("pregnancy")
+    if feature == "photos" and not _said(profile.get("photos_opt_in"), "yes"):
+        reasons.append("no-photo-opt-in")
+    return reasons
+
+
 def append_log(folder, skill, result, date=None):
     """Append one line to log.md: `- YYYY-MM-DD · skill · result`."""
     date = date or datetime.date.today().isoformat()
@@ -190,6 +278,9 @@ def main(argv=None):
     lg.add_argument("skill")
     lg.add_argument("result")
     lg.add_argument("--dir")
+    g = sub.add_parser("gate")
+    g.add_argument("feature", choices=GATE_FEATURES)
+    g.add_argument("--dir")
     a = p.parse_args(argv)
     try:
         if a.cmd == "find":
@@ -197,6 +288,12 @@ def main(argv=None):
         elif a.cmd == "init":
             made = init(a.dir)
             print("\n".join(made) if made else "nothing to create: the folder is already set up")
+        elif a.cmd == "gate":
+            from program_build import front_matter  # program_build imports this module: import here, not on top
+            path = find(a.dir) / "profile.md"
+            reasons = gate(front_matter(path.read_text(encoding="utf-8")) if path.exists() else {}, a.feature)
+            print("off: " + ", ".join(reasons) if reasons else "on")
+            return 3 if reasons else 0
         else:
             print(append_log(find(a.dir), a.skill, a.result), end="")
     except FileNotFoundError as e:

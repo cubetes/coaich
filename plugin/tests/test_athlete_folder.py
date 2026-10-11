@@ -14,6 +14,55 @@ SET = {"date": "2030-01-07", "datetime": "2030-01-07T18:30", "session_id": "manu
        "set_type": "normal", "weight_kg": 60.0, "reps": 8, "rir": 2, "source": "manual"}
 
 
+ADULT = {"age_band": "18-59", "eating_disorder_history": False, "photos_opt_in": True}
+
+
+class GateTest(unittest.TestCase):
+    """The one wellbeing gate nutrition, physique (photos and described) and roadmap cut/bulk phases share."""
+
+    def test_open_for_an_adult_who_said_no(self):
+        for feature in af.GATE_FEATURES:
+            self.assertEqual(af.gate(ADULT, feature), [], feature)
+
+    def test_each_safeguard_closes_every_feature(self):
+        cases = [({"age_band": "16-17"}, "age"), ({"age_band": "under-16"}, "age"), ({"age_years": 17}, "age"),
+                 ({"age_band": "", "age_years": None}, "age-unanswered"),
+                 ({"eating_disorder_history": True}, "eating-disorder-history"),
+                 ({"eating_disorder_history": "prefer-not-to-say"}, "eating-disorder-history"),
+                 ({"eating_disorder_history": ""}, "eating-disorder-unanswered"),
+                 ({"wellbeing_pause": "2030-01-20"}, "wellbeing-pause")]
+        for change, reason in cases:
+            for feature in af.GATE_FEATURES:
+                self.assertIn(reason, af.gate({**ADULT, **change}, feature), (change, feature))
+
+    def test_age_years_alone_is_enough(self):
+        self.assertEqual(af.gate({**ADULT, "age_band": None, "age_years": 30}, "nutrition"), [])
+
+    def test_feature_specific_items(self):
+        pregnant = {**ADULT, "health_items": ["pregnancy"]}
+        self.assertEqual(af.gate(pregnant, "nutrition"), ["pregnancy"])
+        self.assertEqual(af.gate(pregnant, "photos"), [])
+        no_photos = {**ADULT, "photos_opt_in": "no"}
+        self.assertEqual(af.gate(no_photos, "photos"), ["no-photo-opt-in"])
+        self.assertEqual(af.gate(no_photos, "physique"), [])
+        self.assertEqual(af.gate({**ADULT, "photos_opt_in": "yes"}, "photos"), [])  # text yes counts too
+        with self.assertRaises(ValueError):
+            af.gate(ADULT, "diet")
+
+    def test_cli_exit_codes(self):
+        with tempfile.TemporaryDirectory() as d:
+            Path(d, "coaich.md").write_text("x")
+            Path(d, "profile.md").write_text("---\nage_band: 18-59\neating_disorder_history: no\n"
+                                             "wellbeing_pause: 2030-01-20\n---\n")
+            with redirect_stdout(io.StringIO()) as out:
+                self.assertEqual(af.main(["gate", "physique", "--dir", d]), 3)
+            self.assertEqual(out.getvalue().strip(), "off: wellbeing-pause")
+            Path(d, "profile.md").write_text("---\nage_band: 18-59\neating_disorder_history: no\n---\n")
+            with redirect_stdout(io.StringIO()) as out:
+                self.assertEqual(af.main(["gate", "physique", "--dir", d]), 0)
+            self.assertEqual(out.getvalue().strip(), "on")
+
+
 class AthleteFolderTest(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
@@ -98,6 +147,18 @@ class AthleteFolderTest(unittest.TestCase):
         lines = (self.dir / "log.md").read_text().splitlines()
         self.assertEqual(lines[-2], "- 2030-01-06 · onboard · profile written, level intermediate")
         self.assertTrue(lines[-1].endswith(" · safety · status go"))
+
+
+    def test_body_csv_keeps_one_row_per_date_and_source(self):
+        rows = [{"date": "2030-01-06", "weight_kg": 80.4, "source": "apple-health"},
+                {"date": "2030-01-06", "weight_kg": 80.0, "body_fat_pct": 18, "source": "scale"},
+                {"date": "2030-01-06", "body_fat_pct": 17, "source": "photo-range"},
+                {"date": "2030-01-07", "body_fat_pct": 16, "source": "photo-range"}]
+        self.assertEqual(af.upsert_rows(self.dir, "data/body.csv", rows), (4, 0))
+        self.assertEqual(af.upsert_rows(self.dir, "data/body.csv", rows[:1]), (0, 0))
+        # Preferred source per date: by hand, scale, Apple Health, photo range.
+        self.assertEqual(af.body_series(self.dir, "weight_kg"), [("2030-01-06", 80.0)])
+        self.assertEqual(af.body_series(self.dir, "body_fat_pct"), [("2030-01-06", 18.0), ("2030-01-07", 16.0)])
 
 
 if __name__ == "__main__":

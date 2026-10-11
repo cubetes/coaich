@@ -350,6 +350,34 @@ class TestProgramShapes(Base):
         self.assertEqual((r["decision"], r["pre_easy_sets"]), ("easy_week", S([(80.0, 8), (80.0, 8), (80.0, 7)])))
 
 
+class TestEasyWeeksCountedInSessions(Base):
+    """Easy weeks are counted in sessions done, not calendar weeks: the engine and program_build agree."""
+
+    def test_a_missed_session_moves_the_easy_week(self):
+        a = self.athlete([{"title": "Day A", "exercises": [ex(SQUAT, [(100, 8)] * 3, rep_range=[6, 8])]},
+                          {"title": "Day B", "exercises": [ex(BENCH, [(60, 8)] * 3, rep_range=[6, 8])]}])
+        a.program.update(start=str(wk(-2)), days=2, easy_weeks=[2, 4])
+        a.save_program()
+        a.session(wk(-2), "Day A", [(SQUAT, [(100, 8)] * 3)])                    # Day B missed: 1 of 2
+        a.session(wk(-1), "Day B", [(BENCH, [(60, 8)] * 3)])
+        a.session(wk(-1) + timedelta(days=2), "Day A", [(SQUAT, [(100, 8)] * 3)])
+        a.session(wk(-1) + timedelta(days=3), "Other", [(SQUAT, [(100, 8)] * 3)])  # not a program session
+        a.write(wk(-1) + timedelta(days=6))
+        self.assertEqual(pg.week_type_of(a.dir, wk(-1)), "full")       # calendar week 2, program week 1
+        self.assertEqual(pg.week_type_of(a.dir, wk(0)), "recovery")    # 3 sessions done: program week 2
+        a.propose(0)
+        self.assertEqual(a.targets(0)["microcycle_type"], "recovery")
+
+    def test_program_build_and_the_engine_agree(self):
+        import program_build as pb
+        for level, days in (("intermediate", 4), ("advanced", 5), ("beginner", 3)):
+            prog = {"level": level, "days": days, "routines": [{}] * days}
+            every = pb.EASY_WEEK_EVERY[level]
+            easy = list(range(every, 53, every)) if every else []
+            for n in range(days * 30):
+                self.assertEqual(pb.is_easy_week(prog, n), pb.program_week(prog, n) in easy, (level, n))
+
+
 class TestApply(Base):
     def two_rows(self):
         a = self.athlete([{"title": "Day A", "exercises": [

@@ -105,6 +105,12 @@ Update the front matter of `coaich.md`:
 
 Then: `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/athlete_folder.py" log safety "status <status>; <reasons>"`.
 
+## Nutrition safeguards
+
+Calorie targets have their own gate (18+, the eating-disorder answer, `wellbeing_pause`, pregnancy, BMI 18.5,
+the resting-energy floor, the loss cap by body fat), enforced by `scripts/nutrition.py`: see the `nutrition`
+skill. A pregnancy reported later also switches calorie targets off.
+
 ## Never
 
 - Diagnose, name a likely cause, or suggest treatment, medicine or dosing.

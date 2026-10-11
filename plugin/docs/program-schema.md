@@ -9,7 +9,8 @@ athlete folder; `plan/CURRENT.md` says which one is in force. Exercises are free
 | Field | Type | Meaning |
 |---|---|---|
 | `schema` | `"coaich.program/0.1"` | |
-| `start` | date | the day the program was issued (program week 1 starts here) |
+| `start` | date | the day program week 1 began; a re-issue (`program_build.py --start`) keeps it, so easy weeks keep their count |
+| `issued` | date | the day this version was written |
 | `name` | text | layout · time variant · modifiers, e.g. `ul4i·60·strength·pain` (the audit's known-miss key) |
 | `layout` | `fb2b fb3b ul4b fb2i fb3i ul4i ulf5i ppl6i` | `b` = beginner tables, `i` = intermediate (advanced uses them too) |
 | `level` | `beginner intermediate advanced` | caps the load jump; picks the floors and the easy-week interval |
@@ -17,18 +18,19 @@ athlete folder; `plan/CURRENT.md` says which one is in force. Exercises are free
 | `days` | 2–6 | sessions a week the program really runs (may be fewer than asked: see `notes`) |
 | `minutes` | 30–75 | the time answer; every routine's `minutes` is ≤ it |
 | `variant` | 30 · 45 · 60 · 75 | the time version used |
-| `week` | int | the program week the prescription was built for (counted in sessions done) |
+| `week` | int | the program week the prescription was built for (counted in sessions done since `start`: `program_build.program_week`) |
 | `rebuild_at_week` | int or null | rebuild with `program_build.py --week N` then (beginner ramp ends at 5, 60+ rules at 9) |
 | `older` | bool | 60+ rules |
 | `priority` | region or null | advanced only |
 | `pain` | `[{area, red_flag, checked}]` | the areas the program was adapted to |
 | `left_out` | slot codes | slots dropped for pain |
 | `easy_week_every` | 7 · 6 · null | intermediate · advanced · beginner (triggered only) |
-| `easy_weeks` | ints | 1-based program weeks that are easy weeks, up to week 52 |
+| `easy_from_week` | int | the program week the easy-week count starts from: 1, or the week of a level change on a re-issue (a promotion is never followed straight by an easy week) |
+| `easy_weeks` | ints | 1-based program weeks that are easy weeks, up to week 52: every `easy_week_every`th week from `easy_from_week` |
 | `placement` | object | `{level, returning, promotion_check_week, advanced_check_week, row}` |
 | `notes`, `warnings` | text lists | shown beside the program (warnings are medical copy, lawyer review pending) |
 | `rules_fired` | text list | the rule ids that fired (`references/starter-programs.md` §Rules) |
-| `swaps` | `[{routine, from, to, why}]` | every exercise changed from the template, with the reason |
+| `swaps` | `[{routine, from, to, why}]` | every exercise changed from the template, with the reason (pain, goal, or the athlete's own choice: `exercise_swaps` in `profile.md`, within one slot column) |
 | `routines` | list | in the order they are run (sessions run in order, never by weekday) |
 
 ## routines[]
