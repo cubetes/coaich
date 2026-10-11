@@ -1,17 +1,21 @@
 exercise,exercise_id
-Bench Press (Barbell),Barbell_Bench_Press_-_Medium_Grip
-Bent Over Row (Barbell),Bent_Over_Barbell_Row
-Bicep Curl (Dumbbell),Dumbbell_Bicep_Curl
-Deadlift (Barbell),Barbell_Deadlift
-Incline Bench Press (Dumbbell),Incline_Dumbbell_Press
-Lat Pulldown (Cable),Wide-Grip_Lat_Pulldown
-Lateral Raise (Dumbbell),Side_Lateral_Raise
-Leg Extension (Machine),Leg_Extensions
+Barbell Bench Press - Medium Grip,Barbell_Bench_Press_-_Medium_Grip
+Barbell Squat,Barbell_Squat
+Bent Over Barbell Row,Bent_Over_Barbell_Row
+Close-Grip Front Lat Pulldown,Close-Grip_Front_Lat_Pulldown
+Dumbbell Flyes,Dumbbell_Flyes
+Dumbbell Shoulder Press,Dumbbell_Shoulder_Press
+Face Pull,Face_Pull
+Incline Dumbbell Press,Incline_Dumbbell_Press
+Leg Extensions,Leg_Extensions
 Leg Press,Leg_Press
-Lying Leg Curl (Machine),Lying_Leg_Curls
-Overhead Press (Barbell),Standing_Military_Press
-Romanian Deadlift (Barbell),Romanian_Deadlift
-Seated Cable Row,Seated_Cable_Rows
-Squat (Barbell),Barbell_Full_Squat
-Standing Calf Raise (Machine),Standing_Calf_Raises
-Triceps Pushdown (Cable),Triceps_Pushdown
+Lying Leg Curls,Lying_Leg_Curls
+Romanian Deadlift,Romanian_Deadlift
+Seated Cable Rows,Seated_Cable_Rows
+Seated Calf Raise,Seated_Calf_Raise
+Seated Leg Curl,Seated_Leg_Curl
+Side Lateral Raise,Side_Lateral_Raise
+Split Squat with Dumbbells,Split_Squat_with_Dumbbells
+Standing Calf Raises,Standing_Calf_Raises
+Standing Military Press,Standing_Military_Press
+Wide-Grip Lat Pulldown,Wide-Grip_Lat_Pulldown

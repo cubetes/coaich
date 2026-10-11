@@ -1,0 +1,3539 @@
+{
+ "schema": "coaich/targets/0.1",
+ "iso_week": "2030-W04",
+ "week_start": "2030-01-21",
+ "week_end": "2030-01-27",
+ "microcycle_type": "full",
+ "status": "graded",
+ "generated_at": "2030-01-20 20:00",
+ "data_through": "2030-01-20",
+ "based_on_week": "2030-W03",
+ "level": "intermediate",
+ "applied_at": "2030-01-20 20:00",
+ "apply_mode": "confirmed",
+ "graded_at": "2030-01-27 20:00",
+ "summary": {
+  "rows": 21,
+  "increase": 0,
+  "hold": 21,
+  "reduce": 0,
+  "easy_week": 0,
+  "swap": 0,
+  "needs_approval": 0,
+  "grades": {
+   "hit": 17,
+   "partial": 2,
+   "miss": 2
+  }
+ },
+ "rows": [
+  {
+   "id": "upper-a-1",
+   "routine": "Upper A",
+   "slot": 1,
+   "exercise_id": "Barbell_Bench_Press_-_Medium_Grip",
+   "history_ids": [],
+   "name": "Barbell Bench Press - Medium Grip",
+   "category": "compound",
+   "tool": "barbell_upper",
+   "assisted": false,
+   "overload": true,
+   "rep_range": [
+    6,
+    10
+   ],
+   "reps_left": [
+    2,
+    2
+   ],
+   "load_step": 2.5,
+   "target_sets": [
+    {
+     "kg": 70.0,
+     "reps": 6,
+     "type": "normal"
+    },
+    {
+     "kg": 70.0,
+     "reps": 6,
+     "type": "normal"
+    },
+    {
+     "kg": 70.0,
+     "reps": 6,
+     "type": "normal"
+    },
+    {
+     "kg": 70.0,
+     "reps": 6,
+     "type": "normal"
+    }
+   ],
+   "target_kg": 70.0,
+   "target_reps": [
+    6,
+    6,
+    6,
+    6
+   ],
+   "prev_target_sets": [
+    {
+     "kg": 70.0,
+     "reps": 6,
+     "type": "normal"
+    },
+    {
+     "kg": 70.0,
+     "reps": 6,
+     "type": "normal"
+    },
+    {
+     "kg": 70.0,
+     "reps": 6,
+     "type": "normal"
+    },
+    {
+     "kg": 70.0,
+     "reps": 6,
+     "type": "normal"
+    }
+   ],
+   "decision": "hold",
+   "reason": {
+    "code": "failure_hold"
+   },
+   "needs_approval": false,
+   "flags": [],
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
+    {
+     "kg": 70.0,
+     "reps": 6,
+     "type": "normal"
+    },
+    {
+     "kg": 70.0,
+     "reps": 6,
+     "type": "normal"
+    },
+    {
+     "kg": 70.0,
+     "reps": 6,
+     "type": "normal"
+    },
+    {
+     "kg": 70.0,
+     "reps": 6,
+     "type": "normal"
+    }
+   ],
+   "last_week": {
+    "grade": "hit",
+    "grade_reason": {
+     "code": "met",
+     "n": 4
+    },
+    "source_sets": [
+     {
+      "date": "2030-01-14",
+      "kg": 70.0,
+      "reps": 6,
+      "type": "normal",
+      "rir": 2
+     },
+     {
+      "date": "2030-01-14",
+      "kg": 70.0,
+      "reps": 6,
+      "type": "normal",
+      "rir": 2
+     },
+     {
+      "date": "2030-01-14",
+      "kg": 70.0,
+      "reps": 6,
+      "type": "normal",
+      "rir": 1
+     },
+     {
+      "date": "2030-01-14",
+      "kg": 70.0,
+      "reps": 6,
+      "type": "normal",
+      "rir": 0
+     }
+    ],
+    "athlete_note": null,
+    "target_sets": [
+     {
+      "kg": 70.0,
+      "reps": 6,
+      "type": "normal"
+     },
+     {
+      "kg": 70.0,
+      "reps": 6,
+      "type": "normal"
+     },
+     {
+      "kg": 70.0,
+      "reps": 6,
+      "type": "normal"
+     },
+     {
+      "kg": 70.0,
+      "reps": 6,
+      "type": "normal"
+     }
+    ]
+   },
+   "grade": "hit",
+   "grade_reason": {
+    "code": "met",
+    "n": 4
+   },
+   "grade_flags": [
+    "overshoot"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-01-21",
+     "kg": 70.0,
+     "reps": 7,
+     "type": "normal",
+     "rir": 3
+    },
+    {
+     "date": "2030-01-21",
+     "kg": 70.0,
+     "reps": 7,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-01-21",
+     "kg": 70.0,
+     "reps": 6,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-01-21",
+     "kg": 70.0,
+     "reps": 6,
+     "type": "normal",
+     "rir": 2
+    }
+   ]
+  },
+  {
+   "id": "upper-a-2",
+   "routine": "Upper A",
+   "slot": 2,
+   "exercise_id": "Bent_Over_Barbell_Row",
+   "history_ids": [],
+   "name": "Bent Over Barbell Row",
+   "category": "spine",
+   "tool": "barbell_upper",
+   "assisted": false,
+   "overload": true,
+   "rep_range": [
+    8,
+    12
+   ],
+   "reps_left": [
+    2,
+    2
+   ],
+   "load_step": 2.5,
+   "target_sets": [
+    {
+     "kg": 62.5,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 62.5,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 62.5,
+     "reps": 8,
+     "type": "normal"
+    },
+    {
+     "kg": 62.5,
+     "reps": 8,
+     "type": "normal"
+    }
+   ],
+   "target_kg": 62.5,
+   "target_reps": [
+    10,
+    9,
+    8,
+    8
+   ],
+   "prev_target_sets": [
+    {
+     "kg": 62.5,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 62.5,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 62.5,
+     "reps": 8,
+     "type": "normal"
+    },
+    {
+     "kg": 62.5,
+     "reps": 8,
+     "type": "normal"
+    }
+   ],
+   "decision": "hold",
+   "reason": {
+    "code": "add_rep",
+    "set": 1,
+    "frm": 9,
+    "to": 10
+   },
+   "needs_approval": false,
+   "flags": [],
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
+    {
+     "kg": 62.5,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 62.5,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 62.5,
+     "reps": 8,
+     "type": "normal"
+    },
+    {
+     "kg": 62.5,
+     "reps": 8,
+     "type": "normal"
+    }
+   ],
+   "last_week": {
+    "grade": "hit",
+    "grade_reason": {
+     "code": "met",
+     "n": 4
+    },
+    "source_sets": [
+     {
+      "date": "2030-01-14",
+      "kg": 62.5,
+      "reps": 9,
+      "type": "normal",
+      "rir": 2
+     },
+     {
+      "date": "2030-01-14",
+      "kg": 62.5,
+      "reps": 9,
+      "type": "normal",
+      "rir": 1
+     },
+     {
+      "date": "2030-01-14",
+      "kg": 62.5,
+      "reps": 8,
+      "type": "normal",
+      "rir": 2
+     },
+     {
+      "date": "2030-01-14",
+      "kg": 62.5,
+      "reps": 8,
+      "type": "normal",
+      "rir": 1
+     }
+    ],
+    "athlete_note": null,
+    "target_sets": [
+     {
+      "kg": 62.5,
+      "reps": 9,
+      "type": "normal"
+     },
+     {
+      "kg": 62.5,
+      "reps": 9,
+      "type": "normal"
+     },
+     {
+      "kg": 62.5,
+      "reps": 8,
+      "type": "normal"
+     },
+     {
+      "kg": 62.5,
+      "reps": 8,
+      "type": "normal"
+     }
+    ]
+   },
+   "grade": "hit",
+   "grade_reason": {
+    "code": "met",
+    "n": 4
+   },
+   "grade_flags": [
+    "exact_copy"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-01-21",
+     "kg": 62.5,
+     "reps": 10,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-01-21",
+     "kg": 62.5,
+     "reps": 9,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-01-21",
+     "kg": 62.5,
+     "reps": 8,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-01-21",
+     "kg": 62.5,
+     "reps": 8,
+     "type": "normal",
+     "rir": 2
+    }
+   ]
+  },
+  {
+   "id": "upper-a-3",
+   "routine": "Upper A",
+   "slot": 3,
+   "exercise_id": "Standing_Military_Press",
+   "history_ids": [],
+   "name": "Standing Military Press",
+   "category": "spine",
+   "tool": "barbell_upper",
+   "assisted": false,
+   "overload": true,
+   "rep_range": [
+    8,
+    12
+   ],
+   "reps_left": [
+    2,
+    2
+   ],
+   "load_step": 2.5,
+   "target_sets": [
+    {
+     "kg": 40.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 40.0,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 40.0,
+     "reps": 9,
+     "type": "normal"
+    }
+   ],
+   "target_kg": 40.0,
+   "target_reps": [
+    10,
+    9,
+    9
+   ],
+   "prev_target_sets": [
+    {
+     "kg": 40.0,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 40.0,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 40.0,
+     "reps": 9,
+     "type": "normal"
+    }
+   ],
+   "decision": "hold",
+   "reason": {
+    "code": "reps_to_done"
+   },
+   "needs_approval": false,
+   "flags": [],
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
+    {
+     "kg": 40.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 40.0,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 40.0,
+     "reps": 9,
+     "type": "normal"
+    }
+   ],
+   "last_week": {
+    "grade": "hit",
+    "grade_reason": {
+     "code": "met",
+     "n": 3
+    },
+    "source_sets": [
+     {
+      "date": "2030-01-14",
+      "kg": 40.0,
+      "reps": 10,
+      "type": "normal",
+      "rir": 2
+     },
+     {
+      "date": "2030-01-14",
+      "kg": 40.0,
+      "reps": 9,
+      "type": "normal",
+      "rir": 3
+     },
+     {
+      "date": "2030-01-14",
+      "kg": 40.0,
+      "reps": 9,
+      "type": "normal",
+      "rir": null
+     }
+    ],
+    "athlete_note": null,
+    "target_sets": [
+     {
+      "kg": 40.0,
+      "reps": 9,
+      "type": "normal"
+     },
+     {
+      "kg": 40.0,
+      "reps": 9,
+      "type": "normal"
+     },
+     {
+      "kg": 40.0,
+      "reps": 9,
+      "type": "normal"
+     }
+    ]
+   },
+   "grade": "hit",
+   "grade_reason": {
+    "code": "met",
+    "n": 3
+   },
+   "grade_flags": [
+    "exact_copy"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-01-21",
+     "kg": 40.0,
+     "reps": 10,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-01-21",
+     "kg": 40.0,
+     "reps": 9,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-01-21",
+     "kg": 40.0,
+     "reps": 9,
+     "type": "normal",
+     "rir": 1
+    }
+   ]
+  },
+  {
+   "id": "upper-a-4",
+   "routine": "Upper A",
+   "slot": 4,
+   "exercise_id": "Wide-Grip_Lat_Pulldown",
+   "history_ids": [],
+   "name": "Wide-Grip Lat Pulldown",
+   "category": "compound",
+   "tool": "machine",
+   "assisted": false,
+   "overload": true,
+   "rep_range": [
+    8,
+    12
+   ],
+   "reps_left": [
+    1,
+    2
+   ],
+   "load_step": 5.0,
+   "target_sets": [
+    {
+     "kg": 60.0,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
+     "reps": 8,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
+     "reps": 8,
+     "type": "normal"
+    }
+   ],
+   "target_kg": 60.0,
+   "target_reps": [
+    9,
+    8,
+    8
+   ],
+   "prev_target_sets": [
+    {
+     "kg": 60.0,
+     "reps": 8,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
+     "reps": 8,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
+     "reps": 8,
+     "type": "normal"
+    }
+   ],
+   "decision": "hold",
+   "reason": {
+    "code": "add_rep",
+    "set": 1,
+    "frm": 8,
+    "to": 9
+   },
+   "needs_approval": false,
+   "flags": [],
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
+    {
+     "kg": 60.0,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
+     "reps": 8,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
+     "reps": 8,
+     "type": "normal"
+    }
+   ],
+   "last_week": {
+    "grade": "hit",
+    "grade_reason": {
+     "code": "met",
+     "n": 3
+    },
+    "source_sets": [
+     {
+      "date": "2030-01-14",
+      "kg": 60.0,
+      "reps": 8,
+      "type": "normal",
+      "rir": 2
+     },
+     {
+      "date": "2030-01-14",
+      "kg": 60.0,
+      "reps": 8,
+      "type": "normal",
+      "rir": 1
+     },
+     {
+      "date": "2030-01-14",
+      "kg": 60.0,
+      "reps": 8,
+      "type": "normal",
+      "rir": 1
+     }
+    ],
+    "athlete_note": null,
+    "target_sets": [
+     {
+      "kg": 60.0,
+      "reps": 8,
+      "type": "normal"
+     },
+     {
+      "kg": 60.0,
+      "reps": 8,
+      "type": "normal"
+     },
+     {
+      "kg": 60.0,
+      "reps": 8,
+      "type": "normal"
+     }
+    ]
+   },
+   "grade": "hit",
+   "grade_reason": {
+    "code": "met",
+    "n": 3
+   },
+   "grade_flags": [
+    "exact_copy"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-01-21",
+     "kg": 60.0,
+     "reps": 9,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-01-21",
+     "kg": 60.0,
+     "reps": 8,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-01-21",
+     "kg": 60.0,
+     "reps": 8,
+     "type": "normal",
+     "rir": 1
+    }
+   ]
+  },
+  {
+   "id": "upper-a-5",
+   "routine": "Upper A",
+   "slot": 5,
+   "exercise_id": "Side_Lateral_Raise",
+   "history_ids": [],
+   "name": "Side Lateral Raise",
+   "category": "isolation",
+   "tool": "dumbbell",
+   "assisted": false,
+   "overload": true,
+   "rep_range": [
+    10,
+    20
+   ],
+   "reps_left": [
+    0,
+    2
+   ],
+   "load_step": 2.0,
+   "target_sets": [
+    {
+     "kg": 10.0,
+     "reps": 14,
+     "type": "normal"
+    },
+    {
+     "kg": 10.0,
+     "reps": 13,
+     "type": "normal"
+    }
+   ],
+   "target_kg": 10.0,
+   "target_reps": [
+    14,
+    13
+   ],
+   "prev_target_sets": [
+    {
+     "kg": 10.0,
+     "reps": 12,
+     "type": "normal"
+    },
+    {
+     "kg": 10.0,
+     "reps": 12,
+     "type": "normal"
+    }
+   ],
+   "decision": "hold",
+   "reason": {
+    "code": "reps_to_done"
+   },
+   "needs_approval": false,
+   "flags": [],
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
+    {
+     "kg": 10.0,
+     "reps": 14,
+     "type": "normal"
+    },
+    {
+     "kg": 10.0,
+     "reps": 13,
+     "type": "normal"
+    }
+   ],
+   "last_week": {
+    "grade": "hit",
+    "grade_reason": {
+     "code": "met",
+     "n": 2
+    },
+    "source_sets": [
+     {
+      "date": "2030-01-14",
+      "kg": 10.0,
+      "reps": 14,
+      "type": "normal",
+      "rir": 1
+     },
+     {
+      "date": "2030-01-14",
+      "kg": 10.0,
+      "reps": 13,
+      "type": "normal",
+      "rir": null
+     }
+    ],
+    "athlete_note": null,
+    "target_sets": [
+     {
+      "kg": 10.0,
+      "reps": 12,
+      "type": "normal"
+     },
+     {
+      "kg": 10.0,
+      "reps": 12,
+      "type": "normal"
+     }
+    ]
+   },
+   "grade": "hit",
+   "grade_reason": {
+    "code": "met",
+    "n": 2
+   },
+   "grade_flags": [
+    "overshoot"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-01-21",
+     "kg": 10.0,
+     "reps": 15,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-01-21",
+     "kg": 10.0,
+     "reps": 14,
+     "type": "normal",
+     "rir": 1
+    }
+   ]
+  },
+  {
+   "id": "lower-a-1",
+   "routine": "Lower A",
+   "slot": 1,
+   "exercise_id": "Barbell_Squat",
+   "history_ids": [],
+   "name": "Barbell Squat",
+   "category": "spine",
+   "tool": "barbell_lower",
+   "assisted": false,
+   "overload": true,
+   "rep_range": [
+    6,
+    10
+   ],
+   "reps_left": [
+    2,
+    2
+   ],
+   "load_step": 2.5,
+   "target_sets": [
+    {
+     "kg": 95.0,
+     "reps": 6,
+     "type": "normal"
+    },
+    {
+     "kg": 95.0,
+     "reps": 6,
+     "type": "normal"
+    },
+    {
+     "kg": 95.0,
+     "reps": 6,
+     "type": "normal"
+    },
+    {
+     "kg": 95.0,
+     "reps": 6,
+     "type": "normal"
+    }
+   ],
+   "target_kg": 95.0,
+   "target_reps": [
+    6,
+    6,
+    6,
+    6
+   ],
+   "prev_target_sets": [
+    {
+     "kg": 95.0,
+     "reps": 6,
+     "type": "normal"
+    },
+    {
+     "kg": 95.0,
+     "reps": 6,
+     "type": "normal"
+    },
+    {
+     "kg": 95.0,
+     "reps": 6,
+     "type": "normal"
+    },
+    {
+     "kg": 95.0,
+     "reps": 6,
+     "type": "normal"
+    }
+   ],
+   "decision": "hold",
+   "reason": {
+    "code": "failure_hold"
+   },
+   "needs_approval": false,
+   "flags": [],
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
+    {
+     "kg": 95.0,
+     "reps": 6,
+     "type": "normal"
+    },
+    {
+     "kg": 95.0,
+     "reps": 6,
+     "type": "normal"
+    },
+    {
+     "kg": 95.0,
+     "reps": 6,
+     "type": "normal"
+    },
+    {
+     "kg": 95.0,
+     "reps": 6,
+     "type": "normal"
+    }
+   ],
+   "last_week": {
+    "grade": "hit",
+    "grade_reason": {
+     "code": "met",
+     "n": 4
+    },
+    "source_sets": [
+     {
+      "date": "2030-01-15",
+      "kg": 95.0,
+      "reps": 6,
+      "type": "normal",
+      "rir": null
+     },
+     {
+      "date": "2030-01-15",
+      "kg": 95.0,
+      "reps": 6,
+      "type": "normal",
+      "rir": 2
+     },
+     {
+      "date": "2030-01-15",
+      "kg": 95.0,
+      "reps": 6,
+      "type": "normal",
+      "rir": 1
+     },
+     {
+      "date": "2030-01-15",
+      "kg": 95.0,
+      "reps": 6,
+      "type": "normal",
+      "rir": 0
+     }
+    ],
+    "athlete_note": null,
+    "target_sets": [
+     {
+      "kg": 95.0,
+      "reps": 6,
+      "type": "normal"
+     },
+     {
+      "kg": 95.0,
+      "reps": 6,
+      "type": "normal"
+     },
+     {
+      "kg": 95.0,
+      "reps": 6,
+      "type": "normal"
+     },
+     {
+      "kg": 95.0,
+      "reps": 6,
+      "type": "normal"
+     }
+    ]
+   },
+   "grade": "hit",
+   "grade_reason": {
+    "code": "met",
+    "n": 4
+   },
+   "grade_flags": [
+    "overshoot"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-01-22",
+     "kg": 95.0,
+     "reps": 7,
+     "type": "normal",
+     "rir": 3
+    },
+    {
+     "date": "2030-01-22",
+     "kg": 95.0,
+     "reps": 7,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-01-22",
+     "kg": 95.0,
+     "reps": 6,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-01-22",
+     "kg": 95.0,
+     "reps": 6,
+     "type": "normal",
+     "rir": 2
+    }
+   ]
+  },
+  {
+   "id": "lower-a-2",
+   "routine": "Lower A",
+   "slot": 2,
+   "exercise_id": "Romanian_Deadlift",
+   "history_ids": [],
+   "name": "Romanian Deadlift",
+   "category": "spine",
+   "tool": "barbell_lower",
+   "assisted": false,
+   "overload": true,
+   "rep_range": [
+    8,
+    12
+   ],
+   "reps_left": [
+    2,
+    2
+   ],
+   "load_step": 2.5,
+   "target_sets": [
+    {
+     "kg": 82.5,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 82.5,
+     "reps": 8,
+     "type": "normal"
+    },
+    {
+     "kg": 82.5,
+     "reps": 8,
+     "type": "normal"
+    }
+   ],
+   "target_kg": 82.5,
+   "target_reps": [
+    9,
+    8,
+    8
+   ],
+   "prev_target_sets": [
+    {
+     "kg": 82.5,
+     "reps": 8,
+     "type": "normal"
+    },
+    {
+     "kg": 82.5,
+     "reps": 8,
+     "type": "normal"
+    },
+    {
+     "kg": 82.5,
+     "reps": 8,
+     "type": "normal"
+    }
+   ],
+   "decision": "hold",
+   "reason": {
+    "code": "add_rep",
+    "set": 1,
+    "frm": 8,
+    "to": 9
+   },
+   "needs_approval": false,
+   "flags": [],
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
+    {
+     "kg": 82.5,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 82.5,
+     "reps": 8,
+     "type": "normal"
+    },
+    {
+     "kg": 82.5,
+     "reps": 8,
+     "type": "normal"
+    }
+   ],
+   "last_week": {
+    "grade": "hit",
+    "grade_reason": {
+     "code": "met",
+     "n": 3
+    },
+    "source_sets": [
+     {
+      "date": "2030-01-15",
+      "kg": 82.5,
+      "reps": 8,
+      "type": "normal",
+      "rir": 3
+     },
+     {
+      "date": "2030-01-15",
+      "kg": 82.5,
+      "reps": 8,
+      "type": "normal",
+      "rir": 2
+     },
+     {
+      "date": "2030-01-15",
+      "kg": 82.5,
+      "reps": 8,
+      "type": "normal",
+      "rir": 2
+     }
+    ],
+    "athlete_note": null,
+    "target_sets": [
+     {
+      "kg": 82.5,
+      "reps": 8,
+      "type": "normal"
+     },
+     {
+      "kg": 82.5,
+      "reps": 8,
+      "type": "normal"
+     },
+     {
+      "kg": 82.5,
+      "reps": 8,
+      "type": "normal"
+     }
+    ]
+   },
+   "grade": "hit",
+   "grade_reason": {
+    "code": "met",
+    "n": 3
+   },
+   "grade_flags": [
+    "exact_copy"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-01-22",
+     "kg": 82.5,
+     "reps": 9,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-01-22",
+     "kg": 82.5,
+     "reps": 8,
+     "type": "normal",
+     "rir": 3
+    },
+    {
+     "date": "2030-01-22",
+     "kg": 82.5,
+     "reps": 8,
+     "type": "normal",
+     "rir": 2
+    }
+   ]
+  },
+  {
+   "id": "lower-a-3",
+   "routine": "Lower A",
+   "slot": 3,
+   "exercise_id": "Leg_Press",
+   "history_ids": [],
+   "name": "Leg Press",
+   "category": "spine",
+   "tool": "machine",
+   "assisted": false,
+   "overload": true,
+   "rep_range": [
+    8,
+    12
+   ],
+   "reps_left": [
+    2,
+    2
+   ],
+   "load_step": 5.0,
+   "target_sets": [
+    {
+     "kg": 175.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 175.0,
+     "reps": 8,
+     "type": "normal"
+    },
+    {
+     "kg": 175.0,
+     "reps": 8,
+     "type": "normal"
+    }
+   ],
+   "target_kg": 175.0,
+   "target_reps": [
+    10,
+    8,
+    8
+   ],
+   "prev_target_sets": [
+    {
+     "kg": 175.0,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 175.0,
+     "reps": 8,
+     "type": "normal"
+    },
+    {
+     "kg": 175.0,
+     "reps": 8,
+     "type": "normal"
+    }
+   ],
+   "decision": "hold",
+   "reason": {
+    "code": "add_rep",
+    "set": 1,
+    "frm": 9,
+    "to": 10
+   },
+   "needs_approval": false,
+   "flags": [],
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
+    {
+     "kg": 175.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 175.0,
+     "reps": 8,
+     "type": "normal"
+    },
+    {
+     "kg": 175.0,
+     "reps": 8,
+     "type": "normal"
+    }
+   ],
+   "last_week": {
+    "grade": "hit",
+    "grade_reason": {
+     "code": "met",
+     "n": 3
+    },
+    "source_sets": [
+     {
+      "date": "2030-01-15",
+      "kg": 175.0,
+      "reps": 9,
+      "type": "normal",
+      "rir": 2
+     },
+     {
+      "date": "2030-01-15",
+      "kg": 175.0,
+      "reps": 8,
+      "type": "normal",
+      "rir": 3
+     },
+     {
+      "date": "2030-01-15",
+      "kg": 175.0,
+      "reps": 8,
+      "type": "normal",
+      "rir": 2
+     }
+    ],
+    "athlete_note": null,
+    "target_sets": [
+     {
+      "kg": 175.0,
+      "reps": 9,
+      "type": "normal"
+     },
+     {
+      "kg": 175.0,
+      "reps": 8,
+      "type": "normal"
+     },
+     {
+      "kg": 175.0,
+      "reps": 8,
+      "type": "normal"
+     }
+    ]
+   },
+   "grade": "hit",
+   "grade_reason": {
+    "code": "met",
+    "n": 3
+   },
+   "grade_flags": [
+    "overshoot"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-01-22",
+     "kg": 175.0,
+     "reps": 11,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-01-22",
+     "kg": 175.0,
+     "reps": 9,
+     "type": "normal",
+     "rir": 4
+    },
+    {
+     "date": "2030-01-22",
+     "kg": 175.0,
+     "reps": 9,
+     "type": "normal",
+     "rir": 3
+    }
+   ]
+  },
+  {
+   "id": "lower-a-4",
+   "routine": "Lower A",
+   "slot": 4,
+   "exercise_id": "Lying_Leg_Curls",
+   "history_ids": [],
+   "name": "Lying Leg Curls",
+   "category": "isolation",
+   "tool": "machine",
+   "assisted": false,
+   "overload": true,
+   "rep_range": [
+    10,
+    20
+   ],
+   "reps_left": [
+    0,
+    2
+   ],
+   "load_step": 5.0,
+   "target_sets": [
+    {
+     "kg": 40.0,
+     "reps": 11,
+     "type": "normal"
+    },
+    {
+     "kg": 40.0,
+     "reps": 11,
+     "type": "normal"
+    }
+   ],
+   "target_kg": 40.0,
+   "target_reps": [
+    11,
+    11
+   ],
+   "prev_target_sets": [
+    {
+     "kg": 40.0,
+     "reps": 11,
+     "type": "normal"
+    },
+    {
+     "kg": 40.0,
+     "reps": 11,
+     "type": "normal"
+    }
+   ],
+   "decision": "hold",
+   "reason": {
+    "code": "close_hold",
+    "why": {
+     "code": "close",
+     "met": 1,
+     "n": 2,
+     "short": 1
+    }
+   },
+   "needs_approval": false,
+   "flags": [],
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
+    {
+     "kg": 40.0,
+     "reps": 11,
+     "type": "normal"
+    },
+    {
+     "kg": 40.0,
+     "reps": 11,
+     "type": "normal"
+    }
+   ],
+   "last_week": {
+    "grade": "partial",
+    "grade_reason": {
+     "code": "close",
+     "met": 1,
+     "n": 2,
+     "short": 1
+    },
+    "source_sets": [
+     {
+      "date": "2030-01-15",
+      "kg": 40.0,
+      "reps": 11,
+      "type": "normal",
+      "rir": 0
+     },
+     {
+      "date": "2030-01-15",
+      "kg": 40.0,
+      "reps": 10,
+      "type": "normal",
+      "rir": 1
+     }
+    ],
+    "athlete_note": null,
+    "target_sets": [
+     {
+      "kg": 40.0,
+      "reps": 11,
+      "type": "normal"
+     },
+     {
+      "kg": 40.0,
+      "reps": 11,
+      "type": "normal"
+     }
+    ]
+   },
+   "grade": "hit",
+   "grade_reason": {
+    "code": "met",
+    "n": 2
+   },
+   "grade_flags": [
+    "overshoot"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-01-22",
+     "kg": 40.0,
+     "reps": 12,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-01-22",
+     "kg": 40.0,
+     "reps": 12,
+     "type": "normal",
+     "rir": 0
+    }
+   ]
+  },
+  {
+   "id": "lower-a-5",
+   "routine": "Lower A",
+   "slot": 5,
+   "exercise_id": "Standing_Calf_Raises",
+   "history_ids": [],
+   "name": "Standing Calf Raises",
+   "category": "isolation",
+   "tool": "machine",
+   "assisted": false,
+   "overload": true,
+   "rep_range": [
+    10,
+    20
+   ],
+   "reps_left": [
+    0,
+    2
+   ],
+   "load_step": 5.0,
+   "target_sets": [
+    {
+     "kg": 75.0,
+     "reps": 12,
+     "type": "normal"
+    },
+    {
+     "kg": 75.0,
+     "reps": 12,
+     "type": "normal"
+    },
+    {
+     "kg": 75.0,
+     "reps": 11,
+     "type": "normal"
+    }
+   ],
+   "target_kg": 75.0,
+   "target_reps": [
+    12,
+    12,
+    11
+   ],
+   "prev_target_sets": [
+    {
+     "kg": 75.0,
+     "reps": 12,
+     "type": "normal"
+    },
+    {
+     "kg": 75.0,
+     "reps": 12,
+     "type": "normal"
+    },
+    {
+     "kg": 75.0,
+     "reps": 11,
+     "type": "normal"
+    }
+   ],
+   "decision": "hold",
+   "reason": {
+    "code": "miss_hold"
+   },
+   "needs_approval": false,
+   "flags": [],
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
+    {
+     "kg": 75.0,
+     "reps": 12,
+     "type": "normal"
+    },
+    {
+     "kg": 75.0,
+     "reps": 12,
+     "type": "normal"
+    },
+    {
+     "kg": 75.0,
+     "reps": 11,
+     "type": "normal"
+    }
+   ],
+   "last_week": {
+    "grade": "miss",
+    "grade_reason": {
+     "code": "missed",
+     "met": 1,
+     "n": 3,
+     "missing": 0,
+     "under_load": false,
+     "short": 3
+    },
+    "source_sets": [
+     {
+      "date": "2030-01-15",
+      "kg": 75.0,
+      "reps": 11,
+      "type": "normal",
+      "rir": 1
+     },
+     {
+      "date": "2030-01-15",
+      "kg": 75.0,
+      "reps": 11,
+      "type": "normal",
+      "rir": 0
+     },
+     {
+      "date": "2030-01-15",
+      "kg": 75.0,
+      "reps": 10,
+      "type": "normal",
+      "rir": 1
+     }
+    ],
+    "athlete_note": null,
+    "target_sets": [
+     {
+      "kg": 75.0,
+      "reps": 12,
+      "type": "normal"
+     },
+     {
+      "kg": 75.0,
+      "reps": 12,
+      "type": "normal"
+     },
+     {
+      "kg": 75.0,
+      "reps": 11,
+      "type": "normal"
+     }
+    ]
+   },
+   "grade": "partial",
+   "grade_reason": {
+    "code": "close",
+    "met": 2,
+    "n": 3,
+    "short": 1
+   },
+   "grade_flags": [],
+   "source_sets": [
+    {
+     "date": "2030-01-22",
+     "kg": 75.0,
+     "reps": 12,
+     "type": "normal",
+     "rir": 0
+    },
+    {
+     "date": "2030-01-22",
+     "kg": 75.0,
+     "reps": 11,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-01-22",
+     "kg": 75.0,
+     "reps": 11,
+     "type": "normal",
+     "rir": 0
+    }
+   ]
+  },
+  {
+   "id": "upper-b-1",
+   "routine": "Upper B",
+   "slot": 1,
+   "exercise_id": "Incline_Dumbbell_Press",
+   "history_ids": [],
+   "name": "Incline Dumbbell Press",
+   "category": "compound",
+   "tool": "dumbbell",
+   "assisted": false,
+   "overload": true,
+   "rep_range": [
+    8,
+    12
+   ],
+   "reps_left": [
+    1,
+    2
+   ],
+   "load_step": 2.0,
+   "target_sets": [
+    {
+     "kg": 24.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 24.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 24.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 24.0,
+     "reps": 9,
+     "type": "normal"
+    }
+   ],
+   "target_kg": 24.0,
+   "target_reps": [
+    10,
+    10,
+    10,
+    9
+   ],
+   "prev_target_sets": [
+    {
+     "kg": 24.0,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 24.0,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 24.0,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 24.0,
+     "reps": 8,
+     "type": "normal"
+    }
+   ],
+   "decision": "hold",
+   "reason": {
+    "code": "reps_to_done"
+   },
+   "needs_approval": false,
+   "flags": [],
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
+    {
+     "kg": 24.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 24.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 24.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 24.0,
+     "reps": 9,
+     "type": "normal"
+    }
+   ],
+   "last_week": {
+    "grade": "hit",
+    "grade_reason": {
+     "code": "met",
+     "n": 4
+    },
+    "source_sets": [
+     {
+      "date": "2030-01-17",
+      "kg": 24.0,
+      "reps": 10,
+      "type": "normal",
+      "rir": 3
+     },
+     {
+      "date": "2030-01-17",
+      "kg": 24.0,
+      "reps": 10,
+      "type": "normal",
+      "rir": 2
+     },
+     {
+      "date": "2030-01-17",
+      "kg": 24.0,
+      "reps": 10,
+      "type": "normal",
+      "rir": 1
+     },
+     {
+      "date": "2030-01-17",
+      "kg": 24.0,
+      "reps": 9,
+      "type": "normal",
+      "rir": 2
+     }
+    ],
+    "athlete_note": null,
+    "target_sets": [
+     {
+      "kg": 24.0,
+      "reps": 9,
+      "type": "normal"
+     },
+     {
+      "kg": 24.0,
+      "reps": 9,
+      "type": "normal"
+     },
+     {
+      "kg": 24.0,
+      "reps": 9,
+      "type": "normal"
+     },
+     {
+      "kg": 24.0,
+      "reps": 8,
+      "type": "normal"
+     }
+    ]
+   },
+   "grade": "hit",
+   "grade_reason": {
+    "code": "met",
+    "n": 4
+   },
+   "grade_flags": [
+    "overshoot"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-01-24",
+     "kg": 24.0,
+     "reps": 11,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-01-24",
+     "kg": 24.0,
+     "reps": 11,
+     "type": "normal",
+     "rir": null
+    },
+    {
+     "date": "2030-01-24",
+     "kg": 24.0,
+     "reps": 11,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-01-24",
+     "kg": 24.0,
+     "reps": 10,
+     "type": "normal",
+     "rir": 1
+    }
+   ]
+  },
+  {
+   "id": "upper-b-2",
+   "routine": "Upper B",
+   "slot": 2,
+   "exercise_id": "Seated_Cable_Rows",
+   "history_ids": [],
+   "name": "Seated Cable Rows",
+   "category": "compound",
+   "tool": "machine",
+   "assisted": false,
+   "overload": true,
+   "rep_range": [
+    8,
+    12
+   ],
+   "reps_left": [
+    1,
+    2
+   ],
+   "load_step": 5.0,
+   "target_sets": [
+    {
+     "kg": 60.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
+     "reps": 9,
+     "type": "normal"
+    }
+   ],
+   "target_kg": 60.0,
+   "target_reps": [
+    10,
+    10,
+    9
+   ],
+   "prev_target_sets": [
+    {
+     "kg": 60.0,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
+     "reps": 8,
+     "type": "normal"
+    }
+   ],
+   "decision": "hold",
+   "reason": {
+    "code": "reps_to_done"
+   },
+   "needs_approval": false,
+   "flags": [],
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
+    {
+     "kg": 60.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
+     "reps": 9,
+     "type": "normal"
+    }
+   ],
+   "last_week": {
+    "grade": "hit",
+    "grade_reason": {
+     "code": "met",
+     "n": 3
+    },
+    "source_sets": [
+     {
+      "date": "2030-01-17",
+      "kg": 60.0,
+      "reps": 10,
+      "type": "normal",
+      "rir": 2
+     },
+     {
+      "date": "2030-01-17",
+      "kg": 60.0,
+      "reps": 10,
+      "type": "normal",
+      "rir": 2
+     },
+     {
+      "date": "2030-01-17",
+      "kg": 60.0,
+      "reps": 9,
+      "type": "normal",
+      "rir": 2
+     }
+    ],
+    "athlete_note": null,
+    "target_sets": [
+     {
+      "kg": 60.0,
+      "reps": 9,
+      "type": "normal"
+     },
+     {
+      "kg": 60.0,
+      "reps": 9,
+      "type": "normal"
+     },
+     {
+      "kg": 60.0,
+      "reps": 8,
+      "type": "normal"
+     }
+    ]
+   },
+   "grade": "hit",
+   "grade_reason": {
+    "code": "met",
+    "n": 3
+   },
+   "grade_flags": [
+    "overshoot"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-01-24",
+     "kg": 60.0,
+     "reps": 11,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-01-24",
+     "kg": 60.0,
+     "reps": 10,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-01-24",
+     "kg": 60.0,
+     "reps": 9,
+     "type": "normal",
+     "rir": 2
+    }
+   ]
+  },
+  {
+   "id": "upper-b-3",
+   "routine": "Upper B",
+   "slot": 3,
+   "exercise_id": "Dumbbell_Shoulder_Press",
+   "history_ids": [],
+   "name": "Dumbbell Shoulder Press",
+   "category": "compound",
+   "tool": "dumbbell",
+   "assisted": false,
+   "overload": true,
+   "rep_range": [
+    8,
+    12
+   ],
+   "reps_left": [
+    1,
+    2
+   ],
+   "load_step": 2.0,
+   "target_sets": [
+    {
+     "kg": 20.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 20.0,
+     "reps": 8,
+     "type": "normal"
+    }
+   ],
+   "target_kg": 20.0,
+   "target_reps": [
+    10,
+    8
+   ],
+   "prev_target_sets": [
+    {
+     "kg": 20.0,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 20.0,
+     "reps": 8,
+     "type": "normal"
+    }
+   ],
+   "decision": "hold",
+   "reason": {
+    "code": "add_rep",
+    "set": 1,
+    "frm": 9,
+    "to": 10
+   },
+   "needs_approval": false,
+   "flags": [],
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
+    {
+     "kg": 20.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 20.0,
+     "reps": 8,
+     "type": "normal"
+    }
+   ],
+   "last_week": {
+    "grade": "hit",
+    "grade_reason": {
+     "code": "met",
+     "n": 2
+    },
+    "source_sets": [
+     {
+      "date": "2030-01-17",
+      "kg": 20.0,
+      "reps": 9,
+      "type": "normal",
+      "rir": 1
+     },
+     {
+      "date": "2030-01-17",
+      "kg": 20.0,
+      "reps": 8,
+      "type": "normal",
+      "rir": 2
+     }
+    ],
+    "athlete_note": null,
+    "target_sets": [
+     {
+      "kg": 20.0,
+      "reps": 9,
+      "type": "normal"
+     },
+     {
+      "kg": 20.0,
+      "reps": 8,
+      "type": "normal"
+     }
+    ]
+   },
+   "grade": "partial",
+   "grade_reason": {
+    "code": "close",
+    "met": 1,
+    "n": 2,
+    "short": 1
+   },
+   "grade_flags": [],
+   "source_sets": [
+    {
+     "date": "2030-01-24",
+     "kg": 20.0,
+     "reps": 9,
+     "type": "normal",
+     "rir": null
+    },
+    {
+     "date": "2030-01-24",
+     "kg": 20.0,
+     "reps": 8,
+     "type": "normal",
+     "rir": 2
+    }
+   ]
+  },
+  {
+   "id": "upper-b-4",
+   "routine": "Upper B",
+   "slot": 4,
+   "exercise_id": "Close-Grip_Front_Lat_Pulldown",
+   "history_ids": [],
+   "name": "Close-Grip Front Lat Pulldown",
+   "category": "compound",
+   "tool": "machine",
+   "assisted": false,
+   "overload": true,
+   "rep_range": [
+    8,
+    12
+   ],
+   "reps_left": [
+    1,
+    2
+   ],
+   "load_step": 5.0,
+   "target_sets": [
+    {
+     "kg": 55.0,
+     "reps": 11,
+     "type": "normal"
+    },
+    {
+     "kg": 55.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 55.0,
+     "reps": 10,
+     "type": "normal"
+    }
+   ],
+   "target_kg": 55.0,
+   "target_reps": [
+    11,
+    10,
+    10
+   ],
+   "prev_target_sets": [
+    {
+     "kg": 55.0,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 55.0,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 55.0,
+     "reps": 9,
+     "type": "normal"
+    }
+   ],
+   "decision": "hold",
+   "reason": {
+    "code": "reps_to_done"
+   },
+   "needs_approval": false,
+   "flags": [],
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
+    {
+     "kg": 55.0,
+     "reps": 11,
+     "type": "normal"
+    },
+    {
+     "kg": 55.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 55.0,
+     "reps": 10,
+     "type": "normal"
+    }
+   ],
+   "last_week": {
+    "grade": "hit",
+    "grade_reason": {
+     "code": "met",
+     "n": 3
+    },
+    "source_sets": [
+     {
+      "date": "2030-01-17",
+      "kg": 55.0,
+      "reps": 11,
+      "type": "normal",
+      "rir": 2
+     },
+     {
+      "date": "2030-01-17",
+      "kg": 55.0,
+      "reps": 10,
+      "type": "normal",
+      "rir": 2
+     },
+     {
+      "date": "2030-01-17",
+      "kg": 55.0,
+      "reps": 10,
+      "type": "normal",
+      "rir": 2
+     }
+    ],
+    "athlete_note": null,
+    "target_sets": [
+     {
+      "kg": 55.0,
+      "reps": 9,
+      "type": "normal"
+     },
+     {
+      "kg": 55.0,
+      "reps": 9,
+      "type": "normal"
+     },
+     {
+      "kg": 55.0,
+      "reps": 9,
+      "type": "normal"
+     }
+    ]
+   },
+   "grade": "hit",
+   "grade_reason": {
+    "code": "met",
+    "n": 3
+   },
+   "grade_flags": [
+    "overshoot"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-01-24",
+     "kg": 55.0,
+     "reps": 12,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-01-24",
+     "kg": 55.0,
+     "reps": 11,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-01-24",
+     "kg": 55.0,
+     "reps": 11,
+     "type": "normal",
+     "rir": null
+    }
+   ]
+  },
+  {
+   "id": "upper-b-5",
+   "routine": "Upper B",
+   "slot": 5,
+   "exercise_id": "Dumbbell_Flyes",
+   "history_ids": [],
+   "name": "Dumbbell Flyes",
+   "category": "isolation",
+   "tool": "dumbbell",
+   "assisted": false,
+   "overload": true,
+   "rep_range": [
+    10,
+    20
+   ],
+   "reps_left": [
+    0,
+    2
+   ],
+   "load_step": 2.0,
+   "target_sets": [
+    {
+     "kg": 14.0,
+     "reps": 13,
+     "type": "normal"
+    },
+    {
+     "kg": 14.0,
+     "reps": 13,
+     "type": "normal"
+    }
+   ],
+   "target_kg": 14.0,
+   "target_reps": [
+    13,
+    13
+   ],
+   "prev_target_sets": [
+    {
+     "kg": 14.0,
+     "reps": 11,
+     "type": "normal"
+    },
+    {
+     "kg": 14.0,
+     "reps": 11,
+     "type": "normal"
+    }
+   ],
+   "decision": "hold",
+   "reason": {
+    "code": "reps_to_done"
+   },
+   "needs_approval": false,
+   "flags": [],
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
+    {
+     "kg": 14.0,
+     "reps": 13,
+     "type": "normal"
+    },
+    {
+     "kg": 14.0,
+     "reps": 13,
+     "type": "normal"
+    }
+   ],
+   "last_week": {
+    "grade": "hit",
+    "grade_reason": {
+     "code": "met",
+     "n": 2
+    },
+    "source_sets": [
+     {
+      "date": "2030-01-17",
+      "kg": 14.0,
+      "reps": 13,
+      "type": "normal",
+      "rir": 2
+     },
+     {
+      "date": "2030-01-17",
+      "kg": 14.0,
+      "reps": 13,
+      "type": "normal",
+      "rir": 1
+     }
+    ],
+    "athlete_note": null,
+    "target_sets": [
+     {
+      "kg": 14.0,
+      "reps": 11,
+      "type": "normal"
+     },
+     {
+      "kg": 14.0,
+      "reps": 11,
+      "type": "normal"
+     }
+    ]
+   },
+   "grade": "miss",
+   "grade_reason": {
+    "code": "missed",
+    "met": 0,
+    "n": 2,
+    "missing": 0,
+    "under_load": false,
+    "short": 3
+   },
+   "grade_flags": [],
+   "source_sets": [
+    {
+     "date": "2030-01-24",
+     "kg": 14.0,
+     "reps": 12,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-01-24",
+     "kg": 14.0,
+     "reps": 11,
+     "type": "normal",
+     "rir": 1
+    }
+   ]
+  },
+  {
+   "id": "upper-b-6",
+   "routine": "Upper B",
+   "slot": 6,
+   "exercise_id": "Face_Pull",
+   "history_ids": [],
+   "name": "Face Pull",
+   "category": "isolation",
+   "tool": "machine",
+   "assisted": false,
+   "overload": true,
+   "rep_range": [
+    10,
+    20
+   ],
+   "reps_left": [
+    0,
+    2
+   ],
+   "load_step": 5.0,
+   "target_sets": [
+    {
+     "kg": 25.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 25.0,
+     "reps": 10,
+     "type": "normal"
+    }
+   ],
+   "target_kg": 25.0,
+   "target_reps": [
+    10,
+    10
+   ],
+   "prev_target_sets": [
+    {
+     "kg": 25.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 25.0,
+     "reps": 9,
+     "type": "normal"
+    }
+   ],
+   "decision": "hold",
+   "reason": {
+    "code": "reps_to_done"
+   },
+   "needs_approval": false,
+   "flags": [],
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
+    {
+     "kg": 25.0,
+     "reps": 10,
+     "type": "normal"
+    },
+    {
+     "kg": 25.0,
+     "reps": 10,
+     "type": "normal"
+    }
+   ],
+   "last_week": {
+    "grade": "hit",
+    "grade_reason": {
+     "code": "met",
+     "n": 2
+    },
+    "source_sets": [
+     {
+      "date": "2030-01-17",
+      "kg": 25.0,
+      "reps": 10,
+      "type": "normal",
+      "rir": 1
+     },
+     {
+      "date": "2030-01-17",
+      "kg": 25.0,
+      "reps": 10,
+      "type": "normal",
+      "rir": 0
+     }
+    ],
+    "athlete_note": null,
+    "target_sets": [
+     {
+      "kg": 25.0,
+      "reps": 10,
+      "type": "normal"
+     },
+     {
+      "kg": 25.0,
+      "reps": 9,
+      "type": "normal"
+     }
+    ]
+   },
+   "grade": "hit",
+   "grade_reason": {
+    "code": "met",
+    "n": 2
+   },
+   "grade_flags": [
+    "exact_copy"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-01-24",
+     "kg": 25.0,
+     "reps": 10,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-01-24",
+     "kg": 25.0,
+     "reps": 10,
+     "type": "normal",
+     "rir": 0
+    }
+   ]
+  },
+  {
+   "id": "lower-b-1",
+   "routine": "Lower B",
+   "slot": 1,
+   "exercise_id": "Romanian_Deadlift",
+   "history_ids": [],
+   "name": "Romanian Deadlift",
+   "category": "spine",
+   "tool": "barbell_lower",
+   "assisted": false,
+   "overload": true,
+   "rep_range": [
+    6,
+    10
+   ],
+   "reps_left": [
+    2,
+    2
+   ],
+   "load_step": 2.5,
+   "target_sets": [
+    {
+     "kg": 85.0,
+     "reps": 8,
+     "type": "normal"
+    },
+    {
+     "kg": 85.0,
+     "reps": 7,
+     "type": "normal"
+    },
+    {
+     "kg": 85.0,
+     "reps": 6,
+     "type": "normal"
+    },
+    {
+     "kg": 85.0,
+     "reps": 6,
+     "type": "normal"
+    }
+   ],
+   "target_kg": 85.0,
+   "target_reps": [
+    8,
+    7,
+    6,
+    6
+   ],
+   "prev_target_sets": [
+    {
+     "kg": 85.0,
+     "reps": 7,
+     "type": "normal"
+    },
+    {
+     "kg": 85.0,
+     "reps": 7,
+     "type": "normal"
+    },
+    {
+     "kg": 85.0,
+     "reps": 6,
+     "type": "normal"
+    },
+    {
+     "kg": 85.0,
+     "reps": 6,
+     "type": "normal"
+    }
+   ],
+   "decision": "hold",
+   "reason": {
+    "code": "add_rep",
+    "set": 1,
+    "frm": 7,
+    "to": 8
+   },
+   "needs_approval": false,
+   "flags": [],
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
+    {
+     "kg": 85.0,
+     "reps": 8,
+     "type": "normal"
+    },
+    {
+     "kg": 85.0,
+     "reps": 7,
+     "type": "normal"
+    },
+    {
+     "kg": 85.0,
+     "reps": 6,
+     "type": "normal"
+    },
+    {
+     "kg": 85.0,
+     "reps": 6,
+     "type": "normal"
+    }
+   ],
+   "last_week": {
+    "grade": "hit",
+    "grade_reason": {
+     "code": "met",
+     "n": 4
+    },
+    "source_sets": [
+     {
+      "date": "2030-01-18",
+      "kg": 85.0,
+      "reps": 7,
+      "type": "normal",
+      "rir": 3
+     },
+     {
+      "date": "2030-01-18",
+      "kg": 85.0,
+      "reps": 7,
+      "type": "normal",
+      "rir": null
+     },
+     {
+      "date": "2030-01-18",
+      "kg": 85.0,
+      "reps": 6,
+      "type": "normal",
+      "rir": 2
+     },
+     {
+      "date": "2030-01-18",
+      "kg": 85.0,
+      "reps": 6,
+      "type": "normal",
+      "rir": 2
+     }
+    ],
+    "athlete_note": null,
+    "target_sets": [
+     {
+      "kg": 85.0,
+      "reps": 7,
+      "type": "normal"
+     },
+     {
+      "kg": 85.0,
+      "reps": 7,
+      "type": "normal"
+     },
+     {
+      "kg": 85.0,
+      "reps": 6,
+      "type": "normal"
+     },
+     {
+      "kg": 85.0,
+      "reps": 6,
+      "type": "normal"
+     }
+    ]
+   },
+   "grade": "hit",
+   "grade_reason": {
+    "code": "met",
+    "n": 4
+   },
+   "grade_flags": [
+    "overshoot"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-01-25",
+     "kg": 85.0,
+     "reps": 8,
+     "type": "normal",
+     "rir": 3
+    },
+    {
+     "date": "2030-01-25",
+     "kg": 85.0,
+     "reps": 8,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-01-25",
+     "kg": 85.0,
+     "reps": 7,
+     "type": "normal",
+     "rir": 3
+    },
+    {
+     "date": "2030-01-25",
+     "kg": 85.0,
+     "reps": 7,
+     "type": "normal",
+     "rir": 2
+    }
+   ]
+  },
+  {
+   "id": "lower-b-2",
+   "routine": "Lower B",
+   "slot": 2,
+   "exercise_id": "Split_Squat_with_Dumbbells",
+   "history_ids": [],
+   "name": "Split Squat with Dumbbells",
+   "category": "spine",
+   "tool": "dumbbell",
+   "assisted": false,
+   "overload": true,
+   "rep_range": [
+    8,
+    12
+   ],
+   "reps_left": [
+    2,
+    2
+   ],
+   "load_step": 2.0,
+   "target_sets": [
+    {
+     "kg": 28.0,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 28.0,
+     "reps": 8,
+     "type": "normal"
+    },
+    {
+     "kg": 28.0,
+     "reps": 8,
+     "type": "normal"
+    }
+   ],
+   "target_kg": 28.0,
+   "target_reps": [
+    9,
+    8,
+    8
+   ],
+   "prev_target_sets": [
+    {
+     "kg": 28.0,
+     "reps": 8,
+     "type": "normal"
+    },
+    {
+     "kg": 28.0,
+     "reps": 8,
+     "type": "normal"
+    },
+    {
+     "kg": 28.0,
+     "reps": 8,
+     "type": "normal"
+    }
+   ],
+   "decision": "hold",
+   "reason": {
+    "code": "reps_to_done"
+   },
+   "needs_approval": false,
+   "flags": [],
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
+    {
+     "kg": 28.0,
+     "reps": 9,
+     "type": "normal"
+    },
+    {
+     "kg": 28.0,
+     "reps": 8,
+     "type": "normal"
+    },
+    {
+     "kg": 28.0,
+     "reps": 8,
+     "type": "normal"
+    }
+   ],
+   "last_week": {
+    "grade": "hit",
+    "grade_reason": {
+     "code": "met",
+     "n": 3
+    },
+    "source_sets": [
+     {
+      "date": "2030-01-18",
+      "kg": 28.0,
+      "reps": 9,
+      "type": "normal",
+      "rir": 3
+     },
+     {
+      "date": "2030-01-18",
+      "kg": 28.0,
+      "reps": 8,
+      "type": "normal",
+      "rir": 3
+     },
+     {
+      "date": "2030-01-18",
+      "kg": 28.0,
+      "reps": 8,
+      "type": "normal",
+      "rir": 2
+     }
+    ],
+    "athlete_note": null,
+    "target_sets": [
+     {
+      "kg": 28.0,
+      "reps": 8,
+      "type": "normal"
+     },
+     {
+      "kg": 28.0,
+      "reps": 8,
+      "type": "normal"
+     },
+     {
+      "kg": 28.0,
+      "reps": 8,
+      "type": "normal"
+     }
+    ]
+   },
+   "grade": "hit",
+   "grade_reason": {
+    "code": "met",
+    "n": 3
+   },
+   "grade_flags": [
+    "exact_copy"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-01-25",
+     "kg": 28.0,
+     "reps": 9,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-01-25",
+     "kg": 28.0,
+     "reps": 8,
+     "type": "normal",
+     "rir": 2
+    },
+    {
+     "date": "2030-01-25",
+     "kg": 28.0,
+     "reps": 8,
+     "type": "normal",
+     "rir": 1
+    }
+   ]
+  },
+  {
+   "id": "lower-b-3",
+   "routine": "Lower B",
+   "slot": 3,
+   "exercise_id": "Leg_Extensions",
+   "history_ids": [],
+   "name": "Leg Extensions",
+   "category": "isolation",
+   "tool": "machine",
+   "assisted": false,
+   "overload": true,
+   "rep_range": [
+    10,
+    20
+   ],
+   "reps_left": [
+    0,
+    2
+   ],
+   "load_step": 5.0,
+   "target_sets": [
+    {
+     "kg": 60.0,
+     "reps": 12,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
+     "reps": 12,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
+     "reps": 12,
+     "type": "normal"
+    }
+   ],
+   "target_kg": 60.0,
+   "target_reps": [
+    12,
+    12,
+    12
+   ],
+   "prev_target_sets": [
+    {
+     "kg": 60.0,
+     "reps": 11,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
+     "reps": 11,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
+     "reps": 11,
+     "type": "normal"
+    }
+   ],
+   "decision": "hold",
+   "reason": {
+    "code": "reps_to_done"
+   },
+   "needs_approval": false,
+   "flags": [],
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
+    {
+     "kg": 60.0,
+     "reps": 12,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
+     "reps": 12,
+     "type": "normal"
+    },
+    {
+     "kg": 60.0,
+     "reps": 12,
+     "type": "normal"
+    }
+   ],
+   "last_week": {
+    "grade": "hit",
+    "grade_reason": {
+     "code": "met",
+     "n": 3
+    },
+    "source_sets": [
+     {
+      "date": "2030-01-18",
+      "kg": 60.0,
+      "reps": 12,
+      "type": "normal",
+      "rir": 2
+     },
+     {
+      "date": "2030-01-18",
+      "kg": 60.0,
+      "reps": 12,
+      "type": "normal",
+      "rir": 1
+     },
+     {
+      "date": "2030-01-18",
+      "kg": 60.0,
+      "reps": 12,
+      "type": "normal",
+      "rir": 0
+     }
+    ],
+    "athlete_note": null,
+    "target_sets": [
+     {
+      "kg": 60.0,
+      "reps": 11,
+      "type": "normal"
+     },
+     {
+      "kg": 60.0,
+      "reps": 11,
+      "type": "normal"
+     },
+     {
+      "kg": 60.0,
+      "reps": 11,
+      "type": "normal"
+     }
+    ]
+   },
+   "grade": "miss",
+   "grade_reason": {
+    "code": "missed",
+    "met": 1,
+    "n": 3,
+    "missing": 0,
+    "under_load": false,
+    "short": 3
+   },
+   "grade_flags": [],
+   "source_sets": [
+    {
+     "date": "2030-01-25",
+     "kg": 60.0,
+     "reps": 12,
+     "type": "normal",
+     "rir": null
+    },
+    {
+     "date": "2030-01-25",
+     "kg": 60.0,
+     "reps": 11,
+     "type": "normal",
+     "rir": null
+    },
+    {
+     "date": "2030-01-25",
+     "kg": 60.0,
+     "reps": 10,
+     "type": "normal",
+     "rir": 1
+    }
+   ]
+  },
+  {
+   "id": "lower-b-4",
+   "routine": "Lower B",
+   "slot": 4,
+   "exercise_id": "Seated_Leg_Curl",
+   "history_ids": [],
+   "name": "Seated Leg Curl",
+   "category": "isolation",
+   "tool": "machine",
+   "assisted": false,
+   "overload": true,
+   "rep_range": [
+    10,
+    20
+   ],
+   "reps_left": [
+    0,
+    2
+   ],
+   "load_step": 5.0,
+   "target_sets": [
+    {
+     "kg": 40.0,
+     "reps": 14,
+     "type": "normal"
+    },
+    {
+     "kg": 40.0,
+     "reps": 14,
+     "type": "normal"
+    }
+   ],
+   "target_kg": 40.0,
+   "target_reps": [
+    14,
+    14
+   ],
+   "prev_target_sets": [
+    {
+     "kg": 40.0,
+     "reps": 12,
+     "type": "normal"
+    },
+    {
+     "kg": 40.0,
+     "reps": 12,
+     "type": "normal"
+    }
+   ],
+   "decision": "hold",
+   "reason": {
+    "code": "reps_to_done"
+   },
+   "needs_approval": false,
+   "flags": [],
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
+    {
+     "kg": 40.0,
+     "reps": 14,
+     "type": "normal"
+    },
+    {
+     "kg": 40.0,
+     "reps": 14,
+     "type": "normal"
+    }
+   ],
+   "last_week": {
+    "grade": "hit",
+    "grade_reason": {
+     "code": "met",
+     "n": 2
+    },
+    "source_sets": [
+     {
+      "date": "2030-01-18",
+      "kg": 40.0,
+      "reps": 14,
+      "type": "normal",
+      "rir": 3
+     },
+     {
+      "date": "2030-01-18",
+      "kg": 40.0,
+      "reps": 14,
+      "type": "normal",
+      "rir": 2
+     }
+    ],
+    "athlete_note": null,
+    "target_sets": [
+     {
+      "kg": 40.0,
+      "reps": 12,
+      "type": "normal"
+     },
+     {
+      "kg": 40.0,
+      "reps": 12,
+      "type": "normal"
+     }
+    ]
+   },
+   "grade": "hit",
+   "grade_reason": {
+    "code": "met",
+    "n": 2
+   },
+   "grade_flags": [
+    "overshoot"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-01-25",
+     "kg": 40.0,
+     "reps": 15,
+     "type": "normal",
+     "rir": 0
+    },
+    {
+     "date": "2030-01-25",
+     "kg": 40.0,
+     "reps": 14,
+     "type": "normal",
+     "rir": 1
+    }
+   ]
+  },
+  {
+   "id": "lower-b-5",
+   "routine": "Lower B",
+   "slot": 5,
+   "exercise_id": "Seated_Calf_Raise",
+   "history_ids": [],
+   "name": "Seated Calf Raise",
+   "category": "isolation",
+   "tool": "machine",
+   "assisted": false,
+   "overload": true,
+   "rep_range": [
+    10,
+    20
+   ],
+   "reps_left": [
+    0,
+    2
+   ],
+   "load_step": 5.0,
+   "target_sets": [
+    {
+     "kg": 55.0,
+     "reps": 13,
+     "type": "normal"
+    },
+    {
+     "kg": 55.0,
+     "reps": 13,
+     "type": "normal"
+    },
+    {
+     "kg": 55.0,
+     "reps": 12,
+     "type": "normal"
+    }
+   ],
+   "target_kg": 55.0,
+   "target_reps": [
+    13,
+    13,
+    12
+   ],
+   "prev_target_sets": [
+    {
+     "kg": 55.0,
+     "reps": 12,
+     "type": "normal"
+    },
+    {
+     "kg": 55.0,
+     "reps": 12,
+     "type": "normal"
+    },
+    {
+     "kg": 55.0,
+     "reps": 11,
+     "type": "normal"
+    }
+   ],
+   "decision": "hold",
+   "reason": {
+    "code": "reps_to_done"
+   },
+   "needs_approval": false,
+   "flags": [],
+   "pre_easy_sets": null,
+   "accepted": true,
+   "source": "rule",
+   "override_reason": null,
+   "live_target_sets": [
+    {
+     "kg": 55.0,
+     "reps": 13,
+     "type": "normal"
+    },
+    {
+     "kg": 55.0,
+     "reps": 13,
+     "type": "normal"
+    },
+    {
+     "kg": 55.0,
+     "reps": 12,
+     "type": "normal"
+    }
+   ],
+   "last_week": {
+    "grade": "hit",
+    "grade_reason": {
+     "code": "met",
+     "n": 3
+    },
+    "source_sets": [
+     {
+      "date": "2030-01-18",
+      "kg": 55.0,
+      "reps": 13,
+      "type": "normal",
+      "rir": 1
+     },
+     {
+      "date": "2030-01-18",
+      "kg": 55.0,
+      "reps": 13,
+      "type": "normal",
+      "rir": 0
+     },
+     {
+      "date": "2030-01-18",
+      "kg": 55.0,
+      "reps": 12,
+      "type": "normal",
+      "rir": 1
+     }
+    ],
+    "athlete_note": null,
+    "target_sets": [
+     {
+      "kg": 55.0,
+      "reps": 12,
+      "type": "normal"
+     },
+     {
+      "kg": 55.0,
+      "reps": 12,
+      "type": "normal"
+     },
+     {
+      "kg": 55.0,
+      "reps": 11,
+      "type": "normal"
+     }
+    ]
+   },
+   "grade": "hit",
+   "grade_reason": {
+    "code": "met",
+    "n": 3
+   },
+   "grade_flags": [
+    "overshoot"
+   ],
+   "source_sets": [
+    {
+     "date": "2030-01-25",
+     "kg": 55.0,
+     "reps": 14,
+     "type": "normal",
+     "rir": 0
+    },
+    {
+     "date": "2030-01-25",
+     "kg": 55.0,
+     "reps": 13,
+     "type": "normal",
+     "rir": 1
+    },
+    {
+     "date": "2030-01-25",
+     "kg": 55.0,
+     "reps": 13,
+     "type": "normal",
+     "rir": 0
+    }
+   ]
+  }
+ ],
+ "graded_week_type": "full",
+ "status_before_grade": "applied"
+}
