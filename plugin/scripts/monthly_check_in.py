@@ -26,6 +26,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import adapt  # noqa: E402
 import athlete_folder as af  # noqa: E402
 import changes as ch  # noqa: E402
+import nutrition as nu  # noqa: E402
 import program_audit as pa  # noqa: E402
 import program_build as pb  # noqa: E402
 import progression as pg  # noqa: E402
@@ -118,9 +119,11 @@ def volume(folder, start, end, cut):
         lines.append(f"| {m} | {f1(direct)} | {f1(eff)} | {band[0]} | {band[1]}–{band[2]} | {band[3]} | {at} |")
         if at.startswith("below"):
             below.append(m)
-    flags = [f"below the usual coaching band: {', '.join(below)} (the program meets the evidence floors; these "
-             "bands are practitioner ones: more sets there need Advanced with a priority, or longer sessions)"] \
-        if below else []
+    if below:  # information only: no alarm, no set change (the weekly engine stays in parity with the Swift app)
+        lines += ["", f"For information: below the usual coaching band this month: {', '.join(below)}. The program "
+                  "meets the evidence floors, so nothing changes because of this. More sets there come only with "
+                  "Advanced and a priority, or longer sessions, if the athlete wants that."]
+    flags = []
     # MRV as the audit gates it: per group at the group's largest head, per muscle for the rest.
     grouped = {m for _, ms in pa.GROUPS for m in ms}
     over = [(g, sum(effs[m] for m in ms), max(BANDS[m][3] for m in ms)) for g, ms in pa.GROUPS]
@@ -244,6 +247,18 @@ def enabled(folder):
     return bool(prof.get("nutrition_phase")) and not af.gate(prof, "nutrition"), not af.gate(prof, "photos")
 
 
+def nutrition_text(folder, today, nutrition, physique):
+    out = f"Nutrition skill: {'on' if nutrition else 'off'} · physique skill: {'on' if physique else 'off'}."
+    plan = nu.previous_plan(folder)
+    if not nutrition or plan.get("status") != "on":
+        return out
+    out += (f"\n\nTargets in force since {plan['since']}: phase {plan['phase']} ({plan['rate_pct_week']:g} % a week) · "
+            f"{plan['kcal']:,} kcal · protein {plan['protein_g']} g · fat {plan['fat_g']} g · carbs {plan['carbs_g']} g.")
+    if nu.yes(adapt.header(folder, "profile.md").get("weight_tracking")):
+        out += "\n" + nu.trend_line(folder, today)
+    return out
+
+
 def report(folder, today, weeks=4):
     prog = adapt.program(folder)
     mondays, start, end = month(folder, today, weeks)
@@ -273,8 +288,7 @@ def report(folder, today, weeks=4):
         ("Health", health(folder, start, end)),
         ("Past changes", ch.table(graded)),
         ("Roadmap", rm_text),
-        ("Nutrition and physique", f"Nutrition skill: {'on' if nutrition else 'off'} · physique skill: "
-                                   f"{'on' if physique else 'off'}."),
+        ("Nutrition and physique", nutrition_text(folder, today, nutrition, physique)),
         ("Signals for next month", "\n".join(f"- {s}" for s in signals(folder, prog, today, hit, vol_flags,
                                                                        flag_rows, graded, rm_state))),
     ]

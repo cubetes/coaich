@@ -4,14 +4,14 @@
 Usage:
   nutrition.py plan  --dir D [--phase maintain|gain|lose] [--rate PCT] [--intake KCAL] [--meals 3|4|5]
                      [--prefer ID,..] [--exclude ID,..] [--today YYYY-MM-DD] [--dry-run] [--json]
-  nutrition.py trend --dir D [--intake KCAL] [--today YYYY-MM-DD] [--json]
+  nutrition.py trend --dir D [--intake KCAL] [--today YYYY-MM-DD] [--json | --line]
   nutrition.py foods [TEXT] [--diet omnivore|pescatarian|vegetarian|vegan] [--avoid TAG,..] [--group G]
 
 `plan` reads coaich.md, profile.md (the nutrition answers onboard writes) and, with the user's consent,
 data/body.csv; works out maintenance (from the weight trend when it is good enough, else Mifflin-St Jeor x an
 activity factor), the phase target, protein, fat and carbs, and a one-day meal plan from data/foods.csv; then
 writes plan/nutrition.md, the nutrition block of plan/CURRENT.md and a log line. `trend` only reports the weight
-trend. `foods` looks foods up. Every rule and its source: references/nutrition.md. Every number a skill shows
+trend (`--line`: the weekly review's one line against the phase's band). `foods` looks foods up. Every rule and its source: references/nutrition.md. Every number a skill shows
 comes from here: skills never do nutrition arithmetic.
 
 Exit 0 = done, 2 = a missing or bad answer (named on stderr), 3 = a safeguard said no (its wording on stdout).
@@ -282,6 +282,45 @@ def targets(weight, height_cm, age, sex, activity, phase, bf=None, rate=None, ma
             "steps": [{"step": s, "how": h, "value": round(v)} for s, h, v in steps], "notes": notes}
 
 
+def phase_band(phase, rate, cap):
+    """The weekly change (% of body weight, signed) that counts as on track for the plan in force (our rule): lose
+    = from half the planned rate to the loss cap; gain = from half the planned rate to the gain cap; maintain =
+    within ±0.25 %."""
+    if phase == "lose":
+        return -cap, -rate / 2
+    if phase == "gain":
+        return rate / 2, GAIN_CAP_PCT
+    return -0.25, 0.25
+
+
+def weekly_line(tr, prev):
+    """One line for the weekly review: the 4-week weight trend against the band of the plan in force. It never
+    says "eat less": a slower loss is only reported, and the nutrition skill corrects calories at a check-in."""
+    if tr.get("kg_per_week") is None or tr["days"] < TREND_MIN_DAYS or tr["weigh_ins"] < TREND_MIN_WEIGHINS:
+        return (f"Weight trend: not enough weigh-ins yet ({tr['weigh_ins']} in the last 4 weeks; needs "
+                f"{TREND_MIN_WEIGHINS} over {TREND_MIN_DAYS}+ days).")
+    phase, rate = str(prev["phase"]), float(prev.get("rate_pct_week") or 0)
+    lo, hi = phase_band(phase, rate, float(prev.get("loss_cap_pct_week") or LOSS_CAP["lean"]))
+    pct = tr["pct_per_week"]
+    if lo <= pct <= hi:
+        verdict = "on track"
+    elif pct < lo:
+        verdict = "losing faster than the safe cap: eat more" if phase == "lose" else "eat more"
+    else:
+        verdict = {"lose": "slower than planned", "gain": "faster than planned"}.get(phase, "drifting up")
+    return (f"Weight trend: {tr['kg_per_week']:+.2f} kg a week ({pct:+.2f} %), {tr['weigh_ins']} weigh-ins since "
+            f"{tr['since']}; {phase} band {lo:+.2f} to {hi:+.2f} % → {verdict}.")
+
+
+def trend_line(folder, today):
+    """weekly_line for the plan in force over the 4 weeks up to today, or None when no plan is on. The caller has
+    passed the gate and the weight-tracking consent."""
+    prev = previous_plan(folder)
+    if prev.get("status") != "on":
+        return None
+    return weekly_line(trend(weigh_ins(folder, today), today - datetime.timedelta(days=28), today), prev)
+
+
 # ---------------------------------------------------------------- foods and the meal plan
 
 def load_foods(path=FOODS):
@@ -484,7 +523,7 @@ def render(t, today):
           f"rate_pct_week: {t['rate_pct_week']:g}", f"kcal: {t['kcal']}", f"protein_g: {t['protein_g']}",
           f"fat_g: {t['fat_g']}", f"carbs_g: {t['carbs_g']}", f"maintenance_kcal: {t['maintenance_kcal']}",
           f"maintenance_source: {t['maintenance_source']}", f"resting_kcal: {t['resting_kcal']}",
-          f"weight_kg: {t['weight_kg']}", "---"]
+          f"weight_kg: {t['weight_kg']}", f"loss_cap_pct_week: {t['loss_cap_pct_week']:g}", "---"]
     rate = {"lose": f"lose about {t['rate_pct_week']:g} % of body weight a week",
             "gain": f"gain about {t['rate_pct_week']:g} % of body weight a week", "maintain": "keep weight steady"}
     out = fm + ["# Nutrition", "", LAWYER, "", f"In force from {today.isoformat()}. Phase **{t['phase']}**: "
@@ -570,6 +609,7 @@ def main(argv=None):
     t.add_argument("--dir", required=True)
     t.add_argument("--intake", type=float)
     t.add_argument("--json", action="store_true")
+    t.add_argument("--line", action="store_true", help="one line: the 4-week trend against the phase's band")
     t.add_argument("--today", default=datetime.date.today().isoformat())
     f = sub.add_parser("foods")
     f.add_argument("text", nargs="?", default="")
@@ -621,6 +661,10 @@ def cmd_trend(a, today):
     except Safeguard as s:
         print(str(s))
         return 3
+    if a.line:
+        line = trend_line(a.dir, today)
+        print(line or "No nutrition plan in force: no weight-trend line.")
+        return 0 if line else 3
     tr = trend_for(a.dir, weigh_ins(a.dir, today), today, a.intake)
     if a.json:
         print(json.dumps(tr, indent=1))

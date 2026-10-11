@@ -34,7 +34,10 @@ How to read it, in plain words:
 
 - **Volume**: "effective sets" counts an exercise's main muscle as 1 set and each helper muscle as half. The
   bands (MEV, MAV, MRV) are coaching practice, not study cut-offs: say "below the usual coaching band", never
-  "below the minimum". Only MRV is a gate. A low direct count with enough effective sets is fine.
+  "below the minimum". Only MRV is a gate. A low direct count with enough effective sets is fine. Muscles below
+  the band are **information only**: say it calmly, never as an alarm, and never add sets for it. Set counts
+  change only through the weekly engine's rules, which stay the same as the iPhone app's (one rule set, same
+  next targets everywhere).
 - **Health**: context only. Never call fatigue on fewer than two signals that agree.
 - **Past changes**: each change in `plan/changes.md` is graded once its check date has come: in band → keep;
   below or above band → adjust or revert (ask the athlete); no data → say it could not be measured, never guess;
@@ -44,7 +47,8 @@ How to read it, in plain words:
 
 The report's last section says whether each is on (their own safeguards decide).
 
-- **Nutrition on** → call the Skill tool with `nutrition`, step "adjust from the weight trend", for this month.
+- **Nutrition on** → the section shows the targets in force and the weight-trend line. Call the Skill tool with
+  `nutrition`, step "adjust from the weight trend", for this month.
 - **Physique on** → ask for this month's photos; if they are given, call the Skill tool with `physique` (compare
   with the last set).
 
@@ -67,7 +71,7 @@ evidence window. At most about 6 changes; "no changes this month" is a valid out
 | Advanced offer (placement) | the athlete chooses; Advanced means top sets, an easy week every 6th week and a priority region |
 | a change off band | keep, adjust or revert, the athlete's call |
 | hit rate out of band | ask before changing anything (sleep, stress, food) |
-| volume below the coaching bands | explain; more sets come with Advanced + a priority or longer sessions, never by hand |
+| volume below the coaching bands | not a signal: information only. If the athlete asks, more sets come with Advanced + a priority or longer sessions, never by hand |
 | a temporary program past its end | the `adapt` skill's restore |
 
 Show the program change before asking (`--dry-run` writes nothing):

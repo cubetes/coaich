@@ -277,6 +277,30 @@ class Trend(unittest.TestCase):
         fm = nutrition_md(d)
         self.assertGreater(fm["kcal"], 1900)
 
+    def test_weekly_line_against_the_phase_band(self):
+        end = D0 + datetime.timedelta(days=27)
+        cases = [("lose", 0.5, -0.4, "on track"), ("lose", 0.5, -0.1, "slower than planned"),
+                 ("lose", 0.5, -1.2, "losing faster than the safe cap: eat more"), ("gain", 0.25, 0.2, "on track"),
+                 ("gain", 0.25, 0.0, "eat more"), ("gain", 0.25, 0.8, "faster than planned"),
+                 ("maintain", 0, 0.1, "on track"), ("maintain", 0, -0.6, "eat more"), ("maintain", 0, 0.6, "drifting up")]
+        for phase, rate, pct, verdict in cases:
+            tr = nu.trend(self.points(80 * pct / 100 / 7, 28), D0, end)
+            line = nu.weekly_line(tr, {"phase": phase, "rate_pct_week": rate, "loss_cap_pct_week": 0.7})
+            self.assertTrue(line.endswith(f"→ {verdict}."), (phase, pct, line))
+            self.assertNotIn("eat less", line)
+        few = nu.trend(self.points(-0.05, 28)[::5], D0, end)
+        self.assertIn("not enough weigh-ins", nu.weekly_line(few, {"phase": "lose"}))
+
+    def test_trend_line_cli_needs_a_plan_in_force(self):
+        d = athlete(self, nutrition_phase="gain")
+        write_body(d, [80 + 0.02 * i for i in range(28)])
+        r = run("nutrition.py", "trend", "--dir", d, "--today", TODAY, "--line", ok=False)
+        self.assertEqual(r.returncode, 3)
+        plan(d)
+        r = run("nutrition.py", "trend", "--dir", d, "--today", TODAY, "--line")
+        self.assertRegex(r.stdout, r"^Weight trend: \+0\.14 kg a week \(\+0\.17 %\), 28 weigh-ins since 2030-01-04; "
+                                   r"gain band \+0\.12 to \+0\.50 % → on track\.\n$")
+
     def test_no_consent_means_no_body_csv(self):
         d = athlete(self, weight_tracking="no", weight="82 kg")
         write_body(d, [70.0] * 28)
