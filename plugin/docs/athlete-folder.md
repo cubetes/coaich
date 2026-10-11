@@ -20,7 +20,8 @@ my-training/
   data/health.csv        daily wearable metrics, long format (schema below)
   data/exercise_map.csv  source exercise name → exercise_id (the fix-up list)
   data/raw/              untouched exports (git-ignored)
-  photos/YYYY-MM-DD/     front/side/back + photos/ratings.md (v0.2)
+  photos/YYYY-MM-DD/     front.jpg|png, side.*, back.* with metadata stripped (v0.2, git-ignored)
+  photos/ratings.md      muscle-group ratings + body-fat ranges per photo date (v0.2)
   check-ins/             YYYY-MM-DD-weekly.md, YYYY-MM-DD-monthly.md
   log.md                 one line per skill run (format below)
 ```
@@ -78,6 +79,27 @@ fills only the fields it has and keeps values typed by hand.
 
 `date, metric, value, unit, source` — metrics: `steps`, `sleep_h`, `hrv_ms`, `resting_hr_bpm`, `active_kcal`,
 `vo2max`, `weight_kg` (weight also lands in body.csv). Source: `apple-health`.
+
+## photos/ (v0.2, physique skill)
+
+Only for athletes 18 or over with `photos_opt_in: yes` and `eating_disorder_history: no` in `profile.md`;
+`scripts/photos.py` refuses every write otherwise. `photos/YYYY-MM-DD/` holds one file per pose, `front`, `side`
+and `back` (`.jpg` or `.png`), dated by the day they were taken. `photos.py file` copies them in with all
+metadata removed (EXIF incl. GPS, XMP, comments, PNG text/time chunks, anything after the image); a JPEG keeps
+only its orientation and colour profile. The whole `photos/` folder is git-ignored by the template.
+
+`photos/ratings.md`: a short header, then one Markdown table, one row per `date` + `group` (the key):
+
+`| date | group | rating | confidence | note |`
+
+`group` is a rubric id (`references/muscle-rubric.md`) with `rating` = `strong | adequate | lagging |
+severely-lagging`, or `body-fat` with `rating` = `low-high` in % (e.g. `15-19`, at least 4 points wide).
+`confidence` = `high | medium | low` (body fat is always `low`). Its midpoint goes to `body.csv` as
+`source = photo-range`, unless that date's row already holds another source's reading.
+
+`profile.md` fields of the physique skill: `photos_opt_in`, `ideal_physique` (the user's words),
+`long_term_priorities` (program regions, used once the athlete is Advanced; `priority` stays the one region
+`program-build` uses).
 
 ## data/exercise_map.csv
 
