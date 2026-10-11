@@ -171,12 +171,10 @@ def _alternatives(folder, ex_id):
 
 def body(folder, start, end):
     v, detail = ch.weight_rate(folder, start, end)
-    rows = [r for r in af.read_rows(folder, "data/body.csv") if r.get("waist_cm")]
-    waist = [r for r in rows if start <= d(r["date"]) <= end]
+    waist = [(day, cm) for day, cm in af.body_series(folder, "waist_cm") if start <= d(day) <= end]
     out = [f"Body weight: {ch.fmt_value('weight_rate', v)}" + (f" ({detail})." if v is not None else f": {detail}.")]
     if len(waist) >= 2:
-        out.append(f"Waist: {waist[0]['waist_cm']} cm ({waist[0]['date']}) → {waist[-1]['waist_cm']} cm "
-                   f"({waist[-1]['date']}).")
+        out.append(f"Waist: {f1(waist[0][1])} cm ({waist[0][0]}) → {f1(waist[-1][1])} cm ({waist[-1][0]}).")
     return " ".join(out)
 
 
@@ -243,10 +241,7 @@ def signals(folder, prog, today, hit, vol_flags, rows, graded, rm_state):
 
 def enabled(folder):
     prof = adapt.header(folder, "profile.md")
-    nutrition = bool(prof.get("nutrition_phase")) and rmp.nutrition_on(prof)
-    physique = str(prof.get("photos_opt_in")).lower() in ("yes", "true") and \
-        rmp.said_no(prof.get("eating_disorder_history")) and not prof.get("wellbeing_pause")
-    return nutrition, physique
+    return bool(prof.get("nutrition_phase")) and not af.gate(prof, "nutrition"), not af.gate(prof, "photos")
 
 
 def report(folder, today, weeks=4):

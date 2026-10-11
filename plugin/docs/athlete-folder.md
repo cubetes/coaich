@@ -1,4 +1,4 @@
-# The athlete folder — data contract (v0.1)
+# The athlete folder — data contract (v0.2)
 
 Every CoAIch skill reads and writes one folder per athlete, wherever the user keeps it. Skills find it from the
 working directory (the folder that holds `coaich.md`). Nothing leaves this folder except through the user's own
@@ -35,7 +35,7 @@ local time, `datetime` = `YYYY-MM-DDTHH:MM`. CSV: UTF-8, comma, header row, no i
 | `sets.csv` | `session_id` + `exercise` + `set_index` (`set_index` restarts for each exercise) |
 | `sessions.csv` | `session_id` |
 | `health.csv` | `date` + `metric` |
-| `body.csv` | `date` |
+| `body.csv` | `date` + `source` |
 | `exercise_map.csv` | `exercise` |
 
 Training imports replace **whole sessions**: a session in the import replaces every stored session with the same
@@ -72,8 +72,11 @@ included. A hand-filled `gym` survives. `scripts/athlete_folder.py` does every C
 ## data/body.csv
 
 `date, weight_kg, waist_cm, body_fat_pct, source` (blank when unknown; `body_fat_pct` from a scale or a photo
-estimate range midpoint). `source` = `scale` | `apple-health` | `photo-range` | `manual`. An Apple Health import
-fills only the fields it has and keeps values typed by hand.
+estimate range midpoint). `source` = `scale` | `apple-health` | `photo-range` | `manual`. **One row per date and
+source** (v0.2; v0.1 keyed by date only): readings from different methods are never mixed in one row, so a scale
+weigh-in and a photo body-fat range on the same day both stay. An Apple Health import fills only its own
+`apple-health` rows. Where one number per date is needed (weight trend, body fat, waist), `athlete_folder.body_series`
+picks by source: `manual`, then `scale`, then `apple-health`, then `photo-range` (which only ever holds body fat).
 
 ## data/health.csv (long format)
 
@@ -82,8 +85,8 @@ fills only the fields it has and keeps values typed by hand.
 
 ## photos/ (v0.2, physique skill)
 
-Only for athletes 18 or over with `photos_opt_in: yes` and `eating_disorder_history: no` in `profile.md`;
-`scripts/photos.py` refuses every write otherwise. `photos/YYYY-MM-DD/` holds one file per pose, `front`, `side`
+Only when the shared wellbeing gate is open (below: 18 or over, `eating_disorder_history: no`, no
+`wellbeing_pause`) and `photos_opt_in: yes`; `scripts/photos.py` refuses every write otherwise. `photos/YYYY-MM-DD/` holds one file per pose, `front`, `side`
 and `back` (`.jpg` or `.png`), dated by the day they were taken. `photos.py file` copies them in with all
 metadata removed (EXIF incl. GPS, XMP, comments, PNG text/time chunks, anything after the image); a JPEG keeps
 only its orientation and colour profile. The whole `photos/` folder is git-ignored by the template.
@@ -94,12 +97,21 @@ only its orientation and colour profile. The whole `photos/` folder is git-ignor
 
 `group` is a rubric id (`references/muscle-rubric.md`) with `rating` = `strong | adequate | lagging |
 severely-lagging`, or `body-fat` with `rating` = `low-high` in % (e.g. `15-19`, at least 4 points wide).
-`confidence` = `high | medium | low` (body fat is always `low`). Its midpoint goes to `body.csv` as
-`source = photo-range`, unless that date's row already holds another source's reading.
+`confidence` = `high | medium | low` (body fat is always `low`). Its midpoint goes to its own `body.csv` row,
+`source = photo-range`.
 
 `profile.md` fields of the physique skill: `photos_opt_in`, `ideal_physique` (the user's words),
 `long_term_priorities` (program regions, used once the athlete is Advanced; `priority` stays the one region
 `program-build` uses).
+
+## The wellbeing gate (shared)
+
+One function, `athlete_folder.gate(profile, feature)` (CLI: `athlete_folder.py gate nutrition|photos|physique`),
+decides whether calorie targets (`nutrition`, also the roadmap's cut and bulk phases), photo reviews (`photos`)
+and an ideal-physique analysis without photos (`physique`) are on. It returns the reasons they are off, in order:
+`age` (under 18 by `age_band` or `age_years`), `age-unanswered`, `eating-disorder-history` (anything but an
+explicit `no`), `eating-disorder-unanswered`, `wellbeing-pause`; plus `pregnancy` (nutrition only, a
+`health_items` entry) and `no-photo-opt-in` (photos only).
 
 ## data/exercise_map.csv
 
@@ -120,7 +132,7 @@ between `# --- nutrition` and `# --- end nutrition` in the template.
 | `weight` | `80 kg` \| `176 lb` | used until `data/body.csv` has weigh-ins (and consent) |
 | `activity` | `sedentary` \| `light` \| `moderate` \| `very` \| `extra` | starting multiplier; the weight trend replaces it |
 | `eating_disorder_history` | `no` \| `yes` \| `prefer-not-to-say` | anything but an explicit `no` switches calorie targets and fat-loss phases off (photo reviews too, physique skill) |
-| `wellbeing_pause` | `YYYY-MM-DD` or blank | **shared flag** (nutrition + physique): set by either skill when the user says something worrying (extreme restriction, purging, distress about body or food). While set: no calorie targets, no fat-loss phase, no photo reviews; the skill points to professional help. Only the user's explicit request clears it: the skill blanks it and adds a dated note under `# Profile` |
+| `wellbeing_pause` | `YYYY-MM-DD` or blank | **shared flag** (nutrition + physique + roadmap, through the gate): set by either skill when the user says something worrying (extreme restriction, purging, distress about body or food). While set: no calorie targets, no fat-loss phase, no photo reviews; the skill points to professional help. Only the user's explicit request clears it: the skill blanks it and adds a dated note under `# Profile` |
 | `nutrition_phase` | `maintain` \| `gain` \| `lose` | |
 | `rate_pct_week` | number or blank | % of body weight a week; lose is capped by body fat, gain at 0.5 |
 | `body_fat_pct` | number, a range (`16-20`) or blank | a range counts as its midpoint; `data/body.csv` wins when it has one |

@@ -72,7 +72,7 @@ making themselves sick, laxatives, fear or guilt around food, or distress about 
 `wellbeing_pause: <today>` in `profile.md`, run `plan` (it switches targets off and prints the wording), and say
 it. Do not diagnose or ask follow-up questions. Lift it only when the athlete asks in their own words: blank the
 field and add `- <today>: wellbeing pause lifted at the athlete's request.` under `# Profile`. The physique skill
-reads the same flag.
+(and the roadmap's cut and bulk phases) read the same flag: one shared gate, `athlete_folder.py gate`.
 
 **Never:** targets for someone under 18; calories under resting needs; a faster loss than the cap; fat loss
 below BMI 18.5; meal-skipping, fasting protocols, detoxes or "cleanses"; supplement, drug or medical advice;

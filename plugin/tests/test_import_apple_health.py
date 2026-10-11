@@ -2,6 +2,7 @@ import os
 import unittest
 
 from support import fixture, make_folder, rows, run, text
+import athlete_folder as af  # noqa: E402  (support puts the scripts on the path)
 
 A, B = fixture("hae_export_a.json"), fixture("hae_export_b.json")
 
@@ -50,14 +51,17 @@ class OverlappingExports(unittest.TestCase):
 
 
 class ManualValuesSurvive(unittest.TestCase):
-    def test_hand_typed_waist_kept(self):
+    def test_hand_typed_row_kept_beside_the_apple_health_row(self):
         d = make_folder(self)
         os.makedirs(os.path.join(d, "data"))
         with open(os.path.join(d, "data", "body.csv"), "w", encoding="utf-8") as fh:
             fh.write("date,weight_kg,waist_cm,body_fat_pct,source\n2030-03-02,,81.5,,manual\n")
         run("import_apple_health.py", "--dir", d, A)
-        row = next(r for r in rows(d, "body.csv") if r["date"] == "2030-03-02")
-        self.assertEqual((row["weight_kg"], row["waist_cm"], row["source"]), ("80.2", "81.5", "manual"))
+        day = {r["source"]: r for r in rows(d, "body.csv") if r["date"] == "2030-03-02"}
+        self.assertEqual((day["manual"]["weight_kg"], day["manual"]["waist_cm"]), ("", "81.5"))
+        self.assertEqual(day["apple-health"]["weight_kg"], "80.2")
+        self.assertEqual(af.body_series(d, "weight_kg")[1], ("2030-03-02", 80.2))  # one value per date
+        self.assertIn(("2030-03-02", 81.5), af.body_series(d, "waist_cm"))
 
     def test_not_a_hae_file(self):
         d = make_folder(self)

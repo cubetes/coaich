@@ -289,6 +289,21 @@ class Trend(unittest.TestCase):
         self.assertEqual(nu.body_fat({"body_fat_pct": "about"}, []), None)
         self.assertEqual(nu.body_fat({"body_fat_pct": 30}, [(D0, 80, 22.0)]), 22.0)  # body.csv wins
 
+    def test_sources_on_the_same_day_are_picked_not_mixed(self):
+        import athlete_folder as af
+        d = athlete(self, nutrition_phase="maintain")
+        write_body(d, [80.0] * 28, bf=20)
+        last = (D0 + datetime.timedelta(days=27)).isoformat()
+        af.upsert_rows(d, "data/body.csv", [
+            {"date": last, "weight_kg": 90.0, "body_fat_pct": 30, "source": "apple-health"},
+            {"date": last, "body_fat_pct": 12, "source": "photo-range"},
+            {"date": TODAY, "body_fat_pct": 14, "source": "photo-range"}])
+        pts = nu.weigh_ins(d, datetime.date.fromisoformat(TODAY))
+        self.assertEqual(pts[-2][1:], (80.0, 20.0))  # weight and body fat: the scale over Apple Health and photos
+        self.assertEqual(pts[-1][1:], (None, 14.0))  # a photo range alone still counts for body fat
+        self.assertEqual(nu.current_weight({}, pts)[0], 80.0)
+        self.assertEqual(nu.body_fat({}, pts), 14.0)
+
     def test_weight_is_the_last_week_of_weigh_ins(self):
         d = athlete(self, nutrition_phase="maintain")
         write_body(d, [80.0] * 21 + [78.0] * 7)

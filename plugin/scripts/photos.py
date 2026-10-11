@@ -72,18 +72,10 @@ def _profile(folder):
 
 
 def gate(folder, photos=True):
-    """The photo/physique safeguards from profile.md → {"allowed", "reasons"}. photos=False checks only what an
-    ideal-physique analysis without photos needs (age and the eating-disorder answer)."""
-    prof, reasons = _profile(folder), []
-    if prof.get("age_band") not in ("18-59", "60+"):
-        reasons.append("age" if prof.get("age_band") else "age-unanswered")
-    ed = prof.get("eating_disorder_history")
-    if ed is True:
-        reasons.append("eating-disorder-history")
-    elif ed is not False:
-        reasons.append("eating-disorder-unanswered")
-    if photos and prof.get("photos_opt_in") is not True:
-        reasons.append("no-photo-opt-in")
+    """The photo/physique safeguards (the shared gate, athlete_folder.gate) → {"allowed", "reasons"}.
+    photos=False checks only what an ideal-physique analysis without photos needs (age, the eating-disorder answer,
+    no wellbeing pause)."""
+    reasons = af.gate(_profile(folder), "photos" if photos else "physique")
     return {"allowed": not reasons, "reasons": reasons}
 
 
@@ -369,9 +361,9 @@ def rate(folder, date, ratings, confidence, notes=None):
 
 
 def body_fat(folder, date, low, high):
-    """A visual body-fat range → a ratings.md row and the midpoint in body.csv (source photo-range). The range
-    must be at least 4 points wide. body.csv is left alone when that date's row holds another source's data:
-    readings from different methods are never mixed in one row. Returns (midpoint, wrote_body_csv)."""
+    """A visual body-fat range → a ratings.md row and the midpoint in body.csv, in its own `photo-range` row
+    (body.csv is keyed by date + source, so a scale or Apple Health reading on the same day stays as it is). The
+    range must be at least 4 points wide. Returns the midpoint."""
     _require(folder)
     date = _date(date)
     if not 3 <= low < high <= 60:
@@ -381,13 +373,8 @@ def body_fat(folder, date, low, high):
     mid = round((low + high) / 2, 1)
     write_ratings(folder, [{"date": date, "group": BODY_FAT, "rating": f"{low:g}-{high:g}", "confidence": "low",
                             "note": f"visual estimate; midpoint {mid:g}"}])
-    row = next((r for r in af.read_rows(folder, "data/body.csv") if r["date"] == date), None)
-    other = row and row.get("source") != "photo-range" and any(row.get(c) for c in
-                                                                ("weight_kg", "waist_cm", "body_fat_pct"))
-    if other:
-        return mid, False
     af.upsert_rows(folder, "data/body.csv", [{"date": date, "body_fat_pct": mid, "source": "photo-range"}])
-    return mid, True
+    return mid
 
 
 # ---------------------------------------------------------------- compare and priorities
@@ -521,10 +508,9 @@ def main(argv=None):
                      {g.lower(): t for g, t in a.note or []})
             print(f"photos/ratings.md: {n} row(s) written for {a.date}")
         elif a.cmd == "bodyfat":
-            mid, wrote = body_fat(folder, a.date, a.low, a.high)
-            print(f"body fat about {a.low:g}–{a.high:g} % (midpoint {mid:g}) → photos/ratings.md" +
-                  (" and data/body.csv" if wrote else "; data/body.csv kept: that date already holds another "
-                   "source's reading"))
+            mid = body_fat(folder, a.date, a.low, a.high)
+            print(f"body fat about {a.low:g}–{a.high:g} % (midpoint {mid:g}) → photos/ratings.md and data/body.csv "
+                  "(its own photo-range row)")
         elif a.cmd == "compare":
             print(json.dumps(compare(folder, a.old, a.new), ensure_ascii=False))
         else:

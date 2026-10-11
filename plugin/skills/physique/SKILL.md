@@ -16,12 +16,14 @@ ratings, priority matrix, timelines, body-fat rules) is [muscle-rubric.md](../..
 
 ## 1. Gate (always first)
 
-Run `python3 "$P" gate --dir <folder>`. Exit 0 → go on. Exit 2 → the printed `reasons` decide:
+Run `python3 "$P" gate --dir <folder>` (the shared wellbeing gate, `athlete_folder.gate`). Exit 0 → go on.
+Exit 2 → the printed `reasons` decide:
 
 | Reason | Do |
 |---|---|
 | `age`, `age-unanswered` | Say *"Photo and physique reviews are for ages 18 and over."* Unanswered: ask the onboard age question first. Stop. |
 | `eating-disorder-history` | Say *"Photo and physique reviews are switched off for you, because of your answer about eating disorders. That keeps the focus on how you train and feel. If you'd like support, an eating-disorder service or your doctor can help."* Stop. Never offer a way around it. |
+| `wellbeing-pause` | Say *"Photo reviews are paused, as we agreed. That pause lifts only when you ask for it."* Stop. |
 | `eating-disorder-unanswered` | Ask the eating-disorder question from `/onboard` (its exact wording), write the answer to `profile.md`, gate again. |
 | `no-photo-opt-in` | Photos: ask the opt-in from `/onboard` step 8; a yes writes `photos_opt_in: yes`. Ideal physique without photos is still allowed (step 6, described ratings). |
 
@@ -31,9 +33,10 @@ Also run the `safety` gate: with `safety_status: stop`, rate photos if asked, bu
 **Mid-review stop.** If the user, at any point, says things like fearing food or weight, skipping meals or
 making up for eating, hating their body, or wants to look "smaller" at any cost: stop the review, say *"I'll stop
 the photo review here. What you said matters more than any rating. Please talk to your doctor or an
-eating-disorder service; they can help."*, set `photos_opt_in: no` in `profile.md` with a dated note under
-`# Profile` ("photo review paused on <date>"), and log it. Do not resume it yourself; only the user turning it
-back on in `/onboard` does.
+eating-disorder service; they can help."*, set `wellbeing_pause: <today>` in `profile.md` (the shared flag:
+it also switches calorie targets off, so run the `nutrition` skill's `plan` if nutrition is on) with a dated note
+under `# Profile` ("wellbeing pause on <date>, from a photo review"), and log it. Do not resume it yourself; only
+the user's own explicit request lifts it (blank the field, add a dated note), as in the nutrition skill.
 
 ## 2. Photos in
 
@@ -83,9 +86,9 @@ then:
 python3 "$P" bodyfat --dir <folder> --date YYYY-MM-DD --low 15 --high 19
 ```
 
-It writes the range to `photos/ratings.md` and the midpoint to `data/body.csv` (`source = photo-range`) unless
-that date already holds a scale or Apple Health reading: then say the photo range is kept in the ratings only.
-Never compare it with a scale or scanner number.
+It writes the range to `photos/ratings.md` and the midpoint to its own `photo-range` row of `data/body.csv` (one
+row per date and source: a scale or Apple Health reading the same day stays, and wins wherever one number is
+needed). Never compare it with a scale or scanner number.
 
 ## 6. Goal physique → priorities
 

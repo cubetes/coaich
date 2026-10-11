@@ -17,7 +17,6 @@ Exit 0 ok · 1 refused (no program, or a cut/bulk the athlete cannot have) · 2 
 import argparse
 import datetime as dt
 import os
-import re
 import sys
 from pathlib import Path
 
@@ -64,16 +63,9 @@ def load(folder):
     return prog, profile
 
 
-def said_no(v):
-    """A YAML header reads a bare `no` as False."""
-    return v is False or str(v).strip().lower() == "no"
-
-
 def nutrition_on(profile):
-    """The nutrition skill may set calories (its profile.md fields: docs/athlete-folder.md, skills/nutrition)."""
-    age = profile.get("age_years")
-    return (isinstance(age, int) and age >= 18 and said_no(profile.get("eating_disorder_history"))
-            and not profile.get("wellbeing_pause") and str(profile.get("age_band")) not in ("under-16", "16-17"))
+    """The nutrition skill may set calories: the shared wellbeing gate (athlete_folder.gate) is open."""
+    return not af.gate(profile, "nutrition")
 
 
 def main_lifts(prog):
@@ -230,12 +222,8 @@ def summary(rm, prog, today):
 
 def write_current(folder, rm, prog, today):
     rm["_folder"] = folder
-    block = f"<!-- coaich:roadmap -->\n## Roadmap\n\n{summary(rm, prog, today)}\n<!-- /coaich:roadmap -->\n"
-    path = Path(folder) / "plan" / "CURRENT.md"
-    old = path.read_text(encoding="utf-8") if path.exists() else "# In force today\n\n"
-    m = re.search(r"<!-- coaich:roadmap -->.*?<!-- /coaich:roadmap -->\n?", old, re.S)
-    path.write_text(old[:m.start()] + block + old[m.end():] if m else old.rstrip("\n") + "\n\n" + block,
-                    encoding="utf-8")
+    pb.write_current(folder, f"<!-- coaich:roadmap -->\n## Roadmap\n\n{summary(rm, prog, today)}\n"
+                             "<!-- /coaich:roadmap -->\n", tag="roadmap")
 
 
 # ------------------------------------------------------------------ commands

@@ -131,15 +131,13 @@ def parse_weight(v):
 
 
 def weigh_ins(folder, today):
-    """[(date, kg, body_fat_pct or None)] from data/body.csv up to today, oldest first."""
-    out = []
-    for r in af.read_rows(folder, "data/body.csv"):
-        if not r.get("weight_kg"):
-            continue
-        d = datetime.date.fromisoformat(r["date"])
-        if d <= today:
-            out.append((d, float(r["weight_kg"]), float(r["body_fat_pct"]) if r.get("body_fat_pct") else None))
-    return sorted(out)
+    """[(date, kg, body_fat_pct or None)] from data/body.csv up to today, oldest first: one weight per date and the
+    body fat of that date, each from the preferred source (athlete_folder.body_series: by hand, scale, Apple Health,
+    then a photo range), plus the dates that have only a body-fat value (kg None)."""
+    fat = dict(af.body_series(folder, "body_fat_pct"))
+    kg = dict(af.body_series(folder, "weight_kg"))
+    out = [(datetime.date.fromisoformat(d), kg.get(d), fat.get(d)) for d in sorted(set(kg) | set(fat))]
+    return [p for p in out if p[0] <= today]
 
 
 def previous_plan(folder):
@@ -186,7 +184,7 @@ def linreg(xs, ys):
 def trend(points, since, until, intake=None):
     """Weight trend over [since, until] by least squares. With `intake` (kcal/day eaten on average), also
     maintenance = intake - slope x 7700. `usable` = long and tight enough to replace the formula (our rule)."""
-    pts = [(d, w) for d, w, _ in points if since <= d <= until]
+    pts = [(d, w) for d, w, _ in points if since <= d <= until and w is not None]
     out = {"since": since.isoformat(), "until": until.isoformat(), "weigh_ins": len(pts), "usable": False}
     if len(pts) < 2:
         out["why"] = "fewer than 2 weigh-ins in the window"
@@ -390,21 +388,15 @@ def meal_plan(t, foods, ok, n_meals=4, prefer=()):
 # ---------------------------------------------------------------- the gate and the plan
 
 def gate(settings, prof):
-    """Safeguards that switch nutrition off, in order. Raises Missing or Safeguard(off=True)."""
+    """Safeguards that switch nutrition off (the shared gate, athlete_folder.gate), in its order. Raises Missing
+    or Safeguard(off=True)."""
     if not settings.get("safety_acknowledged"):
         raise Missing("the safety intake has not been done: run the safety skill (or /onboard) first")
-    band, age = prof.get("age_band"), prof.get("age_years")
-    if str(band) in ("under-16", "16-17") or (isinstance(age, (int, float)) and age < 18):
-        raise Safeguard("age", off=True)
-    ed = prof.get("eating_disorder_history")
-    if not answered(ed):
-        raise Missing("profile.md needs 'eating_disorder_history' (no | yes | prefer-not-to-say)")
-    if not (ed is False or str(ed).strip().lower() == "no"):  # only an explicit "no" opens targets
-        raise Safeguard("eating-disorder", off=True)
-    if answered(prof.get("wellbeing_pause")):
-        raise Safeguard("wellbeing-pause", off=True)
-    if "pregnancy" in as_list(prof.get("health_items")):
-        raise Safeguard("pregnancy", off=True)
+    for reason in af.gate(prof, "nutrition"):
+        if reason == "eating-disorder-unanswered":
+            raise Missing("profile.md needs 'eating_disorder_history' (no | yes | prefer-not-to-say)")
+        if reason != "age-unanswered":  # an unanswered age is asked below (age_years)
+            raise Safeguard("eating-disorder" if reason == "eating-disorder-history" else reason, off=True)
 
 
 def inputs(folder, today):
@@ -427,6 +419,7 @@ def inputs(folder, today):
 
 def current_weight(prof, points):
     """(kg, how): the mean of the weigh-ins in the 7 days up to the latest one, else profile `weight`."""
+    points = [p for p in points if p[1] is not None]
     if points:
         last = points[-1][0]
         week = [w for d, w, _ in points if (last - d).days < 7]

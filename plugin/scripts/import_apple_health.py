@@ -113,14 +113,14 @@ def main():
          "source": "apple-health"}
         for (day, metric), v in sorted(values.items()) if metric not in BODY_ONLY])
 
-    body = {r["date"]: r for r in af.read_rows(folder, "data/body.csv")}
+    # body.csv is keyed by date + source: Apple Health fills its own row, rows from other sources stay as they are.
+    body = {r["date"]: r for r in af.read_rows(folder, "data/body.csv") if r["source"] == "apple-health"}
     changed = set()
     for (day, metric), v in values.items():
         if metric in ("weight_kg", "waist_cm", "body_fat_pct"):
             row = body.setdefault(day, {"date": day, "weight_kg": "", "waist_cm": "", "body_fat_pct": "",
                                         "source": "apple-health"})
-            row[metric] = ic.fmt(v, 2)  # a value already typed by hand for another field stays
-            row["source"] = row.get("source") or "apple-health"
+            row[metric] = ic.fmt(v, 2)
             changed.add(day)
     af.upsert_rows(folder, "data/body.csv", [body[d] for d in sorted(changed)])
 

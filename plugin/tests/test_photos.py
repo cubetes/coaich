@@ -144,11 +144,18 @@ class GateTest(Base):
         cases = {("16-17", "no", "yes"): "age", ("under-16", "no", "yes"): "age",
                  ("18-59", "yes", "yes"): "eating-disorder-history", ("18-59", "", "yes"): "eating-disorder-unanswered",
                  ("60+", "no", "no"): "no-photo-opt-in", ("18-59", "no", ""): "no-photo-opt-in",
-                 ("", "no", "yes"): "age-unanswered"}
+                 ("", "no", "yes"): "age-unanswered", ("18-59", "prefer-not-to-say", "yes"): "eating-disorder-history"}
         for (age, ed, opt), reason in cases.items():
             g = ph.gate(self.folder(age, ed, opt))
             self.assertFalse(g["allowed"], (age, ed, opt))
             self.assertIn(reason, g["reasons"])
+
+    def test_wellbeing_pause_closes_photos_and_described_priorities(self):
+        d = self.folder()
+        af.set_header(d, "profile.md", "wellbeing_pause", "2030-01-20")
+        self.assertEqual(ph.gate(d), {"allowed": False, "reasons": ["wellbeing-pause"]})
+        with self.assertRaisesRegex(ph.Refused, "wellbeing-pause"):
+            ph.priorities(d, {"calves": "lagging"})
 
     def test_closed_gate_refuses_every_write(self):
         d = self.folder(ed="yes")
@@ -240,8 +247,7 @@ class RatingsTest(Base):
 
     def test_body_fat_range_midpoint_and_source(self):
         d = self.folder()
-        mid, wrote = ph.body_fat(d, "2030-01-06", 15, 19)
-        self.assertEqual((mid, wrote), (17.0, True))
+        self.assertEqual(ph.body_fat(d, "2030-01-06", 15, 19), 17.0)
         body = af.read_rows(d, "data/body.csv")
         self.assertEqual(body, [{"date": "2030-01-06", "weight_kg": "", "waist_cm": "", "body_fat_pct": "17",
                                  "source": "photo-range"}])
@@ -251,12 +257,16 @@ class RatingsTest(Base):
             with self.assertRaises(ph.Refused):
                 ph.body_fat(d, "2030-01-07", low, high)
 
-    def test_body_fat_never_mixes_into_another_source_row(self):
+    def test_body_fat_gets_its_own_row_beside_a_scale_reading(self):
         d = self.folder()
-        af.upsert_rows(d, "data/body.csv", [{"date": "2030-01-06", "weight_kg": 80, "source": "scale"}])
-        self.assertEqual(ph.body_fat(d, "2030-01-06", 15, 19), (17.0, False))
-        self.assertEqual(af.read_rows(d, "data/body.csv")[0]["source"], "scale")
-        self.assertTrue([r for r in ph.read_ratings(d) if r["group"] == "body-fat"])
+        af.upsert_rows(d, "data/body.csv", [{"date": "2030-01-06", "weight_kg": 80, "body_fat_pct": 18,
+                                             "source": "scale"}])
+        self.assertEqual(ph.body_fat(d, "2030-01-06", 15, 19), 17.0)
+        ph.body_fat(d, "2030-01-06", 14, 18)  # a second estimate the same day replaces the first, not the scale's
+        rows = {r["source"]: r for r in af.read_rows(d, "data/body.csv")}
+        self.assertEqual(sorted(rows), ["photo-range", "scale"])
+        self.assertEqual((rows["scale"]["weight_kg"], rows["scale"]["body_fat_pct"]), ("80", "18"))
+        self.assertEqual((rows["photo-range"]["weight_kg"], rows["photo-range"]["body_fat_pct"]), ("", "16"))
 
     def test_compare_two_sets(self):
         d = self.folder()

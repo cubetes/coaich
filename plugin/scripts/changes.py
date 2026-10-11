@@ -202,14 +202,8 @@ def effective_sets(folder, name, start, end):
 
 
 def weight_rate(folder, start, end):
-    pts = []
-    for r in af.read_rows(folder, "data/body.csv"):
-        try:
-            day, kg = d(r["date"]), float(r.get("weight_kg") or "")
-        except ValueError:
-            continue
-        if start <= day <= end:
-            pts.append(((day - start).days, kg))
+    pts = [((d(day) - start).days, kg) for day, kg in af.body_series(folder, "weight_kg")
+           if start <= d(day) <= end]
     if len(pts) < 6 or pts[-1][0] - pts[0][0] < 14:
         return None, f"{len(pts)} weigh-ins; need 6 over 2 weeks"
     n = len(pts)
