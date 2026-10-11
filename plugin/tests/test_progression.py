@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Tests for progression.py. Synthetic athlete folders in temp dirs, dates in 2030.
 
-Run:  python3 -m unittest discover -s plugin/scripts/tests
+Run:  python3 -m unittest discover -s plugin/tests
 """
 import contextlib
 import csv
@@ -15,7 +15,7 @@ import tempfile
 import unittest
 from datetime import date, timedelta
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "scripts"))
 import progression as pg  # noqa: E402
 
 SET_COLS = ["date", "datetime", "session_id", "workout_name", "exercise", "exercise_id", "set_index",
