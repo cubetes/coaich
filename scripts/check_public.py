@@ -15,7 +15,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 GUARD = os.path.join(HERE, "real-data-guard.txt")
 SELF = {"scripts/real-data-guard.txt", "scripts/check_public.py"}  # they name the patterns they hunt
 DUPE = re.compile(r" 2(\.[^/]*)?$")  # iCloud conflict copies: "File 2.swift", "Folder 2"
-FIXTURE = re.compile(r"(^|/)(Tests|UITests|WatchUITests|Fixtures|examples)/|Demo|Fixture|Previews")
+FIXTURE = re.compile(r"(^|/)(Tests|tests|UITests|WatchUITests|Fixtures|examples)/|[Dd]emo|Fixture|Previews")
 IMAGE = (".png", ".jpg", ".jpeg", ".heic", ".webp", ".tif", ".tiff", ".gif")
 # EXIF/XMP/text metadata markers in PNG, JPEG, WebP, HEIC and TIFF files.
 META = (b"Exif\x00\x00", b"eXIf", b"tEXt", b"iTXt", b"zTXt", b"<x:xmpmeta", b"XMP ", b"EXIF")
@@ -37,6 +37,7 @@ def load_guard(path=GUARD):
 def walk(root):
     for d, dirs, files in os.walk(root):
         dirs[:] = [x for x in dirs if x != ".git"]
+        files = [x for x in files if x != ".git"]  # a worktree's .git file holds a local path
         for name in dirs + files:
             yield os.path.relpath(os.path.join(d, name), root), name in files
 
@@ -69,10 +70,13 @@ def check(root, rules):
 def self_test():
     rules = load_guard()
     with tempfile.TemporaryDirectory() as t:
-        os.makedirs(os.path.join(t, "Tests"))
+        for sub in ("Tests", "plugin/tests", "plugin/scripts"):
+            os.makedirs(os.path.join(t, sub))
         files = {
             "ok.swift": "let x = 1 // 2026-10-08 decision date is fine outside fixtures\n",
             "Tests/T.swift": 'let d = "2026-10-07"\n',
+            "plugin/tests/t.py": 'D = "2026-10-07"\n',
+            "plugin/scripts/demo_x.py": 'D = "2026-10-07"\n',
             "a.swift": "// Adrián\n",  # decomposed accent
             "b.swift": 'let id = "79D0BB3A"\n',
             "c 2.swift": "",
@@ -83,7 +87,7 @@ def self_test():
             with open(os.path.join(t, name), "wb") as f:
                 f.write(body if isinstance(body, bytes) else body.encode())
         out = "\n".join(check(t, rules))
-        for want in ("Tests/T.swift:1", "a.swift:1", "b.swift:1", "c 2.swift: iCloud", "i.png: image metadata"):
+        for want in ("Tests/T.swift:1", "plugin/tests/t.py:1", "plugin/scripts/demo_x.py:1", "a.swift:1", "b.swift:1", "c 2.swift: iCloud", "i.png: image metadata"):
             assert want in out, (want, out)
         for clean in ("ok.swift", "j.png"):
             assert clean not in out, (clean, out)

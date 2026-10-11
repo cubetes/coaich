@@ -25,6 +25,16 @@ cd Packages/AthleteCore && swift test     # the engine and its tests
 The Xcode project for the app targets is not published yet. It will be generated with
 [XcodeGen](https://github.com/yonaskolb/XcodeGen) from a `project.yml` that comes in a later sync.
 
+## Claude Code plugin
+
+`plugin/` is CoAIch as a Claude Code plugin: the same coaching rules, working on plain files in your own
+training folder. See [plugin/README.md](plugin/README.md).
+
+```
+/plugin marketplace add <org>/coaich
+/plugin install coaich@coaich
+```
+
 ## Repository checks
 
 `scripts/checks.sh` runs before anything is published, locally and in CI:

@@ -10,7 +10,7 @@ my-training/
   profile.md             intake answers (YAML header + notes)
   plan/CURRENT.md        what is in force today; wins over every other file
   plan/roadmap.md        macrocycle › phase › mesocycle › microcycle (vocabulary: references/periodization-system.md)
-  plan/program.json      routine spec (no vendor ids; exercises by free-exercise-db id)
+  plan/program.json      routine spec (no vendor ids; exercises by free-exercise-db id): program-schema.md
   plan/targets/          targets_YYYY-Www.json, one per ISO week
   plan/changes.md        dated plan changes, each with its success band
   plan/nutrition.md      macros + meal plan (v0.2)
@@ -22,13 +22,25 @@ my-training/
   data/raw/              untouched exports (git-ignored)
   photos/YYYY-MM-DD/     front/side/back + photos/ratings.md (v0.2)
   check-ins/             YYYY-MM-DD-weekly.md, YYYY-MM-DD-monthly.md
-  log.md                 one line per skill run: date · skill · one-line result
+  log.md                 one line per skill run (format below)
 ```
 
 All weights are stored in **kg** (lb converted on import, `coaich.md` sets the display unit). Dates are ISO 8601,
 local time, `datetime` = `YYYY-MM-DDTHH:MM`. CSV: UTF-8, comma, header row, no index column. Importers are
-**idempotent**: re-importing the same export never duplicates rows (key = `session_id` + `set_index` for sets,
-`session_id` for sessions, `date` + `metric` for health, `date` for body).
+**idempotent**: re-importing the same export never duplicates rows. Keys:
+
+| File | Key |
+|---|---|
+| `sets.csv` | `session_id` + `exercise` + `set_index` (`set_index` restarts for each exercise) |
+| `sessions.csv` | `session_id` |
+| `health.csv` | `date` + `metric` |
+| `body.csv` | `date` |
+| `exercise_map.csv` | `exercise` |
+
+Training imports replace **whole sessions**: a session in the import replaces every stored session with the same
+`session_id`, or with the same start minute + `workout_name` (one workout seen through two exports), sets
+included. A hand-filled `gym` survives. `scripts/athlete_folder.py` does every CSV read and write and the log line
+(`read_rows`, `upsert_rows`, `replace_sessions`, `append_log`).
 
 ## data/sets.csv
 
@@ -59,9 +71,34 @@ local time, `datetime` = `YYYY-MM-DDTHH:MM`. CSV: UTF-8, comma, header row, no i
 ## data/body.csv
 
 `date, weight_kg, waist_cm, body_fat_pct, source` (blank when unknown; `body_fat_pct` from a scale or a photo
-estimate range midpoint, with `source` = scale|photo-range|manual).
+estimate range midpoint). `source` = `scale` | `apple-health` | `photo-range` | `manual`. An Apple Health import
+fills only the fields it has and keeps values typed by hand.
 
 ## data/health.csv (long format)
 
 `date, metric, value, unit, source` — metrics: `steps`, `sleep_h`, `hrv_ms`, `resting_hr_bpm`, `active_kcal`,
 `vo2max`, `weight_kg` (weight also lands in body.csv). Source: `apple-health`.
+
+## data/exercise_map.csv
+
+`exercise, exercise_id` — every exercise name as logged → its free-exercise-db id, or `custom:<slug>` until
+mapped. The importers add new names; the user (or the import skill) fixes a row and the next import applies it to
+every set.
+
+## plan/program.json
+
+Schema: [program-schema.md](program-schema.md). Targets files (`plan/targets/`): the progression rules,
+`skills/progression/rules.md`.
+
+## log.md
+
+Header `# Log`, then one line per skill run, exactly:
+
+```
+- YYYY-MM-DD · <skill> · <one-line result>
+```
+
+The date is the run date; ` · ` is space, middle dot (U+00B7), space; the result is one line (line breaks become
+spaces). Importers write `- YYYY-MM-DD · import · <source>: <n> sessions, <m> sets through YYYY-MM-DD` (Apple
+Health: `apple-health: <n> days through YYYY-MM-DD`). The progression engine reads the newest `· import ·` date as
+"the data is complete up to here" (its stale-data guard).

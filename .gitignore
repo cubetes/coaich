@@ -10,3 +10,5 @@ xcuserdata/
 # secrets never live here
 .secrets/
 *.env
+# Python
+__pycache__/

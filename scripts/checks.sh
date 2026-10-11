@@ -7,6 +7,9 @@ fail=0
 
 python3 scripts/check_public.py --self-test && python3 scripts/check_public.py . || fail=1
 
+# Plugin scripts: unit tests, including "examples/demo-athlete matches its generator".
+python3 -m unittest discover -s plugin/tests || fail=1
+
 if command -v gitleaks >/dev/null; then
   gitleaks dir . --config .gitleaks.toml --no-banner --redact || fail=1
   if git rev-parse --verify --quiet HEAD >/dev/null; then
