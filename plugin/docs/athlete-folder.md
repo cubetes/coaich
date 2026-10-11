@@ -27,7 +27,7 @@ my-training/
 
 All weights are stored in **kg** (lb converted on import, `coaich.md` sets the display unit). Dates are ISO 8601,
 local time, `datetime` = `YYYY-MM-DDTHH:MM`. CSV: UTF-8, comma, header row, no index column. Importers are
-**idempotent**: re-importing the same export never duplicates rows (key = `session_id` + `set_index` for sets,
+**idempotent**: re-importing the same export never duplicates rows (key = `session_id` + `exercise` + `set_index` for sets, since `set_index` restarts for each exercise;
 `session_id` for sessions, `date` + `metric` for health, `date` for body).
 
 ## data/sets.csv

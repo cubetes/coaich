@@ -1,0 +1,16 @@
+{
+  "name": "coaich",
+  "owner": {
+    "name": "CoAIch contributors"
+  },
+  "description": "CoAIch: a strength and nutrition coach for Claude Code. Every number comes with its reason.",
+  "plugins": [
+    {
+      "name": "coaich",
+      "source": "./plugin",
+      "description": "A strength and nutrition coach for lifters. Every number comes with its reason. Your data stays in your folder.",
+      "category": "health",
+      "keywords": ["strength", "training", "coach", "progressive-overload", "lifting"]
+    }
+  ]
+}

@@ -1,0 +1,247 @@
+{
+  "title": "Upper/Lower, 4 days",
+  "level": "intermediate",
+  "goal": "both",
+  "priority": "back",
+  "start": "2030-01-07",
+  "weeks": 12,
+  "easy_weeks": [
+    7
+  ],
+  "routines": [
+    {
+      "title": "Upper A",
+      "day": "Mon",
+      "exercises": [
+        {
+          "exercise_id": "Barbell_Bench_Press_-_Medium_Grip",
+          "name": "Bench Press (Barbell)",
+          "sets": 4,
+          "rep_range": [
+            6,
+            8
+          ],
+          "load_step_kg": 2.5
+        },
+        {
+          "exercise_id": "Bent_Over_Barbell_Row",
+          "name": "Bent Over Row (Barbell)",
+          "sets": 4,
+          "rep_range": [
+            8,
+            10
+          ],
+          "load_step_kg": 2.5
+        },
+        {
+          "exercise_id": "Standing_Military_Press",
+          "name": "Overhead Press (Barbell)",
+          "sets": 3,
+          "rep_range": [
+            6,
+            8
+          ],
+          "load_step_kg": 2.5
+        },
+        {
+          "exercise_id": "Wide-Grip_Lat_Pulldown",
+          "name": "Lat Pulldown (Cable)",
+          "sets": 3,
+          "rep_range": [
+            10,
+            12
+          ],
+          "load_step_kg": 2.5
+        },
+        {
+          "exercise_id": "Side_Lateral_Raise",
+          "name": "Lateral Raise (Dumbbell)",
+          "sets": 3,
+          "rep_range": [
+            12,
+            15
+          ],
+          "load_step_kg": 1.0
+        },
+        {
+          "exercise_id": "Triceps_Pushdown",
+          "name": "Triceps Pushdown (Cable)",
+          "sets": 3,
+          "rep_range": [
+            10,
+            12
+          ],
+          "load_step_kg": 2.5
+        }
+      ]
+    },
+    {
+      "title": "Lower A",
+      "day": "Tue",
+      "exercises": [
+        {
+          "exercise_id": "Barbell_Full_Squat",
+          "name": "Squat (Barbell)",
+          "sets": 4,
+          "rep_range": [
+            5,
+            7
+          ],
+          "load_step_kg": 2.5
+        },
+        {
+          "exercise_id": "Romanian_Deadlift",
+          "name": "Romanian Deadlift (Barbell)",
+          "sets": 3,
+          "rep_range": [
+            8,
+            10
+          ],
+          "load_step_kg": 2.5
+        },
+        {
+          "exercise_id": "Leg_Press",
+          "name": "Leg Press",
+          "sets": 3,
+          "rep_range": [
+            10,
+            12
+          ],
+          "load_step_kg": 10.0
+        },
+        {
+          "exercise_id": "Lying_Leg_Curls",
+          "name": "Lying Leg Curl (Machine)",
+          "sets": 3,
+          "rep_range": [
+            10,
+            12
+          ],
+          "load_step_kg": 2.5
+        },
+        {
+          "exercise_id": "Standing_Calf_Raises",
+          "name": "Standing Calf Raise (Machine)",
+          "sets": 3,
+          "rep_range": [
+            10,
+            15
+          ],
+          "load_step_kg": 5.0
+        }
+      ]
+    },
+    {
+      "title": "Upper B",
+      "day": "Thu",
+      "exercises": [
+        {
+          "exercise_id": "Incline_Dumbbell_Press",
+          "name": "Incline Bench Press (Dumbbell)",
+          "sets": 3,
+          "rep_range": [
+            8,
+            10
+          ],
+          "load_step_kg": 2.0
+        },
+        {
+          "exercise_id": "Seated_Cable_Rows",
+          "name": "Seated Cable Row",
+          "sets": 3,
+          "rep_range": [
+            10,
+            12
+          ],
+          "load_step_kg": 2.5
+        },
+        {
+          "exercise_id": "Wide-Grip_Lat_Pulldown",
+          "name": "Lat Pulldown (Cable)",
+          "sets": 3,
+          "rep_range": [
+            10,
+            12
+          ],
+          "load_step_kg": 2.5
+        },
+        {
+          "exercise_id": "Side_Lateral_Raise",
+          "name": "Lateral Raise (Dumbbell)",
+          "sets": 3,
+          "rep_range": [
+            12,
+            15
+          ],
+          "load_step_kg": 1.0
+        },
+        {
+          "exercise_id": "Dumbbell_Bicep_Curl",
+          "name": "Bicep Curl (Dumbbell)",
+          "sets": 3,
+          "rep_range": [
+            10,
+            12
+          ],
+          "load_step_kg": 1.0
+        }
+      ]
+    },
+    {
+      "title": "Lower B",
+      "day": "Fri",
+      "exercises": [
+        {
+          "exercise_id": "Barbell_Deadlift",
+          "name": "Deadlift (Barbell)",
+          "sets": 3,
+          "rep_range": [
+            4,
+            6
+          ],
+          "load_step_kg": 5.0
+        },
+        {
+          "exercise_id": "Leg_Press",
+          "name": "Leg Press",
+          "sets": 3,
+          "rep_range": [
+            12,
+            15
+          ],
+          "load_step_kg": 10.0
+        },
+        {
+          "exercise_id": "Leg_Extensions",
+          "name": "Leg Extension (Machine)",
+          "sets": 3,
+          "rep_range": [
+            12,
+            15
+          ],
+          "load_step_kg": 2.5
+        },
+        {
+          "exercise_id": "Lying_Leg_Curls",
+          "name": "Lying Leg Curl (Machine)",
+          "sets": 3,
+          "rep_range": [
+            10,
+            12
+          ],
+          "load_step_kg": 2.5
+        },
+        {
+          "exercise_id": "Standing_Calf_Raises",
+          "name": "Standing Calf Raise (Machine)",
+          "sets": 3,
+          "rep_range": [
+            10,
+            15
+          ],
+          "load_step_kg": 5.0
+        }
+      ]
+    }
+  ]
+}
