@@ -1,3 +1,4 @@
+import json
 import os
 import unittest
 
@@ -77,6 +78,35 @@ class HevyMcp(unittest.TestCase):
             self.assertIn(" · import · hevy: 2 sessions, 5 sets through 2030-01-18", fh.read().splitlines()[-1])
         self.assertEqual(run("import_hevy.py", "--dir", self.d, "--cursor").stdout.strip(), "2030-01-18")
         self.assertTrue(os.path.exists(os.path.join(self.d, "data", "raw", "hevy", "hevy_mcp_page1.json")))
+
+
+class HevyMcpLiveShapes(unittest.TestCase):
+    """The live Hevy MCP: get-workout wraps one workout as {"workout": {...}}; get-workouts lists summaries."""
+
+    def _write(self, d, name, doc):
+        path = os.path.join(d, name)
+        with open(path, "w", encoding="utf-8") as fh:
+            json.dump(doc, fh)
+        return path
+
+    def test_get_workout_wrapper_imports(self):
+        d = make_folder(self)
+        with open(fixture("hevy_mcp_page1.json"), encoding="utf-8") as fh:
+            page = json.load(fh)
+        one = (page["workouts"] if isinstance(page, dict) else page)[0]
+        run("import_hevy.py", "--dir", d, self._write(d, "one.json", {"workout": one}))
+        self.assertEqual(len(rows(d, "sessions.csv")), 1)
+        self.assertTrue(rows(d, "sets.csv"))
+
+    def test_get_workouts_summaries_are_refused(self):
+        d = make_folder(self)
+        summary = {"workouts": [{"id": "w1", "title": "Pull", "start_time": "2030-01-18T16:00:00+00:00",
+                                 "end_time": "2030-01-18T17:00:00+00:00", "exercise_count": 3, "set_count": 9}],
+                   "page": 1, "page_count": 1}
+        r = run("import_hevy.py", "--dir", d, self._write(d, "page.json", summary), ok=False)
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn("get-workout", r.stderr)
+        self.assertFalse(os.path.exists(os.path.join(d, "data", "sets.csv")))  # nothing written
 
 
 class HevyPounds(unittest.TestCase):

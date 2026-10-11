@@ -114,10 +114,14 @@ def csv_workouts(path):
 def json_workouts(path):
     with open(path, encoding="utf-8") as fh:
         doc = json.load(fh)
-    if isinstance(doc, dict):
-        doc = doc.get("workouts", [doc] if "start_time" in doc else [])
+    if isinstance(doc, dict):  # get-workout wraps one workout as {"workout": {...}}
+        doc = [doc["workout"]] if isinstance(doc.get("workout"), dict) else \
+            doc.get("workouts", [doc] if "start_time" in doc else [])
     if not isinstance(doc, list) or not all(isinstance(w, dict) and "start_time" in w for w in doc):
         sys.exit(f"{path}: expected Hevy workouts JSON (a list of workouts with start_time).")
+    if any("exercises" not in w for w in doc):  # get-workouts lists summaries only (no sets)
+        sys.exit(f"{path}: these are workout summaries from get-workouts, with no sets. "
+                 "Fetch each workout with get-workout and import those files.")
     return doc
 
 

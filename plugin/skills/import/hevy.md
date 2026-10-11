@@ -13,10 +13,13 @@ first import of a long history: the MCP returns 10 workouts per page.
 
 1. `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/import_hevy.py" --cursor` → the newest Hevy session date on file
    (`none` on a first sync).
-2. Call `get-workouts` with `page: 1, pageSize: 10`. Save the JSON result unchanged to
-   `data/raw/hevy/<today>-p1.json`. Keep paging (`p2`, `p3`…) until a page holds a workout that started
-   before the cursor date, or `page_count` is reached. Overlap is fine: re-sent workouts replace, not add.
-3. `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/import_hevy.py" data/raw/hevy/<today>-p*.json`
+2. Call `get-workouts` (`page: 1`, `page_size: 10`). It returns **summaries only** (id, title, start_time, no sets).
+   Keep paging until a page holds a workout that started before the cursor date, or `page_count` is reached,
+   and collect the ids of the workouts on or after the cursor date.
+3. For each id, call `get-workout` (`workout_id`) and save the JSON result unchanged to
+   `data/raw/hevy/<start date>-<id>.json`. Overlap is fine: re-sent workouts replace, not add.
+   `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/import_hevy.py" data/raw/hevy/<those files>`
+   (the script refuses a saved `get-workouts` page, since it has no sets).
 4. Continue with step 3 of the skill (map new exercises).
 
 ## Notes
