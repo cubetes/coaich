@@ -82,7 +82,7 @@ the rule that fired. `weekly-review` runs the loop and asks you before it change
 User-invoked (you type them): `/onboard`, `/weekly-review`.
 
 Model-invoked (Claude reaches for them, or you name them): `safety`, `import`, `program-build`, `progression`,
-`program-audit`.
+`program-audit`, `physique`.
 
 | Skill | What it does |
 |---|---|
@@ -95,6 +95,7 @@ Model-invoked (Claude reaches for them, or you name them): `safety`, `import`, `
 | `progression` | Grades last week and sets next week's targets, each with a reason. Spine-loaded increases and cuts need your OK. | `progression.py` |
 | `weekly-review` | The weekly loop: import, grade, propose, ask, apply, check-in. | `progression.py` |
 | `program-audit` | Pressure-tests a program, yours or a generated one, against the evidence. | `program_audit.py` |
+| `physique` | 18+ and opt-in only. Rates muscle groups in your progress photos, compares sets, gives a rough body-fat range if you ask, and turns a goal physique into training priorities. Strips photo location data on filing. | `photos.py` |
 
 Every script is Python 3.9+ standard library only, works offline and reads and writes the folder through
 `scripts/athlete_folder.py`.
@@ -113,6 +114,7 @@ my-training/
   data/body.csv      weight, waist
   data/health.csv    steps, sleep, heart-rate data
   data/exercise_map.csv  your exercise names → catalogue ids
+  photos/            progress photos by date + ratings.md (opt-in, git-ignored)
   check-ins/         weekly check-ins
   log.md             one line per skill run
 ```
@@ -128,6 +130,9 @@ own git repository.
 - **Nothing goes to a CoAIch server.** There is no CoAIch server and no telemetry.
 - **Other services only when you turn them on:** Hevy, Apple Health, and later USDA or PubMed.
 - Raw exports and photos are git-ignored in a new folder.
+- **Photos are opt-in and 18+ only**, and off for anyone who reports an eating-disorder history. They stay in
+  your folder and pass only through your own Claude session; location and camera data are stripped when they
+  are filed. Reviews rate muscle groups, never looks; body fat only as a rough range.
 
 ## Licence
 

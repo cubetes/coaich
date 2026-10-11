@@ -89,12 +89,27 @@ Write every answer into the front matter of `profile.md` (field names as in the 
 today, add any free-text remarks under `# Profile`. Then:
 `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/athlete_folder.py" log onboard "<level from --place>, <days> days, <minutes> min, goal <goal>"`.
 
-## 8. v0.2 hooks: do not ask yet
+## 8. v0.2 hooks
 
-<!-- v0.2: nutrition (18+ only, eating-disorder screen first), photos opt-in, ideal-physique reference.
-     Each becomes an optional step here, after safety, behind the nutrition/photo safeguards. -->
-Nutrition, photos and an ideal-physique reference are not in v0.1. If the user asks, say they come in a later
-version.
+<!-- v0.2 nutrition hook (nutrition lane): 18+ only, eating-disorder question first → `eating_disorder_history`. -->
+Nutrition is not in this version yet. If the user asks, say it comes in a later version.
+
+### Photos and ideal physique (18+ only)
+
+Skip this whole step when `age_band` is `under-16` or `16-17`, or `eating_disorder_history: yes` (the nutrition
+step's answer: read it, never ask it twice). If `eating_disorder_history` is not answered, skip it too; the
+`physique` skill asks it when the user first wants a photo review.
+
+1. *"Do you want to use progress photos? I'd rate how each muscle group is coming along, compare them over time
+   and help you pick what to train most. Your photos stay in this folder, pass only through your own Claude
+   session, and their location and camera data are removed when they are filed. You can switch this off any
+   time."* Yes · No → `photos_opt_in: yes | no`. Only an explicit yes counts.
+2. *"Is there a look you're aiming for? Describe it in a few words, or say no. (For example: wider shoulders,
+   bigger arms, stronger legs.)"* → `ideal_physique: "<their words>"`, or leave it blank. If they share a picture
+   of someone, note only which muscle groups it stresses, never who it is. Do not rank anything now: the
+   `physique` skill does that.
+
+Write both answers to the front matter of `profile.md`.
 
 ## 9. Hand off
 

@@ -13,7 +13,10 @@ minutes_per_session:     # 30 | 45 | 60 | 75
 equipment: gym           # gym only in v0.1
 goal:                    # strength | muscle | both
 priority: none           # advanced only: none | chest | back | shoulders | arms | quads | glutes-hamstrings | calves
-# v0.2 (not asked yet): nutrition, photos, ideal_physique
+photos_opt_in:           # yes | no (18+ only; physique skill)
+ideal_physique:          # the user's words for the goal look ("wider shoulders, bigger arms")
+long_term_priorities: [] # program regions ranked by the physique skill; used once Advanced
+# v0.2 (not asked yet): nutrition
 ---
 # Profile
 

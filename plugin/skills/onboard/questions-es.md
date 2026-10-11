@@ -35,4 +35,12 @@ Same order as [SKILL.md](SKILL.md). Answers map to the same English values in `p
   femorales · Gemelos
 - Line: "Te pongo en **Intermedio**: entre 6 meses y 2 años de pesas, y has entrenado en los últimos 3 meses."
 
-**v0.2:** "La nutrición, las fotos y el físico de referencia llegarán en una versión posterior."
+**v0.2:** "La nutrición llegará en una versión posterior."
+
+**Photos and ideal physique** (draft, lawyer review pending)
+1. "¿Quieres usar fotos de progreso? Valoraría cómo va cada grupo muscular, las compararía con el tiempo y te
+   ayudaría a elegir qué entrenar más. Tus fotos se quedan en esta carpeta, solo pasan por tu propia sesión de
+   Claude, y se les quitan la ubicación y los datos de la cámara al guardarlas. Puedes desactivarlo cuando
+   quieras." Sí · No
+2. "¿Buscas un físico concreto? Descríbelo en pocas palabras, o di que no. (Por ejemplo: hombros más anchos,
+   brazos más grandes, piernas más fuertes.)"
