@@ -35,4 +35,24 @@ Same order as [SKILL.md](SKILL.md). Answers map to the same English values in `p
   femorales · Gemelos
 - Line: "Te pongo en **Intermedio**: entre 6 meses y 2 años de pesas, y has entrenado en los últimos 3 meses."
 
-**v0.2:** "La nutrición, las fotos y el físico de referencia llegarán en una versión posterior."
+**Nutrition (8a)** <!-- nutrition hook -->
+- Under 18: "Los objetivos de nutrición son para mayores de 18 años."
+1. "¿Quieres ayuda también con la comida: calorías diarias, proteína y un día de comidas de ejemplo?" Sí · Ahora no
+2. "¿Has tenido alguna vez un trastorno de la conducta alimentaria, o te han tratado por uno?" No · Sí · Prefiero
+   no decirlo
+3. "¿Cuántos años tienes?"
+4. "Para la fórmula de energía: ¿hombre, mujer o prefieres no decirlo?"
+5. "¿Cuánto mides?" (cm, o pies y pulgadas)
+6. "¿Cuánto pesas ahora?" (kg o lb)
+7. "¿Cómo de activa es una semana normal, contando el gimnasio?" Casi todo sentado, poco ejercicio · Casi todo
+   sentado, entreno 1–3 días · Entreno 3–5 días, o paso mucho tiempo de pie · Entreno 6–7 días, o trabajo físico y
+   entreno · Trabajo físico duro y entreno duro casi todos los días
+8. "¿Qué quieres que haga tu peso?" Mantenerse más o menos igual · Subir poco a poco, para ganar músculo · Bajar,
+   para perder grasa. Bajar: "¿Sabes más o menos tu porcentaje de grasa? Un rango vale, como 16–20 %. O sáltalo."
+   · "Empezamos con un 0,5 % de tu peso a la semana. Lo más rápido que vamos depende de tu grasa corporal."
+9. "¿Comes de todo, sin carne, sin carne ni pescado, o nada de origen animal?" · "¿Alguna alergia o intolerancia
+   alimentaria?" · "¿Algo que no comas?"
+10. "¿Puede CoAIch leer tus pesajes (`data/body.csv`) cada semana para ver tu tendencia y corregir las calorías?
+    Se quedan en esta carpeta." Sí · No
+
+**v0.2:** "Las fotos y el físico de referencia llegarán en una versión posterior."

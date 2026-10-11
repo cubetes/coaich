@@ -927,13 +927,14 @@ def current_block(result, today, checks, unexpected):
     return "\n".join(lines) + "\n"
 
 
-def write_current(folder, block):
+def write_current(folder, block, tag="program"):
+    """Replace the `<!-- coaich:{tag} -->` block of plan/CURRENT.md (or append it)."""
     path = os.path.join(folder, "plan", "CURRENT.md")
     old = "# In force today\n\n"
     if os.path.exists(path):
         with open(path, encoding="utf-8") as f:
             old = f.read()
-    m = re.search(r"<!-- coaich:program -->.*?<!-- /coaich:program -->\n?", old, re.S)
+    m = re.search(rf"<!-- coaich:{tag} -->.*?<!-- /coaich:{tag} -->\n?", old, re.S)
     new = old[:m.start()] + block + old[m.end():] if m else old.rstrip("\n") + "\n\n" + block
     with open(path, "w", encoding="utf-8") as f:
         f.write(new)
