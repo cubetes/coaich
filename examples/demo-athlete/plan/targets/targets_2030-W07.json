@@ -22,8 +22,8 @@
   "needs_approval": 0,
   "grades": {
    "hit": 15,
-   "partial": 4,
-   "miss": 2
+   "miss": 3,
+   "partial": 3
   }
  },
  "rows": [
@@ -577,12 +577,14 @@
      }
     ]
    },
-   "grade": "partial",
+   "grade": "miss",
    "grade_reason": {
-    "code": "close",
+    "code": "missed",
     "met": 2,
     "n": 3,
-    "short": 2
+    "missing": 0,
+    "under_load": false,
+    "short": 4
    },
    "grade_flags": [],
    "source_sets": [
@@ -603,9 +605,9 @@
     {
      "date": "2030-02-11",
      "kg": 40.0,
-     "reps": 9,
+     "reps": 8,
      "type": "normal",
-     "rir": 0
+     "rir": 1
     }
    ]
   },

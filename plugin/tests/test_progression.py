@@ -146,11 +146,12 @@ class TestRules(Base):
         self.assertEqual(r["reason"], {"code": "add_rep", "set": 1, "frm": 10, "to": 11})
         self.assertIn("exact_copy", a.targets(-1)["rows"][0]["grade_flags"])
 
-    def test_one_miss_holds_two_misses_reduce_e1rm_matched(self):
+    def test_one_miss_holds_two_hold_three_reduce_e1rm_matched(self):
         a = self.athlete([{"title": "Day A", "exercises": [
             ex(BENCH, [(100, 10)] * 3, rep_range=[8, 12], category="compound", tool="barbell_upper")]}])
         a.session(wk(-1), "Day A", [(BENCH, [(100, 7)] * 3)])
         a.session(wk(0), "Day A", [(BENCH, [(100, 6)] * 3)])
+        a.session(wk(1), "Day A", [(BENCH, [(100, 6)] * 3)])
         a.write(wk(-1) + timedelta(days=6))
         a.propose(0)
         self.assertEqual(a.targets(-1)["rows"][0]["grade"], "miss")
@@ -158,8 +159,14 @@ class TestRules(Base):
         self.assertEqual((r["decision"], r["reason"]["code"], r["needs_approval"]), ("hold", "miss_hold", False))
         a.run("apply", "--week", lab(0), "--accept-all")
         a.write(wk(0) + timedelta(days=6))
-        out = a.propose(1)
-        r2 = a.row(1, "day-a-1")
+        a.propose(1)
+        r1 = a.row(1, "day-a-1")
+        self.assertEqual((r1["decision"], r1["reason"]["code"], r1["needs_approval"]), ("hold", "miss2_hold", False))
+        self.assertIn("coach_review", r1["flags"])
+        a.run("apply", "--week", lab(1), "--accept-all")
+        a.write(wk(1) + timedelta(days=6))
+        out = a.propose(2)
+        r2 = a.row(2, "day-a-1")
         self.assertEqual((r2["decision"], r2["reason"]["code"]), ("reduce", "reduce"))
         self.assertTrue(r2["needs_approval"])
         self.assertIn("coach_review", r2["flags"])
@@ -175,6 +182,7 @@ class TestRules(Base):
         a.session(wk(-1), "Day A", [(RAISE, [(16, 15), (16, 13), (16, 12), (16, 11)])])
         a.session(wk(0), "Day A", [(RAISE, [(16, 15), (16, 14), (16, 13), (16, 12)])])   # +3 total
         a.session(wk(1), "Day A", [(RAISE, [(16, 15), (16, 14), (16, 13), (16, 12)])])   # same
+        a.session(wk(2), "Day A", [(RAISE, [(16, 15), (16, 14), (16, 13), (16, 12)])])   # same
         a.write(wk(-1) + timedelta(days=6))
         a.propose(0)
         a.run("apply", "--week", lab(0), "--accept-all")
@@ -186,7 +194,11 @@ class TestRules(Base):
         a.write(wk(1) + timedelta(days=6))
         a.propose(2)
         self.assertNotIn("rep_pr", a.row(1, "day-a-1")["grade_flags"])
-        self.assertEqual(a.row(2, "day-a-1")["decision"], "reduce")          # the PR miss counted once
+        self.assertEqual(a.row(2, "day-a-1")["reason"]["code"], "miss2_hold")
+        a.run("apply", "--week", lab(2), "--accept-all")
+        a.write(wk(2) + timedelta(days=6))
+        a.propose(3)
+        self.assertEqual(a.row(3, "day-a-1")["decision"], "reduce")          # the PR miss counted once
 
     def test_easy_week_then_restore(self):
         a = self.athlete([{"title": "Day A", "exercises": [
@@ -670,6 +682,7 @@ class TestReasonCodes(unittest.TestCase):
     def produced(self):
         """One scenario per decision code (grade codes come from TestUnits and the folder tests)."""
         miss2 = [{"grade": "miss"}, {"grade": "miss"}]
+        miss3 = miss2 + [{"grade": "miss"}]
         logged = S([(100.0, 7)] * 3)
         bw = dict(ROW, load_step=0.0, tool="bodyweight")
         return {
@@ -687,9 +700,10 @@ class TestReasonCodes(unittest.TestCase):
             "close_hold": self.decide("partial", grade_reason={"code": "close", "met": 2, "n": 3, "short": 1}),
             "miss_hold": self.decide("miss", history=miss2[:1]),
             "rep_pr_hold": self.decide("miss", history=miss2[:1], grade_flags=["rep_pr"]),
-            "reduce": self.decide("miss", history=miss2, source_sets=logged),
-            "reduce_assisted": self.decide("miss", row=dict(ROW, assisted=True), history=miss2, source_sets=logged),
-            "fewer_reps": self.decide("miss", row=bw, history=miss2, source_sets=logged),
+            "miss2_hold": self.decide("miss", history=miss2),
+            "reduce": self.decide("miss", history=miss3, source_sets=logged),
+            "reduce_assisted": self.decide("miss", row=dict(ROW, assisted=True), history=miss3, source_sets=logged),
+            "fewer_reps": self.decide("miss", row=bw, history=miss3, source_sets=logged),
             "swap_after_reduce": self.decide("miss", history=[{"grade": "miss", "decision": "reduce",
                                                                "accepted": True}] * 3),
             "swap_no_assistance": at_top(None, row=dict(ROW, assisted=True, load_step=5.0), kg=0.0),

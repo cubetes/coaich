@@ -49,7 +49,7 @@ LOWER_WORDS = ("squat", "deadlift", "lunge", "hip thrust", "good morning", "spli
 MACHINE_WORDS = ("machine", "cable", "lever", "smith", "leg press", "pulldown", "sled")
 WORKING_TYPES = ("normal", "failure")        # warm-ups and drop-set tails are never graded
 PARTIAL_MAX_SHORTFALL = 2                    # reps short in total that still count as "close"
-REDUCE_E1RM = (0.92, 0.95)                   # 2-miss reduce: aim at 92 % of the best logged e1RM, cap 95 %
+REDUCE_E1RM = (0.92, 0.95)                   # 3-miss reduce: aim at 92 % of the best logged e1RM, cap 95 %
 REDUCE_COARSE = 0.88                         # below this the load step was too coarse (said in the reason)
 REDUCE_MAX_CUT = 0.20                        # grid floor for the reduce (one step down always allowed)
 REDUCE_ASSISTED_PCT = 0.05                   # assisted rows: +5 % assistance (Epley means nothing there)
@@ -215,6 +215,7 @@ TEXT = {"en": {
     "reanchor": "Two weeks in a row far from the target: re-anchor to what you lifted ({target}).",
     "close_hold": "Nearly there ({why}): repeat the target.",
     "miss_hold": "First miss: repeat the target.",
+    "miss2_hold": "Second miss in a row: one more try at the same target. A third miss makes it lighter.",
     "rep_pr_hold": "Missed, but a rep record against last time: repeat the target.",
     "reduce": "{streak} misses in a row: about {pct} % of what you lifted, to build back up{coarse}. "
               "Alternatives: hold, one set fewer, or another exercise.",
@@ -697,7 +698,7 @@ def miss_streak(history):
 
 
 def reduce_sets(base, logged, lo, hi, step):
-    """2-miss reduce anchored on what was lifted: the (load, reps) pair on the row's grid (one step
+    """3-miss reduce anchored on what was lifted: the (load, reps) pair on the row's grid (one step
     below the top target load down to -20 %, reps in range) whose Epley e1RM is closest to 92 % of
     the best logged set, never above 95 %; tie -> heavier. Every set moves down the same steps.
     Returns (sets, fraction of the logged e1RM) or None."""
@@ -845,6 +846,8 @@ def decide(row, base, g, gf, history, next_type, restore=None, level="intermedia
                 return out(same(), "hold", "rep_pr_hold")
             return out(same(), "hold", "miss_hold")
         flags.append("coach_review")
+        if streak == 2 and not reduced:    # one more try before lighter (practitioner, as the reduce itself)
+            return out(same(), "hold", "miss2_hold")
         if reduced and streak >= 3:
             return out(same(), "swap", "swap_after_reduce", True)
         if not step:

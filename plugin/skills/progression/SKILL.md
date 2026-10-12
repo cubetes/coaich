@@ -29,7 +29,7 @@ what was done, the grade, the next target, why, and "ask" on rows that need an O
 
 Lead with what needs a decision, not every row:
 
-1. Every **ask** row: load increases on spine-loaded lifts, every reduce after two misses, every
+1. Every **ask** row: load increases on spine-loaded lifts, every reduce after three misses, every
    swap. Each needs its own explicit OK. A general "ok" does not cover them.
 2. Misses, `coach_review`, `not_done_x2`, and every row with an athlete's note (quoted as written).
 3. One line for the rest ("9 go up, 12 stay the same").

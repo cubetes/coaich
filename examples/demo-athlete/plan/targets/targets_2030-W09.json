@@ -480,24 +480,19 @@
     }
    ],
    "last_week": {
-    "grade": "partial",
+    "grade": "miss",
     "grade_reason": {
-     "code": "close",
+     "code": "missed",
      "met": 2,
      "n": 3,
-     "short": 2
+     "missing": 0,
+     "under_load": false,
+     "short": 4
     },
     "source_sets": [
      {
       "date": "2030-02-18",
       "kg": 40.0,
-      "reps": 10,
-      "type": "normal",
-      "rir": 1
-     },
-     {
-      "date": "2030-02-18",
-      "kg": 40.0,
       "reps": 9,
       "type": "normal",
       "rir": 1
@@ -506,6 +501,13 @@
       "date": "2030-02-18",
       "kg": 40.0,
       "reps": 9,
+      "type": "normal",
+      "rir": 1
+     },
+     {
+      "date": "2030-02-18",
+      "kg": 40.0,
+      "reps": 8,
       "type": "normal",
       "rir": 1
      }
@@ -1416,35 +1418,35 @@
    "load_step": 5.0,
    "target_sets": [
     {
-     "kg": 55.0,
-     "reps": 17,
+     "kg": 65.0,
+     "reps": 13,
      "type": "normal"
     },
     {
-     "kg": 55.0,
-     "reps": 17,
+     "kg": 65.0,
+     "reps": 12,
      "type": "normal"
     }
    ],
-   "target_kg": 55.0,
+   "target_kg": 65.0,
    "target_reps": [
-    17,
-    17
+    13,
+    12
    ],
    "prev_target_sets": [
     {
-     "kg": 60.0,
-     "reps": 17,
+     "kg": 75.0,
+     "reps": 13,
      "type": "normal"
     },
     {
-     "kg": 60.0,
-     "reps": 17,
+     "kg": 75.0,
+     "reps": 12,
      "type": "normal"
     },
     {
-     "kg": 60.0,
-     "reps": 17,
+     "kg": 75.0,
+     "reps": 11,
      "type": "normal"
     }
    ],
@@ -1456,18 +1458,18 @@
    "flags": [],
    "pre_easy_sets": [
     {
-     "kg": 60.0,
-     "reps": 17,
+     "kg": 75.0,
+     "reps": 13,
      "type": "normal"
     },
     {
-     "kg": 60.0,
-     "reps": 17,
+     "kg": 75.0,
+     "reps": 12,
      "type": "normal"
     },
     {
-     "kg": 60.0,
-     "reps": 17,
+     "kg": 75.0,
+     "reps": 11,
      "type": "normal"
     }
    ],
@@ -1476,13 +1478,13 @@
    "override_reason": null,
    "live_target_sets": [
     {
-     "kg": 55.0,
-     "reps": 17,
+     "kg": 65.0,
+     "reps": 13,
      "type": "normal"
     },
     {
-     "kg": 55.0,
-     "reps": 17,
+     "kg": 65.0,
+     "reps": 12,
      "type": "normal"
     }
    ],
@@ -1495,41 +1497,41 @@
     "source_sets": [
      {
       "date": "2030-02-19",
-      "kg": 60.0,
-      "reps": 19,
+      "kg": 75.0,
+      "reps": 13,
       "type": "normal",
-      "rir": 5
+      "rir": 0
      },
      {
       "date": "2030-02-19",
-      "kg": 60.0,
-      "reps": 19,
+      "kg": 75.0,
+      "reps": 12,
       "type": "normal",
-      "rir": 5
+      "rir": 1
      },
      {
       "date": "2030-02-19",
-      "kg": 60.0,
-      "reps": 19,
+      "kg": 75.0,
+      "reps": 12,
       "type": "normal",
-      "rir": 4
+      "rir": 0
      }
     ],
     "athlete_note": null,
     "target_sets": [
      {
-      "kg": 60.0,
-      "reps": 17,
+      "kg": 75.0,
+      "reps": 13,
       "type": "normal"
      },
      {
-      "kg": 60.0,
-      "reps": 17,
+      "kg": 75.0,
+      "reps": 12,
       "type": "normal"
      },
      {
-      "kg": 60.0,
-      "reps": 17,
+      "kg": 75.0,
+      "reps": 11,
       "type": "normal"
      }
     ]

@@ -48,8 +48,8 @@ split, 4 days × 60 min), then each week Sam trained to the engine's targets, im
 ran the weekly review (11 check-ins in `check-ins/`, every step in `log.md`). Sam also asked for help with food:
 `nutrition.py` set targets for a slow lean gain (`plan/nutrition.md`), Sam weighs in most mornings, and each
 check-in carries the weight-trend line. Photos are off (there are no images in this repository). Two sessions
-are missed, one night is bad, the deadlift stalls from week 8, the overhead press slips, a calf exercise gets cut
-back after two misses, and program week 7 is the easy week (2030-W09: easy weeks count in sessions done, so the
+are missed, one night is bad, the deadlift stalls from week 8, the overhead press slips and gets lighter after
+three misses, a calf exercise misses twice and gets one more try, and program week 7 is the easy week (2030-W09: easy weeks count in sessions done, so the
 missed session moves it one calendar week later). The last week (2030-W13) is imported but not reviewed yet.
 
 ```
@@ -64,9 +64,9 @@ You get a table per session: last target, what Sam did, the grade, next week's t
 
 ```
 | lower-a-1 | Barbell Squat | 95×10·10·9·8 | 95×10·10·9·8 | met | 95×10·10·10·8 | Target met: same weight, one more rep on set 3 (9 → 10). |
-| upper-a-3 | Standing Military Press | 40×12·9·9 | 40×10·9·8 | missed | 40×12·9·9 | Missed, but a rep record against last time: repeat the target. |
+| lower-b-1 | Romanian Deadlift | 85×10·10·10·10 | 85×10·10·10·10 | met | 90×6·6·6·6 | 10 reps on every set with 3 reps left: +5 kg, reps back to 6. Needs your OK: load goes up on a spine-loaded lift. | ask |
 
-Summary: targets met 18/21 (86 %) · 18 change (3 go up in weight) · 3 stay the same · 2 need your OK
+Summary: targets met 19/21 (90 %) · 18 change (3 go up in weight) · 3 stay the same · 2 need your OK
 Hit rate, last 4 weeks: 85 % (n=79); healthy band 70–85 % → healthy.
 Weight trend, 4 weeks to 2030-03-31: +0.20 kg a week (+0.25 %), 26 weigh-ins; gain band +0.12 to +0.50 % → on track.
 ```

@@ -68,7 +68,7 @@ asked for the week, say 2030-W13.
 | Session | Exercise | Did | Target | Grade | Next | Why |
 |---|---|---|---|---|---|---|
 | lower-a-1 | Barbell Squat | 95×10·10·9·8 | 95×10·10·9·8 | met | 95×10·10·10·8 | Target met: same weight, one more rep on set 3 (9 → 10). |
-| upper-a-3 | Standing Military Press | 40×12·9·9 | 40×10·9·8 | missed | 40×12·9·9 | Missed, but a rep record against last time: repeat the target. |
+| lower-b-1 | Romanian Deadlift | 85×10·10·10·10 | 85×10·10·10·10 | met | 90×6·6·6·6 | 10 reps on every set with 3 reps left: +5 kg, reps back to 6. Needs your OK: load goes up on a spine-loaded lift. | ask |
 ```
 
 The [plugin guide](plugin/README.md) has the full list of skills, the folder layout and the demo's other steps.

@@ -49,7 +49,7 @@ E1RM = {
     "Split_Squat_with_Dumbbells": (38, 0.01), "Leg_Extensions": (84, 0.01), "Seated_Leg_Curl": (60, 0.01),
     "Seated_Calf_Raise": (80, 0.0075),
 }
-STALL = {"Romanian_Deadlift": (8, 0.0), "Standing_Military_Press": (5, -0.006)}  # (from week, weekly growth)
+STALL = {"Romanian_Deadlift": (8, 0.0), "Standing_Military_Press": (5, -0.015)}  # (from week, weekly growth)
 SKIPPED = {(4, "Lower B"), (10, "Upper A")}      # seeded missed sessions (graded "not done")
 BAD_DAY = {(9, "Lower A"): 0.95}                 # a poor night: everything about 5 % weaker
 NOTES = {(9, "Lower A"): "slept badly", (5, "Lower A", "Barbell_Squat"): "left knee a bit stiff",
@@ -58,7 +58,7 @@ FORM_SD = 0.01                                   # day-to-day readiness (the who
 LIFT_SD = 0.015                                  # and lift by lift
 FATIGUE = 0.6                                    # reps lost per set already done
 EASY_MARGINS = (1, 3)                            # reps to spare before the athlete adds one more
-SEED = 79  # rolling 4-week hit rate 76-85 % every week (healthy band 70-85 %), one 2-miss reduce, six load steps
+SEED = 79  # rolling 4-week hit rate 76-85 % every week (healthy band 70-85 %), one 3-miss reduce (overhead press)
 REVIEW_TIME = "20:00"                            # Sunday evening: the weekly review
 
 COAICH_MD = f"""---

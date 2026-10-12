@@ -92,7 +92,8 @@ brackets; sentences in `TEXT` in the script.
 | 2nd level shift in a row | hold [reanchor] | re-anchored to the logged sets | **yes** |
 | `partial` | hold [close_hold] | repeat | no |
 | 1st miss / rep-PR miss | hold [miss_hold] / [rep_pr_hold] | repeat | no |
-| 2nd miss in a row | `reduce` [reduce] | the (load, reps) pair on the grid (1 step down to −20 %, reps in range) whose Epley estimate is closest to **92 %** of the best logged set, never above **95 %**; tie → heavier. Assisted: +5 % assistance [reduce_assisted]. Bodyweight: reps to `lo` [fewer_reps] | **yes** |
+| 2nd miss in a row | hold [miss2_hold] + `coach_review` | repeat once more | no |
+| 3rd miss in a row | `reduce` [reduce] | the (load, reps) pair on the grid (1 step down to −20 %, reps in range) whose Epley estimate is closest to **92 %** of the best logged set, never above **95 %**; tie → heavier. Assisted: +5 % assistance [reduce_assisted]. Bodyweight: reps to `lo` [fewer_reps] | **yes** |
 | ≥ 3 misses after an accepted reduce | `swap` [swap_after_reduce] | proposal only | **yes** |
 | Met, compound set with 0 reps left | hold [failure_hold] | same; stop a rep earlier | no |
 | Met, every set at `hi`, reps left below target | hold [top_too_hard]; the 2nd week in a row +1 step [step_despite_hard] | | spine: yes |
@@ -173,4 +174,5 @@ below = too demanding or a recovery problem (want ≥ 2 converging signals befor
 - 92 % reduce: no study tests how much to cut after a stall. Published autoregulation steps are
   2–5 % (Helms 2018); 1RM day-to-day noise ~4 % (Grgic 2020); 92 % ≈ 3 reps left. Rep-PR margins
   sit above the 0.7–1.9 rep/set typical error (Mitter 2022; Hernández-Belmonte 2022).
-- Hit-rate band and the 2-miss rule: panel decision (low evidence).
+- Hit-rate band and the 3-miss rule: panel decision (low evidence). 0.6: one more try before lighter (was 2
+  misses), since both rules are practitioner and repeating the load first is the gentler one.
