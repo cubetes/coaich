@@ -35,6 +35,22 @@ scripts/checks.sh                              # everything CI runs
 python3 -m unittest discover -s plugin/tests   # just the plugin tests
 ```
 
+## Plugin evals
+
+`plugin/evals/` holds scripted conversations that check the skills keep their promises: asking before a heavier
+spine-loaded lift, the safety stop, nutrition off by default, nothing posted or sent to Hevy without a yes. Each
+case is a `prompt.md`, an optional `setup.sh` (copies `examples/demo-athlete` into the run's folder) and
+`graders/*.md`. They call Claude, so they cost money and are not part of `scripts/checks.sh`. A change to a
+skill's consent or safety wording should keep them passing.
+
+```sh
+claude plugin eval ./plugin --runs 1 --ablation none --scaffold --trust-plugin \
+  --allow-tools Bash Write Edit --no-publish --max-cost-usd 5    # all cases
+claude plugin eval ./plugin --case 'feedback-*' ...                # one case, same flags
+```
+
+In GitHub, run the `plugin-evals` workflow by hand (Actions tab); it needs an `ANTHROPIC_API_KEY` secret.
+
 ## AI tools
 
 Use any tool you like, including Claude Code. You are still the author:
