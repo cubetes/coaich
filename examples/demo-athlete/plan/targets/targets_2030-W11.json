@@ -432,7 +432,8 @@
     "code": "reduce",
     "streak": 3,
     "pct": 92,
-    "coarse": ""
+    "coarse": "",
+    "rough": ""
    },
    "needs_approval": true,
    "flags": [

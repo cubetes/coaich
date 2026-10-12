@@ -255,7 +255,7 @@ def render(reason, lang="en"):
         elif isinstance(v, float) and "kg" in k:
             v = fmt_kg(v)
         vals[k] = v
-    return tpl(reason) if callable(tpl) else tpl.format(**vals)
+    return tpl(reason) if callable(tpl) else tpl.format_map(defaultdict(str, vals))  # older files lack newer fields
 
 
 def row_text(row, lang="en"):

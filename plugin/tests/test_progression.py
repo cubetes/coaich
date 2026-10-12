@@ -723,6 +723,10 @@ class TestReasonCodes(unittest.TestCase):
         g = pg.grade_exposure(base, [dict(s, idx=i) for i, s in enumerate(logged)], [8, 12], 2.5, False)
         return pg.decide(ROW, base, g, {"grade": g["grade"]}, [], "full")
 
+    def test_reason_saved_before_a_new_field_still_renders(self):
+        old = {"code": "reduce", "streak": 2, "pct": 92, "coarse": ""}     # a 0.5 targets file: no "rough"
+        self.assertEqual(pg.render(old), pg.render(dict(old, rough="")))
+
     def test_reduce_says_rough_only_past_12_reps(self):
         miss3 = [{"grade": "miss"}] * 3
         low = self.decide("miss", history=miss3, source_sets=S([(100.0, 7)] * 3))
