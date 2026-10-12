@@ -253,7 +253,7 @@ def main():
     af.upsert_rows(folder, "data/body.csv", body)
     res = exercise_map.sync(folder)
     summary = (f"opengym: {len(sessions)} sessions, {len(sets)} sets in the export "
-               f"({added} new sessions, {replaced} updated), {len(body)} weigh-ins, {len(drops)} rows dropped, "
+               f"({added} new sessions, {replaced} updated), {len(body)} weigh-ins, {len(drops)} row{'s' * (len(drops) != 1)} dropped, "
                f"{len(res['unmapped'])} exercises to map")
     through = max((x["date"] for x in sessions), default="none")
     af.append_log(folder, "import", f"opengym: {len(sessions)} sessions, {len(sets)} sets through {through}")

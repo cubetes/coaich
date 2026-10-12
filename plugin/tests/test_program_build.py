@@ -279,6 +279,15 @@ class Folder(unittest.TestCase):
         log = read(d, "log.md")
         self.assertEqual(log.count("· program-build · ul4i·60·strength·pain"), 2)
 
+    def test_the_template_placeholder_is_replaced_by_the_program(self):
+        template = os.path.join(os.path.dirname(__file__), "..", "templates", "athlete", "plan", "CURRENT.md")
+        with open(template, encoding="utf-8") as f:
+            d = self.folder(current=f.read())
+        self.assertEqual(self.run_build(d)[0], 0)
+        current = read(d, "plan", "CURRENT.md")
+        self.assertNotIn("none yet", current)
+        self.assertEqual(current.count("<!-- coaich:program -->"), 1)
+
     def test_the_medical_gate_stops_and_writes_nothing(self):
         stops = [
             (PROFILE, SETTINGS.replace("safety_acknowledged: 2030-01-06", "safety_acknowledged:"), "needs_acknowledgement"),

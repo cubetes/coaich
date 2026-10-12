@@ -136,7 +136,7 @@ def main():
     added, replaced = af.replace_sessions(folder, sets, sessions)
     res = exercise_map.sync(folder)
     summary = (f"strong: {len(sessions)} sessions, {len(sets)} sets in the export "
-               f"({added} new sessions, {replaced} updated), {len(drops)} rows dropped, "
+               f"({added} new sessions, {replaced} updated), {len(drops)} row{'s' * (len(drops) != 1)} dropped, "
                f"{len(res['unmapped'])} exercises to map")
     through = max((x["date"] for x in sessions), default="none")
     af.append_log(folder, "import", f"strong: {len(sessions)} sessions, {len(sets)} sets through {through}")

@@ -17,7 +17,7 @@ class SemicolonKgExport(unittest.TestCase):
     def test_counts_and_hygiene_drop(self):
         self.assertEqual(len(self.sessions), 2)
         self.assertEqual(len(self.sets), 12)  # rest timers and note rows are not sets; 9999 kg is dropped
-        self.assertIn("1 rows dropped", self.out)
+        self.assertIn("1 row dropped", self.out)
 
     def test_set_types_from_set_order(self):
         bench = [r for r in self.sets if r["exercise"] == "Bench Press (Barbell)"]

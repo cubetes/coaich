@@ -1244,7 +1244,7 @@ def print_proposal(doc, gdoc, folder):
     hr, n = hit_rate(g)
     s, moved = doc["summary"], sum(1 for r in doc["rows"] if changed(r))
     print("Summary: " + (f"targets met {g['hit']}/{n} ({hr * 100:.0f} %)" if hr is not None else "nothing graded")
-          + f" · {s['increase']} go up · {moved} change · {len(doc['rows']) - moved} stay the same"
+          + f" · {moved} change ({s['increase']} go up in weight) · {len(doc['rows']) - moved} stay the same"
           + f" · {s['needs_approval']} need your OK"
           + (f" · {g['not_done']} not done" if g.get("not_done") else ""))
     if not moved:

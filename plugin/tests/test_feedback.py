@@ -74,6 +74,22 @@ class UsageTest(unittest.TestCase):
         _, body, _ = feedback.build("idea", "x", ver="1.0.0", osn="TestOS 1")
         self.assertNotIn("Skills run", body)
 
+    def test_future_dated_lines_do_not_count(self):
+        # the demo athlete lives in 2030: run today, its log must not count as "the last 90 days"
+        d = make_folder(self)
+        with open(os.path.join(d, "log.md"), "w", encoding="utf-8") as f:
+            f.write(LOG + "- 2030-04-01 · import · tomorrow\n")
+        self.assertEqual(feedback.usage(d, TODAY), {"progression": 1, "weekly-review": 2})
+
+    def test_first_line_is_the_title_not_repeated_in_the_body(self):
+        title, body, _ = feedback.build("idea", "Add a deload button\nWhen I travel I want a lighter week.",
+                                        ver="1.0.0", osn="TestOS 1")
+        self.assertEqual(title, "Add a deload button")
+        self.assertTrue(body.startswith("When I travel"), body)
+        title, body, _ = feedback.build("idea", "One line only", ver="1.0.0", osn="TestOS 1")
+        self.assertEqual(title, "One line only")
+        self.assertIn("One line only", body)
+
     def test_missing_log_or_folder(self):
         self.assertEqual(feedback.usage(make_folder(self), TODAY), {})
         self.assertEqual(feedback.usage(make_folder(self, settings=None), TODAY), {})

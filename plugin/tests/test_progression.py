@@ -481,7 +481,7 @@ class TestApply(Base):
         a.write(wk(-1) + timedelta(days=6))
         out = a.propose(0)                                            # W9 not done -> hold, same target
         self.assertIn("No changes this week", out)
-        self.assertIn("0 change · 1 stay the same", out)
+        self.assertIn("0 change (0 go up in weight) · 1 stay the same", out)
 
     def test_athlete_note_rides_beside_the_grade_only(self):
         plain, r1 = self.one(BENCH, [(60, 10)] * 3, [(60, 10)] * 3, rep_range=[8, 12])

@@ -53,11 +53,12 @@ def usage(folder, today=None):
         lines = path.read_text(encoding="utf-8").splitlines()
     except (FileNotFoundError, OSError):
         return {}
-    since = ((today or datetime.date.today()) - datetime.timedelta(days=USAGE_DAYS)).isoformat()
+    end = today or datetime.date.today()
+    since, until = (end - datetime.timedelta(days=USAGE_DAYS)).isoformat(), end.isoformat()
     counts = {}
     for line in lines:
         m = LOG_LINE.match(line)
-        if m and m.group(1) >= since:
+        if m and since <= m.group(1) <= until:  # future-dated lines (the 2030 demo) don't count
             counts[m.group(2)] = counts.get(m.group(2), 0) + 1
     return dict(sorted(counts.items()))
 
@@ -70,7 +71,10 @@ def usage_line(counts):
 def build(kind, text, title=None, counts=None, ver=None, osn=None):
     """→ (title, body, url). `counts` None = no usage summary. Shortens `text` until the URL fits."""
     text = text.strip()
-    title = (title or (text.splitlines() or [kind])[0]).strip()[:80]
+    lines = text.splitlines()
+    if not title and len(lines) > 1:  # the first line becomes the title, so the body starts after it
+        title, text = lines[0], "\n".join(lines[1:]).strip()
+    title = (title or (lines or [kind])[0]).strip()[:80]
     ver, osn = ver or version(), osn or os_name()
     extra = [usage_line(counts)] if counts is not None else []
     cut = len(text)

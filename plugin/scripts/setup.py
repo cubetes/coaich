@@ -142,7 +142,7 @@ def check(folder=None, paths=None, platform=None, which=shutil.which, version=No
             out.append(("fix", src, f"{paths[src]} can't be read: {err}. {EXPORTS[src][1]}") if err
                        else ("ok", src, f"{paths[src]} reads"))
     if (platform or sys.platform) == "darwin":
-        out.append(("ok", "swiftc", "found") if which("swiftc") else
+        out.append(("ok", "swiftc", "found (used by photo review to remove faces)") if which("swiftc") else
                    ("note", "swiftc", "not found; only photo review needs it: run `xcode-select --install`."))
     return out
 

@@ -23,11 +23,12 @@ next week is 102.5 kg."
 From inside Claude Code:
 
 ```
-/plugin marketplace add <org>/coaich
+/plugin marketplace add cubetes/coaich
 /plugin install coaich@coaich
 ```
 
-From a clone of this repository: `/plugin marketplace add ./path/to/coaich`, then the same install line.
+From a clone of this repository: `/plugin marketplace add ./path/to/coaich` (the repository root, where
+`.claude-plugin/marketplace.json` is, not `plugin/`), then the same install line. You need Python 3.9 or newer.
 
 Then, in an empty folder that will hold your training:
 
@@ -56,6 +57,7 @@ cd examples/demo-athlete
 claude
 > /weekly-review
   (the demo lives in 2030: when asked, say the week is 2030-W13)
+  (the review's line in `log.md` carries today's real date, so it sits among the 2030 lines: that is expected)
 ```
 
 You get a table per session: last target, what Sam did, the grade, next week's target and why. For example:
@@ -64,7 +66,7 @@ You get a table per session: last target, what Sam did, the grade, next week's t
 | lower-a-1 | Barbell Squat | 95×10·10·9·8 | 95×10·10·9·8 | met | 95×10·10·10·8 | Target met: same weight, one more rep on set 3 (9 → 10). |
 | upper-a-3 | Standing Military Press | 40×12·9·9 | 40×10·9·8 | missed | 40×12·9·9 | Missed, but a rep record against last time: repeat the target. |
 
-Summary: targets met 18/21 (86 %) · 3 go up · 18 change · 3 stay the same · 2 need your OK
+Summary: targets met 18/21 (86 %) · 18 change (3 go up in weight) · 3 stay the same · 2 need your OK
 Hit rate, last 4 weeks: 85 % (n=79); healthy band 70–85 % → healthy.
 Weight trend, 4 weeks to 2030-03-31: +0.20 kg a week (+0.25 %), 26 weigh-ins; gain band +0.12 to +0.50 % → on track.
 ```

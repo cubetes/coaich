@@ -8,16 +8,35 @@
 ![plugin: 0.2 preview](https://img.shields.io/badge/plugin-0.2%20preview-A61E93?style=flat-square)
 ![apps: alpha](https://img.shields.io/badge/iPhone%20%26%20Watch-alpha-5E5A52?style=flat-square)
 
-**An evidence-based strength and nutrition coach that shows its work.** Every next weight, rep target and calorie
-number comes with the reason for it, in plain words you can check. Your data stays with you.
+**A strength and nutrition coach for Claude Code. Every number comes with its reason. Your data stays in your folder.**
 
 > **For now CoAIch is built for iPhone and Apple Health users.** Android (Health Connect) comes later.
 >
-> **Pre-release.** "CoAIch" is a working name until the trademark search is done. The plugin is a preview, the
-> iPhone and Watch apps are early alpha, the web companion is next. Release order: plugin, then web companion, then the apps. See the [roadmap](docs/roadmap.md) and the
-> [changelog](CHANGELOG.md).
+> **Preview.** "CoAIch" is a working name until the trademark search is done. The plugin is version 0.2 (preview).
+> See the [roadmap](docs/roadmap.md) and the [changelog](CHANGELOG.md).
 
-## Start here
+## What it does
+
+Most training apps tell you what to lift next and never say why. Most AI chats forget your last session.
+CoAIch keeps your training in plain files in one folder. Every target comes with a reason you can check:
+
+> You did 100 kg × 7, 7, 7, 7 with two reps to spare, so next week is 102.5 kg.
+
+The main skills, in plain words:
+
+- **Onboard and setup.** Asks a few questions, runs a medical check first, writes your profile and builds your first program.
+- **Import.** Brings in your sessions from Strong, Hevy, openGym or Apple Health (a Health Auto Export file).
+- **Program build and audit.** Builds a program and checks it against the evidence.
+- **Next targets.** Grades last week and proposes next week's load and reps, each with its reason. You say yes first.
+- **Weekly review.** Imports, grades, proposes, asks, applies, and writes a check-in.
+- **Monthly check-in.** Four weeks of trends. Grades past changes. Plans the next month.
+- **Roadmap and adapt.** Lays out the year. Rebuilds the plan around pain, fewer days or travel.
+- **Feedback.** Drafts a GitHub post. You read it and post it yourself.
+
+**Experimental, off until you turn them on:** nutrition (calories, macros, meals) and physique (muscle ratings from
+your progress photos).
+
+## Install
 
 From inside [Claude Code](https://claude.com/claude-code):
 
@@ -26,70 +45,49 @@ From inside [Claude Code](https://claude.com/claude-code):
 /plugin install coaich@coaich
 ```
 
-Then, in an empty folder for your training, run `/onboard`. The [plugin guide](plugin/README.md) walks through
-the rest, and `examples/demo-athlete` lets you try it with made-up data first.
+From a clone of this repository, add the repository root instead: `/plugin marketplace add ./coaich`. You need
+Python 3.9 or newer.
 
-## The plugin is the brain; the apps are how you use it
+Then, in an empty folder for your training, run:
+
+```
+/onboard
+```
+
+`/onboard` starts with `/setup`. It asks where your data comes from (Strong, Hevy, openGym, Apple Health or by
+hand) and checks that it works. Run `/setup` again any time.
+
+**Try it first.** Clone this repository and open `examples/demo-athlete`, a made-up athlete with 12 weeks of
+training. The marketplace install does not include that folder. Run `claude` inside it, then `/weekly-review`. When
+asked for the week, say 2030-W13.
+
+```
+| Session | Exercise | Did | Target | Grade | Next | Why |
+|---|---|---|---|---|---|---|
+| lower-a-1 | Barbell Squat | 95×10·10·9·8 | 95×10·10·9·8 | met | 95×10·10·10·8 | Target met: same weight, one more rep on set 3 (9 → 10). |
+| upper-a-3 | Standing Military Press | 40×12·9·9 | 40×10·9·8 | missed | 40×12·9·9 | Missed, but a rep record against last time: repeat the target. |
+```
+
+The [plugin guide](plugin/README.md) has the full list of skills, the folder layout and the demo's other steps.
+
+## Safety and privacy
+
+- CoAIch does not replace a doctor. Some health answers stop the plan until a doctor has cleared you.
+- Your data goes through your own Claude Code session, so Anthropic processes it under your account's terms.
+- There is no CoAIch server and no telemetry. Other services are used only when you turn them on.
+- Photos and food tools are opt-in. Read the [plugin guide](plugin/README.md) before you switch them on.
+
+## Coming later
+
+The order is: plugin first (now), then a web companion, then the iPhone and Apple Watch apps.
+
+- **Web companion** (next): log sets and see your plans in any browser.
+- **iPhone and Apple Watch apps** (last): in alpha today, not for other people yet. Details in the [roadmap](docs/roadmap.md).
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/architecture-dark.svg">
   <img src="docs/architecture.svg" alt="The apps record your training and read Apple Health; your data reaches the Claude Code plugin on your computer through a link you choose (a file, a server on your own computer or your own Cloudflare account, or later CoAIch Pro); the plugin coaches and sends the plans back the same way">
 </picture>
-
-| Part | What it does | Where |
-|---|---|---|
-| **The apps**: iPhone and Watch (alpha), web (planned) | Where you train: record sets, sessions and adherence; show your training and diet plans, schedule and lift statistics. The iPhone app reads Apple Health. No coaching of their own. | Your phone, `iOS/`, `Watch/`, `LiveActivity/` |
-| **The link**, your choice | Carries your data to the plugin and the plans back: a file, a server on your own computer, or one on your own Cloudflare account (one person per server), or later CoAIch Pro. Same data and same plans whichever you pick. | A file today. The open sync server, with setup guides for your own computer and for Cloudflare, is on the [roadmap](docs/roadmap.md). |
-| **The plugin: the brain** (preview) | All the coaching: onboarding and safety, programs, next targets, weekly review and monthly check-in, nutrition, photo review, long-term roadmaps. | Your computer, in Claude Code today; OpenAI Codex and Google Gemini CLI planned: [`plugin/`](plugin/README.md) |
-
-The plugin also works with no app at all, importing from Strong, Hevy or Apple Health.
-
-The coaching rules are defined once, in the plugin. The app's Swift engine (`Packages/AthleteCore`) is an offline
-copy of the rules it needs in the gym, held to the plugin's answers by shared test cases: when they disagree, the
-plugin is right. See [ADR 0006](docs/adr/0006-plugin-is-the-brain.md).
-
-Inside the brain, skill by skill: [how the plugin works](plugin/docs/how-it-works.md).
-
-## The apps: Release 1 (target, apps in alpha today)
-
-- **Free.** No payments, no subscription.
-- **Local.** Your data stays on your devices. No account, no server, no analytics.
-- **Starter programs.** Pick one (full-body 3 days, upper/lower 4 days, push/pull/legs 6 days).
-- **Week 1 measures you.** Your first working set and its reps in reserve set your next target.
-- **Auditable.** The next-target rule is plain Swift in `Packages/AthleteCore`, with tests, matching the plugin.
-
-### Build
-
-Requirements: Xcode with the iOS 27 / watchOS 27 SDKs, Swift 6.
-
-```sh
-cd Packages/AthleteCore && swift test     # the engine and its tests
-```
-
-The Xcode project for the app targets is not published yet. It will be generated with
-[XcodeGen](https://github.com/yonaskolb/XcodeGen) from a `project.yml` that comes in a later sync.
-
-## Repository checks
-
-`scripts/checks.sh` runs before anything is published, locally and in CI:
-
-| Check | What it stops |
-|---|---|
-| gitleaks, trufflehog (`--only-verified`) | Secrets and keys |
-| `* 2.*` names | iCloud duplicate files |
-| Image metadata | EXIF, XMP and PNG text chunks (dates, locations, devices) |
-| Real-data guard (`scripts/real-data-guard.txt`) | Personal names, device ids, private hosts, gym names, real dates in test data |
-| File size | Any file over 500 KB (usually a photo or a data dump committed by mistake) |
-
-This repository is filled by an allow-list copy from a private repository
-(`scripts/sync-from-private.sh`). Only listed paths are copied; flagged files stay out.
-
-## How CoAIch is built
-
-CoAIch is written with the help of Claude Code, which fits: it is also a Claude Code plugin. A person decides what
-goes in, reviews every change and ships it. The coaching rules are plain code with tests (`plugin/scripts`,
-`Packages/AthleteCore`), so a number never depends on what a model happens to say that day. The instructions Claude
-follows in this repo are in [CLAUDE.md](CLAUDE.md).
 
 ## Support CoAIch
 
@@ -104,8 +102,14 @@ Not a money thing? A star, a clear bug report or a shared link helps just as muc
 
 ## Contributing and security
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening an issue or a pull request. Report security or privacy
-problems privately: see [SECURITY.md](SECURITY.md).
+Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening an issue or a pull request. It also lists the repository
+checks (`scripts/checks.sh`). Report security or privacy problems privately: see [SECURITY.md](SECURITY.md).
+
+## How CoAIch is built
+
+CoAIch is written with the help of Claude Code. A person decides what goes in, reviews every change and ships it.
+The coaching rules are plain code with tests in [`plugin/scripts`](plugin/scripts), so a number never depends on
+what a model says that day. The instructions Claude follows in this repo are in [CLAUDE.md](CLAUDE.md).
 
 ## Licence
 
@@ -113,4 +117,5 @@ problems privately: see [SECURITY.md](SECURITY.md).
 
 ## Trademarks
 
-The code is AGPL-3.0. The CoAIch name and logo are not covered by the licence: forks are welcome under another name. See `TRADEMARKS.md`.
+The code is AGPL-3.0. The CoAIch name and logo are not covered by the licence: forks are welcome under another name.
+See [TRADEMARKS.md](TRADEMARKS.md).
