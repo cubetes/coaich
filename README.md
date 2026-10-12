@@ -98,7 +98,7 @@ its development:
 
 - [GitHub Sponsors](https://github.com/sponsors/cubetes): monthly or one-off
 - [Buy Me a Coffee](https://buymeacoffee.com/cubetes): a one-off thank-you
-- Ko-fi: link coming soon
+- [Ko-fi](https://ko-fi.com/cubetes): a one-off or monthly thank-you
 
 Not a money thing? A star, a clear bug report or a shared link helps just as much.
 
