@@ -254,6 +254,7 @@ CHIN_MARGIN = 0.3      # × face height below the face box: Vision's box ends ab
 SHOULDER_CLEAR = 0.3   # × face height the cut stays above the highest shoulder/neck point (traps, delts stay)
 SIDE_NECK_UP = 0.25    # side photos: the cut sits this × face height above the base of the neck
 COVER_SIDE, COVER_UP = 0.35, 0.6  # blur: the cover reaches past the face box to the ears and up over the hair
+BACK_HALF, BACK_EARS, BACK_NECK = 0.35, 1.5, 0.1  # back head cover: × shoulder width, × ear spread, above the neck
 HEAD_POINTS = ("nose", "left_eye", "right_eye", "left_ear", "right_ear")
 FACE_POINTS = ("nose", "left_eye", "right_eye")
 SHOULDER_POINTS = ("neck", "left_shoulder", "right_shoulder")
@@ -290,9 +291,13 @@ def anonymise_plan(det, pose, mode="crop", user_cropped=False):
     if not faces:
         if any(k in pts for k in FACE_POINTS):
             raise Refused("a face is visible but could not be outlined, so it cannot be removed safely. " + RECROP)
-        if pose == "back" or user_cropped:
-            return ["none"]  # no face to remove (a back view, or the user cropped it); metadata still goes
+        if user_cropped:
+            return ["none"]  # the user cut the face off; metadata still goes
+        if pose == "back":
+            return back_head_cover(W, pts)
         raise Refused("no face found, so it cannot be removed safely. " + RECROP)
+    if pose == "back":
+        mode = "blur"  # a cut at the neck would also take raised arms (back double biceps)
     x, y, w, h = faces[0]
     if y + h / 2 > 0.6 * H:
         raise Refused("the only face found is not where a head should be in a standing photo. " + RECROP)
@@ -314,6 +319,23 @@ def anonymise_plan(det, pose, mode="crop", user_cropped=False):
         return ["crop", line]
     return ["cover", max(0, round(x - COVER_SIDE * w)), max(0, round(y - COVER_UP * h)),
             min(W, round(x + w + COVER_SIDE * w)), line]
+
+
+def back_head_cover(W, pts):
+    """A back view: grey block over the back of the head, never a cut (it would take raised arms). The block is a
+    column centred on the ears (else the neck), as wide as the head and hair, from the top down to just above the
+    neck, so arms raised beside the head stay in the picture."""
+    if not all(k in pts for k in SHOULDER_POINTS):
+        raise Refused("the back of the head could not be located (neck and shoulders not found). " + RECROP)
+    xs = sorted(pts[k][0] for k in ("left_shoulder", "right_shoulder"))
+    span = xs[1] - xs[0]
+    ears = sorted(pts[k][0] for k in ("left_ear", "right_ear") if k in pts)
+    mid = (ears[0] + ears[1]) / 2 if len(ears) == 2 else pts["neck"][0]
+    half = max(BACK_HALF * span, BACK_EARS * (ears[1] - ears[0]) / 2 if len(ears) == 2 else 0)
+    bottom = round(pts["neck"][1] - BACK_NECK * span)
+    if span <= 0 or bottom <= 0 or any(pts[k][1] >= bottom for k in ("left_ear", "right_ear") if k in pts):
+        raise Refused("the back of the head could not be located with confidence. " + RECROP)
+    return ["cover", max(0, round(mid - half)), 0, min(W, round(mid + half)), bottom]
 
 
 class VisionDetector:

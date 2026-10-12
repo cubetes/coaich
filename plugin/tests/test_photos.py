@@ -107,6 +107,8 @@ ORIGINAL = b"ORIGINALPIXELS"  # only in the originals' image data: never in the 
 FACE = [400, 200, 200, 240]
 POINTS = {"nose": [500, 330], "left_eye": [460, 290], "right_eye": [540, 290], "neck": [500, 600],
           "left_shoulder": [380, 610], "right_shoulder": [620, 605]}
+BACK_POINTS = {"neck": [500, 600], "left_shoulder": [620, 610], "right_shoulder": [380, 610],  # left/right swap from behind
+               "left_ear": [560, 300], "right_ear": [440, 300]}
 
 
 class FakeDetector:
@@ -222,11 +224,11 @@ class FilingTest(Base):
     def test_files_by_pose_and_date_face_removed_without_metadata(self):
         d = self.folder()
         imgs = self.images()
-        fake = FakeDetector(by_src={imgs["back"]: {"width": 1000, "height": 2000, "faces": [], "points": {}}})
+        fake = FakeDetector(by_src={imgs["back"]: {"width": 1000, "height": 2000, "faces": [], "points": BACK_POINTS}})
         made = ph.file_photos(d, "2030-01-06", imgs, detector=fake)
         self.assertEqual(sorted(made), ["photos/2030-01-06/back.jpg", "photos/2030-01-06/front.jpg",
                                         "photos/2030-01-06/side.jpg"])
-        self.assertEqual(fake.ops, [["crop", 512], ["crop", 540], ["none"]])
+        self.assertEqual(fake.ops, [["crop", 512], ["crop", 540], ["cover", 410, 0, 590, 576]])
         for rel in made:
             data = Path(d, rel).read_bytes()
             self.assertNotIn(GPS_SENTINEL, data)
@@ -358,13 +360,21 @@ class PlanTest(unittest.TestCase):
         with self.assertRaisesRegex(ph.Refused, "not where a head should be"):
             ph.anonymise_plan(self.det(faces=([400, 1500, 200, 240],), points={}), "front")
 
-    def test_back_view_without_a_face_passes_uncropped(self):
-        body_only = {"neck": [500, 600], "left_shoulder": [380, 610], "left_ear": [430, 300]}
-        self.assertEqual(ph.anonymise_plan(self.det(faces=(), points=body_only), "back"), ["none"])
+    def test_back_view_covers_the_head_and_never_cuts(self):
+        # a column between the ears, wider of 0.35 × shoulders or 1.5 × ear spread, down to 0.1 × shoulders above
+        # the neck: arms raised beside the head (back double biceps) stay
+        self.assertEqual(ph.anonymise_plan(self.det(faces=(), points=BACK_POINTS), "back"), ["cover", 410, 0, 590, 576])
+        no_ears = {k: v for k, v in BACK_POINTS.items() if "ear" not in k}
+        self.assertEqual(ph.anonymise_plan(self.det(faces=(), points=no_ears), "back"), ["cover", 416, 0, 584, 576])
+        for missing in ("neck", "left_shoulder"):
+            with self.assertRaisesRegex(ph.Refused, "could not be located"):
+                pts = {k: v for k, v in BACK_POINTS.items() if k != missing}
+                ph.anonymise_plan(self.det(faces=(), points=pts), "back")
         for face_point in ("nose", "left_eye", "right_eye"):
             with self.assertRaisesRegex(ph.Refused, "could not be outlined"):
-                ph.anonymise_plan(self.det(faces=(), points=dict(body_only, **{face_point: [500, 300]})), "back")
-        self.assertEqual(ph.anonymise_plan(self.det(), "back"), ["crop", 512])  # a face in a back view is still cut
+                ph.anonymise_plan(self.det(faces=(), points=dict(BACK_POINTS, **{face_point: [500, 300]})), "back")
+        # a face in a back view is covered, not cut, whatever the mode
+        self.assertEqual(ph.anonymise_plan(self.det(), "back", "crop"), ["cover", 330, 56, 670, 512])
 
     def test_user_cropped_passes_only_with_no_face_left(self):
         self.assertEqual(ph.anonymise_plan(self.det(faces=(), points={}), "front", user_cropped=True), ["none"])

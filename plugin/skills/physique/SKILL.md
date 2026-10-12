@@ -74,7 +74,7 @@ covers the face, ears and hair with a solid grey block instead of cutting; use i
 | a pose already filed | Ask before adding `--replace`. |
 | HEIC | Ask for JPEG. |
 
-A back view with no face and no nose or eyes found is filed uncropped (metadata still removed).
+A back view is never cut, so raised arms stay: a grey block covers the back of the head instead.
 
 **Then check the filed copies** (`photos/DATE/`), the only images you open. If any part of a face still shows,
 delete that file at once (`rm`), say so, and ask the user to crop it themselves. If a pose is not what the user
