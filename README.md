@@ -97,7 +97,8 @@ CoAIch is free and open source, built by one person in the evenings. If it helps
 its development:
 
 - [GitHub Sponsors](https://github.com/sponsors/cubetes): monthly or one-off
-- Buy Me a Coffee and Ko-fi: links coming soon
+- [Buy Me a Coffee](https://buymeacoffee.com/cubetes): a one-off thank-you
+- Ko-fi: link coming soon
 
 Not a money thing? A star, a clear bug report or a shared link helps just as much.
 
