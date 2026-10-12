@@ -187,7 +187,8 @@ own git repository.
   eating-disorder history (or would rather not say), and paused whenever you say something worrying about food
   or your body, until you ask for them back. Pregnancy turns calorie targets off.
 - **Photos are opt-in, and your face comes off first.** Your own computer cuts each photo just below the chin (or
-  covers the face, if you prefer) before Claude sees it; Claude never opens the original. Only that copy is kept,
+  covers the face, if you prefer; back photos get a block over the head) before Claude sees it, with Apple Vision
+  on a Mac (built in, offline) or OpenCV elsewhere if installed; Claude never opens the original. Only that copy is kept,
   in your folder, without location or camera data. Your original stays where you had it. Reviews rate muscle groups, never looks; body fat only as a rough range.
 
 ## Licence

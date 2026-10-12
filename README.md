@@ -75,7 +75,10 @@ The [plugin guide](plugin/README.md) has the full list of skills, the folder lay
 - CoAIch does not replace a doctor. Some health answers stop the plan until a doctor has cleared you.
 - Your data goes through your own Claude Code session, so Anthropic processes it under your account's terms.
 - There is no CoAIch server and no telemetry. Other services are used only when you turn them on.
-- Photos and food tools are opt-in. Read the [plugin guide](plugin/README.md) before you switch them on.
+- **Your face never reaches Claude.** Photo review removes it on your own Mac first, with Apple Vision (the face and
+  body detection built into macOS, offline). It cuts below the chin, or covers the head on back photos, strips the
+  location and camera data, and keeps only that copy. If a face can't be removed with confidence, nothing is filed.
+- Photos and food tools are opt-in and experimental. Read the [plugin guide](plugin/README.md) before you switch them on.
 
 ## Coming later
 
