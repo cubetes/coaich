@@ -2,7 +2,7 @@
 
 **A strength and nutrition coach for Claude Code. Every number comes with its reason. Your data stays in your folder.**
 
-> Preview, v0.2. "CoAIch" is a working name until the trademark search is done. The nutrition and photo
+> Preview, v0.6. "CoAIch" is a working name until the trademark search is done. The nutrition and photo
 > safeguards are in code; their wording is a draft until a lawyer has reviewed it.
 
 Most training apps tell you what to lift next and never say why. Most AI chats forget your last session the

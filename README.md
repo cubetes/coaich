@@ -12,7 +12,7 @@
 
 > **For now CoAIch is built for iPhone and Apple Health users.** Android (Health Connect) comes later.
 >
-> **Preview.** "CoAIch" is a working name until the trademark search is done. The plugin is version 0.2 (preview).
+> **Preview.** "CoAIch" is a working name until the trademark search is done. The plugin is version 0.6 (preview).
 > See the [roadmap](docs/roadmap.md) and the [changelog](CHANGELOG.md).
 
 ## What it does
@@ -65,9 +65,9 @@ training. The marketplace install does not include that folder. Run `claude` ins
 asked for the week, say 2030-W13.
 
 ```
-| Session | Exercise | Did | Target | Grade | Next | Why |
-|---|---|---|---|---|---|---|
-| lower-a-1 | Barbell Squat | 95×10·10·9·8 | 95×10·10·9·8 | met | 95×10·10·10·8 | Target met: same weight, one more rep on set 3 (9 → 10). |
+| Session | Exercise | Target | Did | Grade | Next | Why | Your OK |
+|---|---|---|---|---|---|---|---|
+| lower-a-1 | Barbell Squat | 95×10·10·9·8 | 95×10·10·9·8 | met | 95×10·10·10·8 | Target met: same weight, one more rep on set 3 (9 → 10). | |
 | lower-b-1 | Romanian Deadlift | 85×10·10·10·10 | 85×10·10·10·10 | met | 90×6·6·6·6 | 10 reps on every set with 3 reps left: +5 kg, reps back to 6. Needs your OK: load goes up on a spine-loaded lift. | ask |
 ```
 
