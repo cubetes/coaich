@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Pre-publish checks for the public repo: iCloud duplicates, image metadata, real-data guard.
+"""Pre-publish checks for the public repo: iCloud duplicates, file size, image metadata, real-data guard.
 
 Usage: python3 scripts/check_public.py [ROOT]      exit 1 and list every hit
        python3 scripts/check_public.py --self-test
@@ -18,6 +18,8 @@ DUPE = re.compile(r" 2(\.[^/]*)?$")  # iCloud conflict copies: "File 2.swift", "
 FIXTURE = re.compile(r"(^|/)(Tests|tests|UITests|WatchUITests|Fixtures|examples)/|[Dd]emo|Fixture|Previews")
 IMAGE = (".png", ".jpg", ".jpeg", ".heic", ".webp", ".tif", ".tiff", ".gif")
 # EXIF/XMP/text metadata markers in PNG, JPEG, WebP, HEIC and TIFF files.
+MAX_BYTES = 500 * 1024  # a bigger file is usually a photo or a data dump committed by mistake
+BUILD = re.compile(r"(^|/)(\.build|DerivedData|build|__pycache__)/")  # git-ignored build output, never published
 META = (b"Exif\x00\x00", b"eXIf", b"tEXt", b"iTXt", b"zTXt", b"<x:xmpmeta", b"XMP ", b"EXIF")
 
 
@@ -50,6 +52,8 @@ def check(root, rules):
         if not is_file or rel in SELF:
             continue
         data = open(os.path.join(root, rel), "rb").read()
+        if len(data) > MAX_BYTES and not BUILD.search(rel):
+            hits.append(f"{rel}: {len(data) // 1024} KB, over the {MAX_BYTES // 1024} KB limit")
         if rel.lower().endswith(IMAGE):
             found = [m.decode(errors="replace").strip() for m in META if m in data]
             if found:
@@ -82,14 +86,17 @@ def self_test():
             "c 2.swift": "",
             "i.png": b"\x89PNG....eXIf....",
             "j.png": b"\x89PNG....IDAT....",
+            "big.bin": b"\0" * (MAX_BYTES + 1),
+            ".build/big.bin": b"\0" * (MAX_BYTES + 1),
         }
+        os.makedirs(os.path.join(t, ".build"))
         for name, body in files.items():
             with open(os.path.join(t, name), "wb") as f:
                 f.write(body if isinstance(body, bytes) else body.encode())
         out = "\n".join(check(t, rules))
-        for want in ("Tests/T.swift:1", "plugin/tests/t.py:1", "plugin/scripts/demo_x.py:1", "a.swift:1", "b.swift:1", "c 2.swift: iCloud", "i.png: image metadata"):
+        for want in ("Tests/T.swift:1", "plugin/tests/t.py:1", "plugin/scripts/demo_x.py:1", "a.swift:1", "b.swift:1", "c 2.swift: iCloud", "i.png: image metadata", "big.bin: 500 KB"):
             assert want in out, (want, out)
-        for clean in ("ok.swift", "j.png"):
+        for clean in ("ok.swift", "j.png", ".build/"):
             assert clean not in out, (clean, out)
     print("self-test ok")
 

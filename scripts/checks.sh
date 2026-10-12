@@ -6,6 +6,7 @@ cd "$(dirname "$0")/.."
 fail=0
 
 python3 scripts/check_public.py --self-test && python3 scripts/check_public.py . || fail=1
+python3 scripts/release_check.py --self-test || fail=1
 
 # Plugin scripts: unit tests, including "examples/demo-athlete matches its generator".
 python3 -m unittest discover -s plugin/tests || fail=1

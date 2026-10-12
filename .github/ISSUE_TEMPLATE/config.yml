@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions and ideas
+    url: https://github.com/cubetes/coaich/discussions
+    about: Ask a question or talk through an idea before it becomes an issue.
+  - name: Security or privacy problem
+    url: https://github.com/cubetes/coaich/security/advisories/new
+    about: Report it privately. Never in a public issue.
