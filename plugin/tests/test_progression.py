@@ -738,12 +738,13 @@ class TestReasonCodes(unittest.TestCase):
 
     def test_each_decision_code_is_produced_and_renders(self):
         for code, res in self.produced().items():
-            with self.subTest(code=code):
-                self.assertEqual(res["reason"]["code"], code)
-                text = pg.row_text(dict(res, category=ROW["category"]))
-                self.assertTrue(text and "{" not in text, text)
-                for w in self.BANNED:
-                    self.assertNotIn(w, text.lower())
+            for lang in pg.TEXT:
+                with self.subTest(code=code, lang=lang):
+                    self.assertEqual(res["reason"]["code"], code)
+                    text = pg.row_text(dict(res, category=ROW["category"]), lang)
+                    self.assertTrue(text and "{" not in text, text)
+                    for w in self.BANNED:
+                        self.assertNotIn(w, text.lower())
 
     def test_every_text_code_is_covered(self):
         grade_codes = {"met", "close", "missed", "rep_pr", "easy_week_graded", "travel_week_graded", "reentry",
@@ -754,13 +755,26 @@ class TestReasonCodes(unittest.TestCase):
                    "missed": {"met": 1, "n": 3, "missing": 1, "under_load": True, "short": 4},
                    "reentry": {"days": 14}, "level_shift": {"kg": 60.0, "target_kg": 130.0}}
         for code in grade_codes | suffixes:
-            text = pg.render(dict(samples.get(code, {}), code=code))
-            self.assertTrue(text and "{" not in text, code)
-            for w in self.BANNED:
-                self.assertNotIn(w, text.lower(), code)
+            for lang in pg.TEXT:
+                text = pg.render(dict(samples.get(code, {}), code=code), lang)
+                self.assertTrue(text and "{" not in text, (code, lang))
+                for w in self.BANNED:
+                    self.assertNotIn(w, text.lower(), (code, lang))
+
+    def test_every_language_has_every_code(self):
+        for lang in pg.TEXT:
+            self.assertEqual(set(pg.TEXT[lang]), set(pg.TEXT["en"]), lang)
+
+    def test_spanish_reduce_never_leaks_the_stored_english(self):
+        r = {"code": "reduce", "streak": 3, "pct": 92, "coarse": " (the load step is too big to go finer)",
+             "rough": " (a rough guide: your sets were over 12 reps)"}
+        es = pg.render(r, "es")
+        self.assertNotIn("the load", es)
+        self.assertIn("orientativo", es)
+        self.assertNotIn("orientativo", pg.render(dict(r, rough=""), "es"))
 
     def test_unknown_language_falls_back_to_english(self):
-        self.assertEqual(pg.render({"code": "miss_hold"}, "es"), pg.render({"code": "miss_hold"}))
+        self.assertEqual(pg.render({"code": "miss_hold"}, "fr"), pg.render({"code": "miss_hold"}))
 
 
 if __name__ == "__main__":
