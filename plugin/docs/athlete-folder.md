@@ -102,9 +102,12 @@ installed), works on the upright image (EXIF orientation applied), and writes a 
   the same line. A flat fill, not a real blur: it leaves nothing to reverse.
 
 It stops and writes nothing when there is no face, more than one, head points with no face box, or a face in the
-lower 40 % of the picture. Two exceptions file the photo uncut (metadata still removed): a `back` pose with no
-face and no nose or eye point, and `--user-cropped` (the user cut the face off) with no face found, or with no
-detector at all. The new JPEG is written with no properties, then cleaned again in Python: all metadata removed
+lower 40 % of the picture. A `back` pose is never cut, whatever the mode (a cut at the neck would take arms raised
+beside the head): the head gets the grey block instead, a column centred between the ears (else on the neck), as
+wide as the larger of 0.35 × the shoulder width and 1.5 × the ear spread, from the top of the picture to 0.1 × the
+shoulder width above the neck. With no neck and both shoulders found it stops. One exception files the photo uncut
+(metadata still removed): `--user-cropped` (the user cut the face off) with no face found, or with no detector at
+all. The new JPEG is written with no properties, then cleaned again in Python: all metadata removed
 (EXIF incl. GPS, XMP, comments, PNG text/time chunks, anything after the image); a JPEG keeps only its colour
 profile. The user's original stays where it was, untouched.
 

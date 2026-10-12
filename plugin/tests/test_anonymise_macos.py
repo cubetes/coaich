@@ -94,7 +94,10 @@ class VisionTest(unittest.TestCase):
         with self.assertRaisesRegex(ph.Refused, "no face found"):
             ph.file_photos(d, "2030-01-06", {"front": str(src)})
         self.assertFalse(Path(d, "photos").exists())
-        made = ph.file_photos(d, "2030-01-06", {"back": str(src)})  # a back view with no head features may pass
+        with self.assertRaisesRegex(ph.Refused, "back of the head could not be located"):
+            ph.file_photos(d, "2030-01-06", {"back": str(src)})  # no body found: the head cannot be covered
+        self.assertFalse(Path(d, "photos").exists())
+        made = ph.file_photos(d, "2030-01-06", {"back": str(src)}, user_cropped=True)
         self.assertEqual(made, ["photos/2030-01-06/back.jpg"])
         self.assertEqual(ph.metadata_left(Path(d, made[0]).read_bytes()), [])
 
