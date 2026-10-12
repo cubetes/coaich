@@ -5,7 +5,7 @@
 
 [![checks](https://github.com/cubetes/coaich/actions/workflows/checks.yml/badge.svg)](https://github.com/cubetes/coaich/actions/workflows/checks.yml)
 ![licence: AGPL-3.0](https://img.shields.io/badge/licence-AGPL--3.0-0A0A0B?style=flat-square)
-![plugin: 0.2 preview](https://img.shields.io/badge/plugin-0.2%20preview-A61E93?style=flat-square)
+![plugin: 0.3 preview](https://img.shields.io/badge/plugin-0.3%20preview-A61E93?style=flat-square)
 ![apps: alpha](https://img.shields.io/badge/iPhone%20%26%20Watch-alpha-5E5A52?style=flat-square)
 
 **A strength and nutrition coach for Claude Code. Every number comes with its reason. Your data stays in your folder.**

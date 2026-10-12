@@ -6,6 +6,8 @@ What changed, newest first. The plugin keeps its own detailed changelog in
 
 ## Unreleased
 
+## 0.3.0, preview
+
 ### Project
 - Architecture written down ([ADR 0006](docs/adr/0006-plugin-is-the-brain.md)): the apps record and show, the plugin
   is the brain, and the link between them is the user's choice (a file, a local server, your own Cloudflare, or Pro later; one person per server),

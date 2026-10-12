@@ -5,6 +5,8 @@ name. Dates are release-candidate dates; nothing is published until the trademar
 
 ## Unreleased
 
+## 0.3.0 — preview
+
 Changed
 - `nutrition` and `physique` are **experimental**: off unless `coaich.md` says `experimental: on` (new setting;
   absent = off), because their safety wording has not had a legal review yet. The shared gate reports
