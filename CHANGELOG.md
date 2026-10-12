@@ -6,6 +6,12 @@ What changed, newest first. The plugin keeps its own detailed changelog in
 
 ## Unreleased
 
+## 0.5.0, "Achilles" preview
+
+### Plugin
+- Send routines to Hevy: with Hevy connected and your yes, the weekly review puts next week's targets in your
+  Hevy routines (with each reason as the note) and checks them. Details in [plugin/CHANGELOG.md](plugin/CHANGELOG.md).
+
 ## 0.4.0, "Achilles" preview
 
 ### Plugin

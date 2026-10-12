@@ -5,6 +5,8 @@ name, or the next hero's name with "preview" after it.
 
 ## Unreleased
 
+## 0.5.0 — Achilles preview
+
 Added
 - Send routines to Hevy: after the weekly review applies the targets, and with the athlete's yes, the week's
   targets go to the athlete's Hevy routines (one per program routine, titled "<routine> · CoAIch", with rest,
