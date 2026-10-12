@@ -60,7 +60,8 @@ in a low-back program.
 | Reps in reserve | 2–3 → 1–2 from week 5 | main 2, others 1–2, isolation 0–2 | main 1–2, others 1–2, isolation 0–2 |
 | Easy week | triggered only | every 7th week | every 6th week |
 
-Spine lifts and, with the leak item, squat and hinge: ≥ 2 in reserve. 60+: ≥ 8 reps everywhere, 2 sets and 3 in
+Strength goal (intermediate, advanced): main lifts 2–3 in reserve; strength gains hold further from failure, at
+lower fatigue (Robinson 2024, SR/MA). Spine lifts and, with the leak item, squat and hinge: ≥ 2 in reserve. 60+: ≥ 8 reps everywhere, 2 sets and 3 in
 reserve on compounds for 8 weeks, "lift briskly, lower slowly". Rest: main lift, squat and hinge 180 s, other
 compounds 120 s, isolation 75 s, 60 s between the halves of a pair. Bodyweight ladders: pulls 6–12, pushes and
 core 8–15. Strength goal: the main hinge becomes the deadlift, 3 sets.

@@ -268,7 +268,7 @@ class Folder(unittest.TestCase):
         self.assertEqual(doc["easy_weeks"][:3], [7, 14, 21])
         first = doc["routines"][0]["exercises"][0]
         self.assertEqual((first["tool"], first["load_step_kg"], first["category"], first["reps_left"]),
-                         ("barbell_upper", 2.5, "compound", [2, 2]))
+                         ("barbell_upper", 2.5, "compound", [2, 3]))
         self.assertEqual(doc["start"], "2030-01-07")
         self.assertNotIn("Barbell_Squat", [s["exercise_id"] for r in doc["routines"] for s in r["exercises"]])  # knee
         current = read(d, "plan", "CURRENT.md")

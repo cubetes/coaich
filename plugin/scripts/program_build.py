@@ -347,6 +347,8 @@ def prescription(p, id_, role, level, week, older, goal, leak):
         rir = [3, 3]
     elif level == "beginner":
         rir = [2, 3] if week <= 4 else [1, 2]
+    elif role == "main" and goal == "strength":
+        rir = [2, 3]  # strength gains hold further from failure (Robinson 2024), at lower fatigue
     elif role == "main":
         rir = [1, 2] if level == "advanced" else [2, 2]
     else:

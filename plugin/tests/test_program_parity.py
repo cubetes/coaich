@@ -73,6 +73,13 @@ def mine(case):
     }
 
 
+def strength_rir(o, s):
+    """Since 0.6 the plugin's strength-goal main lifts aim at 2-3 reps left; the Swift core still has 1-2 / 2-2."""
+    if o["goal"] == "strength" and o["level"] != "beginner" and s[10] and s[5] in ([1, 2], [2, 2]):
+        return [2, 3]
+    return s[5]
+
+
 def theirs(o):
     if o["outcome"] != "program":
         return {"outcome": OUTCOME[o["outcome"]], **({"items": [snake(x) for x in o["items"]]} if "items" in o else {})}
@@ -82,7 +89,8 @@ def theirs(o):
         "outcome": "program", "name": swift_text(o["name"]), "minutes_per_routine": o["minutes_per_routine"],
         "layout": o["layout"], "level": o["level"], "days": o["days"], "variant": o["variant"], "goal": o["goal"],
         "titles": [x["title"] for x in o["routines"]],
-        "slots": [[[s[0].split("/", 1)[1]] + s[1:] for s in x["slots"]] for x in o["routines"]],
+        "slots": [[[s[0].split("/", 1)[1]] + s[1:5] + [strength_rir(o, s)] + s[6:] for s in x["slots"]]
+                  for x in o["routines"]],
         "left_out": o["left_out"], "notes": o["notes"], "warnings": [swift_text(w) for w in o["warnings"]],
         "fired": [swift_text(f) for f in o["fired"]], "placement": o["placement"],
         # G2 is a note in the plugin since 0.6 (no study supports a volume cap); the Swift core still gates it
