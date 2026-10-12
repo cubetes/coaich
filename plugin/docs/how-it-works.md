@@ -5,7 +5,7 @@ and explain every number they write. Nothing goes to a CoAIch server: there isn'
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="how-it-works-dark.svg">
-  <img src="how-it-works.svg" alt="How CoAIch works: your apps feed an athlete folder on your computer; onboarding builds a checked program, the weekly review sets next targets, the monthly check-in re-issues the plan">
+  <img src="how-it-works.svg" alt="How CoAIch works: you start once (setup, a safety check, a program you approve), then a weekly loop imports your workouts and Apple Health data, grades last week and proposes next week for your OK; every four weeks a monthly check-in plans the next month. Strong, openGym and Apple Health send files in, Hevy works both ways with your yes, and your Claude session runs on Anthropic. No CoAIch server.">
 </picture>
 
 ## The skills

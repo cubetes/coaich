@@ -35,6 +35,11 @@ The main skills, in plain words:
 - **Roadmap and adapt.** Lays out the year. Rebuilds the plan around pain, fewer days or travel.
 - **Feedback.** Drafts a GitHub post. You read it and post it yourself.
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="plugin/docs/how-it-works-dark.svg">
+  <img src="plugin/docs/how-it-works.svg" alt="How CoAIch works: you start once (setup, a safety check, a program you approve), then a weekly loop imports your workouts and Apple Health data, grades last week and proposes next week for your OK; every four weeks a monthly check-in plans the next month. Strong, openGym and Apple Health send files in, Hevy works both ways with your yes, and your Claude session runs on Anthropic. No CoAIch server.">
+</picture>
+
 **Experimental, off until you turn them on:** nutrition (calories, macros, meals) and physique (muscle ratings from
 your progress photos).
 

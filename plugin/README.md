@@ -13,7 +13,7 @@ next week is 102.5 kg."
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/how-it-works-dark.svg">
-  <img src="docs/how-it-works.svg" alt="How CoAIch works">
+  <img src="docs/how-it-works.svg" alt="How CoAIch works: you start once (setup, a safety check, a program you approve), then a weekly loop imports your workouts and Apple Health data, grades last week and proposes next week for your OK; every four weeks a monthly check-in plans the next month. Strong, openGym and Apple Health send files in, Hevy works both ways with your yes, and your Claude session runs on Anthropic. No CoAIch server.">
 </picture>
 
 **See [how it works](docs/how-it-works.md)**: the skills map, the weekly and monthly loop, and how each next target is decided.
