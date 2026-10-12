@@ -5,6 +5,23 @@ name, or the next hero's name with "preview" after it.
 
 ## Unreleased
 
+Changed (a review against Stronger By Science's articles and the primary studies; numbers come from the
+studies, never copied from the site)
+- `program-audit`: G2, a group over the MRV coaching band, is a note, not a failure. A gate needs a study behind
+  its direction; MRV is a practitioner band and Pelland 2025 found smaller returns but no ceiling.
+- `program-build`: with the strength goal, main lifts aim at 2–3 reps left (was 1–2 or 2): strength gains hold
+  further from failure, at lower fatigue (Robinson 2024). Muscle goal and beginners unchanged.
+- `progression`: a second miss in a row repeats the target once more (`miss2_hold`, flagged for review); the
+  lighter target comes after a third miss (was the second). Both are practitioner rules; this one is gentler.
+- `progression`: a reduce from sets over 12 reps says it is a rough guide (rep-max formulas drift there).
+- `roadmap`, `physique`: goals are rates, never dated body-fat targets.
+- Nutrition (experimental): protein and fat rules checked against PubMed and kept; Morton 2018's exact
+  confidence interval, Helms 2014 (lean athletes in a deficit) and Whittaker 2021 (low-fat diets and
+  testosterone) cited.
+
+Fixed
+- A reason saved by an older version renders even when a newer version added a field to its sentence.
+
 ## 0.5.0 — Achilles preview
 
 Added
