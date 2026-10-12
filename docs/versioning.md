@@ -1,0 +1,33 @@
+# Versioning
+
+CoAIch uses **MAJOR.MINOR.PATCH** (semantic versioning).
+
+| Part | Goes up when | Example |
+|---|---|---|
+| MAJOR | The coaching rules or the athlete-folder format change in a way older data or older apps can't follow | 1.4.2 → 2.0.0 |
+| MINOR | New features that break nothing (a new skill, a new screen) | 1.4.2 → 1.5.0 |
+| PATCH | Fixes only | 1.4.2 → 1.4.3 |
+
+- **0.x is a preview** and has no hero name. **1.0.0 is the first stable public release.**
+- **One major across all products.** The plugin, the iPhone/Watch app and the web app share the MAJOR number and its
+  hero whenever they share the same coaching rules and athlete-folder format. MINOR and PATCH move separately per
+  product. "Plugin 1.3" and "app 1.7" are both the Achilles generation and give the same next targets.
+- Release tags: `v1.0.0`, titled `v1.0.0 "Achilles"`.
+
+## Hero names (one per MAJOR, A to Z)
+
+| MAJOR | Hero | MAJOR | Hero |
+|---|---|---|---|
+| 1 | Achilles | 14 | Nestor |
+| 2 | Bellerophon | 15 | Odysseus |
+| 3 | Cadmus | 16 | Perseus |
+| 4 | Diomedes | 17 | Quirinus |
+| 5 | Enkidu | 18 | Rama |
+| 6 | Fionn | 19 | Spartacus |
+| 7 | Gilgamesh | 20 | Theseus |
+| 8 | Hector | 21 | Utnapishtim |
+| 9 | Idomeneus | 22 | Vercingetorix |
+| 10 | Jason | 23 | Wayland |
+| 11 | Karna | 24 | Xenophon |
+| 12 | Leonidas | 25 | Yudhishthira |
+| 13 | Meleager | 26 | Zal |

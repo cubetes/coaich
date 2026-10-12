@@ -1,0 +1,4 @@
+# gitleaks config: the default rule set, no allow-list. Personal data is the real-data guard's job
+# (scripts/real-data-guard.txt); this file is for secrets only.
+[extend]
+useDefault = true

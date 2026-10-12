@@ -1,0 +1,33 @@
+name: Feature request
+description: A new feature or a change in behaviour, starting from what you are trying to do.
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        One request per issue. Start from the problem, not the solution. Not sure yet? Use Discussions first.
+        **Never paste real health data or photos.**
+  - type: textarea
+    id: use-case
+    attributes:
+      label: What are you trying to do?
+      description: The situation, and what gets in the way today.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would help?
+      description: Optional. Your idea for a solution, if you have one.
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: For a coaching rule, the study or guideline behind it (title, journal, year, DOI or PMID).
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy
+      options:
+        - label: This issue contains no real health data, measurements or photos.
+          required: true

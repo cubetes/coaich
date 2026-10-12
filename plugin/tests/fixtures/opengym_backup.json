@@ -1,0 +1,95 @@
+{
+  "_ts": 1896596800000,
+  "unit": "kg",
+  "lang": "en",
+  "effort": "rir",
+  "workouts": [
+    {
+      "id": "wk-test-0001",
+      "d": "2030-02-04",
+      "start": 1896458400000,
+      "end": 1896462120000,
+      "routineIds": ["rt-upper"],
+      "routineId": "rt-upper",
+      "name": "Upper A",
+      "bw": 80.4,
+      "note": "Felt fresh",
+      "prs": [],
+      "entries": [
+        {
+          "id": "0025",
+          "note": "Pause on the chest",
+          "topW": 80,
+          "sets": [
+            {"w": 40, "r": 10, "done": true, "phase": "warmup"},
+            {"w": 80, "r": 8, "done": true, "rir": 2},
+            {"w": 80, "r": 7, "done": true, "rpe": 9.5, "failure": true},
+            {"w": 80, "r": 6, "done": false}
+          ]
+        },
+        {
+          "id": "im-test-cablefly",
+          "sets": [
+            {"w": 20, "r": 12, "done": true, "type": "dropset", "drops": [{"w": 14, "r": 8}]}
+          ]
+        },
+        {
+          "id": "0464",
+          "sets": [
+            {"sec": 60, "w": 0, "done": true}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wk-test-0002",
+      "d": "2030-02-06",
+      "start": 1896593400000,
+      "end": 1896596700000,
+      "routineId": "rt-legs",
+      "name": "Legs",
+      "prs": ["0043"],
+      "entries": [
+        {
+          "id": "0043",
+          "sets": [
+            {"w": 60, "r": 5, "done": true, "warmup": true},
+            {"w": 120, "r": 5, "done": true, "rpe": 8}
+          ]
+        },
+        {
+          "id": "1001",
+          "sets": [
+            {"w": 16, "r": 20, "done": true, "sides": {"L": {"w": 16, "r": 10, "done": true}, "R": {"w": 16, "r": 10, "done": true}}}
+          ]
+        },
+        {
+          "id": "0685",
+          "sets": [
+            {"min": 20, "speed": 9, "done": true}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wk-test-0003",
+      "d": "2030-02-07",
+      "start": 1896678000000,
+      "end": 1896678600000,
+      "name": "Nothing ticked",
+      "entries": [{"id": "0025", "sets": [{"w": 60, "r": 5, "done": false}]}]
+    }
+  ],
+  "bodyweight": [
+    {"d": "2030-02-04", "w": 80.4, "t": 1896418800000},
+    {"d": "2030-02-06", "w": 80.1, "t": 1896591600000}
+  ],
+  "customEx": [
+    {"id": "im-test-cablefly", "n": "cable fly machine", "custom": true, "eq": "custom"}
+  ],
+  "routines": [
+    {"id": "rt-upper", "name": "Upper A", "ex": [{"id": "0025"}]},
+    {"id": "rt-legs", "name": "Legs", "ex": [{"id": "0043"}]}
+  ],
+  "week": {"1": "rt-upper", "3": "rt-legs"}
+}

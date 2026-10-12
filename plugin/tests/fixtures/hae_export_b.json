@@ -1,0 +1,18 @@
+{"data": {"workouts": [], "metrics": [
+  {"name": "step_count", "units": "count", "data": [
+    {"date": "2030-03-02 09:00:00 +0100", "qty": 6000},
+    {"date": "2030-03-02 18:00:00 +0100", "qty": 4500},
+    {"date": "2030-03-03 12:00:00 +0100", "qty": 12000}]},
+  {"name": "active_energy", "units": "kJ", "data": [
+    {"date": "2030-03-02 00:00:00 +0100", "qty": 2092},
+    {"date": "2030-03-03 00:00:00 +0100", "qty": 4184}]},
+  {"name": "resting_heart_rate", "units": "count/min", "data": [
+    {"date": "2030-03-02 00:00:00 +0100", "qty": 58},
+    {"date": "2030-03-03 00:00:00 +0100", "qty": 200}]},
+  {"name": "weight_body_mass", "units": "lb", "data": [
+    {"date": "2030-03-03 07:00:00 +0100", "qty": 176.4}]},
+  {"name": "vo2_max", "units": "ml/(kg·min)", "data": [
+    {"date": "2030-03-03 10:00:00 +0100", "qty": 45.2}]},
+  {"name": "sleep_analysis", "units": "hr", "data": [
+    {"date": "2030-03-03 00:00:00 +0100", "totalSleep": 6.5}]}
+]}}

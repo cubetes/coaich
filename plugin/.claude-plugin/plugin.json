@@ -1,0 +1,10 @@
+{
+  "name": "coaich",
+  "version": "0.2.0",
+  "description": "A strength and nutrition coach for lifters, for Claude Code. Every number comes with its reason. Your data stays in your folder.",
+  "author": {
+    "name": "CoAIch contributors"
+  },
+  "license": "AGPL-3.0-only",
+  "keywords": ["strength", "training", "coach", "progressive-overload", "lifting", "nutrition"]
+}

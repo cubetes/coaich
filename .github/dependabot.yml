@@ -1,0 +1,14 @@
+# Keeps the pinned GitHub Actions current. The scripts use only the Python standard library, so nothing else.
+# Monthly, grouped, a week's wait on new releases: on a one-person project, noisy update PRs stop being read.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    cooldown:
+      default-days: 7
+    groups:
+      actions:
+        patterns: ["*"]
+    open-pull-requests-limit: 2

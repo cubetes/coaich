@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 496" width="960" height="496" role="img" aria-labelledby="arch-title arch-desc">
+<title id="arch-title">CoAIch: the plugin is the brain</title>
+<desc id="arch-desc">The CoAIch plugin is the brain and runs on your own computer, in Claude Code today and in OpenAI Codex or Google Gemini CLI later. The iPhone and Apple Watch apps (alpha) and the web app (planned) record sets, sessions and adherence, read Apple Health and show your plans. Your data goes to the Claude Code plugin on your own computer through a link you choose: a file, a server on your own computer or on your own Cloudflare account (one person per server), or later CoAIch Pro servers. The plugin coaches and sends the plans back the same way. Without the apps, it imports from Strong or Hevy.</desc>
+<defs><marker id="ar" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4A4741"/></marker><marker id="ar-acc" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#A61E93"/></marker></defs>
+<rect width="960" height="496" fill="#F4F1EA"/>
+<text x="16" y="32" fill="#0A0A0B" font-size="16" font-weight="600" font-family="Archivo, Geist, -apple-system, 'Segoe UI', system-ui, sans-serif">The CoAIch plugin is the brain. The apps are how you use it.</text>
+<rect x="16" y="56" width="240" height="296" rx="8" fill="rgba(10,10,11,0.02)" stroke="rgba(10,10,11,0.10)" stroke-width="0.8"/>
+<rect x="32" y="60" width="152" height="12" rx="2" fill="#F4F1EA"/>
+<text x="108.0" y="69" fill="#5E5A52" font-size="7" font-weight="400" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.14em">THE APPS · WHERE YOU TRAIN</text>
+<rect x="320" y="56" width="256" height="296" rx="8" fill="rgba(10,10,11,0.02)" stroke="rgba(10,10,11,0.10)" stroke-width="0.8"/>
+<rect x="336" y="60" width="124" height="12" rx="2" fill="#F4F1EA"/>
+<text x="398.0" y="69" fill="#5E5A52" font-size="7" font-weight="400" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.14em">THE LINK · YOU CHOOSE</text>
+<rect x="640" y="56" width="304" height="296" rx="8" fill="rgba(10,10,11,0.02)" stroke="#0A0A0B" stroke-width="1.5"/>
+<rect x="656" y="60" width="228" height="12" rx="2" fill="#F4F1EA"/>
+<text x="770.0" y="69" fill="#0A0A0B" font-size="7" font-weight="600" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.14em">THE BRAIN · COAICH PLUGIN · YOUR COMPUTER</text>
+<path d="M256,200 H318" fill="none" stroke="#4A4741" stroke-width="1.2" marker-end="url(#ar)"/>
+<rect x="274.0" y="181" width="28" height="12" rx="2" fill="#F4F1EA"/>
+<text x="288" y="190" fill="#4A4741" font-size="8" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">DATA</text>
+<path d="M320,232 H258" fill="none" stroke="#A61E93" stroke-width="1.2" marker-end="url(#ar-acc)"/>
+<rect x="270.0" y="241" width="36" height="12" rx="2" fill="#F4F1EA"/>
+<text x="288" y="250" fill="#A61E93" font-size="8" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">PLANS</text>
+<path d="M576,200 H638" fill="none" stroke="#4A4741" stroke-width="1.2" marker-end="url(#ar)"/>
+<rect x="594.0" y="181" width="28" height="12" rx="2" fill="#F4F1EA"/>
+<text x="608" y="190" fill="#4A4741" font-size="8" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">DATA</text>
+<path d="M640,232 H578" fill="none" stroke="#A61E93" stroke-width="1.2" marker-end="url(#ar-acc)"/>
+<rect x="590.0" y="241" width="36" height="12" rx="2" fill="#F4F1EA"/>
+<text x="608" y="250" fill="#A61E93" font-size="8" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">PLANS</text>
+<path d="M256,412 H664 V354" fill="none" stroke="#4A4741" stroke-width="1.2" marker-end="url(#ar)"/>
+<rect x="412.0" y="407" width="88" height="12" rx="2" fill="#F4F1EA"/>
+<text x="456" y="416" fill="#4A4741" font-size="8" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">IMPORT · NO APP</text>
+<text x="680" y="376" fill="#5E5A52" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">Claude Code now · Codex, Gemini later</text>
+<rect x="32" y="88" width="208" height="64" rx="6" fill="#F4F1EA"/>
+<rect x="32" y="88" width="208" height="64" rx="6" fill="rgba(94,90,82,0.12)" stroke="#5E5A52" stroke-width="1"/>
+<rect x="44" y="98" width="84" height="12" rx="2" fill="none" stroke="#5E5A52" stroke-opacity="0.45" stroke-width="0.6"/>
+<text x="86.0" y="107" fill="#5E5A52" font-size="7" font-weight="500" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.18em">IPHONE · ALPHA</text>
+<text x="44" y="128" fill="#0A0A0B" font-size="12" font-weight="600" font-family="Archivo, Geist, -apple-system, 'Segoe UI', system-ui, sans-serif">iPhone app</text>
+<text x="44" y="142" fill="#5E5A52" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">sets · adherence · health</text>
+<rect x="32" y="168" width="208" height="64" rx="6" fill="#F4F1EA"/>
+<rect x="32" y="168" width="208" height="64" rx="6" fill="rgba(94,90,82,0.12)" stroke="#5E5A52" stroke-width="1"/>
+<rect x="44" y="178" width="80" height="12" rx="2" fill="none" stroke="#5E5A52" stroke-opacity="0.45" stroke-width="0.6"/>
+<text x="84.0" y="187" fill="#5E5A52" font-size="7" font-weight="500" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.18em">WATCH · ALPHA</text>
+<text x="44" y="208" fill="#0A0A0B" font-size="12" font-weight="600" font-family="Archivo, Geist, -apple-system, 'Segoe UI', system-ui, sans-serif">Apple Watch app</text>
+<text x="44" y="222" fill="#5E5A52" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">sets in the gym</text>
+<rect x="32" y="248" width="208" height="64" rx="6" fill="#F4F1EA"/>
+<rect x="32" y="248" width="208" height="64" rx="6" fill="rgba(94,90,82,0.12)" stroke="#5E5A52" stroke-width="1" stroke-dasharray="4 3"/>
+<rect x="44" y="258" width="80" height="12" rx="2" fill="none" stroke="#5E5A52" stroke-opacity="0.45" stroke-width="0.6"/>
+<text x="84.0" y="267" fill="#5E5A52" font-size="7" font-weight="500" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.18em">WEB · PLANNED</text>
+<text x="44" y="288" fill="#0A0A0B" font-size="12" font-weight="600" font-family="Archivo, Geist, -apple-system, 'Segoe UI', system-ui, sans-serif">Web app</text>
+<text x="44" y="302" fill="#5E5A52" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">same data · android</text>
+<rect x="336" y="88" width="224" height="56" rx="6" fill="#F4F1EA"/>
+<rect x="336" y="88" width="224" height="56" rx="6" fill="#E6E1D6" stroke="#4A4741" stroke-width="1"/>
+<rect x="348" y="98" width="28" height="12" rx="2" fill="none" stroke="#5E5A52" stroke-opacity="0.45" stroke-width="0.6"/>
+<text x="362.0" y="107" fill="#5E5A52" font-size="7" font-weight="500" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.18em">FILE</text>
+<text x="348" y="128" fill="#0A0A0B" font-size="12" font-weight="600" font-family="Archivo, Geist, -apple-system, 'Segoe UI', system-ui, sans-serif">A file</text>
+<text x="548" y="128" fill="#5E5A52" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="end">csv · json</text>
+<rect x="336" y="152" width="224" height="56" rx="6" fill="#F4F1EA"/>
+<rect x="336" y="152" width="224" height="56" rx="6" fill="#E6E1D6" stroke="#4A4741" stroke-width="1"/>
+<rect x="348" y="162" width="36" height="12" rx="2" fill="none" stroke="#5E5A52" stroke-opacity="0.45" stroke-width="0.6"/>
+<text x="366.0" y="171" fill="#5E5A52" font-size="7" font-weight="500" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.18em">LOCAL</text>
+<text x="348" y="192" fill="#0A0A0B" font-size="12" font-weight="600" font-family="Archivo, Geist, -apple-system, 'Segoe UI', system-ui, sans-serif">Local server</text>
+<text x="548" y="192" fill="#5E5A52" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="end">one user</text>
+<rect x="336" y="216" width="224" height="56" rx="6" fill="#F4F1EA"/>
+<rect x="336" y="216" width="224" height="56" rx="6" fill="#E6E1D6" stroke="#4A4741" stroke-width="1"/>
+<rect x="348" y="226" width="64" height="12" rx="2" fill="none" stroke="#5E5A52" stroke-opacity="0.45" stroke-width="0.6"/>
+<text x="380.0" y="235" fill="#5E5A52" font-size="7" font-weight="500" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.18em">CLOUDFLARE</text>
+<text x="348" y="256" fill="#0A0A0B" font-size="12" font-weight="600" font-family="Archivo, Geist, -apple-system, 'Segoe UI', system-ui, sans-serif">Cloudflare</text>
+<text x="548" y="256" fill="#5E5A52" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="end">your account · one user</text>
+<rect x="336" y="280" width="224" height="56" rx="6" fill="#F4F1EA"/>
+<rect x="336" y="280" width="224" height="56" rx="6" fill="#E6E1D6" stroke="#4A4741" stroke-width="1" stroke-dasharray="4 3"/>
+<rect x="348" y="290" width="68" height="12" rx="2" fill="none" stroke="#5E5A52" stroke-opacity="0.45" stroke-width="0.6"/>
+<text x="382.0" y="299" fill="#5E5A52" font-size="7" font-weight="500" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.18em">PRO · LATER</text>
+<text x="348" y="320" fill="#0A0A0B" font-size="12" font-weight="600" font-family="Archivo, Geist, -apple-system, 'Segoe UI', system-ui, sans-serif">CoAIch Pro</text>
+<text x="548" y="320" fill="#5E5A52" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="end">our servers</text>
+<rect x="656" y="88" width="272" height="56" rx="6" fill="#F4F1EA"/>
+<rect x="656" y="88" width="272" height="56" rx="6" fill="rgba(10,10,11,0.05)" stroke="#4A4741" stroke-width="1"/>
+<rect x="668" y="98" width="56" height="12" rx="2" fill="none" stroke="#5E5A52" stroke-opacity="0.45" stroke-width="0.6"/>
+<text x="696.0" y="107" fill="#5E5A52" font-size="7" font-weight="500" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.18em">YOUR DATA</text>
+<text x="668" y="128" fill="#0A0A0B" font-size="12" font-weight="600" font-family="Archivo, Geist, -apple-system, 'Segoe UI', system-ui, sans-serif">Athlete folder</text>
+<text x="916" y="128" fill="#5E5A52" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="end">plain files</text>
+<rect x="656" y="152" width="272" height="56" rx="6" fill="#F4F1EA"/>
+<rect x="656" y="152" width="272" height="56" rx="6" fill="#FFFFFF" stroke="#0A0A0B" stroke-width="1"/>
+<rect x="668" y="162" width="36" height="12" rx="2" fill="none" stroke="#5E5A52" stroke-opacity="0.45" stroke-width="0.6"/>
+<text x="686.0" y="171" fill="#5E5A52" font-size="7" font-weight="500" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.18em">START</text>
+<text x="668" y="192" fill="#0A0A0B" font-size="12" font-weight="600" font-family="Archivo, Geist, -apple-system, 'Segoe UI', system-ui, sans-serif">onboard + program</text>
+<text x="916" y="192" fill="#5E5A52" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="end">safety · roadmap</text>
+<rect x="656" y="216" width="272" height="56" rx="6" fill="#F4F1EA"/>
+<rect x="656" y="216" width="272" height="56" rx="6" fill="rgba(166,30,147,0.10)" stroke="#A61E93" stroke-width="1"/>
+<rect x="668" y="226" width="64" height="12" rx="2" fill="none" stroke="#A61E93" stroke-opacity="0.45" stroke-width="0.6"/>
+<text x="700.0" y="235" fill="#A61E93" font-size="7" font-weight="500" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.18em">EVERY WEEK</text>
+<text x="668" y="256" fill="#0A0A0B" font-size="12" font-weight="600" font-family="Archivo, Geist, -apple-system, 'Segoe UI', system-ui, sans-serif">/weekly-review</text>
+<text x="916" y="256" fill="#5E5A52" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="end">next targets</text>
+<rect x="656" y="280" width="272" height="56" rx="6" fill="#F4F1EA"/>
+<rect x="656" y="280" width="272" height="56" rx="6" fill="#FFFFFF" stroke="#0A0A0B" stroke-width="1"/>
+<rect x="668" y="290" width="68" height="12" rx="2" fill="none" stroke="#5E5A52" stroke-opacity="0.45" stroke-width="0.6"/>
+<text x="702.0" y="299" fill="#5E5A52" font-size="7" font-weight="500" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.18em">EVERY MONTH</text>
+<text x="668" y="320" fill="#0A0A0B" font-size="12" font-weight="600" font-family="Archivo, Geist, -apple-system, 'Segoe UI', system-ui, sans-serif">/monthly-check-in</text>
+<text x="916" y="320" fill="#5E5A52" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="end">diet · photos</text>
+<rect x="32" y="384" width="224" height="56" rx="6" fill="#F4F1EA"/>
+<rect x="32" y="384" width="224" height="56" rx="6" fill="rgba(10,10,11,0.03)" stroke="rgba(10,10,11,0.30)" stroke-width="1"/>
+<rect x="44" y="394" width="64" height="12" rx="2" fill="none" stroke="#5E5A52" stroke-opacity="0.45" stroke-width="0.6"/>
+<text x="76.0" y="403" fill="#5E5A52" font-size="7" font-weight="500" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.18em">OTHER APPS</text>
+<text x="44" y="424" fill="#0A0A0B" font-size="12" font-weight="600" font-family="Archivo, Geist, -apple-system, 'Segoe UI', system-ui, sans-serif">Strong · Hevy</text>
+<line x1="16" y1="456" x2="944" y2="456" stroke="rgba(10,10,11,0.12)" stroke-width="0.8"/>
+<rect x="24" y="472" width="16" height="12" rx="3" fill="rgba(94,90,82,0.12)" stroke="#5E5A52" stroke-width="1"/>
+<text x="48" y="482" fill="#4A4741" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">Our apps</text>
+<rect x="115.19999999999999" y="472" width="16" height="12" rx="3" fill="#E6E1D6" stroke="#4A4741" stroke-width="1"/>
+<text x="139.2" y="482" fill="#4A4741" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">The link</text>
+<rect x="206.39999999999998" y="472" width="16" height="12" rx="3" fill="rgba(10,10,11,0.05)" stroke="#4A4741" stroke-width="1"/>
+<text x="230.39999999999998" y="482" fill="#4A4741" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">Your data</text>
+<rect x="303.0" y="472" width="16" height="12" rx="3" fill="#FFFFFF" stroke="#0A0A0B" stroke-width="1"/>
+<text x="327.0" y="482" fill="#4A4741" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">Plugin skill</text>
+<rect x="415.8" y="472" width="16" height="12" rx="3" fill="rgba(166,30,147,0.10)" stroke="#A61E93" stroke-width="1"/>
+<text x="439.8" y="482" fill="#4A4741" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">Weekly loop</text>
+<rect x="523.2" y="472" width="16" height="12" rx="3" fill="rgba(10,10,11,0.03)" stroke="rgba(10,10,11,0.30)" stroke-width="1"/>
+<text x="547.2" y="482" fill="#4A4741" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">Other apps</text>
+<path d="M625.2,478 H645.2" stroke="#4A4741" stroke-width="1.2" fill="none" marker-end="url(#ar)"/>
+<text x="653.2" y="482" fill="#4A4741" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">Data</text>
+<path d="M698.8000000000001,478 H718.8000000000001" stroke="#A61E93" stroke-width="1.2" fill="none" marker-end="url(#ar-acc)"/>
+<text x="726.8000000000001" y="482" fill="#4A4741" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">Plans</text>
+</svg>

@@ -1,0 +1,5 @@
+Date,Workout Name,Duration,Exercise Name,Set Order,Weight,Reps,Distance,Seconds,Notes,Workout Notes,RPE
+2030-02-04 07:15:00,"Upper",1h 5m,"Bench Press (Dumbbell)",1,50.0,10,0,0,"","",
+2030-02-04 07:15:00,"Upper",1h 5m,"Bench Press (Dumbbell)",2,50.0,9,0,0,"","",8
+2030-02-04 07:15:00,"Upper",1h 5m,"Lat Pulldown (Cable)",1,120.0,12,0,0,"Wide grip","",9.5
+2030-02-04 07:15:00,"Upper",1h 5m,"Running",1,0,0,2.0,900,"","",

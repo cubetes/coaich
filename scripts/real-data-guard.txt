@@ -1,0 +1,19 @@
+# Real-data guard: one Python regex per line, prefixed by its scope.
+#   all:       checked in every text file
+#   fixtures:  checked only in test data, demo data and examples (see FIXTURE in check_public.py)
+# Text is NFC-normalised first, so a pattern with an accent matches whether it is composed or not.
+# Your own patterns (name, devices, places) go in ~/.config/coaich/real-data-guard.local.txt, never in this file.
+# A hit fails the check. Fix the file, or keep it out of the allow-list. Never add an "ignore".
+
+# Personal email addresses
+all: (?i)[a-z0-9._%+-]+@(gmail|hotmail|outlook|icloud|yahoo)\.com
+
+# Private server hosts (use a placeholder such as example.workers.dev in docs)
+all: (?i)[a-z0-9-]+\.[a-z0-9-]+\.workers\.dev
+
+# Hevy exercise-template ids ("79D0BB3A")
+all: "[0-9A-F]{8}"
+
+# Real dates in test or demo data (use synthetic dates, e.g. 2001-01-01)
+fixtures: \b2026-\d{2}-\d{2}
+fixtures: \b2026-W\d{2}

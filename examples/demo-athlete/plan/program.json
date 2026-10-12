@@ -1,0 +1,666 @@
+{
+ "schema": "coaich.program/0.1",
+ "start": "2030-01-07",
+ "issued": "2030-01-07",
+ "name": "ul4i·60",
+ "layout": "ul4i",
+ "level": "intermediate",
+ "goal": "both",
+ "minutes": 60,
+ "variant": 60,
+ "days": 4,
+ "week": 1,
+ "older": false,
+ "priority": null,
+ "pain": [],
+ "routines": [
+  {
+   "key": "upper-a",
+   "title": "Upper A",
+   "exercises": [
+    {
+     "key": "upper-a/barbell-bench-press-medium-grip",
+     "pattern": "HP",
+     "exercise_id": "Barbell_Bench_Press_-_Medium_Grip",
+     "sets": 4,
+     "rep_range": [
+      6,
+      10
+     ],
+     "rest_seconds": 180,
+     "alternatives": [
+      "Dumbbell_Bench_Press",
+      "Machine_Bench_Press",
+      "Incline_Dumbbell_Press"
+     ],
+     "warmup": true,
+     "pair": null,
+     "main": true,
+     "top_set": false,
+     "tool": "barbell_upper",
+     "category": "compound",
+     "name": "Barbell Bench Press - Medium Grip",
+     "equipment": "barbell",
+     "load_step_kg": 2.5,
+     "reps_left": [
+      2,
+      2
+     ]
+    },
+    {
+     "key": "upper-a/bent-over-barbell-row",
+     "pattern": "HR",
+     "exercise_id": "Bent_Over_Barbell_Row",
+     "sets": 4,
+     "rep_range": [
+      8,
+      12
+     ],
+     "rest_seconds": 120,
+     "alternatives": [
+      "Seated_Cable_Rows",
+      "Leverage_Iso_Row"
+     ],
+     "warmup": false,
+     "pair": null,
+     "main": false,
+     "top_set": false,
+     "tool": "barbell_upper",
+     "category": "spine",
+     "name": "Bent Over Barbell Row",
+     "equipment": "barbell",
+     "load_step_kg": 2.5,
+     "reps_left": [
+      2,
+      2
+     ]
+    },
+    {
+     "key": "upper-a/standing-military-press",
+     "pattern": "VP",
+     "exercise_id": "Standing_Military_Press",
+     "sets": 3,
+     "rep_range": [
+      8,
+      12
+     ],
+     "rest_seconds": 120,
+     "alternatives": [
+      "Dumbbell_Shoulder_Press",
+      "Machine_Shoulder_Military_Press"
+     ],
+     "warmup": false,
+     "pair": null,
+     "main": false,
+     "top_set": false,
+     "tool": "barbell_upper",
+     "category": "spine",
+     "name": "Standing Military Press",
+     "equipment": "barbell",
+     "load_step_kg": 2.5,
+     "reps_left": [
+      2,
+      2
+     ]
+    },
+    {
+     "key": "upper-a/wide-grip-lat-pulldown",
+     "pattern": "VR",
+     "exercise_id": "Wide-Grip_Lat_Pulldown",
+     "sets": 3,
+     "rep_range": [
+      8,
+      12
+     ],
+     "rest_seconds": 120,
+     "alternatives": [
+      "Close-Grip_Front_Lat_Pulldown",
+      "Pullups",
+      "Weighted_Pull_Ups"
+     ],
+     "warmup": false,
+     "pair": null,
+     "main": false,
+     "top_set": false,
+     "tool": "machine",
+     "category": "compound",
+     "name": "Wide-Grip Lat Pulldown",
+     "equipment": "cable",
+     "load_step_kg": 5,
+     "reps_left": [
+      1,
+      2
+     ]
+    },
+    {
+     "key": "upper-a/side-lateral-raise",
+     "pattern": "LR",
+     "exercise_id": "Side_Lateral_Raise",
+     "sets": 2,
+     "rep_range": [
+      10,
+      20
+     ],
+     "rest_seconds": 75,
+     "alternatives": [
+      "Cable_Seated_Lateral_Raise"
+     ],
+     "warmup": false,
+     "pair": null,
+     "main": false,
+     "top_set": false,
+     "tool": "dumbbell",
+     "category": "isolation",
+     "name": "Side Lateral Raise",
+     "equipment": "dumbbell",
+     "load_step_kg": 2,
+     "reps_left": [
+      0,
+      2
+     ]
+    }
+   ],
+   "order": 1,
+   "minutes": 57.5
+  },
+  {
+   "key": "lower-a",
+   "title": "Lower A",
+   "exercises": [
+    {
+     "key": "lower-a/barbell-squat",
+     "pattern": "SQ",
+     "exercise_id": "Barbell_Squat",
+     "sets": 4,
+     "rep_range": [
+      6,
+      10
+     ],
+     "rest_seconds": 180,
+     "alternatives": [
+      "Goblet_Squat",
+      "Hack_Squat",
+      "Front_Barbell_Squat"
+     ],
+     "warmup": true,
+     "pair": null,
+     "main": true,
+     "top_set": false,
+     "tool": "barbell_lower",
+     "category": "spine",
+     "name": "Barbell Squat",
+     "equipment": "barbell",
+     "load_step_kg": 2.5,
+     "reps_left": [
+      2,
+      2
+     ]
+    },
+    {
+     "key": "lower-a/romanian-deadlift",
+     "pattern": "HI",
+     "exercise_id": "Romanian_Deadlift",
+     "sets": 3,
+     "rep_range": [
+      8,
+      12
+     ],
+     "rest_seconds": 180,
+     "alternatives": [
+      "Stiff-Legged_Dumbbell_Deadlift",
+      "Barbell_Hip_Thrust",
+      "Barbell_Deadlift"
+     ],
+     "warmup": false,
+     "pair": null,
+     "main": false,
+     "top_set": false,
+     "tool": "barbell_lower",
+     "category": "spine",
+     "name": "Romanian Deadlift",
+     "equipment": "barbell",
+     "load_step_kg": 2.5,
+     "reps_left": [
+      2,
+      2
+     ]
+    },
+    {
+     "key": "lower-a/leg-press",
+     "pattern": "SM",
+     "exercise_id": "Leg_Press",
+     "sets": 3,
+     "rep_range": [
+      8,
+      12
+     ],
+     "rest_seconds": 120,
+     "alternatives": [
+      "Hack_Squat"
+     ],
+     "warmup": false,
+     "pair": null,
+     "main": false,
+     "top_set": false,
+     "tool": "machine",
+     "category": "spine",
+     "name": "Leg Press",
+     "equipment": "machine",
+     "load_step_kg": 5,
+     "reps_left": [
+      2,
+      2
+     ]
+    },
+    {
+     "key": "lower-a/lying-leg-curls",
+     "pattern": "KF",
+     "exercise_id": "Lying_Leg_Curls",
+     "sets": 2,
+     "rep_range": [
+      10,
+      20
+     ],
+     "rest_seconds": 75,
+     "alternatives": [
+      "Seated_Leg_Curl"
+     ],
+     "warmup": false,
+     "pair": null,
+     "main": false,
+     "top_set": false,
+     "tool": "machine",
+     "category": "isolation",
+     "name": "Lying Leg Curls",
+     "equipment": "machine",
+     "load_step_kg": 5,
+     "reps_left": [
+      0,
+      2
+     ]
+    },
+    {
+     "key": "lower-a/standing-calf-raises",
+     "pattern": "CA",
+     "exercise_id": "Standing_Calf_Raises",
+     "sets": 3,
+     "rep_range": [
+      10,
+      20
+     ],
+     "rest_seconds": 75,
+     "alternatives": [
+      "Seated_Calf_Raise"
+     ],
+     "warmup": false,
+     "pair": null,
+     "main": false,
+     "top_set": false,
+     "tool": "machine",
+     "category": "isolation",
+     "name": "Standing Calf Raises",
+     "equipment": "machine",
+     "load_step_kg": 5,
+     "reps_left": [
+      0,
+      2
+     ]
+    }
+   ],
+   "order": 2,
+   "minutes": 50.5
+  },
+  {
+   "key": "upper-b",
+   "title": "Upper B",
+   "exercises": [
+    {
+     "key": "upper-b/incline-dumbbell-press",
+     "pattern": "HP",
+     "exercise_id": "Incline_Dumbbell_Press",
+     "sets": 4,
+     "rep_range": [
+      8,
+      12
+     ],
+     "rest_seconds": 120,
+     "alternatives": [
+      "Barbell_Bench_Press_-_Medium_Grip",
+      "Dumbbell_Bench_Press",
+      "Machine_Bench_Press"
+     ],
+     "warmup": true,
+     "pair": null,
+     "main": false,
+     "top_set": false,
+     "tool": "dumbbell",
+     "category": "compound",
+     "name": "Incline Dumbbell Press",
+     "equipment": "dumbbell",
+     "load_step_kg": 2,
+     "reps_left": [
+      1,
+      2
+     ]
+    },
+    {
+     "key": "upper-b/seated-cable-rows",
+     "pattern": "HR",
+     "exercise_id": "Seated_Cable_Rows",
+     "sets": 3,
+     "rep_range": [
+      8,
+      12
+     ],
+     "rest_seconds": 120,
+     "alternatives": [
+      "Leverage_Iso_Row",
+      "Bent_Over_Barbell_Row"
+     ],
+     "warmup": false,
+     "pair": null,
+     "main": false,
+     "top_set": false,
+     "tool": "machine",
+     "category": "compound",
+     "name": "Seated Cable Rows",
+     "equipment": "cable",
+     "load_step_kg": 5,
+     "reps_left": [
+      1,
+      2
+     ]
+    },
+    {
+     "key": "upper-b/dumbbell-shoulder-press",
+     "pattern": "VP",
+     "exercise_id": "Dumbbell_Shoulder_Press",
+     "sets": 2,
+     "rep_range": [
+      8,
+      12
+     ],
+     "rest_seconds": 120,
+     "alternatives": [
+      "Standing_Military_Press",
+      "Machine_Shoulder_Military_Press"
+     ],
+     "warmup": false,
+     "pair": null,
+     "main": false,
+     "top_set": false,
+     "tool": "dumbbell",
+     "category": "compound",
+     "name": "Dumbbell Shoulder Press",
+     "equipment": "dumbbell",
+     "load_step_kg": 2,
+     "reps_left": [
+      1,
+      2
+     ]
+    },
+    {
+     "key": "upper-b/close-grip-front-lat-pulldown",
+     "pattern": "VR",
+     "exercise_id": "Close-Grip_Front_Lat_Pulldown",
+     "sets": 3,
+     "rep_range": [
+      8,
+      12
+     ],
+     "rest_seconds": 120,
+     "alternatives": [
+      "Wide-Grip_Lat_Pulldown",
+      "Pullups",
+      "Weighted_Pull_Ups"
+     ],
+     "warmup": false,
+     "pair": null,
+     "main": false,
+     "top_set": false,
+     "tool": "machine",
+     "category": "compound",
+     "name": "Close-Grip Front Lat Pulldown",
+     "equipment": "cable",
+     "load_step_kg": 5,
+     "reps_left": [
+      1,
+      2
+     ]
+    },
+    {
+     "key": "upper-b/dumbbell-flyes",
+     "pattern": "FL",
+     "exercise_id": "Dumbbell_Flyes",
+     "sets": 2,
+     "rep_range": [
+      10,
+      20
+     ],
+     "rest_seconds": 75,
+     "alternatives": [
+      "Flat_Bench_Cable_Flyes",
+      "Incline_Dumbbell_Flyes"
+     ],
+     "warmup": false,
+     "pair": null,
+     "main": false,
+     "top_set": false,
+     "tool": "dumbbell",
+     "category": "isolation",
+     "name": "Dumbbell Flyes",
+     "equipment": "dumbbell",
+     "load_step_kg": 2,
+     "reps_left": [
+      0,
+      2
+     ]
+    },
+    {
+     "key": "upper-b/face-pull",
+     "pattern": "RD",
+     "exercise_id": "Face_Pull",
+     "sets": 2,
+     "rep_range": [
+      10,
+      20
+     ],
+     "rest_seconds": 75,
+     "alternatives": [
+      "Reverse_Machine_Flyes",
+      "Cable_Rear_Delt_Fly"
+     ],
+     "warmup": false,
+     "pair": null,
+     "main": false,
+     "top_set": false,
+     "tool": "machine",
+     "category": "isolation",
+     "name": "Face Pull",
+     "equipment": "cable",
+     "load_step_kg": 5,
+     "reps_left": [
+      0,
+      2
+     ]
+    }
+   ],
+   "order": 3,
+   "minutes": 55.0
+  },
+  {
+   "key": "lower-b",
+   "title": "Lower B",
+   "exercises": [
+    {
+     "key": "lower-b/romanian-deadlift",
+     "pattern": "HI",
+     "exercise_id": "Romanian_Deadlift",
+     "sets": 4,
+     "rep_range": [
+      6,
+      10
+     ],
+     "rest_seconds": 180,
+     "alternatives": [
+      "Stiff-Legged_Dumbbell_Deadlift",
+      "Barbell_Hip_Thrust",
+      "Barbell_Deadlift"
+     ],
+     "warmup": true,
+     "pair": null,
+     "main": true,
+     "top_set": false,
+     "tool": "barbell_lower",
+     "category": "spine",
+     "name": "Romanian Deadlift",
+     "equipment": "barbell",
+     "load_step_kg": 2.5,
+     "reps_left": [
+      2,
+      2
+     ]
+    },
+    {
+     "key": "lower-b/split-squat-with-dumbbells",
+     "pattern": "LU",
+     "exercise_id": "Split_Squat_with_Dumbbells",
+     "sets": 3,
+     "rep_range": [
+      8,
+      12
+     ],
+     "rest_seconds": 120,
+     "alternatives": [
+      "Dumbbell_Step_Ups"
+     ],
+     "warmup": false,
+     "pair": null,
+     "main": false,
+     "top_set": false,
+     "tool": "dumbbell",
+     "category": "spine",
+     "name": "Split Squat with Dumbbells",
+     "equipment": "dumbbell",
+     "load_step_kg": 2,
+     "reps_left": [
+      2,
+      2
+     ]
+    },
+    {
+     "key": "lower-b/leg-extensions",
+     "pattern": "KE",
+     "exercise_id": "Leg_Extensions",
+     "sets": 3,
+     "rep_range": [
+      10,
+      20
+     ],
+     "rest_seconds": 75,
+     "alternatives": [],
+     "warmup": false,
+     "pair": null,
+     "main": false,
+     "top_set": false,
+     "tool": "machine",
+     "category": "isolation",
+     "name": "Leg Extensions",
+     "equipment": "machine",
+     "load_step_kg": 5,
+     "reps_left": [
+      0,
+      2
+     ]
+    },
+    {
+     "key": "lower-b/seated-leg-curl",
+     "pattern": "KF",
+     "exercise_id": "Seated_Leg_Curl",
+     "sets": 2,
+     "rep_range": [
+      10,
+      20
+     ],
+     "rest_seconds": 75,
+     "alternatives": [
+      "Lying_Leg_Curls"
+     ],
+     "warmup": false,
+     "pair": null,
+     "main": false,
+     "top_set": false,
+     "tool": "machine",
+     "category": "isolation",
+     "name": "Seated Leg Curl",
+     "equipment": "machine",
+     "load_step_kg": 5,
+     "reps_left": [
+      0,
+      2
+     ]
+    },
+    {
+     "key": "lower-b/seated-calf-raise",
+     "pattern": "CA",
+     "exercise_id": "Seated_Calf_Raise",
+     "sets": 3,
+     "rep_range": [
+      10,
+      20
+     ],
+     "rest_seconds": 75,
+     "alternatives": [
+      "Standing_Calf_Raises"
+     ],
+     "warmup": false,
+     "pair": null,
+     "main": false,
+     "top_set": false,
+     "tool": "machine",
+     "category": "isolation",
+     "name": "Seated Calf Raise",
+     "equipment": "machine",
+     "load_step_kg": 5,
+     "reps_left": [
+      0,
+      2
+     ]
+    }
+   ],
+   "order": 4,
+   "minutes": 46.75
+  }
+ ],
+ "left_out": [],
+ "easy_week_every": 7,
+ "easy_from_week": 1,
+ "easy_weeks": [
+  7,
+  14,
+  21,
+  28,
+  35,
+  42,
+  49
+ ],
+ "rebuild_at_week": null,
+ "placement": {
+  "level": "intermediate",
+  "returning": false,
+  "promotion_check_week": null,
+  "advanced_check_week": 6,
+  "row": 6
+ },
+ "notes": [
+  "At week 6 we offer you Advanced."
+ ],
+ "warnings": [],
+ "rules_fired": [
+  "§3.2 placement row 6: intermediate",
+  "row 14: ul4i, 4 days",
+  "row 15: 60-minute variant",
+  "row 28: goal both"
+ ],
+ "swaps": []
+}

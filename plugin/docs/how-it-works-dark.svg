@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 544" width="960" height="544" role="img" aria-labelledby="coaich-flow-title coaich-flow-desc">
+<title id="coaich-flow-title">How CoAIch works</title>
+<desc id="coaich-flow-desc">Your training apps feed an athlete folder on your computer; onboarding builds a checked program, the weekly review sets next targets, and the monthly check-in re-issues the plan.</desc>
+<defs>
+<marker id="cf-arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#A39E92"/></marker>
+<marker id="cf-arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#F05AD8"/></marker>
+<marker id="cf-arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#A39E92"/></marker>
+</defs>
+<rect width="960" height="544" fill="#0A0A0B"/>
+<rect x="16" y="200" width="208" height="120" rx="8" fill="rgba(244,241,234,0.02)" stroke="rgba(244,241,234,0.10)" stroke-width="0.8"/>
+<rect x="32" y="204" width="64" height="12" rx="2" fill="#0A0A0B"/>
+<text x="64.0" y="213" fill="#B7B1A5" font-size="7" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.14em">YOUR PHONE</text>
+<rect x="240" y="72" width="704" height="400" rx="8" fill="rgba(244,241,234,0.02)" stroke="rgba(244,241,234,0.10)" stroke-width="0.8"/>
+<rect x="256" y="76" width="148" height="12" rx="2" fill="#0A0A0B"/>
+<text x="330.0" y="85" fill="#B7B1A5" font-size="7" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.14em">YOUR COMPUTER · CLAUDE CODE</text>
+<path d="M208,264 H264" fill="none" stroke="#A39E92" stroke-width="1.2" marker-end="url(#cf-arrow-link)"/>
+<path d="M424,264 H494" fill="none" stroke="#A39E92" stroke-width="1.2" marker-end="url(#cf-arrow)"/>
+<rect x="424.0" y="245" width="72" height="12" rx="2" fill="#0A0A0B"/>
+<text x="460" y="254" fill="#A39E92" font-size="8" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">SETS · BODY</text>
+<path d="M424,136 H494" fill="none" stroke="#A39E92" stroke-width="1.2" marker-end="url(#cf-arrow)"/>
+<rect x="432.0" y="117" width="56" height="12" rx="2" fill="#0A0A0B"/>
+<text x="460" y="126" fill="#A39E92" font-size="8" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">/ONBOARD</text>
+<path d="M688,136 H758" fill="none" stroke="#A39E92" stroke-width="1.2" marker-end="url(#cf-arrow)"/>
+<rect x="698.0" y="117" width="52" height="12" rx="2" fill="#0A0A0B"/>
+<text x="724" y="126" fill="#A39E92" font-size="8" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">ANSWERS</text>
+<path d="M560,168 V222" fill="none" stroke="#A39E92" stroke-width="1.2" marker-end="url(#cf-arrow)"/>
+<rect x="504" y="191" width="52" height="12" rx="2" fill="#0A0A0B"/>
+<text x="552" y="200" fill="#A39E92" font-size="8" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="end" letter-spacing="0.06em">PROFILE</text>
+<path d="M816,168 V188 Q816,196 808,196 H632 Q624,196 624,204 V222" fill="none" stroke="#A39E92" stroke-width="1.2" marker-end="url(#cf-arrow)"/>
+<rect x="694.0" y="177" width="52" height="12" rx="2" fill="#0A0A0B"/>
+<text x="720" y="186" fill="#A39E92" font-size="8" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">PROGRAM</text>
+<path d="M872,232 V170" fill="none" stroke="#A39E92" stroke-width="1.2" marker-end="url(#cf-arrow)"/>
+<rect x="878" y="195" width="56" height="12" rx="2" fill="#0A0A0B"/>
+<text x="882" y="204" fill="#A39E92" font-size="8" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="start" letter-spacing="0.06em">RE-ISSUE</text>
+<path d="M688,264 H758" fill="none" stroke="#A39E92" stroke-width="1.2" marker-end="url(#cf-arrow)"/>
+<rect x="698.0" y="245" width="52" height="12" rx="2" fill="#0A0A0B"/>
+<text x="724" y="254" fill="#A39E92" font-size="8" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.06em">4 WEEKS</text>
+<path d="M560,304 V382" fill="none" stroke="#A39E92" stroke-width="1.2" marker-end="url(#cf-arrow)"/>
+<rect x="496" y="339" width="60" height="12" rx="2" fill="#0A0A0B"/>
+<text x="552" y="348" fill="#A39E92" font-size="8" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="end" letter-spacing="0.06em">THIS WEEK</text>
+<path d="M624,384 V306" fill="none" stroke="#F05AD8" stroke-width="1.2" marker-end="url(#cf-arrow-accent)"/>
+<rect x="628" y="339" width="76" height="12" rx="2" fill="#0A0A0B"/>
+<text x="632" y="348" fill="#F05AD8" font-size="8" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="start" letter-spacing="0.06em">NEXT TARGETS</text>
+<rect x="32" y="232" width="176" height="64" rx="6" fill="#0A0A0B"/>
+<rect x="32" y="232" width="176" height="64" rx="6" fill="rgba(244,241,234,0.03)" stroke="rgba(244,241,234,0.30)" stroke-width="1"/>
+<rect x="44" y="242" width="32" height="12" rx="2" fill="none" stroke="#B7B1A5" stroke-opacity="0.45" stroke-width="0.6"/>
+<text x="60.0" y="251" fill="#B7B1A5" font-size="7" font-weight="500" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.18em">APPS</text>
+<text x="44" y="272" fill="#F4F1EA" font-size="12" font-weight="600" font-family="Archivo, Geist, -apple-system, 'Segoe UI', system-ui, sans-serif">Strong · Hevy</text>
+<text x="44" y="286" fill="#B7B1A5" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">apple health</text>
+<rect x="264" y="104" width="160" height="64" rx="6" fill="#0A0A0B"/>
+<rect x="264" y="104" width="160" height="64" rx="6" fill="rgba(244,241,234,0.08)" stroke="#B7B1A5" stroke-width="1"/>
+<rect x="276" y="114" width="24" height="12" rx="2" fill="none" stroke="#B7B1A5" stroke-opacity="0.45" stroke-width="0.6"/>
+<text x="288.0" y="123" fill="#B7B1A5" font-size="7" font-weight="500" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.18em">YOU</text>
+<text x="276" y="144" fill="#F4F1EA" font-size="12" font-weight="600" font-family="Archivo, Geist, -apple-system, 'Segoe UI', system-ui, sans-serif">Athlete</text>
+<text x="276" y="158" fill="#B7B1A5" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">in claude code</text>
+<rect x="496" y="104" width="192" height="64" rx="6" fill="#0A0A0B"/>
+<rect x="496" y="104" width="192" height="64" rx="6" fill="#17171A" stroke="#F4F1EA" stroke-width="1"/>
+<rect x="508" y="114" width="36" height="12" rx="2" fill="none" stroke="#B7B1A5" stroke-opacity="0.45" stroke-width="0.6"/>
+<text x="526.0" y="123" fill="#B7B1A5" font-size="7" font-weight="500" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.18em">START</text>
+<text x="508" y="144" fill="#F4F1EA" font-size="12" font-weight="600" font-family="Archivo, Geist, -apple-system, 'Segoe UI', system-ui, sans-serif">onboard + safety</text>
+<text x="508" y="158" fill="#B7B1A5" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">questions · medical gate</text>
+<rect x="760" y="104" width="168" height="64" rx="6" fill="#0A0A0B"/>
+<rect x="760" y="104" width="168" height="64" rx="6" fill="#17171A" stroke="#F4F1EA" stroke-width="1"/>
+<rect x="772" y="114" width="32" height="12" rx="2" fill="none" stroke="#B7B1A5" stroke-opacity="0.45" stroke-width="0.6"/>
+<text x="788.0" y="123" fill="#B7B1A5" font-size="7" font-weight="500" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.18em">PLAN</text>
+<text x="772" y="144" fill="#F4F1EA" font-size="12" font-weight="600" font-family="Archivo, Geist, -apple-system, 'Segoe UI', system-ui, sans-serif">program-build</text>
+<text x="772" y="158" fill="#B7B1A5" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">audit · roadmap</text>
+<rect x="264" y="232" width="160" height="64" rx="6" fill="#0A0A0B"/>
+<rect x="264" y="232" width="160" height="64" rx="6" fill="#17171A" stroke="#F4F1EA" stroke-width="1"/>
+<rect x="276" y="242" width="40" height="12" rx="2" fill="none" stroke="#B7B1A5" stroke-opacity="0.45" stroke-width="0.6"/>
+<text x="296.0" y="251" fill="#B7B1A5" font-size="7" font-weight="500" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.18em">IMPORT</text>
+<text x="276" y="272" fill="#F4F1EA" font-size="12" font-weight="600" font-family="Archivo, Geist, -apple-system, 'Segoe UI', system-ui, sans-serif">import</text>
+<text x="276" y="286" fill="#B7B1A5" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">csv · mcp · json</text>
+<rect x="496" y="224" width="192" height="80" rx="6" fill="#0A0A0B"/>
+<rect x="496" y="224" width="192" height="80" rx="6" fill="rgba(244,241,234,0.05)" stroke="#A39E92" stroke-width="1"/>
+<rect x="508" y="234" width="56" height="12" rx="2" fill="none" stroke="#B7B1A5" stroke-opacity="0.45" stroke-width="0.6"/>
+<text x="536.0" y="243" fill="#B7B1A5" font-size="7" font-weight="500" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.18em">YOUR DATA</text>
+<text x="508" y="264" fill="#F4F1EA" font-size="12" font-weight="600" font-family="Archivo, Geist, -apple-system, 'Segoe UI', system-ui, sans-serif">Athlete folder</text>
+<text x="508" y="278" fill="#B7B1A5" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">profile · plan · sets · body</text>
+<rect x="760" y="232" width="168" height="64" rx="6" fill="#0A0A0B"/>
+<rect x="760" y="232" width="168" height="64" rx="6" fill="#17171A" stroke="#F4F1EA" stroke-width="1"/>
+<rect x="772" y="242" width="68" height="12" rx="2" fill="none" stroke="#B7B1A5" stroke-opacity="0.45" stroke-width="0.6"/>
+<text x="806.0" y="251" fill="#B7B1A5" font-size="7" font-weight="500" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.18em">EVERY MONTH</text>
+<text x="772" y="272" fill="#F4F1EA" font-size="12" font-weight="600" font-family="Archivo, Geist, -apple-system, 'Segoe UI', system-ui, sans-serif">/monthly-check-in</text>
+<text x="772" y="286" fill="#B7B1A5" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">nutrition · photos · adapt</text>
+<rect x="496" y="384" width="192" height="64" rx="6" fill="#0A0A0B"/>
+<rect x="496" y="384" width="192" height="64" rx="6" fill="rgba(240,90,216,0.14)" stroke="#F05AD8" stroke-width="1"/>
+<rect x="508" y="394" width="60" height="12" rx="2" fill="none" stroke="#F05AD8" stroke-opacity="0.45" stroke-width="0.6"/>
+<text x="538.0" y="403" fill="#F05AD8" font-size="7" font-weight="500" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace" text-anchor="middle" letter-spacing="0.18em">EVERY WEEK</text>
+<text x="508" y="424" fill="#F4F1EA" font-size="12" font-weight="600" font-family="Archivo, Geist, -apple-system, 'Segoe UI', system-ui, sans-serif">/weekly-review</text>
+<text x="508" y="438" fill="#B7B1A5" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">next target + its reason</text>
+<text x="32" y="356" fill="#A39E92" font-size="14" font-style="italic" font-family="'Instrument Serif', Georgia, 'Times New Roman', serif">No CoAIch server:</text>
+<text x="32" y="374" fill="#A39E92" font-size="14" font-style="italic" font-family="'Instrument Serif', Georgia, 'Times New Roman', serif">your data stays in</text>
+<text x="32" y="392" fill="#A39E92" font-size="14" font-style="italic" font-family="'Instrument Serif', Georgia, 'Times New Roman', serif">your folder and your</text>
+<text x="32" y="410" fill="#A39E92" font-size="14" font-style="italic" font-family="'Instrument Serif', Georgia, 'Times New Roman', serif">own Claude session.</text>
+<line x1="16" y1="484" x2="944" y2="484" stroke="rgba(244,241,234,0.12)" stroke-width="0.8"/>
+<rect x="24" y="500" width="16" height="12" rx="3" fill="#17171A" stroke="#F4F1EA" stroke-width="1"/>
+<text x="52" y="510" fill="#A39E92" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">Skill</text>
+<rect x="107.9" y="500" width="16" height="12" rx="3" fill="rgba(244,241,234,0.05)" stroke="#A39E92" stroke-width="1"/>
+<text x="135.9" y="510" fill="#A39E92" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">Your data</text>
+<rect x="214.12" y="500" width="16" height="12" rx="3" fill="rgba(240,90,216,0.14)" stroke="#F05AD8" stroke-width="1"/>
+<text x="242.12" y="510" fill="#A39E92" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">The weekly loop</text>
+<rect x="353.82" y="500" width="16" height="12" rx="3" fill="rgba(244,241,234,0.03)" stroke="rgba(244,241,234,0.30)" stroke-width="1"/>
+<text x="381.82" y="510" fill="#A39E92" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">Outside app</text>
+<path d="M471.2,506 H491.2" stroke="#A39E92" stroke-width="1.2" fill="none" marker-end="url(#cf-arrow)"/>
+<text x="499.2" y="510" fill="#A39E92" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">Data flow</text>
+<path d="M577.42,506 H597.42" stroke="#F05AD8" stroke-width="1.2" fill="none" marker-end="url(#cf-arrow-accent)"/>
+<text x="605.42" y="510" fill="#A39E92" font-size="9" font-family="'Geist Mono', ui-monospace, 'SF Mono', Menlo, monospace">Next targets</text>
+</svg>

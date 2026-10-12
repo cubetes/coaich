@@ -1,0 +1,40 @@
+# DRAFT — inactive on purpose (GitHub only runs files in .github/workflows/).
+# CLA bot, cla-assistant-lite style (contributor-assistant/github-action). Two blockers before moving it to
+# .github/workflows/cla.yml:
+#   1. Done: docs/CLA.md approved by the maintainer 2026-10-12.
+#   2. The action needs `pull_request_target` to comment on pull requests from forks, and the repo rule
+#      (roadmap D1) is "no pull_request_target". The owner decides: accept it for this one job (it never
+#      checks out pull-request code), or use the hosted CLA Assistant app instead.
+# Pin verified 2026-10-11 with `git ls-remote`.
+name: cla
+on:
+  issue_comment:
+    types: [created]
+  pull_request_target:
+    types: [opened, closed, synchronize]
+permissions:
+  actions: write
+  contents: write        # stores signatures on the cla-signatures branch
+  pull-requests: write
+  statuses: write
+jobs:
+  cla:
+    runs-on: ubuntu-24.04
+    # Only in the main repo (forks are never blocked), and a closed pull request only when it was merged:
+    # that run records the signature and locks the thread. Unmerged closed pull requests stay open to comments.
+    if: >-
+      github.repository_owner == 'cubetes' && (
+        github.event.comment.body == 'recheck' ||
+        github.event.comment.body == 'I have read the CLA Document and I hereby sign the CLA' ||
+        (github.event_name == 'pull_request_target' &&
+          (github.event.action != 'closed' || github.event.pull_request.merged == true)))
+    steps:
+      - uses: contributor-assistant/github-action@ca4a40a7d1004f18d9960b404b97e5f30a505a08 # v2.6.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}   # the automatic token; no added secret
+        with:
+          path-to-document: https://github.com/cubetes/coaich/blob/main/docs/CLA.md   # update if the repo moves to an org
+          path-to-signatures: signatures/version1/cla.json
+          branch: cla-signatures
+          allowlist: dependabot[bot]
+          lock-pullrequest-aftermerge: true
