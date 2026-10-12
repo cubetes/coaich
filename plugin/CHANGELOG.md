@@ -1,9 +1,11 @@
 # Changelog
 
 CoAIch follows [docs/versioning.md](../docs/versioning.md): semantic versioning; 0.x is a preview with no hero
-name. Dates are release-candidate dates; nothing is published until the trademark search is done.
+name, or the next hero's name with "preview" after it.
 
 ## Unreleased
+
+## 0.4.0 — Achilles preview
 
 Fixed
 - Coming back after 14+ days off: the first week back is still not graded, but what you lift that week now sets

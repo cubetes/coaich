@@ -6,6 +6,12 @@ What changed, newest first. The plugin keeps its own detailed changelog in
 
 ## Unreleased
 
+## 0.4.0, "Achilles" preview
+
+### Plugin
+- Coming back after 14+ days off: what you lift in the first week back sets the next targets, never above the
+  old ones. Details in [plugin/CHANGELOG.md](plugin/CHANGELOG.md).
+
 ## 0.3.0, "Achilles" preview
 
 ### Project

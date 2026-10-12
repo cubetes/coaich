@@ -13,7 +13,7 @@ body:
     attributes:
       label: CoAIch version
       description: From `plugin/.claude-plugin/plugin.json`, or the app's settings screen.
-      placeholder: 0.3.0
+      placeholder: 0.4.0
     validations:
       required: true
   - type: input
