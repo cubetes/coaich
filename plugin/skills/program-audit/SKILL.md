@@ -36,7 +36,6 @@ and why. The gates:
 | Gate | Check | Source |
 |---|---|---|
 | G1 | weekly effective sets per group ≥ floor (beginner 4, intermediate+ 10 for chest, back, quads, hamstrings, 4 for the rest; 3 / 6 at 30–45 min) | Schoenfeld 2017, Currier 2026 (SR/MA); short-session floors our rule |
-| G2 | no group over the MRV coaching band | RP bands, P |
 | G3 | every group in ≥ 2 sessions a week | Pelland 2025, Currier 2026 (SR/MA): strength, not size |
 | G4 | every session within the minutes | the athlete's answer; time formula our rule |
 | G5 | effort: compounds ≥ 1 in reserve, spine lifts and beginners' first 4 weeks ≥ 2 | Robinson 2024, Refalo 2023; floors our rule |
@@ -44,7 +43,8 @@ and why. The gates:
 | G7 | valid ids, no exercise twice a day, ≤ 7 a day, pairs of two | our rule |
 | G8 | sets per exercise ≤ 4 (beginner 3; 60+ 2 for 8 weeks) | Krieger 2010; Fragala 2019 |
 
-Notes (never failures): G9 overhead triceps extension (Maeo 2023, one RCT) · P1 a direct rear-delt exercise
+Notes (never failures): G2 a group over the MRV coaching band (RP bands, P; a practitioner number cannot fail a program, and Pelland 2025 found
+smaller returns but no ceiling) · G9 overhead triceps extension (Maeo 2023, one RCT) · P1 a direct rear-delt exercise
 (our rule) · P2 a standing calf raise (Kinoshita 2023, small RCT) · P3 easy-week interval matches the level
 (interval our rule) · P4 a heavier main lift for a strength or both goal (Moesgaard 2022: 1RM in trained lifters
 only). A **known miss** is a listed exception with its reason (e.g. 2 days a week cannot reach 10 sets): report

@@ -12,8 +12,8 @@ rear delt, reverse fly, face pull; side delts = lateral raise, upright row; fron
   uses these; at 30/45-minute sessions it uses 3 and 6 (our rule) and the plan says shorter sessions grow muscle
   more slowly.
 - **Coaching bands.** MEV, MAV and MRV below are RP coaching practice (Israetel), grade P: no study has measured
-  them as cut-offs. Say "below the usual coaching band", never "below the minimum effective volume". Only MRV is
-  a gate (G2), applied per group at the group's largest head (back = lats + upper back, delts = three heads), and
+  them as cut-offs. Say "below the usual coaching band", never "below the minimum effective volume". MRV is
+  reported as a note (G2), never a failure, applied per group at the group's largest head (back = lats + upper back, delts = three heads), and
   per muscle for glutes, traps and abs.
 
 ## Bands (effective sets a week, practitioner)

@@ -85,7 +85,8 @@ def theirs(o):
         "slots": [[[s[0].split("/", 1)[1]] + s[1:] for s in x["slots"]] for x in o["routines"]],
         "left_out": o["left_out"], "notes": o["notes"], "warnings": [swift_text(w) for w in o["warnings"]],
         "fired": [swift_text(f) for f in o["fired"]], "placement": o["placement"],
-        "audit": [[g, ok, w, [[m, round(v, 6)] for m, v in miss]] for g, ok, w, miss in o["audit"]],
+        # G2 is a note in the plugin since 0.6 (no study supports a volume cap); the Swift core still gates it
+        "audit": [[g, ok, w or g == 2, [[m, round(v, 6)] for m, v in miss]] for g, ok, w, miss in o["audit"]],
         "unexpected": [swift_text(u) for u in o["unexpected"]],
         "groups": {k: round(v, 6) for k, v in o["groups"].items()},
         "sessions": {k: round(v, 6) for k, v in o["sessions"].items()},

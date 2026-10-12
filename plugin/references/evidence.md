@@ -106,14 +106,14 @@ Years are the print-issue year unless noted. Where the online-first year differs
 
 | Claim | Grade | Source | What CoAIch does with it |
 |---|---|---|---|
-| MEV / MAV / MRV (minimum effective, maximum adaptive and maximum recoverable volume) per muscle. | P | Israetel / Renaissance Periodization coaching bands. There is no study behind them. | MRV is used only as a ceiling. It is never used as a floor or as evidence. |
+| MEV / MAV / MRV (minimum effective, maximum adaptive and maximum recoverable volume) per muscle. | P | Israetel / Renaissance Periodization coaching bands. There is no study behind them. | MRV is a note in the audit (G2), never a failure, a floor or evidence. |
 
 ## Our rules (practitioner)
 
 These numbers are ours. Each one is labelled "our rule" wherever it appears. The direction may have support from the tables above, but the exact number does not.
 
 - **Set floors at short sessions:** effective sets/wk of ≥ 4 for beginners, dropping to **3** at 30/45-minute sessions. Intermediate/advanced: **10** for chest, back, quads and hamstrings, dropping to **6** at 30/45 minutes. The 4 and 10 come from the studies above; **3 and 6 are our rule**.
-- **MRV caps:** taken from RP coaching bands. Our rule.
+- **MRV caps:** taken from RP coaching bands. Our rule, so the audit reports them as a note, not a failure.
 - **Easy-week interval:** every **7th** week for intermediates and every **6th** for advanced, counted in sessions done, not calendar weeks. Beginners: triggered only. Our rule.
 - **Beginner day cap:** at most **4** training days/wk for the first 12 weeks. Our rule.
 - **Beginner set ramp:** **2** sets per exercise in weeks 1–4, then 3 from week 5. Our rule.

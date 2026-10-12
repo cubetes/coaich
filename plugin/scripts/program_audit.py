@@ -68,7 +68,8 @@ AREA_PATTERNS = {
     "other": [],
 }
 
-# MRV (effective sets a week): a practitioner coaching band (RP), the only band number that is a gate (G2).
+# MRV (effective sets a week): a practitioner coaching band (RP). G2 reports it as a note, never a failure: a gate
+# needs a study behind its direction, and Pelland 2025 found smaller returns but no ceiling (Baz-Valle 2022: mixed).
 MRV = {
     "chest": 22, "delts_side": 26, "delts_rear": 25, "delts_front": 12, "lats": 25, "upper_back": 25, "traps": 26,
     "biceps": 26, "triceps": 18, "quadriceps": 20, "hamstrings": 20, "glutes": 16, "calves": 20, "abdominals": 25,
@@ -123,13 +124,13 @@ KNOWN_MISSES = [
 ]
 
 GATE_NAMES = {
-    1: "Weekly effective sets per group ≥ floor", 2: "No group over the MRV band", 3: "Every group in ≥ 2 sessions",
+    1: "Weekly effective sets per group ≥ floor", 2: "Volume over the coaching band (note)", 3: "Every group in ≥ 2 sessions",
     4: "Every session within the minutes", 5: "Effort bounds", 6: "Pain rules", 7: "Exercises valid",
     8: "Sets per exercise", 9: "Overhead triceps preferred",
 }
 GATE_SOURCES = {
     1: "≥ 4 sets: Schoenfeld 2017 (SR/MA); ≥ 10: Currier 2026 (SR/MA); 3 and 6 at 30/45 min: our rule",
-    2: "RP coaching bands (practitioner, P)",
+    2: "RP coaching bands (practitioner, P): a note; Pelland 2025 found no ceiling",
     3: "Pelland 2025, Currier 2026 (SR/MA; strength and session length, not size)",
     4: "the athlete's own answer (time formula: our rule)",
     5: "Robinson 2024, Refalo 2023 (SR/MA); spine lifts ≥ 2 left: our rule",
@@ -260,7 +261,7 @@ def audit(p, catalogue=CATALOGUE):
         if not any(m in ms for _, ms in GROUPS):
             limits[m] = (m_sets.get(m, 0), cap)
     over = sorted((k, v) for k, (v, cap) in limits.items() if v > cap)
-    check(2, not over, "over MRV: " + ", ".join(f"{g} {fmt(v)}" for g, v in over), over)
+    check(2, not over, "over the coaching band: " + ", ".join(f"{g} {fmt(v)}" for g, v in over), over, warn_only=True)
 
     rare = [(g, sessions.get(g, 0)) for g, _ in GROUPS
             if not (p["level"] == "beginner" and g == "calves") and sessions.get(g, 0) < 2] if not pain else []
