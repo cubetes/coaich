@@ -53,6 +53,9 @@ why). Then ask the athlete to confirm, change or reject. Every ask row needs its
 Run the `progression` skill, step 3, with exactly what the athlete confirmed. Never approve a
 spine-loaded increase the athlete did not OK by name.
 
+If the athlete uses Hevy through its MCP server, ask: *"Send next week's targets to your Hevy routines?"* Yes →
+[hevy-routines.md](hevy-routines.md).
+
 ## 6. Write the check-in
 
 Write `check-ins/{today}-weekly.md`:

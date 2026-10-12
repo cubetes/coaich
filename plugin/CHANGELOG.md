@@ -5,6 +5,15 @@ name, or the next hero's name with "preview" after it.
 
 ## Unreleased
 
+Added
+- Send routines to Hevy: after the weekly review applies the targets, and with the athlete's yes, the week's
+  targets go to the athlete's Hevy routines (one per program routine, titled "<routine> · CoAIch", with rest,
+  rep range and each target's reason as the note), then are read back and checked. `program-build` uses the same
+  path for a new program (no weights yet). `scripts/hevy_routines.py` builds the routines from applied targets
+  only and checks the read-back; Claude sends them through the Hevy MCP server (needs Hevy Pro), creating or
+  updating by title and never deleting. Exercise matches live in the new `data/hevy_templates.csv`, learned from
+  imported Hevy workouts or picked by the athlete.
+
 ## 0.4.0 — Achilles preview
 
 Fixed

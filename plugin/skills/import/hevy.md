@@ -3,7 +3,8 @@
 Read-only weekly sync. Needs the Hevy MCP server installed by the user
 ([chrisdoc/hevy-mcp](https://github.com/chrisdoc/hevy-mcp), MIT, `npx -y hevy-mcp`, Node 24+) with their own
 Hevy API key (Hevy Pro, Settings > Developer). The key stays in the user's MCP config, never in the athlete
-folder. Use only the `get-*` tools: `create-*` and `update-*` write to Hevy and are out of scope here.
+folder. Use only the `get-*` tools here: sending routines to Hevy is a separate step with the athlete's yes
+([../weekly-review/hevy-routines.md](../weekly-review/hevy-routines.md)).
 
 If the Hevy tools are not available in this session, say so and offer the CSV export instead
 (Hevy: Settings > Export & Import Data > Export Workouts → `import_hevy.py <file>`). Use the CSV too for a

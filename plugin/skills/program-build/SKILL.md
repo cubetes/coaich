@@ -61,6 +61,6 @@ next: log the sessions (or `/import`), then `/weekly-review` grades them and set
 
 ## 5. Optional: push to Hevy
 
-Only if `data_sources` has `hevy-mcp` and the user says yes. Create or update routines by title, one per
-`routines[]`, sets from `sets` and `rep_range`. Then read the routines back and confirm they match before saying
-it worked. Never delete anything in Hevy.
+Only if `data_sources` has `hevy-mcp` and the user says yes: follow
+[../weekly-review/hevy-routines.md](../weekly-review/hevy-routines.md) with `build --program` (sets and rep
+ranges, no weights yet; the weekly review sends the weights once they're known).

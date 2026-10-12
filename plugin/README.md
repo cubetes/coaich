@@ -138,7 +138,7 @@ Model-invoked (Claude reaches for them, or you name them): `safety`, `import`, `
 | `import` | Strong CSV, Hevy (MCP or CSV), openGym backup → `data/sets.csv`, `data/sessions.csv`; Apple Health, openGym weigh-ins → `data/body.csv` (Apple Health also `data/health.csv`). Safe to re-run. | `import_strong.py`, `import_hevy.py`, `import_opengym.py`, `import_apple_health.py`, `exercise_map.py` |
 | `program-build` | Builds a program from your profile, explains every choice and passes the audit. | `program_build.py` |
 | `progression` | Grades last week and sets next week's targets, each with a reason. Spine-loaded increases and cuts need your OK. | `progression.py` |
-| `weekly-review` | The weekly loop: import, grade, propose, ask, apply, check-in; with nutrition on, one weight-trend line. | `progression.py`, `nutrition.py trend --line` |
+| `weekly-review` | The weekly loop: import, grade, propose, ask, apply, check-in; with nutrition on, one weight-trend line. With Hevy connected and your yes, sends next week's targets to your Hevy routines and checks them. | `progression.py`, `nutrition.py trend --line`, `hevy_routines.py` |
 | `program-audit` | Pressure-tests a program, yours or a generated one, against the evidence. | `program_audit.py` |
 | `monthly-check-in` | Four weeks of trends, past changes graded against their bands, next month's program and roadmap position, with your OK. | `monthly_check_in.py`, `changes.py` |
 | `adapt` | Pain (red flag → a professional, the area left out; otherwise safer swaps), fewer days, less time or travel, then back to normal. Every version passes the audit. | `adapt.py` |

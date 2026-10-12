@@ -19,6 +19,8 @@ my-training/
   data/body.csv          body measurements (schema below)
   data/health.csv        daily wearable metrics, long format (schema below)
   data/exercise_map.csv  source exercise name → exercise_id (the fix-up list)
+  data/hevy_templates.csv  exercise_id → Hevy exercise template id (for sending routines to Hevy)
+  data/hevy/             routines_<week>.json: the routines last built for Hevy
   data/opengym_names.json  openGym catalogue number → exercise name, cached by import_opengym.py --fetch-names
   data/raw/              untouched exports (git-ignored)
   photos/YYYY-MM-DD/     front.jpg, side.jpg, back.jpg: face removed, metadata stripped (v0.2, git-ignored)
@@ -38,6 +40,7 @@ local time, `datetime` = `YYYY-MM-DDTHH:MM`. CSV: UTF-8, comma, header row, no i
 | `health.csv` | `date` + `metric` |
 | `body.csv` | `date` + `source` |
 | `exercise_map.csv` | `exercise` |
+| `hevy_templates.csv` | `exercise_id` |
 
 Training imports replace **whole sessions**: a session in the import replaces every stored session with the same
 `session_id`, or with the same start minute + `workout_name` (one workout seen through two exports), sets
@@ -154,6 +157,12 @@ explicit `no`), `eating-disorder-unanswered`, `wellbeing-pause`; plus `pregnancy
 `exercise, exercise_id` — every exercise name as logged → its free-exercise-db id, or `custom:<slug>` until
 mapped. The importers add new names; the user (or the import skill) fixes a row and the next import applies it to
 every set.
+
+## data/hevy_templates.csv
+
+`exercise_id, template_id, hevy_title`: which Hevy exercise each CoAIch exercise is, so routines can be sent to
+Hevy. `hevy_routines.py build` fills it from imported Hevy workouts; `hevy_routines.py template` saves one the
+user picked.
 
 ## data/opengym_names.json
 

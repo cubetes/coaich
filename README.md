@@ -29,7 +29,8 @@ The main skills, in plain words:
   brings in your steps, weight, sleep and body measurements such as body fat and waist.
 - **Program build and audit.** Builds a program and checks it against the evidence.
 - **Next targets.** Grades last week and proposes next week's load and reps, each with its reason. You say yes first.
-- **Weekly review.** Imports, grades, proposes, asks, applies, and writes a check-in.
+- **Weekly review.** Imports, grades, proposes, asks, applies, and writes a check-in. With Hevy connected, it can
+  send next week's targets to your Hevy routines, after you say yes.
 - **Monthly check-in.** Four weeks of trends. Grades past changes. Plans the next month.
 - **Roadmap and adapt.** Lays out the year. Rebuilds the plan around pain, fewer days or travel.
 - **Feedback.** Drafts a GitHub post. You read it and post it yourself.
