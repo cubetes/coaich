@@ -36,8 +36,8 @@ Then, in an empty folder that will hold your training:
 /onboard
 ```
 
-It starts with `/setup` (language, units and where your workouts come from: Strong, Hevy, openGym, Apple Health
-or by hand, then a check that it all works), asks a few questions (about 3 minutes), runs the medical check,
+It starts with `/setup` (language, units and where your workouts come from: Strong, Hevy, openGym or by hand; Apple
+Health for steps, weight, sleep and body measurements; then a check that it all works), asks a few questions (about 3 minutes), runs the medical check,
 writes your profile and builds your first program. Run `/setup` again any time to change your integrations.
 
 ## Try it on the demo athlete
@@ -99,7 +99,8 @@ warning you must accept, a short health list that can stop the plan until a doct
 pain rule that keeps exercises off a painful area until it has been checked.
 
 **Your history is stuck in an app.** → `import` brings sessions in from a Strong CSV export, Hevy (the MCP
-server or its CSV export), an openGym backup and Apple Health (a Health Auto Export file) into plain CSV files.
+server or its CSV export), an openGym backup, and steps, weight, sleep and body measurements from Apple Health (a Health
+Auto Export file), into plain CSV files.
 
 **Targets with no reasons.** → `progression` grades each exercise and proposes next week's load and reps, with
 the rule that fired. `weekly-review` runs the loop and asks you before it changes anything.

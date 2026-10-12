@@ -25,7 +25,8 @@ CoAIch keeps your training in plain files in one folder. Every target comes with
 The main skills, in plain words:
 
 - **Onboard and setup.** Asks a few questions, runs a medical check first, writes your profile and builds your first program.
-- **Import.** Brings in your sessions from Strong, Hevy, openGym or Apple Health (a Health Auto Export file).
+- **Import.** Brings in your workouts from Strong, Hevy or openGym. From Apple Health (a Health Auto Export file) it
+  brings in your steps, weight, sleep and body measurements such as body fat and waist.
 - **Program build and audit.** Builds a program and checks it against the evidence.
 - **Next targets.** Grades last week and proposes next week's load and reps, each with its reason. You say yes first.
 - **Weekly review.** Imports, grades, proposes, asks, applies, and writes a check-in.
@@ -54,8 +55,9 @@ Then, in an empty folder for your training, run:
 /onboard
 ```
 
-`/onboard` starts with `/setup`. It asks where your data comes from (Strong, Hevy, openGym, Apple Health or by
-hand) and checks that it works. Run `/setup` again any time.
+`/onboard` starts with `/setup`. It asks where your workouts come from (Strong, Hevy, openGym or by hand) and
+whether to read Apple Health for steps, weight and body measurements. Then it checks that it all works. Run
+`/setup` again any time.
 
 **Try it first.** Clone this repository and open `examples/demo-athlete`, a made-up athlete with 12 weeks of
 training. The marketplace install does not include that folder. Run `claude` inside it, then `/weekly-review`. When

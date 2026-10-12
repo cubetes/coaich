@@ -32,7 +32,8 @@ to change. A value the user keeps is not passed to `save`.
    - Hevy, connected account (needs Hevy Pro and the Hevy MCP server, see `skills/import/hevy.md`) → `hevy-mcp`
    - Hevy, CSV export → `hevy-csv`
    - openGym (its JSON export) → `opengym`
-   - Apple Health (export file) → `apple-health`
+   - Apple Health, for steps, weight, sleep and body measurements, not workouts (a Health Auto Export JSON file,
+     a paid app) → `apple-health`
    - None: I'll log by hand → `none`
 5. Data arrives as files you export into this folder: `link: file`. Say once, without asking: *"A self-hosted
    server, so your data arrives without exporting, is on the roadmap."*
@@ -68,7 +69,7 @@ It reads the files only: nothing is copied or imported.
 | Strong | Strong: Settings > Export Strong Data (CSV) |
 | Hevy CSV | Hevy: Settings > Export & Import Data > Export Workouts |
 | openGym | openGym: export your workouts as JSON |
-| Apple Health | Health app: your picture > Export All Health Data (`export.zip`), or a Health Auto Export JSON |
+| Apple Health | Health Auto Export app: export JSON, version 2, aggregated by day (see `skills/import/apple-health.md`) |
 
 **Hevy MCP** can't be checked by the script. Make one read-only call: `get-workouts` (`page: 1`, `page_size: 1`). It answers → *"Hevy is connected."* Tool missing → *"The Hevy MCP server isn't set up: see `skills/import/hevy.md`."* An error → say it in plain words (a 401 means the API key is wrong). Never call a
 Hevy tool that creates or updates.
@@ -86,7 +87,7 @@ Called from `onboard` → go back to its next step. Otherwise, with a new source
 3. "¿Kilos o libras?"
 4. "¿De dónde vienen tus entrenos y tus datos de salud? Elige todos los que uses." Strong (exportación CSV) ·
    Hevy, cuenta conectada (necesita Hevy Pro y el servidor MCP de Hevy) · Hevy, exportación CSV · openGym
-   (exportación JSON) · Apple Health (archivo exportado) · Ninguno: lo apunto a mano
+   (exportación JSON) · Apple Health, para pasos, peso, sueño y medidas corporales, no entrenos (archivo JSON de Health Auto Export) · Ninguno: lo apunto a mano
 5. "Un servidor propio, para que tus datos lleguen sin exportar, está en la hoja de ruta."
 - Experimental: "La nutrición y la revisión de fotos son experimentales y están {activadas|desactivadas}. Para
   cambiarlo, pídemelo (solo mayores de 18) o vuelve a ejecutar /onboard."

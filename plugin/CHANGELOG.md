@@ -29,6 +29,8 @@ Added
   CSV, openGym, Apple Health, or by hand) and how data arrives, saved in `coaich.md`; `scripts/setup.py check`
   says what works and how to fix what doesn't. New `coaich.md` keys `runtime` and `link` (absent = the defaults,
   `claude-code` and `file`); `data_sources` gains `hevy-csv` and `opengym`. Existing folders need no change.
+  Apple Health is offered for steps, weight, sleep and body measurements (Health Auto Export JSON), not
+  workouts; the Health app's `export.zip` is refused with that advice.
 - `physique`: the face is removed on the user's computer before Claude sees a photo. Default: cut just below the
   chin (neck, traps and shoulders kept); `blur` covers the face with a solid block. Apple Vision on macOS
   (`scripts/anonymise.swift`), OpenCV if installed elsewhere; no face, several faces or a chin too close to the

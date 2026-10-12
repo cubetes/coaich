@@ -16,7 +16,6 @@ import json
 import os
 import shutil
 import sys
-import zipfile
 from pathlib import Path
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -88,13 +87,7 @@ def _opengym(path):
 
 def _apple_health(path):
     if str(path).lower().endswith(".zip"):
-        try:
-            with zipfile.ZipFile(path) as z:
-                if not any(n.endswith("export.xml") for n in z.namelist()):
-                    return "the zip has no export.xml"
-                return None
-        except (OSError, zipfile.BadZipFile) as e:
-            return f"not a readable zip ({e})"
+        return "the Health app's export.zip can't be imported; use a Health Auto Export JSON file"
     import import_apple_health
     return _parse(import_apple_health.parse_file, path)
 
@@ -103,8 +96,8 @@ EXPORTS = {  # source -> (checker, how to get a good file, in one sentence)
     "strong-csv": (_strong, "In Strong, open Settings > Export Strong Data and give me that CSV file."),
     "hevy-csv": (_hevy_csv, "In Hevy, open Settings > Export & Import Data > Export Workouts and give me that CSV."),
     "opengym": (_opengym, "In openGym, export your workouts as JSON and give me that file."),
-    "apple-health": (_apple_health, "In the Health app, tap your picture > Export All Health Data and give me "
-                                    "export.zip, or give me a Health Auto Export JSON file."),
+    "apple-health": (_apple_health, "In the Health Auto Export app, export JSON (version 2, aggregated by day) "
+                                    "and give me that file."),
 }
 
 

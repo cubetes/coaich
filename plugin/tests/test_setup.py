@@ -104,19 +104,13 @@ class SetupTest(unittest.TestCase):
         bad = self.write("og-bad.json", "{not json")
         self.assertEqual(self.status(setup.check(self.dir, {"opengym": bad}), "opengym")[0], "fix")
 
-    def test_apple_health_zip(self):
-        good = os.path.join(self.dir, "export.zip")
-        with zipfile.ZipFile(good, "w") as z:
-            z.writestr("apple_health_export/export.xml", "<HealthData/>")
-        self.assertEqual(self.status(setup.check(self.dir, {"apple-health": good}), "apple-health")[0], "ok")
-        no_xml = os.path.join(self.dir, "other.zip")
-        with zipfile.ZipFile(no_xml, "w") as z:
-            z.writestr("readme.txt", "x")
-        r = self.status(setup.check(self.dir, {"apple-health": no_xml}), "apple-health")
+    def test_apple_health_zip_is_refused(self):
+        z = os.path.join(self.dir, "export.zip")
+        with zipfile.ZipFile(z, "w") as f:
+            f.writestr("apple_health_export/export.xml", "<HealthData/>")
+        r = self.status(setup.check(self.dir, {"apple-health": z}), "apple-health")
         self.assertEqual(r[0], "fix")
-        self.assertIn("export.xml", r[2])
-        broken = self.write("broken.zip", "not a zip")
-        self.assertEqual(self.status(setup.check(self.dir, {"apple-health": broken}), "apple-health")[0], "fix")
+        self.assertIn("Health Auto Export", r[2])
 
     def test_apple_health_json(self):
         good = fixture("hae_export_a.json")
