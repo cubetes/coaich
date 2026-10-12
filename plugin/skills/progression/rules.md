@@ -44,7 +44,8 @@ Top level: `level` (`beginner|intermediate|advanced`, caps the jump; default int
 
 `full · moderated · recovery (easy week) · travel`, from the `plan/CURRENT.md` calendar
 (`| W<n> | type | start date | …`), else `program.json` `easy_weeks`, else full. `--week-type`
-overrides. A week whose first session follows ≥ 14 days off is graded as `reentry`.
+overrides. A week whose first session follows ≥ 14 days off is graded as `reentry`: not graded, but what was
+lifted that week sets the next target (below).
 
 ## Grading
 
@@ -86,6 +87,7 @@ brackets; sentences in `TEXT` in the script.
 | Next week is travel | hold [travel_week] | frozen | no |
 | Not done | hold [not_done]; 2 weeks → [not_done_x2] | carried | no |
 | No weight yet, first session logged | hold [calibrated] | the heaviest N logged sets, reps capped at `hi`, −1 rep on a failure set | no |
+| First week back after ≥ 14 days off, logged | hold [reentry_start] | the heaviest N logged sets as in calibration, each capped at the target from before the break (a heavier set takes the old target) | if any load is lower |
 | Other excluded | hold [excluded_hold] | carried; level shift → `coach_review` | no |
 | 2nd level shift in a row | hold [reanchor] | re-anchored to the logged sets | **yes** |
 | `partial` | hold [close_hold] | repeat | no |

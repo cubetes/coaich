@@ -210,6 +210,8 @@ TEXT = {"en": {
     "not_done_x2": "Not done two weeks in a row: same target. Worth a talk about this exercise.",
     "excluded_hold": "Skipped last week ({why}): same target.",
     "calibrated": "Starting weight set from what you logged: {target}.",
+    "reentry_start": "First week back after time off: next week starts from what you lifted ({target}), "
+                     "never above your target from before the break.",
     "reanchor": "Two weeks in a row far from the target: re-anchor to what you lifted ({target}).",
     "close_hold": "Nearly there ({why}): repeat the target.",
     "miss_hold": "First miss: repeat the target.",
@@ -614,6 +616,11 @@ def grade_row(row, target, sessions, monday, week_type):
     if week_type in ("recovery", "travel", "reentry"):
         code = {"recovery": "easy_week_graded", "travel": "travel_week_graded", "reentry": "reentry"}[week_type]
         base.update(grade="excluded", grade_reason={"code": code, "days": REENTRY_GAP_DAYS})
+        s = routine_session(sessions, row["routine"], monday) if week_type == "reentry" else None
+        work = [x for i in row_ids(row) for x in s["sets"].get(i, [])
+                if x.get("type", "normal") in WORKING_TYPES] if s and row.get("overload", True) else []
+        if work:    # the first week back sets next week's start (decide caps it at the old target)
+            base.update(grade_flags=["reentry"], source_sets=source_view(heaviest(work, target, row)))
         return base, None
     if not row.get("overload", True):
         base.update(grade="excluded", grade_reason={"code": "out_of_loop"})
@@ -631,11 +638,8 @@ def grade_row(row, target, sessions, monday, week_type):
         base.update(grade="not_done", grade_reason={"code": "exercise_not_logged"})
         return base, None
     if not target or any(t.get("kg") is None for t in target):     # no weight yet: this session sets it
-        n = len(target) or len(work)
-        heaviest = sorted(work, key=lambda x: (eff(x["kg"], row["assisted"]), x["reps"]), reverse=True)[:n]
         base.update(grade="excluded", grade_flags=["calibration"],
-                    source_sets=source_view(sorted(heaviest, key=lambda x: x["idx"])),
-                    grade_reason={"code": "calibration"})
+                    source_sets=source_view(heaviest(work, target, row)), grade_reason={"code": "calibration"})
         return base, None
     g = grade_exposure(target, work, row["rep_range"], row["load_step"], row["assisted"])
     base.update(grade=g["grade"], grade_reason=g["reason"], grade_flags=list(g["flags"]),
@@ -643,6 +647,13 @@ def grade_row(row, target, sessions, monday, week_type):
     if "athlete_note" in base:
         base["grade_flags"].append("athlete_note")
     return base, g
+
+
+def heaviest(work, target, row):
+    """The heaviest N working sets (N = target sets, else all), in logged order."""
+    n = len(target or []) or len(work)
+    top = sorted(work, key=lambda x: (eff(x["kg"], row["assisted"]), x["reps"]), reverse=True)[:n]
+    return sorted(top, key=lambda x: x["idx"])
 
 
 # ------------------------------------------------------------------ decisions
@@ -812,6 +823,15 @@ def decide(row, base, g, gf, history, next_type, restore=None, level="intermedia
                     return out(new, "hold", "calibrated", target=fmt_sets(new))
                 flags.extend(["coach_review", "reanchor"])
                 return out(new, "hold", "reanchor", True, target=fmt_sets(new))
+        if "reentry" in gflags and gf.get("source_sets"):
+            new = calibrated_sets(gf["source_sets"], base, lo, hi)
+            for i, s in enumerate(new):     # never above the target from before the break
+                b = base[i] if i < len(base) else None
+                if b and b.get("kg") is not None and s["kg"] is not None and eff(s["kg"], assisted) > eff(b["kg"], assisted):
+                    s.update(kg=b["kg"], reps=b["reps"])
+            lower = any(b.get("kg") is not None and s["kg"] is not None and eff(s["kg"], assisted) < eff(b["kg"], assisted)
+                        for s, b in zip(new, base))
+            return out(new, "hold", "reentry_start", lower, target=fmt_sets(new))
         if "level_shift" in gflags:
             flags.append("coach_review")
         return out(same(), "hold", "excluded_hold", why=gf.get("grade_reason"))

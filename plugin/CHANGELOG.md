@@ -5,6 +5,12 @@ name. Dates are release-candidate dates; nothing is published until the trademar
 
 ## Unreleased
 
+Fixed
+- Coming back after 14+ days off: the first week back is still not graded, but what you lift that week now sets
+  the next target (heaviest sets as logged, each capped at the target from before the break; a lower load needs
+  your OK). Before, the old target came back unchanged, however long the break. `adapt` tells you to go lighter
+  in that first week (3–4 reps left on every set). New reason `reentry_start`.
+
 ## 0.3.0 — Achilles preview
 
 Changed

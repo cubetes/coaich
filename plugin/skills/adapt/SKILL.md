@@ -60,8 +60,12 @@ python3 "${CLAUDE_PLUGIN_ROOT}/scripts/adapt.py" constraint --dir . --from YYYY-
 | Constraint | What the script does |
 |---|---|
 | up to 14 days, fewer days or minutes | those weeks run **moderated**: one set fewer per exercise; sessions run in order, what is not done holds its target; misses there do not count towards a reduce |
-| no gym (any length), or 0 days | **travel** weeks: targets frozen, nothing graded; 14+ days off makes the first week back a re-entry week (not graded) |
+| no gym (any length), or 0 days | **travel** weeks: targets frozen, nothing graded; 14+ days off makes the first week back a re-entry week (not graded; what is lifted sets the next targets, never above the old ones) |
 | over 14 days, 2+ days a week | a temporary program for those days and minutes, until `--to` |
+
+Before a first week back after 14+ days off, say: *"Go lighter this week than before the break: pick weights
+you could lift for 3 or 4 more reps on every set. Next week's targets start from what you log, never above your
+old ones."*
 
 If the script says a week's targets are already applied, run the `progression.py propose … --week-type … --force`
 line it prints, then apply, so the week is not graded as a full week.

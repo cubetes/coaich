@@ -335,6 +335,33 @@ class TestRules(Base):
         self.assertIn("60×8·8·7", pg.row_text(r))
 
 
+    def back(self, logged):
+        """Squat target 100x8x3; last trained W4, then 5 weeks off; first week back is W9."""
+        a = self.athlete([{"title": "Day A", "exercises": [ex(SQUAT, [(100, 8)] * 3, rep_range=[6, 10],
+                                                             tool="barbell_lower", category="spine")]}])
+        a.session(wk(-6), "Day A", [(SQUAT, [(100, 8)] * 3)])
+        if logged:
+            a.session(wk(-1), "Day A", [(SQUAT, logged)])
+        a.write(wk(-1) + timedelta(days=6))
+        a.propose(0)
+        return a.row(-1, "day-a-1"), a.row(0, "day-a-1")
+
+    def test_first_week_back_starts_from_what_was_lifted(self):
+        g, r = self.back([(80, 8), (80, 8), (80, 7)])
+        self.assertEqual((g["grade"], g["grade_reason"]["code"], g["grade_flags"]), ("excluded", "reentry", ["reentry"]))
+        self.assertEqual((r["reason"]["code"], r["needs_approval"]), ("reentry_start", True))
+        self.assertEqual(r["target_sets"], S([(80.0, 8), (80.0, 8), (80.0, 7)]))
+
+    def test_first_week_back_never_above_the_old_target(self):
+        _, r = self.back([(110, 8)] * 3)
+        self.assertEqual((r["reason"]["code"], r["needs_approval"]), ("reentry_start", False))
+        self.assertEqual(r["target_sets"], S([(100.0, 8)] * 3))
+
+    def test_first_week_back_not_logged_holds(self):
+        g, r = self.back(None)
+        self.assertEqual(r["target_sets"], S([(100.0, 8)] * 3))
+        self.assertNotEqual(r["reason"]["code"], "reentry_start")
+
 class TestProgramShapes(Base):
     def test_set_count_with_id_key_finds_weights_then_easy_week_from_program(self):
         a = self.athlete([{"title": "Day A", "exercises": [{"id": SQUAT, "sets": 3, "rep_range": [6, 8],
@@ -654,6 +681,7 @@ class TestReasonCodes(unittest.TestCase):
             "excluded_hold": self.decide("excluded", grade_reason={"code": "out_of_loop"}),
             "calibrated": self.decide("excluded", base=S([(None, 8)] * 3), grade_flags=["calibration"],
                                       source_sets=logged),
+            "reentry_start": self.decide("excluded", grade_flags=["reentry"], source_sets=logged),
             "reanchor": self.decide("excluded", grade_flags=["level_shift"], source_sets=logged,
                                     history=[{"grade": "excluded", "flags": ["level_shift"]}] * 2),
             "close_hold": self.decide("partial", grade_reason={"code": "close", "met": 2, "n": 3, "short": 1}),
