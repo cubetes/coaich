@@ -1,0 +1,27 @@
+# A GitHub release from a vX.Y.Z tag, after the preflight: tag = plugin.json version, the changelog has that
+# section, the tagged commit is on main. Notes = that changelog section, word for word. No pull_request_target.
+# Action pin verified 2026-10-11 with `git ls-remote` against the tag named in the comment.
+name: release
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: write   # creates the release; nothing else
+jobs:
+  release:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Preflight
+        run: |
+          git merge-base --is-ancestor "$GITHUB_SHA" origin/main || { echo "the tag is not on main"; exit 1; }
+          python3 scripts/release_check.py "$GITHUB_REF_NAME" > notes.md
+      - name: Checks
+        run: scripts/checks.sh
+      - name: Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --notes-file notes.md --verify-tag

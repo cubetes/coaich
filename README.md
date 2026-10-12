@@ -45,9 +45,22 @@ training folder. See [plugin/README.md](plugin/README.md).
 | `* 2.*` names | iCloud duplicate files |
 | Image metadata | EXIF, XMP and PNG text chunks (dates, locations, devices) |
 | Real-data guard (`scripts/real-data-guard.txt`) | Personal names, device ids, private hosts, gym names, real dates in test data |
+| File size | Any file over 500 KB (usually a photo or a data dump committed by mistake) |
 
 This repository is filled by an allow-list copy from a private repository
 (`scripts/sync-from-private.sh`). Only listed paths are copied; flagged files stay out.
+
+## How CoAIch is built
+
+CoAIch is written with the help of Claude Code, which fits: it is also a Claude Code plugin. A person decides what
+goes in, reviews every change and ships it. The coaching rules are plain code with tests (`plugin/scripts`,
+`Packages/AthleteCore`), so a number never depends on what a model happens to say that day. The instructions Claude
+follows in this repo are in [CLAUDE.md](CLAUDE.md).
+
+## Contributing and security
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening an issue or a pull request. Report security or privacy
+problems privately: see [SECURITY.md](SECURITY.md).
 
 ## Licence
 

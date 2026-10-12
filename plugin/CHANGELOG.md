@@ -11,6 +11,9 @@ Added
   (`scripts/anonymise.swift`), OpenCV if installed elsewhere; no face, several faces or a chin too close to the
   shoulders → nothing is filed and the user crops it. Only the anonymised copy is kept; Claude never opens the
   original. Setting `photo_anonymise: crop | blur` in `coaich.md`.
+- `physique`: a back view is never cut, so arms raised beside the head stay (back double biceps): a grey block
+  covers the back of the head, placed from the ears, neck and shoulders. No neck and shoulders found → nothing is
+  filed.
 
 ## 0.2.0 — preview
 
