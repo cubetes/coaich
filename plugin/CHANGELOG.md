@@ -5,7 +5,7 @@ name. Dates are release-candidate dates; nothing is published until the trademar
 
 ## Unreleased
 
-## 0.3.0 — preview
+## 0.3.0 — Achilles preview
 
 Changed
 - `nutrition` and `physique` are **experimental**: off unless `coaich.md` says `experimental: on` (new setting;

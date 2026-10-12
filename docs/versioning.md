@@ -8,7 +8,8 @@ CoAIch uses **MAJOR.MINOR.PATCH** (semantic versioning).
 | MINOR | New features that break nothing (a new skill, a new screen) | 1.4.2 → 1.5.0 |
 | PATCH | Fixes only | 1.4.2 → 1.4.3 |
 
-- **0.x is a preview** and has no hero name. **1.0.0 is the first stable public release.**
+- **0.x is a preview.** A preview may carry the next hero's name with "preview" after it (0.3.0 "Achilles preview").
+  **1.0.0 is the first stable public release** and the first to carry the name alone.
 - **One major across all products.** The plugin, the iPhone/Watch app and the web app share the MAJOR number and its
   hero whenever they share the same coaching rules and athlete-folder format. MINOR and PATCH move separately per
   product. "Plugin 1.3" and "app 1.7" are both the Achilles generation and give the same next targets.

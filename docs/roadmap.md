@@ -25,7 +25,7 @@ photo tools use Apple's face detection on a Mac. Android (Health Connect) and ot
 ## Step 1: the plugin, public (target December 2026)
 
 - **Before publishing:** a trademark check of the name and logo.
-- **First public version (0.3): the training core.** Onboarding with the medical gate, imports (Strong, Hevy, Apple
+- **First public version (0.3 "Achilles preview"): the training core.** Onboarding with the medical gate, imports (Strong, Hevy, Apple
   Health), program build and audit, next targets with their reasons, the weekly review and the roadmap.
 - **Nutrition and photo review stay marked "experimental"** until a lawyer has reviewed their safety wording; they
   can be switched on, with every safeguard in code.

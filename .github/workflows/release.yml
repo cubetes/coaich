@@ -24,4 +24,7 @@ jobs:
       - name: Release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --notes-file notes.md --verify-tag
+        # title from the changelog heading: "## 0.3.0 — Achilles preview" → v0.3.0 "Achilles preview"
+        run: |
+          name=$(grep -m1 "^## ${GITHUB_REF_NAME#v} — " plugin/CHANGELOG.md | sed 's/^## [^ ]* — //')
+          gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME \"$name\"" --notes-file notes.md --verify-tag
