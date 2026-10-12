@@ -6,6 +6,13 @@ What changed, newest first. The plugin keeps its own detailed changelog in
 
 ## Unreleased
 
+## 0.6.0, "Achilles" preview
+
+### Plugin
+- Rules made more honest after a review against the primary studies: the volume cap is a note, strength-goal
+  main lifts stop 2–3 reps short, the weight drops after a third miss (not the second), goals are rates.
+  Details in [plugin/CHANGELOG.md](plugin/CHANGELOG.md).
+
 ## 0.5.0, "Achilles" preview
 
 ### Plugin

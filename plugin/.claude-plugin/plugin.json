@@ -1,6 +1,6 @@
 {
   "name": "coaich",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "A strength and nutrition coach for lifters, for Claude Code. Every number comes with its reason. Your data stays in your folder.",
   "author": {
     "name": "CoAIch contributors"

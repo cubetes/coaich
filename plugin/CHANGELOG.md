@@ -5,6 +5,8 @@ name, or the next hero's name with "preview" after it.
 
 ## Unreleased
 
+## 0.6.0 — Achilles preview
+
 Changed (a review against Stronger By Science's articles and the primary studies; numbers come from the
 studies, never copied from the site)
 - `program-audit`: G2, a group over the MRV coaching band, is a note, not a failure. A gate needs a study behind
