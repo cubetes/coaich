@@ -217,7 +217,7 @@ TEXT = {"en": {
     "miss_hold": "First miss: repeat the target.",
     "miss2_hold": "Second miss in a row: one more try at the same target. A third miss makes it lighter.",
     "rep_pr_hold": "Missed, but a rep record against last time: repeat the target.",
-    "reduce": "{streak} misses in a row: about {pct} % of what you lifted, to build back up{coarse}. "
+    "reduce": "{streak} misses in a row: about {pct} % of what you lifted, to build back up{coarse}{rough}. "
               "Alternatives: hold, one set fewer, or another exercise.",
     "reduce_assisted": "{streak} misses in a row: more assistance ({kg_add} kg), reps to {reps}.",
     "fewer_reps": "{streak} misses in a row: back to {reps} reps.",
@@ -855,8 +855,10 @@ def decide(row, base, g, gf, history, next_type, restore=None, level="intermedia
         red = None if assisted else reduce_sets(base, gf.get("source_sets"), lo, hi, step)
         if red:
             new, pct = red
+            many = max(int(x["reps"]) for x in gf.get("source_sets") or []) > 12   # rep-max formulas drift past 12
             return out(new, "reduce", "reduce", True, streak=streak, pct=round(pct * 100),
-                       coarse=" (the load step is too big to go finer)" if pct < REDUCE_COARSE else "")
+                       coarse=" (the load step is too big to go finer)" if pct < REDUCE_COARSE else "",
+                       rough=" (a rough guide: your sets were over 12 reps)" if many else "")
         new = [{"kg": load_down(s["kg"], step, REDUCE_ASSISTED_PCT, assisted), "reps": min(hi, lo + 2),
                 "type": s.get("type", "normal")} for s in base]
         return out(new, "reduce", "reduce_assisted", True, streak=streak,

@@ -113,7 +113,8 @@ python3 "$P" bodyfat --dir <folder> --date YYYY-MM-DD --low 15 --high 19
 
 It writes the range to `photos/ratings.md` and the midpoint to its own `photo-range` row of `data/body.csv` (one
 row per date and source: a scale or Apple Health reading the same day stays, and wins wherever one number is
-needed). Never compare it with a scale or scanner number.
+needed). Never compare it with a scale or scanner number, and never turn it into a dated target: goals are
+rates (see the `roadmap` skill).
 
 ## 6. Goal physique → priorities
 

@@ -93,7 +93,7 @@ brackets; sentences in `TEXT` in the script.
 | `partial` | hold [close_hold] | repeat | no |
 | 1st miss / rep-PR miss | hold [miss_hold] / [rep_pr_hold] | repeat | no |
 | 2nd miss in a row | hold [miss2_hold] + `coach_review` | repeat once more | no |
-| 3rd miss in a row | `reduce` [reduce] | the (load, reps) pair on the grid (1 step down to −20 %, reps in range) whose Epley estimate is closest to **92 %** of the best logged set, never above **95 %**; tie → heavier. Assisted: +5 % assistance [reduce_assisted]. Bodyweight: reps to `lo` [fewer_reps] | **yes** |
+| 3rd miss in a row | `reduce` [reduce] | the (load, reps) pair on the grid (1 step down to −20 %, reps in range) whose Epley estimate is closest to **92 %** of the best logged set, never above **95 %**; tie → heavier; best set over 12 reps → the sentence says it is a rough guide (Epley drifts at high reps). Assisted: +5 % assistance [reduce_assisted]. Bodyweight: reps to `lo` [fewer_reps] | **yes** |
 | ≥ 3 misses after an accepted reduce | `swap` [swap_after_reduce] | proposal only | **yes** |
 | Met, compound set with 0 reps left | hold [failure_hold] | same; stop a rep earlier | no |
 | Met, every set at `hi`, reps left below target | hold [top_too_hard]; the 2nd week in a row +1 step [step_despite_hard] | | spine: yes |

@@ -41,6 +41,9 @@ It writes `plan/roadmap.md` (header = the data, body = tables rewritten from it)
   a week"; `hit_rate 70..85` = "you meet 70–85 % of your weekly targets"; `e1rm:<lift> 5..` = "your estimated
   best single on that lift up at least 5 %"; `weight_rate 0.1..0.5` = "body weight up 0.1–0.5 % a week". Say
   once that these are coaching bands (our rule), not study cut-offs.
+- **Goals are rates, never dated body-fat targets.** If the user asks for "X % body fat by <date>", say that a
+  body-fat estimate for one person can be off by several points, that a deadline pushes towards crash dieting,
+  and offer the rate instead (e.g. 0.5 % of body weight a week, checked against the weight trend).
 - **Mesocycles**: one program block each, ending on its easy week (intermediate every 7th program week, advanced
   every 6th; beginners have none planned and change program after the 4-week ramp, then every 6 weeks).
 - **Microcycles**: the projected weeks. Say plainly: easy weeks count in sessions done, so a missed session moves

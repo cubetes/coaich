@@ -723,6 +723,15 @@ class TestReasonCodes(unittest.TestCase):
         g = pg.grade_exposure(base, [dict(s, idx=i) for i, s in enumerate(logged)], [8, 12], 2.5, False)
         return pg.decide(ROW, base, g, {"grade": g["grade"]}, [], "full")
 
+    def test_reduce_says_rough_only_past_12_reps(self):
+        miss3 = [{"grade": "miss"}] * 3
+        low = self.decide("miss", history=miss3, source_sets=S([(100.0, 7)] * 3))
+        high = self.decide("miss", history=miss3, row=dict(ROW, rep_range=[12, 20]), base=S([(40.0, 20)] * 3),
+                           source_sets=S([(40.0, 15)] * 3))
+        self.assertNotIn("rough", pg.row_text(low))
+        self.assertEqual(high["reason"]["code"], "reduce")
+        self.assertIn("a rough guide", pg.row_text(high))
+
     def test_each_decision_code_is_produced_and_renders(self):
         for code, res in self.produced().items():
             with self.subTest(code=code):
