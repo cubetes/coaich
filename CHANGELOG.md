@@ -19,6 +19,7 @@ What changed, newest first. The plugin keeps its own detailed changelog in
 - Checks: files over 500 KB fail; releases need the tag, the plugin version and the changelog to agree.
 
 ### Plugin
+- `/setup` and `/feedback`, import from openGym, nutrition and photo review marked experimental (off by default).
 - Photo review removes the face before Claude sees a photo; back views get a block over the head instead of a cut.
   Details in [plugin/CHANGELOG.md](plugin/CHANGELOG.md).
 
