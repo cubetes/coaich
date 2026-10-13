@@ -5,6 +5,15 @@ name, or the next hero's name with "preview" after it.
 
 ## Unreleased
 
+## 0.8.0 — Achilles preview
+
+Added
+- Spanish: with `language: es` in `coaich.md`, every progression reason is written in Spanish (Spain, tú): the
+  weekly review's table, `progression.py explain`, the monthly check-in's flagged rows and the notes sent to Hevy.
+  Gym words as people say them ("reps", "ejercicio básico", "semana suave") and a decimal comma ("+2,5 kg");
+  files keep the dot. Glossary: [docs/spanish-glossary.md](../docs/spanish-glossary.md). Every reason code has a
+  test in every language.
+
 ## 0.7.0 — Achilles preview
 
 Added

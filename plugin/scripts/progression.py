@@ -345,6 +345,14 @@ def render(reason, lang="en"):
     return re.sub(r"(?<=\d)\.(?=\d)", ",", out) if lang == "es" else out  # Spain writes 82,5 kg; files keep the dot
 
 
+def lang_of(folder):
+    """The athlete's language from coaich.md (`language: es`), English when unset."""
+    try:
+        return af.setting(folder, "language") or "en"
+    except FileNotFoundError:
+        return "en"
+
+
 def row_text(row, lang="en"):
     """The decision sentence plus the OK / logging suffixes."""
     out = [render(row.get("reason"), lang)]
@@ -1347,7 +1355,7 @@ def print_proposal(doc, gdoc, folder):
         for r in rows:
             lw = r["last_week"]
             print(f"| {r['id']} | {r['name']} | {fmt_sets(lw.get('target_sets'))} | {fmt_sets(lw.get('source_sets'))} | "
-                  f"{GRADE_WORD[lw.get('grade')]} | {fmt_sets(r['target_sets'])} | {row_text(r)} | "
+                  f"{GRADE_WORD[lw.get('grade')]} | {fmt_sets(r['target_sets'])} | {row_text(r, lang_of(folder))} | "
                   f"{'ask' if r['needs_approval'] else ''} |")
             if lw.get("athlete_note"):
                 print(f"|  | ✎ athlete's note: “{lw['athlete_note']}” |  |  |  |  |  |  |")
@@ -1389,7 +1397,7 @@ def cmd_explain(args):
         print(f"- {r['name']} ({r['id']}): {fmt_sets(r.get('prev_target_sets'))} -> "
               f"{fmt_sets(r.get('live_target_sets') or r['target_sets'])} · {r['decision']} "
               f"[{(r.get('reason') or {}).get('code')}] · last week {GRADE_WORD[lw.get('grade')]}: "
-              f"{fmt_sets(lw.get('source_sets'))}\n  {row_text(r)}"
+              f"{fmt_sets(lw.get('source_sets'))}\n  {row_text(r, lang_of(args.dir))}"
               + (f" Coach override: {r['override_reason']}" if r.get("override_reason") else ""))
 
 

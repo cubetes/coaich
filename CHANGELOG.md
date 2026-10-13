@@ -6,6 +6,12 @@ What changed, newest first. The plugin keeps its own detailed changelog in
 
 ## Unreleased
 
+## 0.8.0, "Achilles" preview
+
+### Plugin
+- Spanish: set your language to Spanish in `/setup` and every reason for your next targets is written in Spanish,
+  with the words people use at the gym. Details in [plugin/CHANGELOG.md](plugin/CHANGELOG.md).
+
 ## 0.7.0, "Achilles" preview
 
 ### Plugin

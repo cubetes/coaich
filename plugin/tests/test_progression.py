@@ -149,6 +149,15 @@ class TestRules(Base):
         with self.assertRaises(SystemExit):
             a.run("explain", "--week", lab(0), "--find", "squat")
 
+    def test_spanish_athlete_reads_spanish_reasons(self):
+        a, r = self.one(RAISE, [(8, 15)] * 3, [(8, 15)] * 3, rep_range=[12, 15], load_step_kg=1.0,
+                        category="isolation", tool="dumbbell")
+        with open(os.path.join(a.dir, "coaich.md"), "w") as fh:
+            fh.write("language: es\nunits: kg\n")
+        es = pg.row_text(r, "es")
+        self.assertIn(es, a.run("explain", "--week", lab(0), "--find", "lateral raise"))
+        self.assertNotEqual(es, pg.row_text(r))
+
     def test_hold_adds_one_rep(self):
         a, r = self.one(BENCH, [(60, 10)] * 3, [(60, 10)] * 3, rep_range=[8, 12], category="compound",
                         tool="barbell_upper")

@@ -157,7 +157,7 @@ def flagged(folder, mondays):
     lines, out = [], []
     for rid, (label, r) in seen.items():
         alts = [pa.CATALOGUE[x]["name"] for x in _alternatives(folder, r["exercise_id"])]
-        lines.append(f"- {label} · {r['name']} ({rid}): {pg.row_text(r)}"
+        lines.append(f"- {label} · {r['name']} ({rid}): {pg.row_text(r, pg.lang_of(folder))}"
                      + (f" Same-slot alternatives: {', '.join(alts)}." if alts else ""))
         out.append(r)
     return "\n".join(lines), out
