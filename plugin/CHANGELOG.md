@@ -5,6 +5,17 @@ name, or the next hero's name with "preview" after it.
 
 ## Unreleased
 
+## 0.7.0 — Achilles preview
+
+Added
+- `evidence` skill: answers "why" questions (why 10 sets, why did my squat go up, is this backed by research)
+  from CoAIch's own rules and the studies behind them, each with its grade. Says plainly when a number is a
+  CoAIch rule, not a study. Never invents a study. Backed by `progression.py explain`.
+- `plugin/evals/`: six scripted conversations run by `claude plugin eval` (spine increases ask first, nothing
+  goes to Hevy without a yes, a red flag stops onboarding, import refuses a Health zip, nutrition stays off
+  unless switched on, feedback is never posted for you). Run by hand from the `plugin-evals` workflow; each run
+  costs API credit.
+
 ## 0.6.0 — Achilles preview
 
 Changed (a review against Stronger By Science's articles and the primary studies; numbers come from the

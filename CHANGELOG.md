@@ -6,6 +6,13 @@ What changed, newest first. The plugin keeps its own detailed changelog in
 
 ## Unreleased
 
+## 0.7.0, "Achilles" preview
+
+### Plugin
+- New `evidence` skill: ask "why?" about any target, rule or number and get CoAIch's rule with the studies
+  behind it, graded honestly. Six scripted test conversations check the plugin keeps its promises. Details in
+  [plugin/CHANGELOG.md](plugin/CHANGELOG.md).
+
 ## 0.6.0, "Achilles" preview
 
 ### Plugin
