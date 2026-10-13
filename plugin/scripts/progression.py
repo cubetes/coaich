@@ -16,8 +16,9 @@ Rules: plugin/skills/progression/rules.md. Data contract: plugin/docs/athlete-fo
                                       reason code and its sentence (the evidence skill uses it).
 
 Targets are per routine x exercise (row id = routine slug + slot). Reasons are stored as codes plus
-values ({"code": "step", "kg_add": 5.0, ...}) and rendered to sentences by `render` (English now; the
-TEXT table has a slot per language). User-facing text says "reps left" and "easy week".
+values ({"code": "step", "kg_add": 5.0, ...}) and rendered to sentences by `render` (English and Spanish; the
+TEXT table has a slot per language). User-facing text says "reps left" and "easy week"
+("te quedaban N" and "semana suave" in Spanish).
 Deterministic, Python 3.9+ stdlib, no network.
 """
 import argparse
@@ -244,6 +245,89 @@ TEXT = {"en": {
 }}
 
 
+# Spanish (Spain, tú). Glossary: docs/spanish-glossary.md. Callables ignore the English text stored in
+# "coarse"/"rough" and only test whether it is there.
+def _reps_es(n):
+    return f"{n} rep" if n == 1 else f"{n} reps"
+
+
+def _short_es(n):
+    return f"te faltó {_reps_es(n)}" if n == 1 else f"te faltaron {_reps_es(n)}"
+
+
+def _missed_es(v):
+    bits = [f"{v['met']}/{v['n']} series cumplidas"]
+    if v.get("missing"):
+        bits.append(f"{v['missing']} serie{'s' if v['missing'] != 1 else ''} sin hacer")
+    if v.get("under_load"):
+        bits.append("peso por debajo del objetivo")
+    if v.get("short"):
+        bits.append(_short_es(v["short"]))
+    return "; ".join(bits) + "."
+
+
+TEXT["es"] = {
+    # grades
+    "met": "{n}/{n} series en el objetivo o por encima.",
+    "close": lambda v: f"{v['met']}/{v['n']} series; en total {_short_es(v['short'])}.",
+    "missed": _missed_es,
+    "rep_pr": "Aun así, récord de reps respecto a la última vez.",
+    "easy_week_graded": "Semana suave: no cuenta.",
+    "travel_week_graded": "Semana de viaje: no cuenta.",
+    "reentry": "Primera semana tras {days} días o más sin entrenar: no cuenta.",
+    "out_of_loop": "No entra en la progresión semanal (program.json).",
+    "session_not_done": "Esta semana no apuntaste esta sesión.",
+    "exercise_not_logged": "No apuntaste este ejercicio en la sesión (¿lo cambiaste por otro?).",
+    "level_shift": "Apuntaste {kg} kg con un objetivo de {target_kg} kg: ¿otra máquina u otra variante?",
+    "calibration": "Primera sesión apuntada: marca tu peso de partida.",
+    # decisions
+    "easy_week": "Semana suave para recuperar: un 10 % menos de peso y un tercio menos de series. "
+                 "La semana que viene vuelven tus objetivos.",
+    "travel_week": "Semana de viaje: objetivos congelados.",
+    "after_easy_week": "Vuelves de la semana suave: recuperas tu objetivo anterior.",
+    "not_done": "No lo hiciste la semana pasada: mismo objetivo.",
+    "not_done_x2": "Dos semanas seguidas sin hacerlo: mismo objetivo. Conviene hablar de este ejercicio.",
+    "excluded_hold": "La semana pasada no contó ({why}): mismo objetivo.",
+    "calibrated": "Peso de partida según lo que apuntaste: {target}.",
+    "reentry_start": "Primera semana tras un parón: la semana que viene empiezas desde lo que levantaste "
+                     "({target}), nunca por encima de tu objetivo de antes del parón.",
+    "reanchor": "Dos semanas seguidas lejos del objetivo: lo ajustamos a lo que levantaste ({target}).",
+    "close_hold": "Casi ({why}): repite el objetivo.",
+    "miss_hold": "Primera vez que no llegas: repite el objetivo.",
+    "miss2_hold": "Segunda vez seguida sin llegar: un intento más con el mismo objetivo. "
+                  "Si a la tercera no llegas, bajamos el peso.",
+    "rep_pr_hold": "No llegaste, pero es récord de reps respecto a la última vez: repite el objetivo.",
+    "reduce": lambda v: f"{v['streak']} veces seguidas sin llegar: sobre el {v['pct']} % de lo que levantaste, "
+                        "para volver a subir"
+                        + (" (el salto de peso es demasiado grande para afinar más)" if v.get("coarse") else "")
+                        + (" (orientativo: tus series pasaban de 12 reps)" if v.get("rough") else "")
+                        + ". Alternativas: mantener, una serie menos u otro ejercicio.",
+    "reduce_assisted": "{streak} veces seguidas sin llegar: más asistencia ({kg_add} kg), bajas a {reps} reps.",
+    "fewer_reps": "{streak} veces seguidas sin llegar: vuelves a {reps} reps.",
+    "swap_after_reduce": "Sigue sin salir tras un bloque más ligero: toca cambiar de ejercicio.",
+    "swap_no_assistance": "Ya no queda asistencia que quitar: pasa a la versión sin asistencia.",
+    "step": lambda v: f"{_reps_es(v['reps'])} en todas las series"
+                      + ("" if v.get("left") is None else f" y te quedaban {v['left']}")
+                      + f": +{fmt_kg(v['kg_add'])} kg, vuelves a {v['lo']} reps.",
+    "step_despite_hard": "Segunda semana seguida arriba del rango y casi sin margen: +{kg_add} kg igualmente. "
+                         "Que te queden 2 reps.",
+    "step_assisted": "{reps} reps en todas las series: {kg_add} kg menos de asistencia, "
+                     "vuelves a {lo} reps.",
+    "top_too_hard": "Llegaste arriba del rango, pero solo te quedaban {left}: mismo peso.",
+    "failure_hold": "Llegaste al fallo en un ejercicio básico: mismo peso; para una rep antes.",
+    "top_no_load": "{reps} reps en todas las series de un ejercicio con tu peso corporal: "
+                   "toca una variante más difícil.",
+    "add_rep": "Objetivo cumplido: mismo peso, una rep más en la serie {set} ({frm} → {to}).",
+    "reps_to_done": "Objetivo cumplido: mismo peso, las reps suben a lo que hiciste.",
+    "reanchored": "Objetivo cumplido con más peso: el objetivo pasa a lo que levantaste.",
+    "new_row": "Nuevo en el programa: empieza con el objetivo previsto.",
+    # suffixes
+    "needs_ok_spine": "Necesita tu visto bueno: sube el peso en un ejercicio que carga la columna.",
+    "needs_ok": "Necesita tu visto bueno.",
+    "reps_left_missing": "Apunta cuántas reps te quedaban en este ejercicio: decide el tamaño del próximo salto.",
+}
+
+
 def render(reason, lang="en"):
     """{"code": ..., values} -> sentence. Nested reasons render first; floats ending in _kg/kg print as kg."""
     if not reason:
@@ -257,7 +341,8 @@ def render(reason, lang="en"):
         elif isinstance(v, float) and "kg" in k:
             v = fmt_kg(v)
         vals[k] = v
-    return tpl(reason) if callable(tpl) else tpl.format_map(defaultdict(str, vals))  # older files lack newer fields
+    out = tpl(reason) if callable(tpl) else tpl.format_map(defaultdict(str, vals))  # older files lack newer fields
+    return re.sub(r"(?<=\d)\.(?=\d)", ",", out) if lang == "es" else out  # Spain writes 82,5 kg; files keep the dot
 
 
 def row_text(row, lang="en"):
