@@ -773,6 +773,11 @@ class TestReasonCodes(unittest.TestCase):
         self.assertIn("orientativo", es)
         self.assertNotIn("orientativo", pg.render(dict(r, rough=""), "es"))
 
+    def test_spanish_writes_decimal_comma_and_reps(self):
+        r = {"code": "step", "reps": 12, "left": 3, "kg_add": 2.5, "lo": 8}
+        self.assertEqual(pg.render(r, "es"), "12 reps en todas las series y te quedaban 3: +2,5 kg, vuelves a 8 reps.")
+        self.assertIn("+2.5 kg", pg.render(r))                              # English and files keep the dot
+
     def test_unknown_language_falls_back_to_english(self):
         self.assertEqual(pg.render({"code": "miss_hold"}, "fr"), pg.render({"code": "miss_hold"}))
 

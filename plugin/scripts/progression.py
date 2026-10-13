@@ -246,7 +246,7 @@ TEXT = {"en": {
 # Spanish (Spain, tú). Glossary: docs/spanish-glossary.md. Callables ignore the English text stored in
 # "coarse"/"rough" and only test whether it is there.
 def _reps_es(n):
-    return f"{n} repetición" if n == 1 else f"{n} repeticiones"
+    return f"{n} rep" if n == 1 else f"{n} reps"
 
 
 def _short_es(n):
@@ -269,7 +269,7 @@ TEXT["es"] = {
     "met": "{n}/{n} series en el objetivo o por encima.",
     "close": lambda v: f"{v['met']}/{v['n']} series; en total {_short_es(v['short'])}.",
     "missed": _missed_es,
-    "rep_pr": "Aun así, récord de repeticiones respecto a la última vez.",
+    "rep_pr": "Aun así, récord de reps respecto a la última vez.",
     "easy_week_graded": "Semana suave: no cuenta.",
     "travel_week_graded": "Semana de viaje: no cuenta.",
     "reentry": "Primera semana tras {days} días o más sin entrenar: no cuenta.",
@@ -294,35 +294,35 @@ TEXT["es"] = {
     "miss_hold": "Primera vez que no llegas: repite el objetivo.",
     "miss2_hold": "Segunda vez seguida sin llegar: un intento más con el mismo objetivo. "
                   "Si a la tercera no llegas, bajamos el peso.",
-    "rep_pr_hold": "No llegaste, pero es récord de repeticiones respecto a la última vez: repite el objetivo.",
+    "rep_pr_hold": "No llegaste, pero es récord de reps respecto a la última vez: repite el objetivo.",
     "reduce": lambda v: f"{v['streak']} veces seguidas sin llegar: sobre el {v['pct']} % de lo que levantaste, "
                         "para volver a subir"
                         + (" (el salto de peso es demasiado grande para afinar más)" if v.get("coarse") else "")
-                        + (" (orientativo: tus series pasaban de 12 repeticiones)" if v.get("rough") else "")
+                        + (" (orientativo: tus series pasaban de 12 reps)" if v.get("rough") else "")
                         + ". Alternativas: mantener, una serie menos u otro ejercicio.",
-    "reduce_assisted": "{streak} veces seguidas sin llegar: más asistencia ({kg_add} kg), bajas a {reps} repeticiones.",
-    "fewer_reps": "{streak} veces seguidas sin llegar: vuelves a {reps} repeticiones.",
+    "reduce_assisted": "{streak} veces seguidas sin llegar: más asistencia ({kg_add} kg), bajas a {reps} reps.",
+    "fewer_reps": "{streak} veces seguidas sin llegar: vuelves a {reps} reps.",
     "swap_after_reduce": "Sigue sin salir tras un bloque más ligero: toca cambiar de ejercicio.",
     "swap_no_assistance": "Ya no queda asistencia que quitar: pasa a la versión sin asistencia.",
     "step": lambda v: f"{_reps_es(v['reps'])} en todas las series"
                       + ("" if v.get("left") is None else f" y te quedaban {v['left']}")
-                      + f": +{fmt_kg(v['kg_add'])} kg, vuelves a {v['lo']} repeticiones.",
+                      + f": +{fmt_kg(v['kg_add'])} kg, vuelves a {v['lo']} reps.",
     "step_despite_hard": "Segunda semana seguida arriba del rango y casi sin margen: +{kg_add} kg igualmente. "
-                         "Que te queden 2 repeticiones.",
-    "step_assisted": "{reps} repeticiones en todas las series: {kg_add} kg menos de asistencia, "
-                     "vuelves a {lo} repeticiones.",
+                         "Que te queden 2 reps.",
+    "step_assisted": "{reps} reps en todas las series: {kg_add} kg menos de asistencia, "
+                     "vuelves a {lo} reps.",
     "top_too_hard": "Llegaste arriba del rango, pero solo te quedaban {left}: mismo peso.",
-    "failure_hold": "Llegaste al fallo en un ejercicio compuesto: mismo peso; para una repetición antes.",
-    "top_no_load": "{reps} repeticiones en todas las series de un ejercicio con tu peso corporal: "
+    "failure_hold": "Llegaste al fallo en un ejercicio básico: mismo peso; para una rep antes.",
+    "top_no_load": "{reps} reps en todas las series de un ejercicio con tu peso corporal: "
                    "toca una variante más difícil.",
-    "add_rep": "Objetivo cumplido: mismo peso, una repetición más en la serie {set} ({frm} → {to}).",
-    "reps_to_done": "Objetivo cumplido: mismo peso, las repeticiones suben a lo que hiciste.",
+    "add_rep": "Objetivo cumplido: mismo peso, una rep más en la serie {set} ({frm} → {to}).",
+    "reps_to_done": "Objetivo cumplido: mismo peso, las reps suben a lo que hiciste.",
     "reanchored": "Objetivo cumplido con más peso: el objetivo pasa a lo que levantaste.",
     "new_row": "Nuevo en el programa: empieza con el objetivo previsto.",
     # suffixes
     "needs_ok_spine": "Necesita tu visto bueno: sube el peso en un ejercicio que carga la columna.",
     "needs_ok": "Necesita tu visto bueno.",
-    "reps_left_missing": "Apunta cuántas repeticiones te quedaban en este ejercicio: decide el tamaño del próximo salto.",
+    "reps_left_missing": "Apunta cuántas reps te quedaban en este ejercicio: decide el tamaño del próximo salto.",
 }
 
 
@@ -339,7 +339,8 @@ def render(reason, lang="en"):
         elif isinstance(v, float) and "kg" in k:
             v = fmt_kg(v)
         vals[k] = v
-    return tpl(reason) if callable(tpl) else tpl.format_map(defaultdict(str, vals))  # older files lack newer fields
+    out = tpl(reason) if callable(tpl) else tpl.format_map(defaultdict(str, vals))  # older files lack newer fields
+    return re.sub(r"(?<=\d)\.(?=\d)", ",", out) if lang == "es" else out  # Spain writes 82,5 kg; files keep the dot
 
 
 def row_text(row, lang="en"):
