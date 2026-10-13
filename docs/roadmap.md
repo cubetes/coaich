@@ -8,9 +8,13 @@ photo tools use Apple's face detection on a Mac. Android (Health Connect) and ot
 
 **The order (decided 2026-10-12): ship something useful as early as possible, then build on it.**
 
-1. **The plugin**: the brain, usable on its own.
-2. **The web companion**: log and see your plans in any browser, phone included.
-3. **The iPhone and Apple Watch apps**: the best experience, released last.
+1. **1.0 "Achilles", the plugin**: the brain, usable on its own.
+2. **2.0 "Bellerophon", the web companion**: see your plan and the coach's reasons in any browser, phone included,
+   and tick your meals.
+3. **3.0 "Cadmus", the iPhone companion**: the same, as a native iPhone app.
+4. **4.0 "Diomedes", the iPhone and Apple Watch logger**: log your sets live in the gym.
+
+(Decided 2026-10-13; see [versioning.md](versioning.md).)
 
 ## Where each part stands
 
@@ -36,22 +40,26 @@ photo tools use Apple's face detection on a Mac. Android (Health Connect) and ot
 - **`/feedback`**: send an idea or a problem to the project as a pre-filled GitHub Discussion or issue. Only safe
   details go with it (plugin version, operating system, which skills you used); never health data or names, and
   you see the exact text first. An optional, local usage count (off by default) can be attached when you choose.
-- Then **1.0 "Achilles"**: Spanish, the evidence skill, shared test cases with the app's engine, plugin evaluations
-  in CI, the Claude Code plugin marketplace.
+- Done since launch: the evidence skill and scripted plugin evaluations (0.7).
+- Then **1.0 "Achilles"**: Spanish (0.8), a frozen athlete-folder format (0.9), shared test cases with the app's
+  engine, the Claude Code plugin marketplace.
 
-## Step 2: the web companion and the open server (target early 2027)
+## Step 2: 2.0, the web companion and the open server (target early 2027)
 
 - **Publish the sync server:** one sync format, one open (AGPL) server, one person per server.
 - **Setup guides** for running it on your own computer and on your own Cloudflare account.
-- **The web companion:** log sets in the gym from your phone's browser, follow your training and diet plans, see the
-  next target and its reason. Installable on the home screen, so it also covers Android.
-- English first, Spanish next.
+- **The web companion:** see today's training and its targets with their reasons, your plan, the coach's weekly
+  review and your weight trend; tick your meals and leave a day note, which the plugin reads back in the weekly
+  review. Installable on the home screen, so it also covers Android. It shows and records; the plugin decides.
+- No set logging in 2.0: that is 4.0.
+- English and Spanish.
 
-## Step 3: the iPhone and Apple Watch apps (target mid 2027)
+## Step 3: 3.0 the iPhone companion, then 4.0 the iPhone and Apple Watch logger (target mid 2027)
 
-- Public TestFlight, then the App Store: starter programs, week-1 calibration, offline next targets, phone and Watch
-  logging, Apple Health read by the app.
-- Same data and plans as the web companion, through the same link.
+- **3.0:** the web companion's screens as a native iPhone app, Apple Health read by the app. Same data and plans,
+  through the same link.
+- **4.0:** logging in the gym on the iPhone and the Apple Watch (sets, rest timers, heart rate), starter programs,
+  week-1 calibration, offline next targets. Public TestFlight, then the App Store.
 
 ## Alongside
 
