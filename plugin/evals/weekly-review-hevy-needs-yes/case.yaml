@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: weekly-review-hevy-needs-yes
+context:
+  scaffold_script: setup.sh

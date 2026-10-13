@@ -12,6 +12,8 @@ Rules: plugin/skills/progression/rules.md. Data contract: plugin/docs/athlete-fo
                                       grade table + proposals as Markdown.
     apply   --dir D --week YYYY-Www   after the athlete's OK: mark accepted rows; the targets file
                                       becomes "applied" and frozen. Writes nothing else.
+    explain --dir D --week YYYY-Www [--find words]   read-only: per row, before -> after, the
+                                      reason code and its sentence (the evidence skill uses it).
 
 Targets are per routine x exercise (row id = routine slug + slot). Reasons are stored as codes plus
 values ({"code": "step", "kg_add": 5.0, ...}) and rendered to sentences by `render` (English and Spanish; the
@@ -1371,13 +1373,36 @@ def print_live(doc):
         print()
 
 
+def cmd_explain(args):
+    """Read-only: why each target is what it is (the evidence skill's 'why did my X change')."""
+    path = targets_path(args.dir, week_label(parse_week(args.week)))
+    if not os.path.exists(path):
+        raise SystemExit(f"No targets file for {args.week}: {path}")
+    doc, words = load_json(path), (args.find or "").lower().split()
+    rows = [r for r in doc["rows"]
+            if all(w in f"{r['id']} {r['name']} {r['exercise_id']}".lower().replace("_", " ") for w in words)]
+    if not rows:
+        raise SystemExit(f"No row in {doc['iso_week']} matches '{args.find}'.")
+    print(f"## Why: targets {doc['iso_week']} ({doc['status']}, {doc['microcycle_type']} week)\n")
+    for r in rows:
+        lw = r.get("last_week") or {}
+        print(f"- {r['name']} ({r['id']}): {fmt_sets(r.get('prev_target_sets'))} -> "
+              f"{fmt_sets(r.get('live_target_sets') or r['target_sets'])} · {r['decision']} "
+              f"[{(r.get('reason') or {}).get('code')}] · last week {GRADE_WORD[lw.get('grade')]}: "
+              f"{fmt_sets(lw.get('source_sets'))}\n  {row_text(r)}"
+              + (f" Coach override: {r['override_reason']}" if r.get("override_reason") else ""))
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     sub = p.add_subparsers(dest="cmd", required=True)
-    for name in ("grade", "propose", "apply"):
+    for name in ("grade", "propose", "apply", "explain"):
         sp = sub.add_parser(name)
         sp.add_argument("--dir", required=True, help="the athlete folder (holds coaich.md)")
         sp.add_argument("--week", required=True, help="ISO week, e.g. 2030-W10")
+        if name == "explain":
+            sp.add_argument("--find", help="words that pick the exercise, e.g. 'squat'")
+            continue
         sp.add_argument("--force", action="store_true")
         if name in ("grade", "propose"):
             sp.add_argument("--week-type", choices=("full", "moderated", "recovery", "travel"))
@@ -1389,7 +1414,7 @@ def main(argv=None):
             sp.add_argument("--override", action="append", help="ID=KGxR·R·R:reason")
             sp.add_argument("--auto-isolation-only", action="store_true")
     args = p.parse_args(argv)
-    {"grade": cmd_grade, "propose": cmd_propose, "apply": cmd_apply}[args.cmd](args)
+    {"grade": cmd_grade, "propose": cmd_propose, "apply": cmd_apply, "explain": cmd_explain}[args.cmd](args)
 
 
 if __name__ == "__main__":

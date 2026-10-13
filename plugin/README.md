@@ -128,7 +128,7 @@ photos, compares them over time and turns a goal look into training priorities.
 User-invoked (you type them): `/onboard`, `/setup`, `/weekly-review`, `/monthly-check-in`, `/feedback`.
 
 Model-invoked (Claude reaches for them, or you name them): `safety`, `import`, `program-build`, `progression`,
-`program-audit`, `nutrition`, `physique`, `adapt`, `roadmap`.
+`program-audit`, `evidence`, `nutrition`, `physique`, `adapt`, `roadmap`.
 
 | Skill | What it does | Script |
 |---|---|---|
@@ -140,6 +140,7 @@ Model-invoked (Claude reaches for them, or you name them): `safety`, `import`, `
 | `progression` | Grades last week and sets next week's targets, each with a reason. Spine-loaded increases and cuts need your OK. | `progression.py` |
 | `weekly-review` | The weekly loop: import, grade, propose, ask, apply, check-in; with nutrition on, one weight-trend line. With Hevy connected and your yes, sends next week's targets to your Hevy routines and checks them. | `progression.py`, `nutrition.py trend --line`, `hevy_routines.py` |
 | `program-audit` | Pressure-tests a program, yours or a generated one, against the evidence. | `program_audit.py` |
+| `evidence` | Answers "why" questions (why 10 sets, why did my squat go up, is this backed by research) with CoAIch's rule and the studies behind it, each with its grade; says plainly when a number is our rule. Never invents a study. | `progression.py explain` |
 | `monthly-check-in` | Four weeks of trends, past changes graded against their bands, next month's program and roadmap position, with your OK. | `monthly_check_in.py`, `changes.py` |
 | `adapt` | Pain (red flag → a professional, the area left out; otherwise safer swaps), fewer days, less time or travel, then back to normal. Every version passes the audit. | `adapt.py` |
 | `feedback` | Drafts an idea, problem or question as a GitHub post you read and post yourself; nothing is sent automatically. Warns about anything that looks personal. Attaches a count of skill runs only if you say yes. | `feedback.py` |

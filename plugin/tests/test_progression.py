@@ -138,6 +138,17 @@ class TestRules(Base):
         self.assertFalse(r["needs_approval"])
         self.assertEqual(a.targets(-1)["rows"][0]["grade"], "hit")
 
+    def test_explain_prints_the_reason_sentence_read_only(self):
+        a, r = self.one(RAISE, [(8, 15)] * 3, [(8, 15)] * 3, rep_range=[12, 15], load_step_kg=1.0,
+                        category="isolation", tool="dumbbell")
+        before = sha(pg.targets_path(a.dir, lab(0)))
+        out = a.run("explain", "--week", lab(0), "--find", "lateral raise")
+        self.assertIn("[step]", out)
+        self.assertIn(pg.row_text(r), out)
+        self.assertEqual(sha(pg.targets_path(a.dir, lab(0))), before)
+        with self.assertRaises(SystemExit):
+            a.run("explain", "--week", lab(0), "--find", "squat")
+
     def test_hold_adds_one_rep(self):
         a, r = self.one(BENCH, [(60, 10)] * 3, [(60, 10)] * 3, rep_range=[8, 12], category="compound",
                         tool="barbell_upper")
