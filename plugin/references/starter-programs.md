@@ -1,7 +1,7 @@
 # Starter programs
 
 How `scripts/program_build.py` turns intake answers into a program. Same rules as the CoAIch app's Release 1
-core; `tests/test_program_parity.py` checks both give the same program for every answer. Every template is our
+core; `tests/app_parity/test_program_parity.py` (repository root) checks both give the same program for every answer. Every template is our
 own: no third-party program name, table or text. Evidence and grades: [evidence.md](evidence.md). "Our rule" =
 a practitioner number, no study behind the exact value.
 

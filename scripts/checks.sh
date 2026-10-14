@@ -10,6 +10,8 @@ python3 scripts/release_check.py --self-test || fail=1
 
 # Plugin scripts: unit tests, including "examples/demo-athlete matches its generator".
 python3 -m unittest discover -s plugin/tests || fail=1
+# The app's program core against the plugin's (outside plugin/, so the plugin ships no binary fixture).
+python3 -m unittest discover -s tests/app_parity || fail=1
 
 if command -v gitleaks >/dev/null; then
   gitleaks dir . --config .gitleaks.toml --no-banner --redact || fail=1

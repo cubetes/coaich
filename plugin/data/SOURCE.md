@@ -7,7 +7,7 @@
 | `exercise_aliases.csv` | Written for CoAIch: common exercise names as Strong and Hevy show them → `exercises.json` ids. Every id is checked by `tests/test_exercise_map.py`. | AGPL-3.0, like the plugin |
 
 To refresh `exercises.json`: download the file again, trim the same fields, update the commit above, run the tests
-(`tests/test_program_parity.py` checks the build against the app over 11,086 cases).
+(`tests/app_parity/test_program_parity.py` at the repository root checks the build against the app over 11,086 cases).
 
 To refresh `foods.csv`: `FDC_API_KEY=<your key> python3 plugin/scripts/build_foods.py` (the food list and our tags live
 in that script), update the date above, run the tests (`tests/test_nutrition.py` checks every row).

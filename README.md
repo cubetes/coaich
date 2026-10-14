@@ -12,7 +12,7 @@
 
 > **For now CoAIch is built for iPhone and Apple Health users.** Android (Health Connect) comes later.
 >
-> **Preview.** "CoAIch" is a working name until the trademark search is done. The plugin is version 0.6 (preview).
+> **Preview.** "CoAIch" is a working name until the trademark search is done. The plugin is version 0.9 (preview).
 > See the [roadmap](docs/roadmap.md) and the [changelog](CHANGELOG.md).
 
 ## What it does
@@ -87,6 +87,7 @@ The [plugin guide](plugin/README.md) has the full list of skills, the folder lay
   body detection built into macOS, offline). It cuts below the chin, or covers the head on back photos, strips the
   location and camera data, and keeps only that copy. If a face can't be removed with confidence, nothing is filed.
 - Photos and food tools are opt-in and experimental. Read the [plugin guide](plugin/README.md) before you switch them on.
+- The full [privacy policy](PRIVACY.md).
 
 ## Coming later
 

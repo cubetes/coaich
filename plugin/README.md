@@ -2,7 +2,7 @@
 
 **A strength and nutrition coach for Claude Code. Every number comes with its reason. Your data stays in your folder.**
 
-> Preview, v0.6. "CoAIch" is a working name until the trademark search is done. The nutrition and photo
+> Preview, v0.9. "CoAIch" is a working name until the trademark search is done. The nutrition and photo
 > safeguards are in code; their wording is a draft until a lawyer has reviewed it.
 
 Most training apps tell you what to lift next and never say why. Most AI chats forget your last session the
@@ -192,6 +192,7 @@ own git repository.
   covers the face, if you prefer; back photos get a block over the head) before Claude sees it, with Apple Vision
   on a Mac (built in, offline) or OpenCV elsewhere if installed; Claude never opens the original. Only that copy is kept,
   in your folder, without location or camera data. Your original stays where you had it. Reviews rate muscle groups, never looks; body fat only as a rough range.
+- The full [privacy policy](../PRIVACY.md).
 
 ## Licence
 

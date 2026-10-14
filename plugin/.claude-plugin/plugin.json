@@ -5,6 +5,19 @@
   "author": {
     "name": "CoAIch contributors"
   },
+  "homepage": "https://github.com/cubetes/coaich",
+  "repository": "https://github.com/cubetes/coaich",
+  "documentationUrl": "https://github.com/cubetes/coaich/blob/main/plugin/README.md",
+  "supportUrl": "https://github.com/cubetes/coaich/issues",
+  "privacyPolicyUrl": "https://github.com/cubetes/coaich/blob/main/PRIVACY.md",
+  "icon": "./icon.png",
   "license": "AGPL-3.0-only",
-  "keywords": ["strength", "training", "coach", "progressive-overload", "lifting", "nutrition"]
+  "keywords": [
+    "strength",
+    "training",
+    "coach",
+    "progressive-overload",
+    "lifting",
+    "nutrition"
+  ]
 }

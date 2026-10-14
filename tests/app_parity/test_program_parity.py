@@ -1,6 +1,6 @@
 """Parity with the Release 1 Swift core: every answer cell gives the same program.
 
-fixtures/swift_parity.json.gz was exported from AthleteCore (Onboarding.decide + StarterProgram.audit) by a temporary
+swift_parity.json.gz (kept outside plugin/: the directory scan refuses binary files) was exported from AthleteCore (Onboarding.decide + StarterProgram.audit) by a temporary
 test in the r1-core worktree (commit d7b7ea0; no source change): 60 cells × 16 modifiers × weeks 1/5/9, every cell
 with 33 pain sets, the low-back grid, the 4032-answer gap grid and the medical gates. Routine titles are Spanish
 there; slot keys are compared by their exercise half.
@@ -13,7 +13,7 @@ import sys
 import unittest
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(HERE, "..", "scripts"))
+sys.path.insert(0, os.path.join(HERE, "..", "..", "plugin", "scripts"))
 import program_audit as pa  # noqa: E402
 import program_build as pb  # noqa: E402
 
@@ -103,7 +103,7 @@ def theirs(o):
 
 
 def load():
-    with gzip.open(os.path.join(HERE, "fixtures", "swift_parity.json.gz"), "rt", encoding="utf-8") as f:
+    with gzip.open(os.path.join(HERE, "swift_parity.json.gz"), "rt", encoding="utf-8") as f:
         return json.load(f)
 
 

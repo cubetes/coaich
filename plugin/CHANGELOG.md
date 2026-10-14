@@ -5,6 +5,11 @@ name, or the next hero's name with "preview" after it.
 
 ## Unreleased
 
+Changed
+- Ready for the Claude plugin directory: `plugin.json` links the homepage, docs, support and the new
+  [privacy policy](../PRIVACY.md), and has an icon. The app-parity test and its binary fixture moved to
+  `tests/app_parity/` at the repository root (the directory scan refuses binary files); it still runs in every check.
+
 ## 0.9.1 — Achilles preview
 
 Added
