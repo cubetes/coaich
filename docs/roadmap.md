@@ -20,7 +20,7 @@ photo tools use Apple's face detection on a Mac. Android (Health Connect) and ot
 
 | Part | Stage | Notes |
 |---|---|---|
-| **The plugin** (the brain) | Preview, 0.8 | 15 skills, 300 tests. Public. |
+| **The plugin** (the brain) | Preview, 0.9 | 15 skills, 306 tests. Public. |
 | **Web companion** | Private | Runs for the maintainer today (Spanish, one person). Needs English, a clean setup and the open server. |
 | **Sync server** (the link) | Private | One person per server, on your computer or your own Cloudflare account. Not in this repo yet. |
 | **iPhone app** | Alpha | Used daily by the maintainer. Not for other people yet. |
@@ -40,9 +40,9 @@ photo tools use Apple's face detection on a Mac. Android (Health Connect) and ot
 - **`/feedback`**: send an idea or a problem to the project as a pre-filled GitHub Discussion or issue. Only safe
   details go with it (plugin version, operating system, which skills you used); never health data or names, and
   you see the exact text first. An optional, local usage count (off by default) can be attached when you choose.
-- Done since launch: the evidence skill and scripted plugin evaluations (0.7), Spanish (0.8).
-- Then **1.0 "Achilles"**: a frozen athlete-folder format (0.9), shared test cases with the app's
-  engine, the Claude Code plugin marketplace.
+- Done since launch: the evidence skill and scripted plugin evaluations (0.7), Spanish (0.8), a frozen
+  athlete-folder format (0.9).
+- Then **1.0 "Achilles"**: shared test cases with the app's engine, the Claude Code plugin marketplace.
 
 ## Step 2: 2.0, the web companion and the open server (target early 2027)
 
