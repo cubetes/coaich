@@ -20,7 +20,7 @@ photo tools use Apple's face detection on a Mac. Android (Health Connect) and ot
 
 | Part | Stage | Notes |
 |---|---|---|
-| **The plugin** (the brain) | Preview, 0.9 | 15 skills, 306 tests. Public. |
+| **The plugin** (the brain) | Preview, 0.9 | 15 skills, 309 tests. Public. |
 | **Web companion** | Private | Runs for the maintainer today (Spanish, one person). Needs English, a clean setup and the open server. |
 | **Sync server** (the link) | Private | One person per server, on your computer or your own Cloudflare account. Not in this repo yet. |
 | **iPhone app** | Alpha | Used daily by the maintainer. Not for other people yet. |

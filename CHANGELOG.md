@@ -6,6 +6,8 @@ What changed, newest first. The plugin keeps its own detailed changelog in
 
 ## Unreleased
 
+## 0.9.1, "Achilles" preview
+
 ### Plugin
 - Fixed: after the weight drops following three misses, one more miss no longer proposes a new exercise straight
   away. You get the same three tries on the lighter weight. Found by the new shared target cases, one per rule,

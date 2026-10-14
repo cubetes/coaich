@@ -5,6 +5,8 @@ name, or the next hero's name with "preview" after it.
 
 ## Unreleased
 
+## 0.9.1 — Achilles preview
+
 Added
 - Shared target cases (`tests/fixtures/target_cases.json`, #13): 22 cases, one per progression rule, from a
   program row and the sets logged week by week to the expected grade, decision, reason code, next sets and OK.
