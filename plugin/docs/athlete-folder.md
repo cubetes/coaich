@@ -1,4 +1,4 @@
-# The athlete folder — data contract (v0.2)
+# The athlete folder — data contract (format 1, frozen)
 
 Every CoAIch skill reads and writes one folder per athlete, wherever the user keeps it. Skills find it from the
 working directory (the folder that holds `coaich.md`). Nothing leaves this folder except through the user's own
@@ -6,7 +6,7 @@ Claude session and the integrations the user turns on (Hevy MCP, Apple Health MC
 
 ```
 my-training/
-  coaich.md              settings: language (en|es), units (kg|lb), runtime, data sources, link, experimental (on|off), safety acknowledgement + clearance (date, sentence)
+  coaich.md              format (`coaich: 1`) and settings: language (en|es), units (kg|lb), runtime, data sources, link, experimental (on|off), safety acknowledgement + clearance (date, sentence)
   profile.md             intake answers (YAML header + notes)
   plan/CURRENT.md        what is in force today; wins over every other file
   plan/roadmap.md        macrocycle › phase › mesocycle › microcycle (vocabulary: references/periodization-system.md)
@@ -47,6 +47,16 @@ Training imports replace **whole sessions**: a session in the import replaces ev
 included. A hand-filled `gym` survives. `scripts/athlete_folder.py` does every CSV read and write and the log line
 (`read_rows`, `upsert_rows`, `replace_sessions`, `append_log`).
 
+## Format 1 (frozen)
+
+This contract is **format 1**, frozen for 1.0 ([ADR 0010](../../docs/adr/0010-athlete-folder-format-1-frozen.md)):
+`coaich: 1` in `coaich.md`. Within format 1 only optional additions are made: a new file, or a new key whose
+absence means the old behaviour. Anything else (a rename, a removal, a changed meaning, a new CSV column) is
+format 2, with an upgrade step and a MAJOR version. A plugin refuses a folder whose format is newer than it reads
+(`find` says to update the plugin). Folders made by 0.x (`coaich: 0.1`, or no key) are format 1 already;
+`athlete_folder.py upgrade`, run by `/setup`, stamps them. The `(v0.2)` and `(v0.1)` marks below say when a part
+arrived; all of it is format 1.
+
 ## coaich.md — setup fields
 
 Written by the `setup` skill (`scripts/setup.py save`, which changes only the keys it is given). An absent key
@@ -54,6 +64,7 @@ means the default.
 
 | Key | Values | Default |
 |---|---|---|
+| `coaich` | the folder format: `1` (written by `init`, stamped by `upgrade`; never set by hand) | `0` = a 0.x folder, read as format 1 |
 | `runtime` | `claude-code` (OpenAI Codex and Google Gemini CLI planned) | `claude-code` |
 | `data_sources` | list of `strong-csv`, `hevy-mcp`, `hevy-csv`, `opengym`, `apple-health`; `[]` = logged by hand | `[]` |
 | `link` | `file`: exports the user puts in this folder (a self-hosted server is planned) | `file` |

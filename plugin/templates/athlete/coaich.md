@@ -1,5 +1,5 @@
 ---
-coaich: 0.1
+coaich: 1                # athlete-folder format (docs/athlete-folder.md); /setup upgrades older folders
 language: en             # en | es
 units: kg                # kg | lb (files always store kg)
 runtime: claude-code     # where CoAIch runs (/setup); claude-code today

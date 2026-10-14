@@ -5,6 +5,12 @@ name, or the next hero's name with "preview" after it.
 
 ## Unreleased
 
+Added
+- The athlete-folder format is frozen as format 1 ([ADR 0010](../docs/adr/0010-athlete-folder-format-1-frozen.md)):
+  `coaich: 1` in `coaich.md`. `athlete_folder.py upgrade` (run by `/setup`) stamps folders made by 0.x; their
+  files and columns are already format 1, so nothing else changes. A plugin refuses a folder from a newer format
+  and says to update, so it never rewrites files it doesn't understand.
+
 ## 0.8.0 — Achilles preview
 
 Added

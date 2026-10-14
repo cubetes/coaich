@@ -82,6 +82,60 @@ class GateTest(unittest.TestCase):
             self.assertEqual(out.getvalue().strip(), "on")
 
 
+class FormatTest(unittest.TestCase):
+    """The frozen athlete-folder format: 0.x folders upgrade by a stamp, newer folders are refused."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.dir = Path(self.tmp.name)
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def write(self, header):
+        (self.dir / "coaich.md").write_text(f"---\n{header}language: es             # en | es\n---\n# Notes\n")
+
+    def test_new_folders_are_the_current_format(self):
+        af.init(self.dir)
+        self.assertEqual(af.folder_format(self.dir), af.FORMAT)
+
+    def test_a_0x_folder_is_stamped_and_keeps_everything_else(self):
+        for header in ("coaich: 0.1\n", ""):  # the 0.3–0.8 template, and a hand-made file without the key
+            with self.subTest(header=header):
+                self.write(header)
+                self.assertIn("upgraded", af.upgrade(self.dir))
+                text = (self.dir / "coaich.md").read_text()
+                self.assertEqual(af.folder_format(self.dir), af.FORMAT)
+                self.assertIn("language: es             # en | es", text)
+                self.assertTrue(text.endswith("# Notes\n"))
+                self.assertIn("already", af.upgrade(self.dir))  # safe to run again
+                self.assertEqual((self.dir / "coaich.md").read_text(), text)
+
+    def test_a_0x_folder_still_works_before_the_upgrade(self):
+        self.write("coaich: 0.1\n")
+        self.assertEqual(af.find(self.dir), self.dir.resolve())
+
+    def test_a_newer_folder_is_refused_before_anything_is_written(self):
+        self.write("coaich: 2\n")
+        with self.assertRaisesRegex(FileNotFoundError, "update the plugin"):
+            af.find(self.dir)
+        with self.assertRaisesRegex(ValueError, "update the plugin"):
+            af.upgrade(self.dir)
+        self.assertIn("coaich: 2", (self.dir / "coaich.md").read_text())
+
+    def test_a_format_that_is_not_a_number_is_an_error(self):
+        self.write("coaich: soon\n")
+        with self.assertRaisesRegex(ValueError, "not a format number"):
+            af.upgrade(self.dir)
+
+    def test_cli_upgrade_logs_once(self):
+        self.write("coaich: 0.1\n")
+        for _ in range(2):
+            with redirect_stdout(io.StringIO()):
+                self.assertEqual(af.main(["upgrade", "--dir", str(self.dir)]), 0)
+        self.assertEqual((self.dir / "log.md").read_text().count("· upgrade ·"), 1)
+
+
 class AthleteFolderTest(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()

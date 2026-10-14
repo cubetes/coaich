@@ -6,6 +6,10 @@ What changed, newest first. The plugin keeps its own detailed changelog in
 
 ## Unreleased
 
+### Plugin
+- Your training folder's format is now frozen: folders keep working from here to 1.0 and after. Run `/setup` once
+  to stamp an older folder; nothing in it changes. Details in [plugin/CHANGELOG.md](plugin/CHANGELOG.md).
+
 ## 0.8.0, "Achilles" preview
 
 ### Plugin

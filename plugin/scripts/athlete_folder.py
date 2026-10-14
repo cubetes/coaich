@@ -4,11 +4,12 @@
 Usage:
   athlete_folder.py find [--dir D]              print the athlete folder (the one holding coaich.md)
   athlete_folder.py init DIR                    create the folder from the template; never overwrites
+  athlete_folder.py upgrade [--dir D]           stamp a folder made by CoAIch 0.x with the current format
   athlete_folder.py log SKILL RESULT [--dir D]  append "date · skill · result" to log.md
   athlete_folder.py gate FEATURE [--dir D]      nutrition | photos | physique: exit 0 "on", exit 3 "off: reasons"
                                                 (experimental features: off unless coaich.md says `experimental: on`)
 
-Library: find(), setting(), read_rows(), upsert_rows(), write_rows(), replace_sessions(), set_header(),
+Library: find(), folder_format(), upgrade(), setting(), read_rows(), upsert_rows(), write_rows(), replace_sessions(), set_header(),
 append_log(), body_series(), gate().
 Python stdlib only.
 """
@@ -21,6 +22,7 @@ import sys
 from pathlib import Path
 
 MARKER = "coaich.md"
+FORMAT = 1  # the athlete-folder format (docs/athlete-folder.md, frozen); `coaich:` in coaich.md
 TEMPLATE = Path(__file__).resolve().parent.parent / "templates" / "athlete"
 
 # file -> (columns, key). The key makes every write idempotent: a row with an existing key replaces it.
@@ -48,6 +50,9 @@ def find(start=None):
     here = Path(start or os.getcwd()).resolve()
     for d in (here, *here.parents):
         if (d / MARKER).is_file():
+            if folder_format(d) > FORMAT:  # an older plugin rewriting newer files could lose data: refuse
+                raise FileNotFoundError(f"{d} uses athlete-folder format {folder_format(d):g}, newer than this "
+                                        f"CoAIch reads ({FORMAT}): update the plugin")
             return d
     raise FileNotFoundError(f"no {MARKER} in {here} or above: run /onboard to set up an athlete folder")
 
@@ -60,6 +65,27 @@ def setting(folder, key):
             if sep and k.strip().lower() == key:
                 return v.strip().strip("`\"'").lower() or None
     return None
+
+
+def folder_format(folder):
+    """The `coaich:` format number in coaich.md. Absent counts as 0 (every 0.x folder, same files as format 1)."""
+    v = setting(folder, "coaich")
+    try:
+        return float(v) if v else 0.0
+    except ValueError:
+        raise ValueError(f"coaich.md: `coaich: {v}` is not a format number") from None
+
+
+def upgrade(folder):
+    """Bring a folder to the current format. 0.x folders (CoAIch 0.3–0.8) already have format 1's files and
+    columns, so this only stamps `coaich: 1`. Safe to run again. Returns what it did, in one line."""
+    old = folder_format(folder)
+    if old > FORMAT:
+        raise ValueError(f"format {old:g} is newer than this CoAIch reads ({FORMAT}): update the plugin")
+    if old == FORMAT:
+        return f"already athlete-folder format {FORMAT}"
+    set_header(folder, MARKER, "coaich", FORMAT)
+    return f"upgraded athlete-folder format {old:g} → {FORMAT}"
 
 
 def init(folder):
@@ -278,6 +304,8 @@ def main(argv=None):
     f.add_argument("--dir")
     i = sub.add_parser("init")
     i.add_argument("dir")
+    u = sub.add_parser("upgrade")
+    u.add_argument("--dir")
     lg = sub.add_parser("log")
     lg.add_argument("skill")
     lg.add_argument("result")
@@ -292,6 +320,12 @@ def main(argv=None):
         elif a.cmd == "init":
             made = init(a.dir)
             print("\n".join(made) if made else "nothing to create: the folder is already set up")
+        elif a.cmd == "upgrade":
+            folder = find(a.dir)
+            line = upgrade(folder)
+            if line.startswith("upgraded"):
+                append_log(folder, "upgrade", line)
+            print(line)
         elif a.cmd == "gate":
             from program_build import front_matter  # program_build imports this module: import here, not on top
             folder = find(a.dir)
@@ -302,7 +336,7 @@ def main(argv=None):
             return 3 if reasons else 0
         else:
             print(append_log(find(a.dir), a.skill, a.result), end="")
-    except FileNotFoundError as e:
+    except (FileNotFoundError, ValueError) as e:
         print(e, file=sys.stderr)
         return 1
     return 0

@@ -18,6 +18,11 @@ Run `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/athlete_folder.py" find`. Not found 
 skill, it has just made the folder: something is wrong, stop and say so. Otherwise say *"Run /onboard first: it
 sets up your training folder."* and end.
 
+Then run `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/athlete_folder.py" upgrade`. It prints one line. "upgraded …" →
+tell the user, in their language, in one sentence: *"Your folder is now on the stable format: nothing in it
+changed."* "already …" → say nothing. Exit 1 with "update the plugin" → say the folder was made by a newer CoAIch,
+tell them to update the plugin (`/plugin`), and end.
+
 On a re-run, show the current answers first (`setup.py check` prints them) and ask only about what the user wants
 to change. A value the user keeps is not passed to `save`.
 
