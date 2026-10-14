@@ -43,7 +43,8 @@ every reason. Rounded outside corners, square inside corners.
 - **Below 24 px** the cut gets thin; check it on the real screen before using it that small.
 
 Files in `docs/brand/`: `wordmark-ink.svg`, `wordmark-bone.svg`, `logo-ink.svg`, `logo-bone.svg`, `logo-mono.svg`, `app-icon.svg`, `banner-light.svg`,
-`banner-dark.svg`, `social-preview.png` (1280 × 640, for the repository's social preview).
+`banner-dark.svg`. The repository's social preview (1280 × 640 PNG) is uploaded in the GitHub settings, not
+kept here: the plugin directory refuses binary files.
 
 ## Voice
 

@@ -7,8 +7,11 @@ name, or the next hero's name with "preview" after it.
 
 Changed
 - Ready for the Claude plugin directory: `plugin.json` links the homepage, docs, support and the new
-  [privacy policy](PRIVACY.md), and has an icon. The app-parity test and its binary fixture moved to
-  `tests/app_parity/` at the repository root (the directory scan refuses binary files); it still runs in every check.
+  [privacy policy](PRIVACY.md), and has an icon.
+- The repository is now the plugin only ([ADR 0011](docs/adr/0011-repo-is-the-plugin.md)): the plugin moved from
+  `plugin/` to the repository root, its guide is [docs/guide.md](docs/guide.md), and the repository checks are in
+  `tools/`. The iPhone and Watch app code, and the test that checked the app's program builder against this one,
+  live in the app's own repository. Install commands are unchanged.
 
 ## 0.9.1 — Achilles preview
 

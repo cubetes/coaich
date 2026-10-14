@@ -18,12 +18,14 @@ photo tools use Apple's face detection on a Mac. Android (Health Connect) and ot
 
 ## Where each part stands
 
+This repository is the plugin only. The other parts live in their own repositories.
+
 | Part | Stage | Notes |
 |---|---|---|
 | **The plugin** (the brain) | Preview, 0.9 | 15 skills, 309 tests. Public. |
 | **Web companion** | Private | Runs for the maintainer today (Spanish, one person). Needs English, a clean setup and the open server. |
-| **Sync server** (the link) | Private | One person per server, on your computer or your own Cloudflare account. Not in this repo yet. |
-| **iPhone app** | Alpha | Used daily by the maintainer. Not for other people yet. |
+| **Sync server** (the link) | Private | One person per server, on your computer or your own Cloudflare account. Its own repository when published. |
+| **iPhone app** | Alpha | Used daily by the maintainer. Not for other people yet. Private repository. |
 | **Apple Watch app** | Alpha | Same. Sits on top of the iPhone app, which works fully without it. |
 
 ## Step 1: the plugin, public (target December 2026)

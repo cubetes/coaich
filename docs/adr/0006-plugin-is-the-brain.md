@@ -1,5 +1,8 @@
 # The plugin is the brain; the apps are wrappers; the link between them is the user's choice
 
+> Where the code lives is superseded by [ADR 0011](0011-repo-is-the-plugin.md): this repository is the plugin
+> only, and the apps and their Swift engine live in their own repository. The rest of this decision stands.
+
 The owner's split (2026-10-12).
 
 **The apps** (iPhone, Apple Watch, web) are where you train: they record sets and sessions and adherence, show your
