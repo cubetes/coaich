@@ -1,7 +1,7 @@
 # The athlete-folder format is frozen as format 1
 
 2026-10-14. 1.0 promises that a training folder keeps working. So the format in
-[plugin/docs/athlete-folder.md](../../plugin/docs/athlete-folder.md) is frozen as **format 1**, recorded as
+[docs/athlete-folder.md](../athlete-folder.md) is frozen as **format 1**, recorded as
 `coaich: 1` in `coaich.md`.
 
 - **What is frozen:** every file, column, key, header field and block the contract describes. The labels inside

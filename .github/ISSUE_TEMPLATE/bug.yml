@@ -12,7 +12,7 @@ body:
     id: version
     attributes:
       label: CoAIch version
-      description: From `plugin/.claude-plugin/plugin.json`, or the app's settings screen.
+      description: From `.claude-plugin/plugin.json`, or the app's settings screen.
       placeholder: 0.9.1
     validations:
       required: true

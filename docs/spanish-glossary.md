@@ -1,6 +1,6 @@
 # Spanish glossary (Spain, tú)
 
-Owner-approved 2026-10-13 (issue #10). Used by `TEXT["es"]` in `plugin/scripts/progression.py`.
+Owner-approved 2026-10-13 (issue #10). Used by `TEXT["es"]` in `scripts/progression.py`.
 
 | English | Spanish | Why |
 |---|---|---|

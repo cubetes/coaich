@@ -20,7 +20,7 @@ jobs:
           echo "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb  gitleaks.tgz" | sha256sum -c -
           tar -xzf gitleaks.tgz -C /usr/local/bin gitleaks && rm gitleaks.tgz
       - name: Duplicates, image metadata, real-data guard, gitleaks
-        run: scripts/checks.sh
+        run: tools/checks.sh
       - name: trufflehog (verified secrets only)
         uses: trufflesecurity/trufflehog@a5f3de55cc2065ae4dde8fee24076f137fd62fcf # v3.97.8
         with:

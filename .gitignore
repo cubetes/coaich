@@ -6,4 +6,4 @@
 # Python
 __pycache__/
 # plugin eval runs
-plugin/evals/results/
+evals/results/
