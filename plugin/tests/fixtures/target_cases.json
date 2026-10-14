@@ -1,0 +1,2058 @@
+{
+ "about": "Shared target cases (plugin/tests/test_target_cases.py). Week n is ISO week 2030-W(10+n); each week's session is logged on its Monday as routine 'Day A'. Sets are [kg, reps, type, reps left] (type defaults to normal). expect: per proposed week, the grade of the week before (null if no targets file), decision, reason code, next sets [kg, reps], and needs_ok. Every proposed week is applied, all rows OK'd, before the next. The plugin is the reference; an app engine passes by giving the same answers.",
+ "format": 1,
+ "cases": [
+  {
+   "id": "step-isolation",
+   "rule": "Met, every set at hi: increase one step, reps to lo [step]",
+   "exercise": {
+    "exercise_id": "Side_Lateral_Raise",
+    "sets": [
+     [
+      8,
+      15
+     ],
+     [
+      8,
+      15
+     ],
+     [
+      8,
+      15
+     ]
+    ],
+    "rep_range": [
+     12,
+     15
+    ],
+    "load_step_kg": 1.0,
+    "category": "isolation",
+    "tool": "dumbbell"
+   },
+   "sessions": {
+    "0": [
+     [
+      8,
+      15
+     ],
+     [
+      8,
+      15
+     ],
+     [
+      8,
+      15
+     ]
+    ]
+   },
+   "expect": {
+    "1": {
+     "grade": "hit",
+     "decision": "increase",
+     "code": "step",
+     "needs_ok": false,
+     "sets": [
+      [
+       9.0,
+       12
+      ],
+      [
+       9.0,
+       12
+      ],
+      [
+       9.0,
+       12
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "add-rep",
+   "rule": "Met, below hi, logged = target: +1 rep on the first set [add_rep]",
+   "exercise": {
+    "exercise_id": "Barbell_Incline_Bench_Press_-_Medium_Grip",
+    "sets": [
+     [
+      60,
+      10
+     ],
+     [
+      60,
+      10
+     ],
+     [
+      60,
+      10
+     ]
+    ],
+    "rep_range": [
+     8,
+     12
+    ],
+    "category": "compound",
+    "tool": "barbell_upper"
+   },
+   "sessions": {
+    "0": [
+     [
+      60,
+      10
+     ],
+     [
+      60,
+      10
+     ],
+     [
+      60,
+      10
+     ]
+    ]
+   },
+   "expect": {
+    "1": {
+     "grade": "hit",
+     "decision": "hold",
+     "code": "add_rep",
+     "needs_ok": false,
+     "sets": [
+      [
+       60.0,
+       11
+      ],
+      [
+       60.0,
+       10
+      ],
+      [
+       60.0,
+       10
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "reps-to-done",
+   "rule": "Met, below hi, more reps than the target: reps become what was done [reps_to_done]",
+   "exercise": {
+    "exercise_id": "Barbell_Incline_Bench_Press_-_Medium_Grip",
+    "sets": [
+     [
+      60,
+      9
+     ],
+     [
+      60,
+      9
+     ],
+     [
+      60,
+      9
+     ]
+    ],
+    "rep_range": [
+     8,
+     12
+    ],
+    "category": "compound",
+    "tool": "barbell_upper"
+   },
+   "sessions": {
+    "0": [
+     [
+      60,
+      11
+     ],
+     [
+      60,
+      10
+     ],
+     [
+      60,
+      10
+     ]
+    ]
+   },
+   "expect": {
+    "1": {
+     "grade": "hit",
+     "decision": "hold",
+     "code": "reps_to_done",
+     "needs_ok": false,
+     "sets": [
+      [
+       60.0,
+       11
+      ],
+      [
+       60.0,
+       10
+      ],
+      [
+       60.0,
+       10
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "jump-two-steps",
+   "rule": "Met at hi with reps left = target hi + 1: two steps (jump table)",
+   "exercise": {
+    "exercise_id": "Barbell_Incline_Bench_Press_-_Medium_Grip",
+    "sets": [
+     [
+      60,
+      12
+     ],
+     [
+      60,
+      12
+     ],
+     [
+      60,
+      12
+     ]
+    ],
+    "rep_range": [
+     8,
+     12
+    ],
+    "category": "compound",
+    "tool": "barbell_upper"
+   },
+   "sessions": {
+    "0": [
+     [
+      60,
+      12,
+      "normal",
+      3
+     ],
+     [
+      60,
+      12,
+      "normal",
+      3
+     ],
+     [
+      60,
+      12,
+      "normal",
+      3
+     ]
+    ]
+   },
+   "expect": {
+    "1": {
+     "grade": "hit",
+     "decision": "increase",
+     "code": "step",
+     "needs_ok": false,
+     "sets": [
+      [
+       65.0,
+       8
+      ],
+      [
+       65.0,
+       8
+      ],
+      [
+       65.0,
+       8
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "jump-beginner-capped",
+   "rule": "Beginner, reps left ≥ hi + 2: three steps, capped at 5 kg on an upper-body barbell",
+   "level": "beginner",
+   "exercise": {
+    "exercise_id": "Barbell_Incline_Bench_Press_-_Medium_Grip",
+    "sets": [
+     [
+      60,
+      12
+     ],
+     [
+      60,
+      12
+     ],
+     [
+      60,
+      12
+     ]
+    ],
+    "rep_range": [
+     8,
+     12
+    ],
+    "category": "compound",
+    "tool": "barbell_upper"
+   },
+   "sessions": {
+    "0": [
+     [
+      60,
+      12,
+      "normal",
+      5
+     ],
+     [
+      60,
+      12,
+      "normal",
+      5
+     ],
+     [
+      60,
+      12,
+      "normal",
+      5
+     ]
+    ]
+   },
+   "expect": {
+    "1": {
+     "grade": "hit",
+     "decision": "increase",
+     "code": "step",
+     "needs_ok": false,
+     "sets": [
+      [
+       65.0,
+       8
+      ],
+      [
+       65.0,
+       8
+      ],
+      [
+       65.0,
+       8
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "failure-hold",
+   "rule": "Met, a compound set with 0 reps left: same target [failure_hold]",
+   "exercise": {
+    "exercise_id": "Barbell_Incline_Bench_Press_-_Medium_Grip",
+    "sets": [
+     [
+      60,
+      12
+     ],
+     [
+      60,
+      12
+     ],
+     [
+      60,
+      12
+     ]
+    ],
+    "rep_range": [
+     8,
+     12
+    ],
+    "category": "compound",
+    "tool": "barbell_upper"
+   },
+   "sessions": {
+    "0": [
+     [
+      60,
+      12,
+      "normal",
+      2
+     ],
+     [
+      60,
+      12,
+      "normal",
+      1
+     ],
+     [
+      60,
+      12,
+      "normal",
+      0
+     ]
+    ]
+   },
+   "expect": {
+    "1": {
+     "grade": "hit",
+     "decision": "hold",
+     "code": "failure_hold",
+     "needs_ok": false,
+     "sets": [
+      [
+       60.0,
+       12
+      ],
+      [
+       60.0,
+       12
+      ],
+      [
+       60.0,
+       12
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "top-too-hard-then-step",
+   "rule": "Met at hi with reps left below target: hold, then one step the 2nd week [top_too_hard, step_despite_hard]",
+   "exercise": {
+    "exercise_id": "Barbell_Deadlift",
+    "sets": [
+     [
+      140,
+      8
+     ],
+     [
+      140,
+      8
+     ],
+     [
+      140,
+      8
+     ]
+    ],
+    "rep_range": [
+     4,
+     8
+    ],
+    "load_step_kg": 2.5,
+    "category": "spine",
+    "tool": "barbell_lower"
+   },
+   "sessions": {
+    "0": [
+     [
+      140,
+      8,
+      "normal",
+      1
+     ],
+     [
+      140,
+      8,
+      "normal",
+      1
+     ],
+     [
+      140,
+      8,
+      "normal",
+      1
+     ]
+    ],
+    "1": [
+     [
+      140,
+      8,
+      "normal",
+      1
+     ],
+     [
+      140,
+      8,
+      "normal",
+      1
+     ],
+     [
+      140,
+      8,
+      "normal",
+      1
+     ]
+    ]
+   },
+   "expect": {
+    "1": {
+     "grade": "hit",
+     "decision": "hold",
+     "code": "top_too_hard",
+     "needs_ok": false,
+     "sets": [
+      [
+       140.0,
+       8
+      ],
+      [
+       140.0,
+       8
+      ],
+      [
+       140.0,
+       8
+      ]
+     ]
+    },
+    "2": {
+     "grade": "hit",
+     "decision": "increase",
+     "code": "step_despite_hard",
+     "needs_ok": true,
+     "sets": [
+      [
+       142.5,
+       4
+      ],
+      [
+       142.5,
+       4
+      ],
+      [
+       142.5,
+       4
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "spine-step-needs-ok",
+   "rule": "Spine lift load increase needs the athlete's OK [step]",
+   "exercise": {
+    "exercise_id": "Barbell_Deadlift",
+    "sets": [
+     [
+      140,
+      8
+     ],
+     [
+      140,
+      8
+     ],
+     [
+      140,
+      8
+     ]
+    ],
+    "rep_range": [
+     4,
+     8
+    ],
+    "load_step_kg": 2.5,
+    "category": "spine",
+    "tool": "barbell_lower"
+   },
+   "sessions": {
+    "0": [
+     [
+      140,
+      8,
+      "normal",
+      2
+     ],
+     [
+      140,
+      8,
+      "normal",
+      2
+     ],
+     [
+      140,
+      8,
+      "normal",
+      2
+     ]
+    ]
+   },
+   "expect": {
+    "1": {
+     "grade": "hit",
+     "decision": "increase",
+     "code": "step",
+     "needs_ok": true,
+     "sets": [
+      [
+       142.5,
+       4
+      ],
+      [
+       142.5,
+       4
+      ],
+      [
+       142.5,
+       4
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "close-hold",
+   "rule": "Close (≤ 2 reps short in total, every load within a step): repeat [close_hold]",
+   "exercise": {
+    "exercise_id": "Barbell_Incline_Bench_Press_-_Medium_Grip",
+    "sets": [
+     [
+      100,
+      10
+     ],
+     [
+      100,
+      10
+     ],
+     [
+      100,
+      10
+     ]
+    ],
+    "rep_range": [
+     8,
+     12
+    ],
+    "category": "compound",
+    "tool": "barbell_upper"
+   },
+   "sessions": {
+    "0": [
+     [
+      100,
+      10
+     ],
+     [
+      100,
+      9
+     ],
+     [
+      100,
+      9
+     ]
+    ]
+   },
+   "expect": {
+    "1": {
+     "grade": "partial",
+     "decision": "hold",
+     "code": "close_hold",
+     "needs_ok": false,
+     "sets": [
+      [
+       100.0,
+       10
+      ],
+      [
+       100.0,
+       10
+      ],
+      [
+       100.0,
+       10
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "miss-miss-reduce",
+   "rule": "1st miss holds, 2nd holds + coach review, 3rd reduces to ~92 % e1RM [miss_hold, miss2_hold, reduce]",
+   "exercise": {
+    "exercise_id": "Barbell_Incline_Bench_Press_-_Medium_Grip",
+    "sets": [
+     [
+      100,
+      10
+     ],
+     [
+      100,
+      10
+     ],
+     [
+      100,
+      10
+     ]
+    ],
+    "rep_range": [
+     8,
+     12
+    ],
+    "category": "compound",
+    "tool": "barbell_upper"
+   },
+   "sessions": {
+    "0": [
+     [
+      100,
+      7
+     ],
+     [
+      100,
+      7
+     ],
+     [
+      100,
+      7
+     ]
+    ],
+    "1": [
+     [
+      100,
+      6
+     ],
+     [
+      100,
+      6
+     ],
+     [
+      100,
+      6
+     ]
+    ],
+    "2": [
+     [
+      100,
+      6
+     ],
+     [
+      100,
+      6
+     ],
+     [
+      100,
+      6
+     ]
+    ]
+   },
+   "expect": {
+    "1": {
+     "grade": "miss",
+     "decision": "hold",
+     "code": "miss_hold",
+     "needs_ok": false,
+     "sets": [
+      [
+       100.0,
+       10
+      ],
+      [
+       100.0,
+       10
+      ],
+      [
+       100.0,
+       10
+      ]
+     ]
+    },
+    "2": {
+     "grade": "miss",
+     "decision": "hold",
+     "code": "miss2_hold",
+     "needs_ok": false,
+     "sets": [
+      [
+       100.0,
+       10
+      ],
+      [
+       100.0,
+       10
+      ],
+      [
+       100.0,
+       10
+      ]
+     ]
+    },
+    "3": {
+     "grade": "miss",
+     "decision": "reduce",
+     "code": "reduce",
+     "needs_ok": true,
+     "sets": [
+      [
+       85.0,
+       9
+      ],
+      [
+       85.0,
+       9
+      ],
+      [
+       85.0,
+       9
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "rep-pr-saves-a-week",
+   "rule": "A miss that beats the last exposure holds and counts once [rep_pr_hold]",
+   "exercise": {
+    "exercise_id": "Side_Lateral_Raise",
+    "sets": [
+     [
+      16,
+      15
+     ],
+     [
+      16,
+      15
+     ],
+     [
+      16,
+      15
+     ],
+     [
+      16,
+      15
+     ]
+    ],
+    "rep_range": [
+     12,
+     15
+    ],
+    "load_step_kg": 2.0,
+    "category": "isolation",
+    "tool": "dumbbell"
+   },
+   "sessions": {
+    "0": [
+     [
+      16,
+      15
+     ],
+     [
+      16,
+      13
+     ],
+     [
+      16,
+      12
+     ],
+     [
+      16,
+      11
+     ]
+    ],
+    "1": [
+     [
+      16,
+      15
+     ],
+     [
+      16,
+      14
+     ],
+     [
+      16,
+      13
+     ],
+     [
+      16,
+      12
+     ]
+    ],
+    "2": [
+     [
+      16,
+      15
+     ],
+     [
+      16,
+      14
+     ],
+     [
+      16,
+      13
+     ],
+     [
+      16,
+      12
+     ]
+    ],
+    "3": [
+     [
+      16,
+      15
+     ],
+     [
+      16,
+      14
+     ],
+     [
+      16,
+      13
+     ],
+     [
+      16,
+      12
+     ]
+    ]
+   },
+   "expect": {
+    "1": {
+     "grade": "miss",
+     "decision": "hold",
+     "code": "miss_hold",
+     "needs_ok": false,
+     "sets": [
+      [
+       16.0,
+       15
+      ],
+      [
+       16.0,
+       15
+      ],
+      [
+       16.0,
+       15
+      ],
+      [
+       16.0,
+       15
+      ]
+     ]
+    },
+    "2": {
+     "grade": "miss",
+     "decision": "hold",
+     "code": "rep_pr_hold",
+     "needs_ok": false,
+     "sets": [
+      [
+       16.0,
+       15
+      ],
+      [
+       16.0,
+       15
+      ],
+      [
+       16.0,
+       15
+      ],
+      [
+       16.0,
+       15
+      ]
+     ]
+    },
+    "3": {
+     "grade": "miss",
+     "decision": "hold",
+     "code": "miss2_hold",
+     "needs_ok": false,
+     "sets": [
+      [
+       16.0,
+       15
+      ],
+      [
+       16.0,
+       15
+      ],
+      [
+       16.0,
+       15
+      ],
+      [
+       16.0,
+       15
+      ]
+     ]
+    },
+    "4": {
+     "grade": "miss",
+     "decision": "reduce",
+     "code": "reduce",
+     "needs_ok": true,
+     "sets": [
+      [
+       14.0,
+       15
+      ],
+      [
+       14.0,
+       15
+      ],
+      [
+       14.0,
+       15
+      ],
+      [
+       14.0,
+       15
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "swap-after-reduce",
+   "rule": "After an accepted reduce the miss count starts again: 1st miss holds, 2nd holds, 3rd proposes a swap [miss_hold, miss2_hold, swap_after_reduce]",
+   "exercise": {
+    "exercise_id": "Barbell_Incline_Bench_Press_-_Medium_Grip",
+    "sets": [
+     [
+      100,
+      10
+     ],
+     [
+      100,
+      10
+     ],
+     [
+      100,
+      10
+     ]
+    ],
+    "rep_range": [
+     8,
+     12
+    ],
+    "category": "compound",
+    "tool": "barbell_upper"
+   },
+   "sessions": {
+    "0": [
+     [
+      100,
+      6
+     ],
+     [
+      100,
+      6
+     ],
+     [
+      100,
+      6
+     ]
+    ],
+    "1": [
+     [
+      100,
+      6
+     ],
+     [
+      100,
+      6
+     ],
+     [
+      100,
+      6
+     ]
+    ],
+    "2": [
+     [
+      100,
+      6
+     ],
+     [
+      100,
+      6
+     ],
+     [
+      100,
+      6
+     ]
+    ],
+    "3": [
+     [
+      85,
+      6
+     ],
+     [
+      85,
+      6
+     ],
+     [
+      85,
+      6
+     ]
+    ],
+    "4": [
+     [
+      85,
+      6
+     ],
+     [
+      85,
+      6
+     ],
+     [
+      85,
+      6
+     ]
+    ],
+    "5": [
+     [
+      85,
+      6
+     ],
+     [
+      85,
+      6
+     ],
+     [
+      85,
+      6
+     ]
+    ]
+   },
+   "expect": {
+    "1": {
+     "grade": "miss",
+     "decision": "hold",
+     "code": "miss_hold",
+     "needs_ok": false,
+     "sets": [
+      [
+       100.0,
+       10
+      ],
+      [
+       100.0,
+       10
+      ],
+      [
+       100.0,
+       10
+      ]
+     ]
+    },
+    "2": {
+     "grade": "miss",
+     "decision": "hold",
+     "code": "miss2_hold",
+     "needs_ok": false,
+     "sets": [
+      [
+       100.0,
+       10
+      ],
+      [
+       100.0,
+       10
+      ],
+      [
+       100.0,
+       10
+      ]
+     ]
+    },
+    "3": {
+     "grade": "miss",
+     "decision": "reduce",
+     "code": "reduce",
+     "needs_ok": true,
+     "sets": [
+      [
+       85.0,
+       9
+      ],
+      [
+       85.0,
+       9
+      ],
+      [
+       85.0,
+       9
+      ]
+     ]
+    },
+    "4": {
+     "grade": "miss",
+     "decision": "hold",
+     "code": "miss_hold",
+     "needs_ok": false,
+     "sets": [
+      [
+       85.0,
+       9
+      ],
+      [
+       85.0,
+       9
+      ],
+      [
+       85.0,
+       9
+      ]
+     ]
+    },
+    "5": {
+     "grade": "miss",
+     "decision": "hold",
+     "code": "miss2_hold",
+     "needs_ok": false,
+     "sets": [
+      [
+       85.0,
+       9
+      ],
+      [
+       85.0,
+       9
+      ],
+      [
+       85.0,
+       9
+      ]
+     ]
+    },
+    "6": {
+     "grade": "miss",
+     "decision": "swap",
+     "code": "swap_after_reduce",
+     "needs_ok": true,
+     "sets": [
+      [
+       85.0,
+       9
+      ],
+      [
+       85.0,
+       9
+      ],
+      [
+       85.0,
+       9
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "not-done-twice",
+   "rule": "Not logged: hold, the 2nd week says so [not_done, not_done_x2]",
+   "exercise": {
+    "exercise_id": "Barbell_Incline_Bench_Press_-_Medium_Grip",
+    "sets": [
+     [
+      100,
+      10
+     ],
+     [
+      100,
+      10
+     ],
+     [
+      100,
+      10
+     ]
+    ],
+    "rep_range": [
+     8,
+     12
+    ],
+    "category": "compound",
+    "tool": "barbell_upper"
+   },
+   "sessions": {},
+   "expect": {
+    "1": {
+     "grade": "not_done",
+     "decision": "hold",
+     "code": "not_done",
+     "needs_ok": false,
+     "sets": [
+      [
+       100.0,
+       10
+      ],
+      [
+       100.0,
+       10
+      ],
+      [
+       100.0,
+       10
+      ]
+     ]
+    },
+    "2": {
+     "grade": "not_done",
+     "decision": "hold",
+     "code": "not_done_x2",
+     "needs_ok": false,
+     "sets": [
+      [
+       100.0,
+       10
+      ],
+      [
+       100.0,
+       10
+      ],
+      [
+       100.0,
+       10
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "calibration",
+   "rule": "No weight yet: the first session sets it [calibrated]",
+   "exercise": {
+    "exercise_id": "Barbell_Squat",
+    "sets": [
+     [
+      null,
+      8
+     ],
+     [
+      null,
+      8
+     ],
+     [
+      null,
+      8
+     ]
+    ],
+    "rep_range": [
+     6,
+     10
+    ],
+    "category": "spine",
+    "tool": "barbell_lower"
+   },
+   "sessions": {
+    "0": [
+     [
+      40,
+      5,
+      "warmup"
+     ],
+     [
+      60,
+      8
+     ],
+     [
+      60,
+      8
+     ],
+     [
+      60,
+      7
+     ]
+    ]
+   },
+   "expect": {
+    "1": {
+     "grade": "excluded",
+     "decision": "hold",
+     "code": "calibrated",
+     "needs_ok": false,
+     "sets": [
+      [
+       60.0,
+       8
+      ],
+      [
+       60.0,
+       8
+      ],
+      [
+       60.0,
+       7
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "warmups-and-ramps-ignored",
+   "rule": "Only the N heaviest working sets are graded; warm-ups never count",
+   "exercise": {
+    "exercise_id": "Barbell_Incline_Bench_Press_-_Medium_Grip",
+    "sets": [
+     [
+      100,
+      8
+     ],
+     [
+      100,
+      8
+     ],
+     [
+      100,
+      8
+     ]
+    ],
+    "rep_range": [
+     6,
+     10
+    ],
+    "category": "compound",
+    "tool": "barbell_upper"
+   },
+   "sessions": {
+    "0": [
+     [
+      40,
+      10,
+      "warmup"
+     ],
+     [
+      60,
+      10
+     ],
+     [
+      80,
+      5
+     ],
+     [
+      100,
+      8
+     ],
+     [
+      100,
+      8
+     ],
+     [
+      100,
+      8
+     ]
+    ]
+   },
+   "expect": {
+    "1": {
+     "grade": "hit",
+     "decision": "hold",
+     "code": "add_rep",
+     "needs_ok": false,
+     "sets": [
+      [
+       100.0,
+       9
+      ],
+      [
+       100.0,
+       8
+      ],
+      [
+       100.0,
+       8
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "heavier-fewer-reps-met",
+   "rule": "A heavier set with ≥ lo reps and a higher e1RM meets the target",
+   "exercise": {
+    "exercise_id": "Barbell_Incline_Bench_Press_-_Medium_Grip",
+    "sets": [
+     [
+      100,
+      10
+     ],
+     [
+      100,
+      10
+     ],
+     [
+      100,
+      10
+     ]
+    ],
+    "rep_range": [
+     8,
+     12
+    ],
+    "category": "compound",
+    "tool": "barbell_upper"
+   },
+   "sessions": {
+    "0": [
+     [
+      105,
+      9
+     ],
+     [
+      105,
+      9
+     ],
+     [
+      105,
+      9
+     ]
+    ]
+   },
+   "expect": {
+    "1": {
+     "grade": "hit",
+     "decision": "hold",
+     "code": "reanchored",
+     "needs_ok": false,
+     "sets": [
+      [
+       105.0,
+       9
+      ],
+      [
+       105.0,
+       9
+      ],
+      [
+       105.0,
+       9
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "assisted-step",
+   "rule": "Assisted: one step less assistance [step_assisted]",
+   "exercise": {
+    "exercise_id": "Dips_-_Chest_Version",
+    "sets": [
+     [
+      10,
+      12
+     ],
+     [
+      10,
+      12
+     ]
+    ],
+    "rep_range": [
+     8,
+     12
+    ],
+    "load_step_kg": 5.0,
+    "assisted": true,
+    "tool": "machine"
+   },
+   "sessions": {
+    "0": [
+     [
+      10,
+      12
+     ],
+     [
+      10,
+      12
+     ]
+    ]
+   },
+   "expect": {
+    "1": {
+     "grade": "hit",
+     "decision": "increase",
+     "code": "step_assisted",
+     "needs_ok": false,
+     "sets": [
+      [
+       5.0,
+       8
+      ],
+      [
+       5.0,
+       8
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "bodyweight-top",
+   "rule": "Bodyweight at the top of the range: hold, no load to add [top_no_load]",
+   "exercise": {
+    "exercise_id": "Pushups",
+    "sets": [
+     [
+      0,
+      20
+     ],
+     [
+      0,
+      20
+     ],
+     [
+      0,
+      20
+     ]
+    ],
+    "rep_range": [
+     12,
+     20
+    ],
+    "tool": "bodyweight"
+   },
+   "sessions": {
+    "0": [
+     [
+      0,
+      20
+     ],
+     [
+      0,
+      20
+     ],
+     [
+      0,
+      20
+     ]
+    ]
+   },
+   "expect": {
+    "1": {
+     "grade": "hit",
+     "decision": "hold",
+     "code": "top_no_load",
+     "needs_ok": false,
+     "sets": [
+      [
+       0.0,
+       20
+      ],
+      [
+       0.0,
+       20
+      ],
+      [
+       0.0,
+       20
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "easy-week-then-restore",
+   "rule": "Easy week: -10 % load, -1/3 sets; the week after restores the target [easy_week, after_easy_week]",
+   "week_types": {
+    "1": "Recovery (easy week)"
+   },
+   "exercise": {
+    "exercise_id": "Barbell_Incline_Bench_Press_-_Medium_Grip",
+    "sets": [
+     [
+      100,
+      10
+     ],
+     [
+      100,
+      10
+     ],
+     [
+      100,
+      10
+     ]
+    ],
+    "rep_range": [
+     8,
+     12
+    ],
+    "category": "compound",
+    "tool": "barbell_upper"
+   },
+   "sessions": {
+    "0": [
+     [
+      100,
+      10
+     ],
+     [
+      100,
+      10
+     ],
+     [
+      100,
+      10
+     ]
+    ],
+    "1": [
+     [
+      90,
+      10
+     ],
+     [
+      90,
+      10
+     ]
+    ]
+   },
+   "expect": {
+    "1": {
+     "grade": "hit",
+     "decision": "easy_week",
+     "code": "easy_week",
+     "needs_ok": false,
+     "sets": [
+      [
+       90.0,
+       10
+      ],
+      [
+       90.0,
+       10
+      ]
+     ]
+    },
+    "2": {
+     "grade": "excluded",
+     "decision": "hold",
+     "code": "after_easy_week",
+     "needs_ok": false,
+     "sets": [
+      [
+       100.0,
+       10
+      ],
+      [
+       100.0,
+       10
+      ],
+      [
+       100.0,
+       10
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "travel-week",
+   "rule": "Travel week: target frozen [travel_week]",
+   "week_types": {
+    "1": "Travel"
+   },
+   "exercise": {
+    "exercise_id": "Barbell_Incline_Bench_Press_-_Medium_Grip",
+    "sets": [
+     [
+      100,
+      10
+     ],
+     [
+      100,
+      10
+     ],
+     [
+      100,
+      10
+     ]
+    ],
+    "rep_range": [
+     8,
+     12
+    ],
+    "category": "compound",
+    "tool": "barbell_upper"
+   },
+   "sessions": {
+    "0": [
+     [
+      100,
+      10
+     ],
+     [
+      100,
+      10
+     ],
+     [
+      100,
+      10
+     ]
+    ]
+   },
+   "expect": {
+    "1": {
+     "grade": "hit",
+     "decision": "hold",
+     "code": "travel_week",
+     "needs_ok": false,
+     "sets": [
+      [
+       100.0,
+       10
+      ],
+      [
+       100.0,
+       10
+      ],
+      [
+       100.0,
+       10
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "level-shift-twice-reanchor",
+   "rule": "Logged load far off target twice: excluded, then re-anchored with an OK [excluded_hold, reanchor]",
+   "exercise": {
+    "exercise_id": "Leg_Press",
+    "sets": [
+     [
+      130,
+      12
+     ],
+     [
+      130,
+      12
+     ],
+     [
+      130,
+      12
+     ]
+    ],
+    "rep_range": [
+     10,
+     15
+    ],
+    "load_step_kg": 5.0,
+    "category": "compound",
+    "tool": "machine"
+   },
+   "sessions": {
+    "0": [
+     [
+      60,
+      15
+     ],
+     [
+      60,
+      15
+     ],
+     [
+      60,
+      15
+     ]
+    ],
+    "1": [
+     [
+      60,
+      15
+     ],
+     [
+      60,
+      15
+     ],
+     [
+      60,
+      15
+     ]
+    ]
+   },
+   "expect": {
+    "1": {
+     "grade": "excluded",
+     "decision": "hold",
+     "code": "excluded_hold",
+     "needs_ok": false,
+     "sets": [
+      [
+       130.0,
+       12
+      ],
+      [
+       130.0,
+       12
+      ],
+      [
+       130.0,
+       12
+      ]
+     ]
+    },
+    "2": {
+     "grade": "excluded",
+     "decision": "hold",
+     "code": "reanchor",
+     "needs_ok": true,
+     "sets": [
+      [
+       60.0,
+       15
+      ],
+      [
+       60.0,
+       15
+      ],
+      [
+       60.0,
+       15
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "reentry-lighter",
+   "rule": "First week back after ≥ 14 days off: what was lifted is the new target, OK needed if lighter [reentry_start]",
+   "exercise": {
+    "exercise_id": "Barbell_Squat",
+    "sets": [
+     [
+      100,
+      8
+     ],
+     [
+      100,
+      8
+     ],
+     [
+      100,
+      8
+     ]
+    ],
+    "rep_range": [
+     6,
+     10
+    ],
+    "category": "spine",
+    "tool": "barbell_lower"
+   },
+   "sessions": {
+    "0": [
+     [
+      100,
+      8
+     ],
+     [
+      100,
+      8
+     ],
+     [
+      100,
+      8
+     ]
+    ],
+    "5": [
+     [
+      80,
+      8
+     ],
+     [
+      80,
+      8
+     ],
+     [
+      80,
+      7
+     ]
+    ]
+   },
+   "expect": {
+    "6": {
+     "grade": "excluded",
+     "decision": "hold",
+     "code": "reentry_start",
+     "needs_ok": true,
+     "sets": [
+      [
+       80.0,
+       8
+      ],
+      [
+       80.0,
+       8
+      ],
+      [
+       80.0,
+       7
+      ]
+     ]
+    }
+   }
+  },
+  {
+   "id": "reentry-capped",
+   "rule": "First week back, heavier than before the break: capped at the old target [reentry_start]",
+   "exercise": {
+    "exercise_id": "Barbell_Squat",
+    "sets": [
+     [
+      100,
+      8
+     ],
+     [
+      100,
+      8
+     ],
+     [
+      100,
+      8
+     ]
+    ],
+    "rep_range": [
+     6,
+     10
+    ],
+    "category": "spine",
+    "tool": "barbell_lower"
+   },
+   "sessions": {
+    "0": [
+     [
+      100,
+      8
+     ],
+     [
+      100,
+      8
+     ],
+     [
+      100,
+      8
+     ]
+    ],
+    "5": [
+     [
+      110,
+      8
+     ],
+     [
+      110,
+      8
+     ],
+     [
+      110,
+      8
+     ]
+    ]
+   },
+   "expect": {
+    "6": {
+     "grade": "excluded",
+     "decision": "hold",
+     "code": "reentry_start",
+     "needs_ok": false,
+     "sets": [
+      [
+       100.0,
+       8
+      ],
+      [
+       100.0,
+       8
+      ],
+      [
+       100.0,
+       8
+      ]
+     ]
+    }
+   }
+  }
+ ]
+}

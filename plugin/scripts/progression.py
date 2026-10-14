@@ -777,7 +777,8 @@ def rep_pr(cur, prev, assisted):
 
 def miss_streak(history):
     """history newest-first -> (streak, reduced). not_done / excluded / moderated weeks neither break
-    nor extend it; a rep-PR miss counts once and ends the look-back (it saves one week)."""
+    nor extend it; a rep-PR miss counts once and ends the look-back (it saves one week); an accepted reduce
+    ends it too (misses before the lighter block don't count against it)."""
     streak, reduced = 0, False
     for h in history:
         if h.get("grade") in (None, "not_done", "excluded") or h.get("week_type") == "moderated":
@@ -787,6 +788,7 @@ def miss_streak(history):
         streak += 1
         if h.get("decision") == "reduce" and h.get("accepted"):
             reduced = True
+            break
         if h.get("rep_pr"):
             break
     return streak, reduced
@@ -941,7 +943,7 @@ def decide(row, base, g, gf, history, next_type, restore=None, level="intermedia
                 return out(same(), "hold", "rep_pr_hold")
             return out(same(), "hold", "miss_hold")
         flags.append("coach_review")
-        if streak == 2 and not reduced:    # one more try before lighter (practitioner, as the reduce itself)
+        if streak == 2:                    # one more try before lighter (practitioner, as the reduce itself)
             return out(same(), "hold", "miss2_hold")
         if reduced and streak >= 3:
             return out(same(), "swap", "swap_after_reduce", True)

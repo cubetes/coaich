@@ -100,7 +100,8 @@ brackets; sentences in `TEXT` in the script.
 | Met, every set at `hi` | `increase` [step] | + the jump table below, reps → `lo`. Assisted: −1 step of assistance [step_assisted]; none left → `swap` [swap_no_assistance]. Bodyweight: hold [top_no_load] | **spine: yes** |
 | Met, below `hi` | hold [add_rep] / [reps_to_done] | reps → what was done (≤ `hi`); unchanged → +1 rep on the first set below `hi`. Sets logged ≥ 1 step heavier move to that load [reanchored] | spine, if the load rises |
 
-- Miss streaks skip `not_done`, `excluded` and moderated weeks.
+- Miss streaks skip `not_done`, `excluded` and moderated weeks. An accepted reduce starts the count again:
+  the misses before the lighter block don't count against it.
 - Moderated weeks trim one set; the next full week restores the program's set count.
 
 ## The jump table (G119)
@@ -119,6 +120,14 @@ Caps: steps by level (beginner 3 · intermediate 2 · advanced 2), then kg by eq
 barbell 10 kg · upper-body barbell 5 kg · others 2 steps). The table is `JUMP_STEPS`, `MAX_STEPS`,
 `JUMP_CAP_KG` at the top of the script; setting every step to 1 gives classic one-step double
 progression.
+
+## Shared test cases
+
+[`tests/fixtures/target_cases.json`](../../tests/fixtures/target_cases.json): one case per rule above, each a
+program row, the sets logged week by week (athlete-folder format 1) and the expected grade, decision, reason
+code, next sets and OK for every proposed week. `tests/test_target_cases.py` runs them through this engine. An
+app's engine copies these rules (ADR 0006) and passes when it gives the same answers. A deliberate rule change
+refills them with `python3 tests/test_target_cases.py --write`; review the diff.
 
 ## Change nothing + evidence rules
 

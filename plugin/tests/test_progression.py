@@ -724,8 +724,8 @@ class TestReasonCodes(unittest.TestCase):
             "reduce": self.decide("miss", history=miss3, source_sets=logged),
             "reduce_assisted": self.decide("miss", row=dict(ROW, assisted=True), history=miss3, source_sets=logged),
             "fewer_reps": self.decide("miss", row=bw, history=miss3, source_sets=logged),
-            "swap_after_reduce": self.decide("miss", history=[{"grade": "miss", "decision": "reduce",
-                                                               "accepted": True}] * 3),
+            "swap_after_reduce": self.decide("miss", history=miss2 + [{"grade": "miss", "decision": "reduce",
+                                                                        "accepted": True}] + miss3),
             "swap_no_assistance": at_top(None, row=dict(ROW, assisted=True, load_step=5.0), kg=0.0),
             "step": at_top(2),
             "step_despite_hard": at_top(0, row=dict(ROW, category="isolation"), prev_code="top_too_hard"),
@@ -742,6 +742,12 @@ class TestReasonCodes(unittest.TestCase):
         base = S([(100.0, 10)] * 3)
         g = pg.grade_exposure(base, [dict(s, idx=i) for i, s in enumerate(logged)], [8, 12], 2.5, False)
         return pg.decide(ROW, base, g, {"grade": g["grade"]}, [], "full")
+
+    def test_misses_count_again_from_an_accepted_reduce(self):
+        reduced = [{"grade": "miss", "decision": "reduce", "accepted": True}] + [{"grade": "miss"}] * 3
+        for before, code in ((0, "miss_hold"), (1, "miss2_hold"), (2, "swap_after_reduce")):
+            out = self.decide("miss", history=[{"grade": "miss"}] * before + reduced, source_sets=S([(85.0, 6)] * 3))
+            self.assertEqual(out["reason"]["code"], code, before)
 
     def test_reason_saved_before_a_new_field_still_renders(self):
         old = {"code": "reduce", "streak": 2, "pct": 92, "coarse": ""}     # a 0.5 targets file: no "rough"

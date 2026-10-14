@@ -5,6 +5,16 @@ name, or the next hero's name with "preview" after it.
 
 ## Unreleased
 
+Added
+- Shared target cases (`tests/fixtures/target_cases.json`, #13): 22 cases, one per progression rule, from a
+  program row and the sets logged week by week to the expected grade, decision, reason code, next sets and OK.
+  The plugin runs them on every check; an app engine passes by giving the same answers.
+
+Fixed
+- After an accepted weight drop, the engine counted the misses from before the drop too, so a single miss on the
+  lighter weight proposed a swap. The count now starts again at the drop: miss, miss, then a swap, as the rules
+  say.
+
 ## 0.9.0 — Achilles preview
 
 Added
