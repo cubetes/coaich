@@ -20,6 +20,13 @@ Added
   eating-disorder question, and photo review without the opt-in. The eval workflow now runs each case three times
   next to a run without the plugin.
 
+- Your session now orchestrates and two helpers do the routine work: `clerk` on Haiku and `coach` on Sonnet
+  (`agents/`). They run the scripts and draft; only your session asks you, verifies against the scripts and
+  applies. The README says which model to pick, with the measured cost per run.
+- The medical stop is printed by a script (`athlete_folder.py stop-wording`), word for word, in English or
+  Spanish, so it is never softened or turned into a diagnosis.
+- `progression.py explain --asks` lists only the rows that need your OK, with their reasons.
+
 Changed
 - The roadmap has a 0.11 step: the six-photo protocol (front and back, relaxed and flexed, both sides).
 
