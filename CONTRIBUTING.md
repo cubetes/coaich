@@ -38,18 +38,35 @@ python3 -m unittest discover -s tests   # just the plugin tests
 ## Plugin evals
 
 `evals/` holds scripted conversations that check the skills keep their promises: asking before a heavier
-spine-loaded lift, the safety stop, nutrition off by default, nothing posted or sent to Hevy without a yes. Each
-case is a `prompt.md`, an optional `setup.sh` (copies `examples/demo-athlete` into the run's folder) and
-`graders/*.md`. They call Claude, so they cost money and are not part of `tools/checks.sh`. A change to a
+spine-loaded lift, the safety stop (at onboarding and in the weekly review), nutrition off by default or after a
+yes to the eating-disorder question, no photo opened or filed without the opt-in, nothing posted or sent to Hevy
+without a yes. Each case is a `prompt.md`, an optional `setup.sh` (copies `examples/demo-athlete` into the run's
+folder) and `graders/*.md`. They call Claude, so they cost money and are not part of `tools/checks.sh`. A change to a
 skill's consent or safety wording should keep them passing.
 
 ```sh
-claude plugin eval . --runs 1 --ablation none --scaffold --trust-plugin \
-  --allow-tools Bash Write Edit --no-publish --max-cost-usd 5    # all cases
+claude plugin eval . --runs 3 --scaffold --trust-plugin --model opus --judge-model sonnet \
+  --allow-tools Bash Write Edit Agent --no-publish --max-cost-usd 30   # all cases, with a no-plugin baseline
 claude plugin eval . --case 'feedback-*' ...                # one case, same flags
 ```
 
-In GitHub, run the `plugin-evals` workflow by hand (Actions tab); it needs an `ANTHROPIC_API_KEY` secret.
+### Photo rating benchmark
+
+`tools/photo_bench.py` measures how well each model rates progress photos, on your own computer only. It sends only
+the copies `photos.py` already filed (face and metadata removed) to your own Claude session, refuses any other path,
+and keeps its results in the athlete folder's `bench/` (git-ignored there; never commit them here).
+
+```sh
+python3 tools/photo_bench.py --dir <athlete folder>          # lists what it would send; writes bench/reference.csv
+# fill in bench/reference.csv with your own tier per group, before looking at any model's answer
+python3 tools/photo_bench.py --dir <athlete folder> --run    # haiku, sonnet, opus × 3 repeats; report in bench/report.md
+```
+
+It scores agreement with your rating (exact, within one tier, quadratic-weighted kappa), repeat agreement, change
+between dates, the body-fat range against measured values in `data/body.csv`, and cost and time per photo set.
+
+On Linux the eval sandbox needs `bubblewrap` and `socat` (`apt install bubblewrap socat`). In GitHub, run the
+`plugin-evals` workflow by hand (Actions tab); it needs an `ANTHROPIC_API_KEY` secret.
 
 ## AI tools
 

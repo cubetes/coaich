@@ -17,8 +17,13 @@ Read the front matter of `coaich.md` (find the folder with
 `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/athlete_folder.py" find`).
 
 - No `safety_acknowledged` date → run **Intake** below first.
-- `safety_status: stop` → do not build, change or progress anything. Say why in one line (the stop wording) and
-  offer the clearance step. Questions about training in general can still be answered.
+- `safety_status: stop` → do not build, change or progress anything. Print the stop text with
+  `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/athlete_folder.py" stop-wording --dir .` (no folder yet, as in onboarding:
+  `--reasons <ids> --lang en|es`) and copy it exactly as printed: it holds the stop, the urgent line when it applies
+  and the clearance step. Add nothing to it: no softening ("probably"), no possible cause, no diagnosis. Questions
+  about training in general can still be answered.
+- Never offer to change, re-ask or "correct" a safety answer (a health item, the eating-disorder question, age, the
+  photo opt-in), and never suggest it might have been recorded by mistake. Only the athlete can bring it up.
 - `warn` → go on, and repeat each warning line at the top of whatever you produce.
 - `go` → go on.
 - Any exercise that loads a `pain` area with `red_flag: true` and no `checked` date stays out of every plan.
@@ -58,7 +63,7 @@ and that sentence (without the last one) as `safety_acknowledged` / `safety_ackn
 
 Write the chosen ids to `health_items` in `profile.md`. Do not ask follow-up medical questions.
 
-- **Any stop item** → say: *"From your answers, you need a doctor to tell you that you can do strength training
+- **Any stop item** → print it with `stop-wording` (above), which says: *"From your answers, you need a doctor to tell you that you can do strength training
   before you start. Once you have that, confirm it here."* Then go to **Clearance**.
 - **Each warning item** → say: *"You told me: {wording}. Strength training is often part of looking after this,
   but it can change what is safe for you. Talk to your doctor before you start and tell them you plan to lift

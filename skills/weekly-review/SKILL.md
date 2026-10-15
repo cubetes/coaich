@@ -27,10 +27,12 @@ graded "not done", which is fine, but it should be true.
 If `plan/CURRENT.md` has an **Adapted** block whose temporary program has ended
 (`adapt.py status --dir .` says DUE), run the `adapt` skill's restore first.
 
-## 2. Grade and propose
+## 2. Grade and propose (the `coach` agent drafts)
 
-Run the `progression` skill, step 1 (`propose --week {next}`). It grades `{last}` and drafts
-`{next}`. Keep the printed tables: they go into the check-in.
+Hand steps 2 and 3 to the `coach` agent (Agent tool, `coaich:coach`), which runs on Sonnet: *"Weekly review draft
+in <this folder>: run `progression.py propose --dir . --week {next}`, then the lines of the weekly-review skill's
+step 3. Return the tables and lines as printed."* Keep its reply for the check-in. If the agent is not available,
+run the `progression` skill, step 1 (`propose --week {next}`) yourself. It grades `{last}` and drafts `{next}`.
 
 ## 3. The week in numbers
 
@@ -47,11 +49,16 @@ From the propose output and `data/`:
   planned). Exit 3 → say nothing about weight or food (a safeguard or no consent). Never change calories here:
   that is the `nutrition` skill's job at the monthly check-in, or when the athlete asks.
 
-## 4. Ask
+## 4. Verify, then ask
 
-Show the exceptions as the `progression` skill says (ask rows first, each with before → after and
-why). Then ask the athlete to confirm, change or reject. Every ask row needs its own yes.
-"No changes this week" is a fine answer.
+Verify before showing anything: run
+`python3 "${CLAUDE_PLUGIN_ROOT}/scripts/progression.py" explain --dir . --week {next} --asks`. Its header must say
+`proposed` (nothing applied yet). Its rows are the asks, whatever a draft says: show each exactly as printed, with
+its before → after and its reason. Then the misses and notes from the draft, and one line for the rest, as the
+`progression` skill says. If the draft and the script disagree, trust the script and say nothing of the draft.
+
+Ask the athlete to confirm, change or reject. Every ask row needs its own yes. "No changes this week" is a fine
+answer.
 
 ## 5. Apply
 

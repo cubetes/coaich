@@ -14,6 +14,7 @@ into the latest release only.
 ## In scope
 
 - A face, or part of one, left in a photo the plugin filed (`scripts/photos.py`, `scripts/anonymise.swift`).
+- A way to get Claude to open an original photo past the photo guard (`hooks/hooks.json`, `scripts/photo_guard.py`).
 - Metadata (GPS, dates, device) left in a filed photo or anywhere in the repository.
 - A way to make the plugin send athlete-folder data anywhere other than the user's own Claude session.
 - Real personal data in the repository, or a way around `tools/checks.sh`.

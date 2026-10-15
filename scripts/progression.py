@@ -1393,8 +1393,12 @@ def cmd_explain(args):
         raise SystemExit(f"No targets file for {args.week}: {path}")
     doc, words = load_json(path), (args.find or "").lower().split()
     rows = [r for r in doc["rows"]
-            if all(w in f"{r['id']} {r['name']} {r['exercise_id']}".lower().replace("_", " ") for w in words)]
+            if all(w in f"{r['id']} {r['name']} {r['exercise_id']}".lower().replace("_", " ") for w in words)
+            and (r.get("needs_approval") or not args.asks)]
     if not rows:
+        if args.asks:
+            print(f"## Asks: targets {doc['iso_week']} ({doc['status']}): none need an OK.")
+            return
         raise SystemExit(f"No row in {doc['iso_week']} matches '{args.find}'.")
     print(f"## Why: targets {doc['iso_week']} ({doc['status']}, {doc['microcycle_type']} week)\n")
     for r in rows:
@@ -1415,6 +1419,7 @@ def main(argv=None):
         sp.add_argument("--week", required=True, help="ISO week, e.g. 2030-W10")
         if name == "explain":
             sp.add_argument("--find", help="words that pick the exercise, e.g. 'squat'")
+            sp.add_argument("--asks", action="store_true", help="only the rows that need the athlete's OK")
             continue
         sp.add_argument("--force", action="store_true")
         if name in ("grade", "propose"):

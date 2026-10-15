@@ -29,6 +29,13 @@ Save a file the user drops in the chat to `data/raw/<source>/` first, with its o
 
 ## 2. Run the importer
 
+Only a file that matched a row in step 1 gets here. Anything else (the Health app's own `export.zip`, a PDF, a
+screenshot) is refused as its source page says, and never run through an importer.
+
+To save tokens, hand the run to the `clerk` agent (Agent tool, `coaich:clerk`, on Haiku) with the exact command,
+and show its reply: the importer's summary as printed. Confirm it with one line of the log (`tail -n 1 log.md`).
+The fix-up questions in step 3 stay with you: only you talk to the athlete.
+
 ```sh
 python3 "${CLAUDE_PLUGIN_ROOT}/scripts/import_strong.py" data/raw/strong/strong.csv
 ```

@@ -1,4 +1,6 @@
-# Scripted conversations against the plugin (evals/), run by `claude plugin eval`. Manual only: every run
+# Scripted conversations against the plugin (evals/), run by `claude plugin eval`: 3 runs per case, plus a no-plugin
+# baseline arm (the default ablation) so the score shows what the plugin adds. The session runs on Opus, the
+# orchestrator CoAIch recommends; its clerk and coach agents run on Haiku and Sonnet (agents/). Manual only: every run
 # calls Claude and costs money. Needs the ANTHROPIC_API_KEY repository secret; without it the job is skipped.
 # Action pins verified 2026-10-13 with `git ls-remote` against the tags named in the comments.
 name: plugin-evals
@@ -25,17 +27,19 @@ jobs:
         if: env.ANTHROPIC_API_KEY != ''
         with:
           persist-credentials: false
-      - name: Install Claude Code 2.1.296 (exact version)
+      - name: Install Claude Code 2.1.296 (exact version) and the eval sandbox (bubblewrap, socat)
         if: env.ANTHROPIC_API_KEY != ''
-        run: npm install -g @anthropic-ai/claude-code@2.1.296
+        run: |
+          sudo apt-get install -y bubblewrap socat
+          npm install -g @anthropic-ai/claude-code@2.1.296
       - name: Run the eval suite
         if: env.ANTHROPIC_API_KEY != ''
         env:
           CASE: ${{ inputs.case }}
         # The cases are ours: --scaffold copies examples/demo-athlete into each run's folder.
         run: >
-          claude plugin eval . --case "$CASE" --runs 1 --ablation none --scaffold --trust-plugin
-          --allow-tools Bash Write Edit --no-publish --max-cost-usd 10
+          claude plugin eval . --case "$CASE" --runs 3 --scaffold --trust-plugin
+          --model opus --judge-model sonnet --allow-tools Bash Write Edit Agent --no-publish --max-cost-usd 30
           --output-dir eval-results --report eval-results/report.html
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: always() && env.ANTHROPIC_API_KEY != ''

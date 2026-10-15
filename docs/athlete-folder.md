@@ -142,6 +142,11 @@ all. The new JPEG is written with no properties, then cleaned again in Python: a
 (EXIF incl. GPS, XMP, comments, PNG text/time chunks, anything after the image); a JPEG keeps only its colour
 profile. The user's original stays where it was, untouched.
 
+**The photo guard, a second layer.** While the plugin is enabled, a `PreToolUse` hook (`hooks/hooks.json` →
+`scripts/photo_guard.py`) blocks Claude's Read tool on any image in or below an athlete folder, or read from a
+session working in one, unless it is a filed copy, `photos/YYYY-MM-DD/<pose>.jpg`. Input it cannot read but that
+names an image is blocked too. It does not see shell commands; the skills never use them to open a picture.
+
 `photos/ratings.md`: a short header, then one Markdown table, one row per `date` + `group` (the key):
 
 `| date | group | rating | confidence | note |`

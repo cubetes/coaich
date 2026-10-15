@@ -5,6 +5,33 @@ name, or the next hero's name with "preview" after it.
 
 ## Unreleased
 
+## 0.10.0 — Achilles preview
+
+Added
+- A photo guard: while the plugin is enabled, Claude cannot open a photo in or near your training folder unless the
+  plugin has already removed its face and metadata (a hook on the Read tool, `scripts/photo_guard.py`). A second
+  layer under the photo rule; other projects are not affected.
+- In a training folder, Claude now answers coaching questions only through CoAIch's skills (a short rule added when
+  the session starts, `scripts/session_context.py`). The evals showed that a plain "how many calories?" could get
+  numbers from general knowledge, skipping the safeguards (nutrition off, the eating-disorder question).
+- A check that every skill handoff, script, subcommand and link the skills mention exists, so a rename cannot break
+  a skill silently.
+- Evaluations for every safety refusal: the weekly review on a medical stop, nutrition after a yes to the
+  eating-disorder question, and photo review without the opt-in. The eval workflow now runs each case three times
+  next to a run without the plugin.
+
+- Your session now orchestrates and two helpers do the routine work: `clerk` on Haiku and `coach` on Sonnet
+  (`agents/`). They run the scripts and draft; only your session asks you, verifies against the scripts and
+  applies. The README says which model to pick, with the measured cost per run.
+- The medical stop is printed by a script (`athlete_folder.py stop-wording`), word for word, in English or
+  Spanish, so it is never softened or turned into a diagnosis.
+- `progression.py explain --asks` lists only the rows that need your OK, with their reasons.
+- `tools/photo_bench.py` (maintainers): measures how each model rates your own anonymised photo sets against your
+  rating, between repeats and against measured body fat, with cost and time. It runs and stays on your computer.
+
+Changed
+- The roadmap has a 0.11 step: the six-photo protocol (front and back, relaxed and flexed, both sides).
+
 ## 0.9.2 — Achilles preview
 
 Fixed
