@@ -1,5 +1,5 @@
 {
-  "description": "CoAIch photo guard: Claude never opens a photo the plugin has not anonymised (scripts/photo_guard.py).",
+  "description": "CoAIch: in an athlete folder, coach only through the skills (scripts/session_context.py); never open a photo the plugin has not anonymised (scripts/photo_guard.py).",
   "hooks": {
     "PreToolUse": [
       {
@@ -8,6 +8,17 @@
           {
             "type": "command",
             "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/photo_guard.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/session_context.py\"",
             "timeout": 10
           }
         ]
