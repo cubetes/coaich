@@ -43,6 +43,11 @@ checks them. Then go on in the language it saved.
 Call the Skill tool with `safety` and run its **Intake**. If the status comes back `stop`, write what you have,
 log it, tell the user they can run `/onboard` again after the clearance, and end.
 
+If the user's first message already names a stop item (chest pain, fainting, a heart condition, a doctor's no, …),
+do not wait for this step: before any other question, print
+`python3 "${CLAUDE_PLUGIN_ROOT}/scripts/athlete_folder.py" stop-wording --reasons <ids> --lang <en|es>` and copy it
+as printed. Then the folder question may follow, so the stop can be recorded.
+
 ## 5. Training
 
 1. *"How long have you trained with weights? Only count periods when you went 2 or more times a week."*
