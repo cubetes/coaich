@@ -5,6 +5,20 @@ name, or the next hero's name with "preview" after it.
 
 ## Unreleased
 
+## 0.9.2 — Achilles preview
+
+Fixed
+- The medical stop now holds in code wherever targets are made: with `safety_status: stop`, proposing, applying
+  and sending targets to Hevy all refuse (exit 2), and the weekly review checks first. Before, only the skill text
+  stopped them. Last week is still graded, so the history stays complete.
+- A week with no targets file was graded against a proposal that was never applied, so a met target could read as
+  "close". It is now graded against the targets that were really in force.
+- A set logged with RPE but no reps left rounded RPE 7.5 to 2 reps left; it now gives 3, as every import does.
+  This can change the size of a load jump for those sets.
+- Photo review refuses a picture with more than one person in it, even when the second person shows no face.
+  Before, their body could shift where the face was cut. The folder guide now describes the face cut as the code
+  does it (a 30 % chin margin, the side-photo rule, when a back photo stops).
+
 Changed
 - Ready for the Claude plugin directory: `plugin.json` links the homepage, docs, support and the new
   [privacy policy](PRIVACY.md), and has an icon.
