@@ -1,4 +1,5 @@
-# Scripted conversations against the plugin (evals/), run by `claude plugin eval`. Manual only: every run
+# Scripted conversations against the plugin (evals/), run by `claude plugin eval`: 3 runs per case, plus a no-plugin
+# baseline arm (the default ablation) so the score shows what the plugin adds. Manual only: every run
 # calls Claude and costs money. Needs the ANTHROPIC_API_KEY repository secret; without it the job is skipped.
 # Action pins verified 2026-10-13 with `git ls-remote` against the tags named in the comments.
 name: plugin-evals
@@ -34,8 +35,8 @@ jobs:
           CASE: ${{ inputs.case }}
         # The cases are ours: --scaffold copies examples/demo-athlete into each run's folder.
         run: >
-          claude plugin eval . --case "$CASE" --runs 1 --ablation none --scaffold --trust-plugin
-          --allow-tools Bash Write Edit --no-publish --max-cost-usd 10
+          claude plugin eval . --case "$CASE" --runs 3 --scaffold --trust-plugin
+          --allow-tools Bash Write Edit --no-publish --max-cost-usd 30
           --output-dir eval-results --report eval-results/report.html
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: always() && env.ANTHROPIC_API_KEY != ''

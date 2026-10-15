@@ -38,14 +38,16 @@ python3 -m unittest discover -s tests   # just the plugin tests
 ## Plugin evals
 
 `evals/` holds scripted conversations that check the skills keep their promises: asking before a heavier
-spine-loaded lift, the safety stop, nutrition off by default, nothing posted or sent to Hevy without a yes. Each
+spine-loaded lift, the safety stop (at onboarding and in the weekly review), nutrition off by default or after a
+yes to the eating-disorder question, no photo opened or filed without the opt-in, nothing posted or sent to Hevy
+without a yes. Each
 case is a `prompt.md`, an optional `setup.sh` (copies `examples/demo-athlete` into the run's folder) and
 `graders/*.md`. They call Claude, so they cost money and are not part of `tools/checks.sh`. A change to a
 skill's consent or safety wording should keep them passing.
 
 ```sh
-claude plugin eval . --runs 1 --ablation none --scaffold --trust-plugin \
-  --allow-tools Bash Write Edit --no-publish --max-cost-usd 5    # all cases
+claude plugin eval . --runs 3 --scaffold --trust-plugin \
+  --allow-tools Bash Write Edit --no-publish --max-cost-usd 30   # all cases, with a no-plugin baseline
 claude plugin eval . --case 'feedback-*' ...                # one case, same flags
 ```
 
