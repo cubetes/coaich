@@ -11,6 +11,9 @@ Added
 - A photo guard: while the plugin is enabled, Claude cannot open a photo in or near your training folder unless the
   plugin has already removed its face and metadata (a hook on the Read tool, `scripts/photo_guard.py`). A second
   layer under the photo rule; other projects are not affected.
+- In a training folder, Claude now answers coaching questions only through CoAIch's skills (a short rule added when
+  the session starts, `scripts/session_context.py`). The evals showed that a plain "how many calories?" could get
+  numbers from general knowledge, skipping the safeguards (nutrition off, the eating-disorder question).
 - A check that every skill handoff, script, subcommand and link the skills mention exists, so a rename cannot break
   a skill silently.
 - Evaluations for every safety refusal: the weekly review on a medical stop, nutrition after a yes to the
