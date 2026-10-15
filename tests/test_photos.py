@@ -361,6 +361,15 @@ class PlanTest(unittest.TestCase):
             with self.assertRaisesRegex(ph.Refused, "no face found"):
                 ph.anonymise_plan(self.det(faces=(), points={}), pose)
 
+    def test_stops_when_a_second_person_shows_no_face(self):
+        # a second body with its back turned or cut at the edge: its points could move the cut, so file nothing
+        for pose in ("front", "side", "back"):
+            with self.assertRaisesRegex(ph.Refused, "2 people found"):
+                ph.anonymise_plan(dict(self.det(), people=2), pose)
+        with self.assertRaisesRegex(ph.Refused, "2 people found"):
+            ph.anonymise_plan(dict(self.det(faces=()), people=2), "front", user_cropped=True)
+        self.assertEqual(ph.anonymise_plan(dict(self.det(), people=1), "front"), ["crop", 512])
+
     def test_one_head_found_twice_is_one_face_cut_below_the_lower_chin(self):
         # the real side-photo case: two boxes on the same head, the second lower
         self.assertEqual(ph.merge_faces([[436, 261, 153, 153], [448, 330, 135, 135]]), [[436, 261, 153, 204]])

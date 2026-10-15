@@ -280,11 +280,13 @@ def merge_faces(faces, overlap=0.5):
 
 def anonymise_plan(det, pose, mode="crop", user_cropped=False):
     """What to do to one photo, from a detector's findings → ["none"] | ["crop", top] | ["cover", x0, y0, x1, y1].
-    `det` = {"width", "height", "faces": [[x, y, w, h]], "points": {name: [x, y]}}, pixels of the upright image,
-    origin top-left. Refuses whenever the face cannot be removed with confidence: never lets a face through."""
+    `det` = {"width", "height", "faces": [[x, y, w, h]], "points": {name: [x, y]}, "people": n (optional)}, pixels
+    of the upright image, origin top-left. Refuses whenever the face cannot be removed with confidence: never lets a face through."""
     if mode not in ANON_MODES:
         raise Refused(f"unknown anonymise mode '{mode}': use crop or blur")
     W, H, pts = det["width"], det["height"], det.get("points") or {}
+    if (det.get("people") or 0) > 1:  # a second body with no visible face still moves the head and shoulder points
+        raise Refused(f"{det['people']} people found. Only one person can be in a progress photo. " + RECROP)
     faces = merge_faces(det["faces"])
     if len(faces) > 1:
         raise Refused(f"{len(faces)} faces found. Only one person can be in a progress photo. " + RECROP)

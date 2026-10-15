@@ -124,17 +124,19 @@ into `~/Library/Caches/coaich/`; Windows/Linux: OpenCV's bundled Haar face detec
 installed), works on the upright image (EXIF orientation applied), and writes a new JPEG:
 
 - `crop` (default; `photo_anonymise` in `coaich.md` or `--anonymise`): everything above a line just below the chin
-  is cut off: the face box's bottom edge (or the lowest nose, eye or ear point, if lower) plus 12 % of the face
+  is cut off: the face box's bottom edge (or the lowest nose, eye or ear point, if lower) plus 30 % of the face
   height. The line must stay 30 % of the face height above the highest shoulder or neck point, so the neck, traps
-  and shoulders stay; if it cannot, nothing is filed.
+  and shoulders stay; if it cannot, nothing is filed. A `side` pose needs the neck point (else nothing is filed):
+  in profile the face box ends above the jaw, so the line goes at least to 25 % of the face height above the base
+  of the neck, and may sit right on the shoulders (traps are not rated from the side).
 - `blur`: a solid grey block over the face box widened by 35 % each side and raised by 60 % (ears, hair), down to
   the same line. A flat fill, not a real blur: it leaves nothing to reverse.
 
-It stops and writes nothing when there is no face, more than one, head points with no face box, or a face in the
-lower 40 % of the picture. A `back` pose is never cut, whatever the mode (a cut at the neck would take arms raised
+It stops and writes nothing when there is no face, more than one, more than one person (even with no second face),
+head points with no face box, or a face in the lower 40 % of the picture. A `back` pose is never cut, whatever the mode (a cut at the neck would take arms raised
 beside the head): the head gets the grey block instead, a column centred between the ears (else on the neck), as
 wide as the larger of 0.35 × the shoulder width and 1.5 × the ear spread, from the top of the picture to 0.1 × the
-shoulder width above the neck. With no neck and both shoulders found it stops. One exception files the photo uncut
+shoulder width above the neck. Unless the neck and both shoulders are found, it stops. One exception files the photo uncut
 (metadata still removed): `--user-cropped` (the user cut the face off) with no face found, or with no detector at
 all. The new JPEG is written with no properties, then cleaned again in Python: all metadata removed
 (EXIF incl. GPS, XMP, comments, PNG text/time chunks, anything after the image); a JPEG keeps only its colour
