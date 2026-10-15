@@ -1,0 +1,17 @@
+{
+  "description": "CoAIch photo guard: Claude never opens a photo the plugin has not anonymised (scripts/photo_guard.py).",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/photo_guard.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
