@@ -21,6 +21,9 @@ athlete in 2030), ask which date to review and use it as `--today` everywhere.
 
 ## 2. The report
 
+Hand the report run to the `coach` agent (Agent tool, `coaich:coach`, on Sonnet) with the command below; it returns
+the sections as printed. Proposals in later steps stay with you, and so does every question to the athlete.
+
 ```
 python3 "${CLAUDE_PLUGIN_ROOT}/scripts/monthly_check_in.py" report --dir . --today {today}
 ```

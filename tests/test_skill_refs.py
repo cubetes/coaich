@@ -73,6 +73,27 @@ class SkillRefsTest(unittest.TestCase):
         self.assertGreaterEqual(seen, 20, "the subcommand pattern found almost nothing: is the regex broken?")
         self.assertEqual(bad, [])
 
+    def test_agents_are_cheap_read_only_workers(self):
+        agents = sorted(os.listdir(os.path.join(ROOT, "agents")))
+        self.assertTrue(agents)
+        for name in agents:
+            with open(os.path.join(ROOT, "agents", name), encoding="utf-8") as fh:
+                head = fh.read().split("---")[1]
+            fields = dict(line.split(":", 1) for line in head.strip().splitlines())
+            self.assertIn(fields["model"].strip(), ("haiku", "sonnet"), name)  # Opus stays the orchestrator
+            tools = {x.strip() for x in fields["tools"].split(",")}
+            self.assertFalse(tools & {"Write", "Edit", "NotebookEdit", "Agent"}, name)  # workers draft, never write
+
+    def test_delegations_name_an_existing_agent(self):
+        bad, seen = [], 0
+        for rel, n, line in markdown("skills"):
+            for m in re.finditer(r"`coaich:([a-z-]+)`", line):
+                seen += 1
+                if not os.path.exists(os.path.join(ROOT, "agents", m.group(1) + ".md")):
+                    bad.append(f"{rel}:{n}: no agents/{m.group(1)}.md")
+        self.assertGreaterEqual(seen, 4)
+        self.assertEqual(bad, [])
+
     def test_relative_links_resolve(self):
         bad = []
         for rel, n, line in markdown("skills", "docs", "references"):

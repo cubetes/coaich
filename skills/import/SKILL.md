@@ -13,6 +13,10 @@ one and is never counted twice. Exports are kept untouched in `data/raw/<source>
 Scripts live in `${CLAUDE_PLUGIN_ROOT}/scripts/`; run them from the athlete folder (or pass `--dir`).
 If they say there is no `coaich.md`, run `/onboard` first.
 
+To save tokens, hand the run to the `clerk` agent (Agent tool, `coaich:clerk`, on Haiku) with the exact command from
+below, and show its reply: the importer's summary as printed. Confirm it yourself with one line of the log
+(`tail -n 1 log.md`). The fix-up questions in step 3 stay with you: only you talk to the athlete.
+
 ## 1. Pick the source
 
 Use `data_sources` in `coaich.md`, or what the user names. Ask only if both are silent.

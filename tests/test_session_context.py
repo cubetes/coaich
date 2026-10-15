@@ -34,7 +34,7 @@ class SessionContextTest(unittest.TestCase):
             r = self.hook(cwd)
             self.assertEqual(r.returncode, 0, r.stderr)
             text = r.stdout
-            for must in ("nutrition", "calorie", "skill", "safety_status", "photo"):
+            for must in ("nutrition", "calorie", "skill", "safety_status", "photo", "verify", "clerk"):
                 self.assertIn(must, text, cwd)
 
     def test_other_projects_get_nothing(self):

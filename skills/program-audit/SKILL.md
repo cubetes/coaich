@@ -10,6 +10,10 @@ fail, they are notes. Every line names its source and grade, from [evidence.md](
 a study (SR/MA, RCT, OBS) or "our rule" (practitioner). Never call a preference a failure, and never present an
 "our rule" number as a finding of science.
 
+To save tokens, hand the audit run to the `clerk` agent (Agent tool, `coaich:clerk`, on Haiku) with the command from
+step 2, and show its gate and note lines as printed. Check the pass/fail line against the script's own output if
+the reply looks incomplete.
+
 ## 1. Get the program into program.json shape
 
 - **Generated program** → it is already `plan/program.json`. Go to 2.

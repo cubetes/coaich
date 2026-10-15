@@ -20,7 +20,9 @@ weekly-review, program-build, nutrition, physique, adapt, roadmap, safety) and f
 load or program numbers from general knowledge here: the skills' scripts apply this athlete's safeguards (the medical
 stop, the eating-disorder question, the experimental switch, age limits) before any number. If coaich.md says
 safety_status: stop, run the safety skill and change nothing. Never open an original photo; only the photo copies the
-plugin filed in photos/."""
+plugin filed in photos/. You orchestrate: where a skill says so, hand the script runs to the CoAIch agents (clerk on
+Haiku, coach on Sonnet), then verify their reply against the script's own output before showing it. Only you ask the
+athlete, and only you apply."""
 
 
 def main():

@@ -462,6 +462,14 @@ class TestApply(Base):
         self.assertFalse(os.path.exists(pg.targets_path(a.dir, lab(1))))
         a.run("grade", "--week", lab(-1), "--force")                 # the history is still graded
 
+    def test_explain_asks_lists_only_the_rows_that_need_an_ok(self):
+        a = self.two_rows()
+        out = a.run("explain", "--week", lab(0), "--asks")
+        self.assertIn("(proposed,", out)                        # the orchestrator sees nothing was applied
+        self.assertIn("(day-a-1)", out)                         # the deadlift increase, with its reason line
+        self.assertNotIn("(day-a-2)", out)
+        self.assertEqual(out.count("\n- "), 1)
+
     def test_needs_ok_requires_explicit_approve(self):
         a = self.two_rows()
         with self.assertRaises(SystemExit):
