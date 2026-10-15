@@ -5,6 +5,21 @@ name, or the next hero's name with "preview" after it.
 
 ## Unreleased
 
+## 0.10.0 — Achilles preview
+
+Added
+- A photo guard: while the plugin is enabled, Claude cannot open a photo in or near your training folder unless the
+  plugin has already removed its face and metadata (a hook on the Read tool, `scripts/photo_guard.py`). A second
+  layer under the photo rule; other projects are not affected.
+- A check that every skill handoff, script, subcommand and link the skills mention exists, so a rename cannot break
+  a skill silently.
+- Evaluations for every safety refusal: the weekly review on a medical stop, nutrition after a yes to the
+  eating-disorder question, and photo review without the opt-in. The eval workflow now runs each case three times
+  next to a run without the plugin.
+
+Changed
+- The roadmap has a 0.11 step: the six-photo protocol (front and back, relaxed and flexed, both sides).
+
 ## 0.9.2 — Achilles preview
 
 Fixed
