@@ -7,7 +7,7 @@
   "plugins": [
     {
       "name": "coaich",
-      "source": "./plugin",
+      "source": "./",
       "description": "A strength and nutrition coach for lifters. Every number comes with its reason. Your data stays in your folder.",
       "category": "health",
       "keywords": ["strength", "training", "coach", "progressive-overload", "lifting"]

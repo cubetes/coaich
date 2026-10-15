@@ -10,7 +10,7 @@ data: there is no CoAIch server, no account and no telemetry.
 Your training folder: workouts, body measurements (weight, waist, body fat), daily health metrics you import
 (steps, sleep, heart rate), your answers to the onboarding and health questions, your plans and check-ins, and, if
 you turn photo review on, progress photos with the face removed. The format is in
-[plugin/docs/athlete-folder.md](plugin/docs/athlete-folder.md).
+[docs/athlete-folder.md](docs/athlete-folder.md).
 
 ## Where it goes
 
@@ -28,7 +28,7 @@ you turn photo review on, progress photos with the face removed. The format is i
 - **Photos**: the face is removed on your own computer before Claude sees a photo; location and camera data are
   stripped; the original is never opened by Claude. If a face can't be removed with confidence, nothing is filed.
 
-`plugin/scripts/build_foods.py` calls the USDA FoodData Central API. It is a maintainer tool for rebuilding the
+`scripts/build_foods.py` calls the USDA FoodData Central API. It is a maintainer tool for rebuilding the
 bundled food table; the plugin never runs it for you.
 
 ## Age and sensitive features

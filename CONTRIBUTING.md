@@ -23,7 +23,7 @@ Reproduce with `examples/demo-athlete` instead.
 - **Every change needs a test.** Exempt: changes that only remove code (not to fix a bug), only touch comments,
   `.md` files or `.github/`. A bug fix starts with a test that fails without it.
 - **No new dependencies.** The plugin scripts use the Python standard library only. Adding one is a hard sell.
-- **Synthetic data only**, in code, tests and fixtures. `scripts/checks.sh` must pass; it scans for real data,
+- **Synthetic data only**, in code, tests and fixtures. `tools/checks.sh` must pass; it scans for real data,
   secrets and photo metadata.
 - **A change to the athlete-folder format** (what an old folder can still read) needs an ADR in `docs/adr/` and a
   migration note in the changelog. See [docs/versioning.md](docs/versioning.md).
@@ -31,22 +31,22 @@ Reproduce with `examples/demo-athlete` instead.
   ADR before code.
 
 ```sh
-scripts/checks.sh                              # everything CI runs
-python3 -m unittest discover -s plugin/tests   # just the plugin tests
+tools/checks.sh                         # everything CI runs
+python3 -m unittest discover -s tests   # just the plugin tests
 ```
 
 ## Plugin evals
 
-`plugin/evals/` holds scripted conversations that check the skills keep their promises: asking before a heavier
+`evals/` holds scripted conversations that check the skills keep their promises: asking before a heavier
 spine-loaded lift, the safety stop, nutrition off by default, nothing posted or sent to Hevy without a yes. Each
 case is a `prompt.md`, an optional `setup.sh` (copies `examples/demo-athlete` into the run's folder) and
-`graders/*.md`. They call Claude, so they cost money and are not part of `scripts/checks.sh`. A change to a
+`graders/*.md`. They call Claude, so they cost money and are not part of `tools/checks.sh`. A change to a
 skill's consent or safety wording should keep them passing.
 
 ```sh
-claude plugin eval ./plugin --runs 1 --ablation none --scaffold --trust-plugin \
+claude plugin eval . --runs 1 --ablation none --scaffold --trust-plugin \
   --allow-tools Bash Write Edit --no-publish --max-cost-usd 5    # all cases
-claude plugin eval ./plugin --case 'feedback-*' ...                # one case, same flags
+claude plugin eval . --case 'feedback-*' ...                # one case, same flags
 ```
 
 In GitHub, run the `plugin-evals` workflow by hand (Actions tab); it needs an `ANTHROPIC_API_KEY` secret.

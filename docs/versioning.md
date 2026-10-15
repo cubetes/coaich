@@ -13,9 +13,10 @@ CoAIch uses **MAJOR.MINOR.PATCH** (semantic versioning).
 - **One major across all products.** The plugin, the iPhone/Watch app and the web app share the MAJOR number and its
   hero whenever they share the same coaching rules and athlete-folder format. MINOR and PATCH move separately per
   product. "Plugin 1.3" and "app 1.7" are both the Achilles generation and give the same next targets.
-- **A major also marks a new product** (decided 2026-10-13): 1.0 "Achilles" the plugin, 2.0 "Bellerophon" the web
-  companion, 3.0 "Cadmus" the iPhone companion, 4.0 "Diomedes" the iPhone and Apple Watch logger. Each keeps
-  following the rules above; the plugin moves to 2.0 with the web companion.
+- **A major also marks a new product** (decided 2026-10-13, changed 2026-10-15 by
+  [ADR 0012](adr/0012-plugin-2-before-web.md)): 1.0 "Achilles" the plugin, 2.0 "Bellerophon" the plugin's measured
+  coach, 3.0 "Cadmus" the web companion, 4.0 "Diomedes" the iPhone companion, 5.0 "Enkidu" the iPhone and Apple
+  Watch logger. Each keeps following the rules above; the plugin moves to each later major with its product.
 - Release tags: `v1.0.0`, titled `v1.0.0 "Achilles"`.
 
 ## Hero names (one per MAJOR, A to Z)

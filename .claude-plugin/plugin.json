@@ -1,0 +1,23 @@
+{
+  "name": "coaich",
+  "version": "0.9.2",
+  "description": "A strength and nutrition coach for lifters, for Claude Code. Every number comes with its reason. Your data stays in your folder.",
+  "author": {
+    "name": "CoAIch contributors"
+  },
+  "homepage": "https://github.com/cubetes/coaich",
+  "repository": "https://github.com/cubetes/coaich",
+  "documentationUrl": "https://github.com/cubetes/coaich/blob/main/docs/guide.md",
+  "supportUrl": "https://github.com/cubetes/coaich/issues",
+  "privacyPolicyUrl": "https://github.com/cubetes/coaich/blob/main/PRIVACY.md",
+  "icon": "./icon.png",
+  "license": "AGPL-3.0-only",
+  "keywords": [
+    "strength",
+    "training",
+    "coach",
+    "progressive-overload",
+    "lifting",
+    "nutrition"
+  ]
+}

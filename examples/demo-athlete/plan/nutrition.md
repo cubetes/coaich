@@ -65,4 +65,4 @@ Diet: omnivore. Allergy tags are ours: always check labels.
 
 Against the targets: calories +0.1 %, protein +0.3 % (on target).
 
-Food values: USDA FoodData Central (public domain), per `plugin/data/SOURCE.md`.
+Food values: USDA FoodData Central (public domain), per `data/SOURCE.md`.

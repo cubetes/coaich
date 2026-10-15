@@ -18,13 +18,13 @@ jobs:
       - name: Preflight
         run: |
           git merge-base --is-ancestor "$GITHUB_SHA" origin/main || { echo "the tag is not on main"; exit 1; }
-          python3 scripts/release_check.py "$GITHUB_REF_NAME" > notes.md
+          python3 tools/release_check.py "$GITHUB_REF_NAME" > notes.md
       - name: Checks
-        run: scripts/checks.sh
+        run: tools/checks.sh
       - name: Release
         env:
           GH_TOKEN: ${{ github.token }}
         # title from the changelog heading: "## 0.3.0 — Achilles preview" → v0.3.0 "Achilles preview"
         run: |
-          name=$(grep -m1 "^## ${GITHUB_REF_NAME#v} — " plugin/CHANGELOG.md | sed 's/^## [^ ]* — //')
+          name=$(grep -m1 "^## ${GITHUB_REF_NAME#v} — " CHANGELOG.md | sed 's/^## [^ ]* — //')
           gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME \"$name\"" --notes-file notes.md --verify-tag
