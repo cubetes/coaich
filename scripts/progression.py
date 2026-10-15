@@ -32,6 +32,7 @@ from datetime import date, datetime, timedelta
 from itertools import permutations
 
 import athlete_folder as af
+import import_common as ic
 import program_build as pb
 
 # ------------------------------------------------------------------ the jump table (G119), in one place
@@ -399,7 +400,7 @@ def load_sessions(folder):
         rir = fnum(r.get("rir"))
         rpe = fnum(r.get("rpe"))
         if rir is None and rpe is not None:
-            rir = min(5, max(0, round(10 - rpe)))
+            rir = int(ic.rir_from_rpe(rpe))      # half up, as every importer does
         s["sets"][r.get("exercise_id", "")].append({
             "date": str(d), "idx": int(fnum(r.get("set_index"), 0) or 0),
             "type": r.get("set_type") or "normal",
@@ -1083,7 +1084,7 @@ def grade_week(folder, sessions, monday, write=True, week_type=None):
             tgt = row["spec_sets"]
             for pr in (prev or {}).get("rows", []):
                 if same_row(pr, row):
-                    tgt = effective_target(pr, prev.get("status"))
+                    tgt = effective_target(pr, prev.get("status_before_grade") or prev.get("status"))
                     if pr.get("decision") == "easy_week" and pr.get("pre_easy_sets"):
                         tgt = pr["pre_easy_sets"]
                     break

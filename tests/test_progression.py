@@ -16,6 +16,7 @@ import unittest
 from datetime import date, timedelta
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "scripts"))
+import import_common as ic  # noqa: E402
 import progression as pg  # noqa: E402
 
 SET_COLS = ["date", "datetime", "session_id", "workout_name", "exercise", "exercise_id", "set_index",
@@ -566,6 +567,31 @@ class TestApply(Base):
         for k in ("decision", "target_sets", "reason", "needs_approval"):
             self.assertEqual(r1[k], r2[k], k)
         self.assertEqual(r2["last_week"]["athlete_note"], "elbow ached")
+
+
+class TestGradingFixes(Base):
+    def test_implicit_week_is_graded_against_the_target_in_force_not_an_unapplied_proposal(self):
+        a = self.athlete([{"title": "Day A", "exercises": [
+            ex(BENCH, [(60, 10)] * 3, rep_range=[8, 12], category="compound", tool="barbell_upper")]}])
+        for n in (0, 1, 2):
+            a.session(wk(n), "Day A", [(BENCH, [(60, 10, "normal", 2)] * 3)])
+        a.write(wk(2) + timedelta(days=6))
+        a.propose(1)                                                  # W11 proposed, never applied
+        self.assertNotEqual(a.row(1, "day-a-1")["target_sets"][0]["reps"], 10)
+        a.run("grade", "--week", lab(1))
+        a.run("grade", "--week", lab(2))                              # W12 has no targets file
+        self.assertEqual([s["reps"] for s in a.row(2, "day-a-1")["target_sets"]], [10, 10, 10])
+        self.assertEqual(a.row(2, "day-a-1")["grade"], "hit")
+
+    def test_rpe_without_rir_rounds_half_up_like_the_importers(self):
+        a = self.athlete([{"title": "Day A", "exercises": [ex(BENCH, [(60, 10)] * 3)]}])
+        a.session(wk(0), "Day A", [(BENCH, [(60, 10)] * 3)])
+        for r, rpe in zip(a.rows, (7.5, 6.5, 8.5)):
+            r["rpe"] = rpe
+        a.write(wk(0) + timedelta(days=6))
+        got = [s["rir"] for s in pg.load_sessions(a.dir)[0]["sets"][BENCH]]
+        self.assertEqual(got, [int(ic.rir_from_rpe(x)) for x in (7.5, 6.5, 8.5)])
+        self.assertEqual(got, [3, 4, 2])
 
 
 class TestUnits(unittest.TestCase):
