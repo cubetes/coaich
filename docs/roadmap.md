@@ -9,12 +9,14 @@ photo tools use Apple's face detection on a Mac. Android (Health Connect) and ot
 **The order (decided 2026-10-12): ship something useful as early as possible, then build on it.**
 
 1. **1.0 "Achilles", the plugin**: the brain, usable on its own.
-2. **2.0 "Bellerophon", the web companion**: see your plan and the coach's reasons in any browser, phone included,
-   and tick your meals.
-3. **3.0 "Cadmus", the iPhone companion**: the same, as a native iPhone app.
-4. **4.0 "Diomedes", the iPhone and Apple Watch logger**: log your sets live in the gym.
+2. **2.0 "Bellerophon", the measured coach**: the plugin again. Stalls, photo measures and posture trends worked out
+   by scripts, and openGym both ways.
+3. **3.0 "Cadmus", the web companion**: see your plan and the coach's reasons in any browser, phone included, and
+   tick your meals.
+4. **4.0 "Diomedes", the iPhone companion**: the same, as a native iPhone app.
+5. **5.0 "Enkidu", the iPhone and Apple Watch logger**: log your sets live in the gym.
 
-(Decided 2026-10-13; see [versioning.md](versioning.md).)
+(Decided 2026-10-15, [ADR 0012](adr/0012-plugin-2-before-web.md); see [versioning.md](versioning.md).)
 
 ## Where each part stands
 
@@ -28,47 +30,48 @@ This repository is the plugin only. The other parts live in their own repositori
 | **iPhone app** | Alpha | Used daily by the maintainer. Not for other people yet. Private repository. |
 | **Apple Watch app** | Alpha | Same. Sits on top of the iPhone app, which works fully without it. |
 
-## Step 1: the plugin, public (target December 2026)
+## Step 1: the plugin, from 0.9 to 2.0
 
-- **Before publishing:** a trademark check of the name and logo.
-- **First public version (0.3 "Achilles preview"): the training core.** Onboarding with the medical gate, imports (Strong, Hevy, Apple
-  Health), program build and audit, next targets with their reasons, the weekly review and the roadmap.
-- **Nutrition and photo review stay marked "experimental"** until a lawyer has reviewed their safety wording; they
-  can be switched on, with every safeguard in code.
-- **Import from openGym** (its JSON export, and its read-only MCP server), next to Strong and Hevy.
-- **`/setup`**, run first by `/onboard` and again any time: where you run the plugin, which integrations you use
-  (Strong, Hevy, openGym, Apple Health), how your data arrives, language and units, experimental features. It
-  checks each integration works and says how to fix it if not.
-- **`/feedback`**: send an idea or a problem to the project as a pre-filled GitHub Discussion or issue. Only safe
-  details go with it (plugin version, operating system, which skills you used); never health data or names, and
-  you see the exact text first. An optional, local usage count (off by default) can be attached when you choose.
-- Done since launch: the evidence skill and scripted plugin evaluations (0.7), Spanish (0.8), a frozen
-  athlete-folder format (0.9).
-- Then **1.0 "Achilles"**: shared test cases with the app's engine, the Claude Code plugin marketplace.
+Done so far (0.3 to 0.9.1): the training core (onboarding with the medical gate, imports from Strong, Hevy, openGym
+and Apple Health, program build and audit, next targets with their reasons, the weekly review, the roadmap),
+`/setup`, `/feedback`, the evidence skill and scripted evaluations (0.7), Spanish (0.8), a frozen athlete-folder
+format (0.9). Nutrition and photo review stay marked "experimental" until a lawyer has reviewed their safety
+wording; they can be switched on, with every safeguard in code.
 
-## Step 2: 2.0, the web companion and the open server (target early 2027)
+The next steps come from an October 2026 review of the plugin, other coaching apps and how expert coaches work.
+Fixes come first. Anything that changes the targets the coach gives waits for 2.0, because a target change is a
+major version ([versioning.md](versioning.md)).
+
+| Version | Target | What it brings | Waits on |
+|---|---|---|---|
+| **0.9.2** | Oct 2026 | **Safety and correctness fixes.** The medical stop is enforced in code wherever targets are made or sent to Hevy, not only in the skill text. Two grading fixes: a week with no targets file is graded against the targets in force, not an unapplied proposal; RPE 7.5 becomes 3 reps left everywhere. Photo review refuses a picture with more than one person in it. The folder guide matches the photo code (chin margin, side and back photos). | Nothing |
+| **0.10** | Nov 2026 | **Checks that catch regressions.** A test that every skill handoff and script path exists. Evaluations for every refusal (stopped athlete, the eating-disorder question, photos), run three times against a no-plugin baseline. A hook that blocks opening an original photo before it happens. | Nothing |
+| **1.0 "Achilles"** | Dec 2026 | **The first stable release.** Shared test cases with the app's engine, the Claude Code plugin marketplace, and `/coaich:start`, which looks at your folder and tells you the one next step and why. | The trademark check |
+| **1.1** | Q1 2027 | **Pain that lingers is followed up.** A pain without red flags is asked about again; one that persists or gets worse leads, in code, to a physiotherapist referral or a stop. | An ADR (optional keys on pain entries) |
+| **1.2** | Q1 2027 | **Import from any app or spreadsheet.** Map a CSV's columns once; you declare the date format and units, check the first and last rows, and say yes before anything is written. | An ADR (the saved mapping file) |
+| **1.3** | Q2 2027 | **openGym without exporting by hand**: read through openGym's own MCP server, with your exercise matches saved. | Checking the tool shapes against openGym's source |
+| **1.4** | Q2 2027 | **Stalls worked out by a script.** A robust trend (Theil–Sen) over each lift's estimated one-rep max labels it rising, flat or falling. The coach reads the label instead of judging; the targets stay the same. | Evidence rows in `references/` |
+| **1.5** | Q2 2027 | **The brain on other AI tools.** An `AGENTS.md`, no Claude Code-only path variable in the skills, and the full weekly loop tested on OpenAI Codex and Google Gemini CLI before calling them supported. | The weekly loop passing on each tool |
+| **2.0 "Bellerophon"** | mid 2027 | **The measured coach.** Stalls drive exercise swaps and easy weeks. Bigger jumps from "reps left" are capped for beginners and long sets if the evidence review supports it. Photo review adds measured numbers (proportions, symmetry, change over time) next to Claude's ratings, and says when the two disagree. Optional posture notes: alignment trends from your anonymised photos, with no diagnosis and no pain claims. openGym both ways: next week's targets sent as routines, with your yes. A new set of shared target cases, which the apps' engines must follow. | The lawyer's review of the photo wording; ADRs for photo measures and openGym writing; an openGym round trip on a test instance; the evidence review on reps-left accuracy |
+
+## Step 2: 3.0, the web companion and the open server (target late 2027)
 
 - **Publish the sync server:** one sync format, one open (AGPL) server, one person per server.
 - **Setup guides** for running it on your own computer and on your own Cloudflare account.
 - **The web companion:** see today's training and its targets with their reasons, your plan, the coach's weekly
   review and your weight trend; tick your meals and leave a day note, which the plugin reads back in the weekly
   review. Installable on the home screen, so it also covers Android. It shows and records; the plugin decides.
-- No set logging in 2.0: that is 4.0.
+- No set logging in 3.0: that is 5.0.
 - English and Spanish.
 
-## Step 3: 3.0 the iPhone companion, then 4.0 the iPhone and Apple Watch logger (target mid 2027)
+## Step 3: 4.0 the iPhone companion, then 5.0 the iPhone and Apple Watch logger (target 2028)
 
-- **3.0:** the web companion's screens as a native iPhone app, Apple Health read by the app. Same data and plans,
+- **4.0:** the web companion's screens as a native iPhone app, Apple Health read by the app. Same data and plans,
   through the same link.
-- **4.0:** logging in the gym on the iPhone and the Apple Watch (sets, rest timers, heart rate), starter programs,
+- **5.0:** logging in the gym on the iPhone and the Apple Watch (sets, rest timers, heart rate), starter programs,
   week-1 calibration, offline next targets. Public TestFlight, then the App Store.
 
 ## Alongside
-
-### The brain on other AI tools
-- The skills follow the open Agent Skills format (`SKILL.md`), which OpenAI Codex and Google Gemini CLI also read.
-- Work needed: remove the Claude Code-only path variable from the skills, add an `AGENTS.md`, and test the full
-  weekly loop on each tool before calling it supported.
 
 ### CoAIch Pro (after step 3)
 - The same open server, run by us on EU servers: nothing to set up. A hosted weekly coaching report. Price decided
@@ -97,7 +100,6 @@ App Store or TestFlight. Web distribution waits until the company can pass the f
 
 ## Parked (not scheduled)
 
-- Posture analysis from progress photos.
 - Importing gym body-scanner reports (for example 3D scanners) as their own trend.
 - Tracking the music you train to.
 

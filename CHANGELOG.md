@@ -12,6 +12,8 @@ Changed
   `plugin/` to the repository root, its guide is [docs/guide.md](docs/guide.md), and the repository checks are in
   `tools/`. The iPhone and Watch app code, and the test that checked the app's program builder against this one,
   live in the app's own repository. Install commands are unchanged.
+- The [roadmap](docs/roadmap.md) now runs the plugin from 0.9.2 to 2.0 "Bellerophon", the measured coach; the
+  web companion becomes 3.0 ([ADR 0012](docs/adr/0012-plugin-2-before-web.md)).
 
 ## 0.9.1 — Achilles preview
 
