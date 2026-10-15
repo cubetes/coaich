@@ -26,6 +26,8 @@ Added
 - The medical stop is printed by a script (`athlete_folder.py stop-wording`), word for word, in English or
   Spanish, so it is never softened or turned into a diagnosis.
 - `progression.py explain --asks` lists only the rows that need your OK, with their reasons.
+- `tools/photo_bench.py` (maintainers): measures how each model rates your own anonymised photo sets against your
+  rating, between repeats and against measured body fat, with cost and time. It runs and stays on your computer.
 
 Changed
 - The roadmap has a 0.11 step: the six-photo protocol (front and back, relaxed and flexed, both sides).
