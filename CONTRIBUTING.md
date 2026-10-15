@@ -45,12 +45,13 @@ folder) and `graders/*.md`. They call Claude, so they cost money and are not par
 skill's consent or safety wording should keep them passing.
 
 ```sh
-claude plugin eval . --runs 3 --scaffold --trust-plugin \
-  --allow-tools Bash Write Edit --no-publish --max-cost-usd 30   # all cases, with a no-plugin baseline
+claude plugin eval . --runs 3 --scaffold --trust-plugin --model opus --judge-model sonnet \
+  --allow-tools Bash Write Edit Agent --no-publish --max-cost-usd 30   # all cases, with a no-plugin baseline
 claude plugin eval . --case 'feedback-*' ...                # one case, same flags
 ```
 
-In GitHub, run the `plugin-evals` workflow by hand (Actions tab); it needs an `ANTHROPIC_API_KEY` secret.
+On Linux the eval sandbox needs `bubblewrap` and `socat` (`apt install bubblewrap socat`). In GitHub, run the
+`plugin-evals` workflow by hand (Actions tab); it needs an `ANTHROPIC_API_KEY` secret.
 
 ## AI tools
 
