@@ -13,6 +13,11 @@ One pass, in order. The athlete folder is the working directory (it holds `coaic
 Monday. When the newest session in `data/sets.csv` is weeks away from today (an old export, the demo athlete in
 2030), ask which week to review and take `{today}` as that week's Sunday.
 
+## 0. Safety first
+
+If `coaich.md` says `safety_status: stop`, run the `safety` skill instead and end here: no targets are proposed,
+applied or sent to Hevy. The scripts refuse too (exit 2), so never try to work around that.
+
 ## 1. Make sure the week is in
 
 Check `data/sets.csv` has sessions dated in `{last}`. If the athlete trained since the last import,

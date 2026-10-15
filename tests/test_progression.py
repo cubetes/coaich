@@ -447,6 +447,20 @@ class TestApply(Base):
         a.propose(0)
         return a
 
+    def test_safety_stop_refuses_propose_and_apply_but_grade_still_runs(self):
+        a = self.two_rows()                                           # W10 proposed while the status was go
+        with open(os.path.join(a.dir, "coaich.md"), "a") as fh:
+            fh.write("safety_status: stop\n")
+        with self.assertRaises(SystemExit) as e:
+            a.run("apply", "--week", lab(0), "--accept-all", "--approve", "day-a-1")
+        self.assertEqual(e.exception.code, 2)
+        self.assertEqual(a.targets(0)["status"], "proposed")
+        with self.assertRaises(SystemExit) as e:
+            a.propose(1)
+        self.assertEqual(e.exception.code, 2)
+        self.assertFalse(os.path.exists(pg.targets_path(a.dir, lab(1))))
+        a.run("grade", "--week", lab(-1), "--force")                 # the history is still graded
+
     def test_needs_ok_requires_explicit_approve(self):
         a = self.two_rows()
         with self.assertRaises(SystemExit):

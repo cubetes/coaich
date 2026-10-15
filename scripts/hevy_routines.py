@@ -198,6 +198,7 @@ def main(argv=None):
         return 0
     if a.cmd == "verify":
         return 0 if verify(folder, a.week, a.files) else 1
+    af.safety_stop(folder, "nothing is sent to Hevy")
     label, routines, missing = build(folder, a.week, a.program)
     if missing:
         print("No Hevy exercise yet for:")

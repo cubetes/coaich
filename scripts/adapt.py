@@ -59,9 +59,7 @@ def header(folder, name):
 
 
 def gate(folder):
-    if str(header(folder, "coaich.md").get("safety_status") or "").lower() == "stop":
-        print("stop: safety status is stop; nothing is built or changed (safety skill).", file=sys.stderr)
-        raise SystemExit(2)
+    af.safety_stop(folder)
 
 
 def program(folder):

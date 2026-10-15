@@ -67,6 +67,15 @@ def setting(folder, key):
     return None
 
 
+
+def safety_stop(folder, what="nothing is built or changed"):
+    """Exit 2 when coaich.md says safety_status: stop (skills/safety/SKILL.md). Every script that makes or sends
+    targets calls this first, so the medical stop holds in code, not only in the skill text."""
+    if (Path(folder) / MARKER).exists() and setting(folder, "safety_status") == "stop":
+        print(f"stop: safety status is stop; {what} (safety skill).", file=sys.stderr)
+        raise SystemExit(2)
+
+
 def folder_format(folder):
     """The `coaich:` format number in coaich.md. Absent counts as 0 (every 0.x folder, same files as format 1)."""
     v = setting(folder, "coaich")

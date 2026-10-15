@@ -1176,6 +1176,7 @@ def cmd_grade(args):
 
 def cmd_propose(args):
     folder, monday = args.dir, parse_week(args.week)
+    af.safety_stop(folder, "no targets are proposed")
     label, gmon = week_label(monday), monday - timedelta(days=7)
     sessions = load_sessions(folder)
     dt = stale_guard(folder, sessions, gmon, "propose", args.data_through)
@@ -1250,6 +1251,7 @@ def parse_override(s):
 
 def cmd_apply(args):
     folder, monday = args.dir, parse_week(args.week)
+    af.safety_stop(folder, "no targets are applied")
     label = week_label(monday)
     path = targets_path(folder, label)
     if not os.path.exists(path):

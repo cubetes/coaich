@@ -8,6 +8,7 @@ import tempfile
 import unittest
 
 import support  # noqa: F401  (puts scripts/ on sys.path)
+import athlete_folder as af  # noqa: E402
 import hevy_routines as hr  # noqa: E402
 import progression as pg  # noqa: E402
 
@@ -36,6 +37,14 @@ class HevyRoutinesTest(unittest.TestCase):
         code, out = self.run_main("build")
         self.assertEqual(code, 2)
         self.assertEqual(out.count("(Romanian_Deadlift)"), 1)
+        self.assertFalse(os.path.exists(os.path.join(self.dir, "data", "hevy")))
+
+    def test_safety_stop_sends_nothing_to_hevy(self):
+        self.all_templates()
+        af.set_header(self.dir, "coaich.md", "safety_status", "stop")
+        with self.assertRaises(SystemExit) as e:
+            self.run_main("build")
+        self.assertEqual(e.exception.code, 2)
         self.assertFalse(os.path.exists(os.path.join(self.dir, "data", "hevy")))
 
     def test_build_uses_the_applied_targets_in_program_order(self):
