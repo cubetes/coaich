@@ -76,6 +76,36 @@ def safety_stop(folder, what="nothing is built or changed"):
         raise SystemExit(2)
 
 
+# The medical stop, word for word from skills/safety/SKILL.md and copy-es.md (tests/test_stop_wording.py holds them
+# together). Printed by `stop-wording` so no model paraphrases, softens or adds a diagnosis.
+STOP_WORDING = {
+    "en": {
+        "urgent": "Stop training now. Chest pain, fainting or severe shortness of breath can be serious: call your "
+                  "local emergency number or get medical help right away.",
+        "stop": "From your answers, you need a doctor to tell you that you can do strength training before you start. "
+                "Once you have that, confirm it here.",
+        "clearance": "When a doctor has cleared you, reply with this sentence:",
+        "clearance_sentence": "\"I confirm a doctor has cleared me to do strength training.\"",
+    },
+    "es": {
+        "urgent": "Deja de entrenar ahora. El dolor en el pecho, un desmayo o mucha falta de aire pueden ser graves: "
+                  "llama a tu número local de emergencias o busca ayuda médica ya.",
+        "stop": "Por lo que has respondido, antes de empezar necesitas que un médico te diga que puedes entrenar "
+                "fuerza. Cuando lo tengas, confírmalo aquí.",
+        "clearance": "Cuando un médico te haya autorizado, responde con esta frase:",
+        "clearance_sentence": "\"Confirmo que un médico me ha autorizado a entrenar fuerza.\"",
+    },
+}
+URGENT_REASONS = ("chest-pain", "fainting")
+
+
+def stop_wording(reasons, lang="en"):
+    """The exact stop text for these safety reasons: the urgent line first after chest pain or fainting."""
+    w = STOP_WORDING.get(lang, STOP_WORDING["en"])
+    parts = [w["urgent"]] if any(r in URGENT_REASONS for r in reasons) else []
+    return "\n\n".join(parts + [w["stop"], w["clearance"], w["clearance_sentence"]])
+
+
 def folder_format(folder):
     """The `coaich:` format number in coaich.md. Absent counts as 0 (every 0.x folder, same files as format 1)."""
     v = setting(folder, "coaich")
@@ -319,6 +349,10 @@ def main(argv=None):
     lg.add_argument("skill")
     lg.add_argument("result")
     lg.add_argument("--dir")
+    sw = sub.add_parser("stop-wording", help="print the exact medical-stop text (skills/safety); copy it as printed")
+    sw.add_argument("--dir", help="read safety_status, safety_reasons and language from this folder's coaich.md")
+    sw.add_argument("--reasons", help="comma-separated stop items, before a folder exists (onboarding)")
+    sw.add_argument("--lang", choices=sorted(STOP_WORDING))
     g = sub.add_parser("gate")
     g.add_argument("feature", choices=GATE_FEATURES)
     g.add_argument("--dir")
@@ -335,6 +369,15 @@ def main(argv=None):
             if line.startswith("upgraded"):
                 append_log(folder, "upgrade", line)
             print(line)
+        elif a.cmd == "stop-wording":
+            reasons, lang = [r.strip() for r in (a.reasons or "").split(",") if r.strip()], a.lang
+            if not reasons:
+                folder = find(a.dir)
+                if setting(folder, "safety_status") != "stop":
+                    return 1  # no stop recorded: nothing to say
+                reasons = [r.strip() for r in (setting(folder, "safety_reasons") or "").strip("[]").split(",")]
+                lang = lang or setting(folder, "language")
+            print(stop_wording(reasons, lang or "en"))
         elif a.cmd == "gate":
             from program_build import front_matter  # program_build imports this module: import here, not on top
             folder = find(a.dir)

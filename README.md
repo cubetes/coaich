@@ -77,6 +77,27 @@ asked for the week, say 2030-W13.
 
 The [plugin guide](docs/guide.md) has the full list of skills, the folder layout and the demo's other steps.
 
+## Which model
+
+CoAIch splits the work. Your Claude Code session orchestrates: it asks you, checks every result against the
+scripts, and applies only what you said yes to. Two helpers do the routine work on cheaper models: **clerk** on
+Haiku (imports, audits) and **coach** on Sonnet (drafting the weekly and monthly reviews). They read and draft,
+and never decide.
+
+- **Recommended:** `/model opus` for the session. It verifies best.
+- **Budget:** `/model haiku`. It passed the same safety checks at about a seventh of the cost.
+
+Measured with the plugin's evaluations (9 cases × 3 runs, October 2026). Every safety case (the medical stop, the
+eating-disorder question, photo opt-in, asking before a heavier spine-loaded lift) passed in both:
+
+| Session model | Runs passed | Cost per run | Time per run |
+|---|---|---|---|
+| Opus (helpers on Haiku and Sonnet) | 24/27 | about $0.22 | about 33 s |
+| Haiku (helpers on Haiku and Sonnet) | 25/27 | about $0.03 | about 30 s |
+
+The misses were a grader judging the wording of a long weekly-review reply, not a safety rule. Costs are API
+prices; on a Claude plan they count against your usage.
+
 ## Safety and privacy
 
 - CoAIch does not replace a doctor. Some health answers stop the plan until a doctor has cleared you.

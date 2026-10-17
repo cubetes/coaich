@@ -1,3 +1,4 @@
-# Raw exports and photos stay on this machine.
+# Raw exports, photos and photo benchmarks stay on this machine.
 data/raw/
 photos/
+bench/

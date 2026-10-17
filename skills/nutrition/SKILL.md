@@ -55,6 +55,7 @@ maintenance and the same phase. A trend faster than the loss cap always means **
 ## 4. Safeguards (the script enforces them; you say the words)
 
 Exit 3 means a safeguard. Say the printed wording exactly, add nothing, and do not argue or look for a way round.
+Never offer to change, re-ask or "correct" the answer behind it, and never suggest it was recorded by mistake.
 
 | Code | When | What happens |
 |---|---|---|

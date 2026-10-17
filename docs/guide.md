@@ -40,6 +40,14 @@ It starts with `/setup` (language, units and where your workouts come from: Stro
 Health for steps, weight, sleep and body measurements; then a check that it all works), asks a few questions (about 3 minutes), runs the medical check,
 writes your profile and builds your first program. Run `/setup` again any time to change your integrations.
 
+## Which model
+
+Your session orchestrates and verifies; the `clerk` (Haiku) and `coach` (Sonnet) agents in `agents/` run the
+scripts and draft. Only the session asks you anything or applies a change, and it checks each draft against the
+script's own output first: the weekly review lists its asks from `progression.py explain --asks`, never from a
+draft. Use `/model opus` for the session (recommended) or `/model haiku` (about a seventh of the cost). The
+numbers are in the [README](../README.md#which-model).
+
 ## Try it on the demo athlete
 
 `examples/demo-athlete` is "Sam", a fictional intermediate lifter with 12 weeks of training in 2030. It was made
